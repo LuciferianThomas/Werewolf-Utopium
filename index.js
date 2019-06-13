@@ -25,6 +25,12 @@ bot.login(token)
 
 bot.on('ready', () => {
   console.log("Unity is up!")
+	bot.user.setPresence({
+		status: 'online',
+		game: {
+			name: `@Unity help`
+		}
+	})
 })
 
 bot.on('message', async message => {
