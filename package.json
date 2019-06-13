@@ -10,7 +10,8 @@
     "http": "^0.0.0",
     "discord.js-commando": "^0.10.0",
     "path": "^0.12.7",
-    "es6-shim": "^0.35.5"
+    "es6-shim": "^0.35.5",
+    "enmap": "^4.8.6"
   },
   "devDependencies": {},
   "scripts": {

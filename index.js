@@ -3,15 +3,47 @@ require('es6-shim')
 const Discord = require('discord.js')
 const express = require ('express')
 const fs = require("fs")
+const http = require('http')
+const Enmap = require('enmap')
 
-var http = require('http')
+/* ALL THE PACKAGES BEFORE HERE */
 
-http.createServer(function (req, res) {
-	res.write("Status: Online")
-	res.end()
-}).listen(8080)
+
+
+
+
+
+
+
+
+/* ALL GLOBAL CONSTANTS HERE*/
+
+const app = express();
+app.use(express.static('public'));
+
+app.get("/", function(request, response) {
+  response.sendFile(__dirname + '/views/index.html');
+  console.log(Date.now() + " Ping Received");
+});
+
+const listener = app.listen(process.env.PORT, function() {
+  setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 225000);
+});
 
 const bot = new Discord.Client()
+
+bot.settings = new Enmap({
+  name: "settings",
+  fetchAll: false,
+  autoFetch: true,
+  cloneLevel: 'deep'
+});
+
+const defaultSettings = {   
+  prefix: "u!"
+};
 
 bot.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
@@ -19,8 +51,6 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`)
 	bot.commands.set(command.name, command)
 }
-
-bot.commandPrefix = "u!"
 
 const token = process.env.DISCORD_BOT_TOKEN
 
@@ -36,10 +66,17 @@ bot.on('ready', () => {
 	})
 })
 
+bot.on('guildCreate', () => {
+  bot.settings.set(`491659679336759299`, "em/", prefix);
+})
+
+
+
 bot.on('message', async message => {
   
   const msg = message.content.toLowerCase()
-  const prefix = "u!"
+  const guildConf = bot.settings.ensure(message.guild.id, defaultSettings)
+  const prefix = guildConf.prefix
   const mention = "<@562910620664463365> "
   const mention1 = "<@!562910620664463365> "
   
