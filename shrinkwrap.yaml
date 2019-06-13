@@ -1,6 +1,5 @@
 dependencies:
   discord.js: 11.5.1
-  discord.js-arbitrary-ffmpeg: 1.0.0
   discord.js-commando: 0.10.0
   es6-shim: 0.35.5
   fs: 0.0.2
@@ -17,10 +16,6 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
-  /discord.js-arbitrary-ffmpeg/1.0.0:
-    dev: false
-    resolution:
-      integrity: sha1-nLgmDhasrFy/6Vi8YqDHBBSt0zg=
   /discord.js-commando/0.10.0:
     dependencies:
       common-tags: 1.8.0
@@ -127,7 +122,6 @@ shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   discord.js: ^11.5.1
-  discord.js-arbitrary-ffmpeg: ^1.0.0
   discord.js-commando: ^0.10.0
   es6-shim: ^0.35.5
   fs: ^0.0.2

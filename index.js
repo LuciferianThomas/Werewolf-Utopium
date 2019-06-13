@@ -10,3 +10,17 @@ const client = new Commando.Client({
 	commandPrefix: 'u!'
 })
 
+client.registry
+	.registerDefaultTypes()
+	.registerGroups([
+		['util', 'Utility Commands']
+	])
+	.registerCommandsIn(path.join(__dirname, "commands"))
+
+const token = process.env.DISCORD_BOT_TOKEN
+
+client.login(token)
+
+client.on('ready', () => {
+  console.log("Unity is up!")
+})

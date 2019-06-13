@@ -6,7 +6,6 @@
   "main": "index.js",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "discord.js-arbitrary-ffmpeg": "^1.0.0",
     "fs": "^0.0.2",
     "http": "^0.0.0",
     "discord.js-commando": "^0.10.0",
