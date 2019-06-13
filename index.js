@@ -1,6 +1,7 @@
 require('es6-shim')
 
 const Discord = require('discord.js')
+const express = require ('express')
 const fs = require("fs")
 
 var http = require('http')
@@ -19,6 +20,8 @@ for (const file of commandFiles) {
 	bot.commands.set(command.name, command)
 }
 
+bot.commandPrefix = "u!"
+
 const token = process.env.DISCORD_BOT_TOKEN
 
 bot.login(token)
@@ -28,7 +31,7 @@ bot.on('ready', () => {
 	bot.user.setPresence({
 		status: 'online',
 		game: {
-			name: `@Unity help`
+			name: `${bot.commandPrefix}help`
 		}
 	})
 })
