@@ -3,6 +3,13 @@ require('es6-shim')
 const Discord = require('discord.js')
 const fs = require("fs")
 
+var http = require('http')
+
+http.createServer(function (req, res) {
+	res.write("Status: Online")
+	res.end()
+}).listen(8080)
+
 const bot = new Discord.Client()
 
 bot.commands = new Discord.Collection()
@@ -24,8 +31,8 @@ bot.on('message', async message => {
   
   const msg = message.content.toLowerCase()
   const prefix = "u!"
-  const mention = "<@336389636878368770> "
-  const mention1 = "<@!336389636878368770> "
+  const mention = "<@562910620664463365> "
+  const mention1 = "<@!562910620664463365> "
   
   let shared = {}
   

@@ -21,7 +21,7 @@ module.exports = {
         .addField(`Result`, '```js\n'+out+'```')
         .setFooter("Project Unity", bot.user.avatarURL)
 			message.channel.send(embed)
-        .then(message.delete())
+        .then(message.delete().catch())
         .catch(console.error)
 		} catch (e) {
       var embed = new Discord.RichEmbed()
@@ -31,7 +31,7 @@ module.exports = {
         .addField(`Error Message`, '```js\n'+e+'```')
         .setFooter("Project Unity", bot.user.avatarURL)
 			message.channel.send(embed)
-        .then(message.delete())
+        .then(message.delete().catch())
         .catch(console.error)
 		}
     
