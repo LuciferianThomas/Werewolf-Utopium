@@ -17,8 +17,9 @@
     "start": "node index.js"
   },
   "keywords": [
-    "embed"
+    "rpg",
+    "unity"
   ],
-  "author": "NikkaNC",
+  "author": "LuciferianThomas",
   "license": "MIT"
 }

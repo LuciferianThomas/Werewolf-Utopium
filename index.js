@@ -1,26 +1,60 @@
 require('es6-shim')
 
 const Discord = require('discord.js')
-const Commando = require('discord.js-commando')
-const path = require('path')
-var __dirname = path.resolve()
+const fs = require("fs")
 
-const client = new Commando.Client({
-	owner: '336389636878368770',
-	commandPrefix: 'u!'
-})
+const bot = new Discord.Client()
 
-client.registry
-	.registerDefaultTypes()
-	.registerGroups([
-		['util', 'Utility Commands']
-	])
-	.registerCommandsIn(path.join(__dirname, "commands"))
+bot.commands = new Discord.Collection()
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`)
+	bot.commands.set(command.name, command)
+}
 
 const token = process.env.DISCORD_BOT_TOKEN
 
-client.login(token)
+bot.login(token)
 
-client.on('ready', () => {
+bot.on('ready', () => {
   console.log("Unity is up!")
+})
+
+bot.on('message', async message => {
+  
+  const msg = message.content.toLowerCase()
+  const prefix = "u!"
+  const mention = "<@336389636878368770> "
+  const mention1 = "<@!336389636878368770> "
+  
+  let shared = {}
+  
+  if (msg.startsWith(prefix) || msg.startsWith(mention) || msg.startsWith(mention1)) {
+    
+    var args
+    
+    if (msg.startsWith(prefix)) {
+      args = message.content.slice(prefix.length).split(/\s+/u)
+      shared.prefix = prefix
+    } else if (msg.startsWith(mention)) {
+      args = message.content.slice(mention.length).split(/\s+/u)
+      shared.prefix = mention
+    } else if (msg.startsWith(mention1)) {
+      args = message.content.slice(mention1.length).split(/\s+/u)
+      shared.prefix = mention1
+    }
+    
+		const commandName = args.shift().toLowerCase()
+		shared.commandName = commandName
+		const command = bot.commands.get(commandName) || bot.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
+
+		if (!command) return;
+		
+		try {
+			await command.run(bot, message, args, shared)
+		} catch (error) {
+			message.channel.send(error)
+		}
+	}
+  
 })
