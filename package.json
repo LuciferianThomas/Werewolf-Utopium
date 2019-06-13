@@ -11,7 +11,9 @@
     "discord.js-commando": "^0.10.0",
     "path": "^0.12.7",
     "es6-shim": "^0.35.5",
-    "enmap": "^4.8.6"
+    "enmap": "^4.8.6",
+    "express": "^4.16.4",
+    "better-sqlite-pool": "^0.2.2"
   },
   "devDependencies": {},
   "scripts": {

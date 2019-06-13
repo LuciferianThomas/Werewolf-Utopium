@@ -1,15 +1,16 @@
 require('es6-shim')
 
 const Discord = require('discord.js')
-const express = require ('express')
+const express = require('express')
 const fs = require("fs")
 const http = require('http')
 const Enmap = require('enmap')
 
-/* ALL THE PACKAGES BEFORE HERE */
+/* --- ALL PACKAGES BEFORE THIS LINE --- */
 
+/* ALL GLOBAL CONSTANTS HERE*/
 
-
+const prefix = "u!"
 
 
 
@@ -18,7 +19,7 @@ const Enmap = require('enmap')
 
 /* ALL GLOBAL CONSTANTS HERE*/
 
-const app = express();
+const app = express()
 app.use(express.static('public'));
 
 app.get("/", function(request, response) {
@@ -61,16 +62,14 @@ bot.on('ready', () => {
 	bot.user.setPresence({
 		status: 'online',
 		game: {
-			name: `${bot.commandPrefix}help`
+			name: `${prefix}help`
 		}
 	})
 })
 
-bot.on('guildCreate', () => {
-  bot.settings.set(`491659679336759299`, "em/", prefix);
+bot.on('guildDelete', guild => {
+  bot.settings.delete(guild.id);
 })
-
-
 
 bot.on('message', async message => {
   
