@@ -60,9 +60,10 @@ bot.login(token)
 bot.on('ready', () => {
   console.log("Unity is up!")
 	bot.user.setPresence({
-		status: 'online',
+		status: 'dnd',
 		game: {
-			name: `${prefix}help`
+			name: `maintenance go on`,
+      type: "WATCHING"
 		}
 	})
 })
