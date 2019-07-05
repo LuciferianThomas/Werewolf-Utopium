@@ -143,6 +143,9 @@ client.on('message', async message => {
     if (command.botStaffOnly && !user.botStaff) return msg.reply("you do not have the permissions to use this command!")
     if (command.guildPerms && !message.member.hasPermission(command.guildPerms)) return msg.reply("you do not have the permissions to use this command!")
 		
+    shared.user = user
+    shared.guild = guild
+    
 		try {
 			await command.run(client, message, args, shared)
 		} catch (error) {

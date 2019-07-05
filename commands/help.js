@@ -10,14 +10,17 @@ module.exports = {
     
 		const { commands } = msg.client
     
-    console.log()
+    console.log(commands)
     
     let displayCommandList = {}
     let mapped = commands.map(command => `${shared.prefix}${command.name}\n`)
+    console.log(mapped)
     let perms = {}
-    perms.bot = commands.map(command => !(command.botStaffOnly && !shared.permissions.bot))
+    perms.bot = commands.map(command => !(command.botStaffOnly && !shared.user.botStaff))
     perms.guild = commands.map(command => !(command.guildPerms && !msg.member.hasPermission(command.guildPerms) == undefined ? false : command.guildPerms && !msg.member.hasPermission(command.guildPerms)))
+    console.log(perms)
     let cmdCats = commands.map(command => command.category)
+    console.log(cmdCats)
     for (var i = 0; i < mapped.length; i++) {
       if (perms.bot[i] && perms.guild[i]) {
         if (!displayCommandList[cmdCats[i]]) displayCommandList[cmdCats[i]] = []
