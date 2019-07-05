@@ -91,12 +91,6 @@ client.on('message', async message => {
     }
     userData.set(message.author.id, newUserData)
   }
-  userData.set(message.author.id, {
-      botStaff: true,
-      blacklisted: false,
-      commandsUsed: 0,
-      createdTimestamp: moment()
-    })
   let user = userData.get(message.author.id)
   
   if (!guildData.has(message.guild.id)) {
