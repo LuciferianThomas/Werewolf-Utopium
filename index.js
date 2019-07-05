@@ -65,7 +65,18 @@ bot.on('message', async message => {
   
   if (message.author.bot) return;
   
-  console.log(`${message.guild.name} #${message.channel.name} | ${message.author.tag} > ${message.attachment}${message.cleanContent}`)
+  console.log(`${message.guild.name} #${message.channel.name} | ${message.author.tag} > ${message.cleanContent}`)
+  // message.attachments ? message.attachments.forEach(a => console.log(`${message.guild.name} #${message.channel.name} | ${message.author.tag} > ${a.url}`)) : null
+  // message.embeds ? message.attachments.forEach(a => console.log(`${message.guild.name} #${message.channel.name} | ${message.author.tag} > [EMBED]`)) : null
+  
+  if (!userData.has(message.author.id)) {
+    let newUserData = {
+      botStaff: false,
+      blacklisted: false,
+      commandsUsed: 0,
+      
+    }
+  }
   
   const msg = message.content.toLowerCase()
   
@@ -95,6 +106,8 @@ bot.on('message', async message => {
 		const command = bot.commands.get(commandName) || bot.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
 
 		if (!command) return;
+    
+    if (command.botStaffOnly)
 		
 		try {
 			await command.run(bot, message, args, shared)
