@@ -55,14 +55,10 @@ bot.on('ready', () => {
 	bot.user.setPresence({
 		status: 'DND',
 		game: {
-			name: `maintenance go on`,
+			name: `for ${defaultPrefix}help`,
       type: "WATCHING"
 		}
 	})
-})
-
-bot.on('guildDelete', guild => {
-  bot.settings.delete(guild.id);
 })
 
 bot.on('message', async message => {
