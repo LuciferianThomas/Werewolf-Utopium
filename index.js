@@ -145,6 +145,7 @@ client.on('message', async message => {
 		
     shared.user = user
     shared.guild = guild
+    shared.defaultPrefix = defaultPrefix
     shared.embedColor = embedColor
     
 		try {

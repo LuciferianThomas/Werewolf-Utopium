@@ -1,4 +1,8 @@
 const Discord = require('discord.js')
+const db = require('quick.db')
+const userData = new db.table("USERDATA")
+
+let botStaff = userData.all()
 
 module.exports = {
   name: "info",
@@ -18,7 +22,9 @@ module.exports = {
       .setColor(shared.embedColor)
       .setTitle(`${client.user.username} | Information`)
       .setThumbnail(client.user.avatarURL)
-      .addField("Name", client.user.username, )
+      .addField("Name", client.user.username, true)
+      .addField("Prefix", `Default: \`${shared.defaultPrefix}\`\nMention: ${client.user}\nServer: ${shared.guild.prefix}`)
+      .addField("Developer", "")
     
   }
 }

@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const db = require()
 
 module.exports = {
 	name: "eval",
