@@ -119,7 +119,6 @@ client.on('message', async message => {
   let shared = {}
   
   if (msg.startsWith(prefix) || msg.startsWith(mention) || msg.startsWith(mention1)) {
-    console.log()
     
     var args
     

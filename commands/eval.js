@@ -1,5 +1,7 @@
 const Discord = require('discord.js')
-const db = require()
+const db = require('quick.db')
+const userData = new db.table("USERDATA"),
+      guildData = new db.table("GUILDDATA")
 
 module.exports = {
 	name: "eval",
@@ -21,7 +23,6 @@ module.exports = {
         .addField(`Result`, '```js\n'+out+'```')
         .setFooter(bot.user.username, bot.user.avatarURL)
 			message.channel.send(embed)
-        .then(message.delete().catch(console.error))
         .catch(console.error)
 		} catch (e) {
       var embed = new Discord.RichEmbed()
@@ -31,7 +32,6 @@ module.exports = {
         .addField(`Error Message`, '```js\n'+e+'```')
         .setFooter(bot.user.username, bot.user.avatarURL)
 			message.channel.send(embed)
-        .then(message.delete().catch(console.error))
         .catch(console.error)
 		}
     
