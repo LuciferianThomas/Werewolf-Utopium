@@ -51,9 +51,9 @@ const token = process.env.DISCORD_BOT_TOKEN
 bot.login(token)
 
 bot.on('ready', () => {
-  console.log(`${bot.user.username} is up!`)
+  console.log(`[INFO] ${bot.user.username} is up!`)
 	bot.user.setPresence({
-		status: 'DND',
+		status: 'online',
 		game: {
 			name: `for ${defaultPrefix}help`,
       type: "WATCHING"
@@ -62,6 +62,10 @@ bot.on('ready', () => {
 })
 
 bot.on('message', async message => {
+  
+  if (message.author.bot) return;
+  
+  console.log(`${message.guild.name} #${message.channel.name} | ${message.author.tag} > ${message.attachment}${message.cleanContent}`)
   
   const msg = message.content.toLowerCase()
   
