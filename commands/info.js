@@ -2,8 +2,6 @@ const Discord = require('discord.js')
 const db = require('quick.db')
 const userData = new db.table("USERDATA")
 
-let botStaff = userData.all().filter(i => JSON.parse(i.data).botStaff).map(i => i.tag)
-
 module.exports = {
   name: "info",
   usage: "info",
@@ -11,6 +9,8 @@ module.exports = {
   category: "Utility",
   botStaffOnly: false,
   run: async (client, message, args, shared) => {
+
+    let botStaff = userData.all().filter(i => JSON.parse(i.data).botStaff).map(i => client.users.get(i.ID).tag)
     
     let m = await message.channel.send("Pinging...")
     
@@ -23,12 +23,20 @@ module.exports = {
       .setTitle(`${client.user.username} | Information`)
       .setThumbnail(client.user.avatarURL)
       .addField("Name", client.user.username, true)
-      .addField("Prefix", `Default: \`${shared.defaultPrefix}\`\nMention: ${client.user}\nServer: ${shared.guild.prefix}`, true)
-      .addField("Developer", botStaff, true)
+      .addField("Prefix", `Default: \`${shared.defaultPrefix}\`\nMention: ${client.user}\nServer: \`${shared.guild.prefix}\``, true)
+      .addField("Developer", botStaff.join(', '), true)
       .addField("Created", shared.date(client.user.createdAt), true)
       .addField("Servers", client.guilds.size, true)
       .addField("Users", client.users.size, true)
-      .addField("Memory Used", `${memory}MB`)
+      .addField("Bot Latency", `${botLatency}ms`, true)
+      .addField("Ping", `${ping}ms`, true)
+      .addField("Memory Used", `${memory}MB`, true)
+      .addField("Library", "discord.js", true)
+      .addField("ID", client.user.id)
+      .setFooter(client.user.username, client.user.avatarURL)
+    
+    message.channel.send(embed)
+      
     
   }
 }

@@ -146,6 +146,7 @@ client.on('message', async message => {
     shared.guild = guild
     shared.defaultPrefix = defaultPrefix
     shared.embedColor = embedColor
+    shared.date = date
     
 		try {
 			await command.run(client, message, args, shared)
