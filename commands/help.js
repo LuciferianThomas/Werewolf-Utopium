@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: "help",
   usage: "help [command]",
-  description: "Help command.",
+  description: "Commands information.",
   category: "Utility",
   botStaffOnly: false,
   run: async (client, msg, args, shared) => {
