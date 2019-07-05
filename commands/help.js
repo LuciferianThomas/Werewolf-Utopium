@@ -1,5 +1,4 @@
-const fs = require('fs');
-const Discord = require('discord.js');
+const Discord = require('discord.js')
 
 module.exports = {
   name: "help",
@@ -23,12 +22,11 @@ module.exports = {
         displayCommandList[cmdCats[i]].push(mapped[i])
       }
     }
-    
 
 		if (args.length == 0) {
       for (var i in displayCommandList) {
         let embed = new Discord.RichEmbed() 
-          .setTitle(`Exo | ${i} Commands`)
+          .setTitle(`${client.user.username} | ${i} Commands`)
           .setColor(0xe86ae8)
           .setThumbnail(client.user.avatarURL)
           .setDescription(displayCommandList[i].join('') + "\nDo `help [command]` to get information about specific commands!")
@@ -40,7 +38,6 @@ module.exports = {
           })
         })
       }
-      shared.exoSay(client, msg, "Check your DMs!")
 		} else {
 			const name = args[0].toLowerCase();
 			const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name))

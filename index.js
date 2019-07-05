@@ -37,22 +37,22 @@ const listener = app.listen(process.env.PORT, function() {
   }, 225000);
 });
 
-const bot = new Discord.Client()
+const client = new Discord.Client()
 
-bot.commands = new Discord.Collection()
+client.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`)
-	bot.commands.set(command.name, command)
+	client.commands.set(command.name, command)
 }
 
 const token = process.env.DISCORD_BOT_TOKEN
 
-bot.login(token)
+client.login(token)
 
-bot.on('ready', () => {
-  console.log(`[INFO] ${bot.user.username} is up!`)
-	bot.user.setPresence({
+client.on('ready', () => {
+  console.log(`[INFO] ${client.user.username} is up!`)
+	client.user.setPresence({
 		status: 'online',
 		game: {
 			name: `for ${defaultPrefix}help`,
@@ -61,7 +61,7 @@ bot.on('ready', () => {
 	})
 })
 
-bot.on('guildCreate', async guild => {
+client.on('guildCreate', async guild => {
   if (!guildData.has(guild.id)) {
     let newGuildData = {
       prefix: defaultPrefix,
@@ -73,7 +73,7 @@ bot.on('guildCreate', async guild => {
   }
 })
 
-bot.on('message', async message => {
+client.on('message', async message => {
   
   if (message.author.bot) return;
   
@@ -92,17 +92,28 @@ bot.on('message', async message => {
   }
   
   let user = userData.get(message.author.id)
+  
+  if (!guildData.has(message.guild.id)) {
+    let newGuildData = {
+      prefix: defaultPrefix,
+      blacklisted: false,
+      commandsUsed: 0,
+      createdTimestamp: moment()
+    }
+    guildData.set(message.guild.id, newGuildData)
+  }
   let guild = guildData.get(message.guild.id)
   
   const msg = message.content.toLowerCase()
   
   const prefix = guild.prefix || defaultPrefix,
-        mention = `<@${bot.user.id}> `,
-        mention1 = `<@!${bot.user.id}> `
+        mention = `<@${client.user.id}> `,
+        mention1 = `<@!${client.user.id}> `
   
   let shared = {}
   
   if (msg.startsWith(prefix) || msg.startsWith(mention) || msg.startsWith(mention1)) {
+    console.log()
     
     var args
     
@@ -119,17 +130,18 @@ bot.on('message', async message => {
     
 		const commandName = args.shift().toLowerCase()
 		shared.commandName = commandName
-		const command = bot.commands.get(commandName) || bot.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
+		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
 
 		if (!command) return;
     
     if (command.botStaffOnly)
 		
 		try {
-			await command.run(bot, message, args, shared)
+			await command.run(client, message, args, shared)
 		} catch (error) {
 			message.channel.send(error)
 		}
+    
+    message.delete().catch()
 	}
-  
 })

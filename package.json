@@ -1,8 +1,8 @@
 {
-  "name": "projectunity",
+  "name": "lt-discord-bot-format",
   "version": "1.0.0",
   "homepage": "-",
-  "description": "Play RPG games with Project Unity bot!",
+  "description": "Discord Bot Format by LuciferianThomas",
   "main": "index.js",
   "dependencies": {
     "discord.js": "^11.5.1",

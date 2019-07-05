@@ -4,7 +4,7 @@ module.exports = {
 	name: "eval",
 	usage: "eval <code>",
 	description: "Evaluate JavaScript code!",
-  category: "Utility",
+  category: "Bot Staff",
   botStaffOnly: true,
 	run: async (bot, message, args, shared) => {
     const msg = message, client = bot
