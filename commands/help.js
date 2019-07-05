@@ -7,15 +7,17 @@ module.exports = {
   category: "Utility",
   botStaffOnly: false,
   run: async (client, msg, args, shared) => {
-		const data = []
+    
 		const { commands } = msg.client
     
-    var displayCommandList = {}
-    var mapped = commands.map(command => `${shared.prefix}${command.name}\n`)
-    var perms = {}
+    console.log()
+    
+    let displayCommandList = {}
+    let mapped = commands.map(command => `${shared.prefix}${command.name}\n`)
+    let perms = {}
     perms.bot = commands.map(command => !(command.botStaffOnly && !shared.permissions.bot))
     perms.guild = commands.map(command => !(command.guildPerms && !msg.member.hasPermission(command.guildPerms) == undefined ? false : command.guildPerms && !msg.member.hasPermission(command.guildPerms)))
-    var cmdCats = commands.map(command => command.category)
+    let cmdCats = commands.map(command => command.category)
     for (var i = 0; i < mapped.length; i++) {
       if (perms.bot[i] && perms.guild[i]) {
         if (!displayCommandList[cmdCats[i]]) displayCommandList[cmdCats[i]] = []
@@ -46,7 +48,8 @@ module.exports = {
 				return msg.reply('that\'s not a valid command!')
 			}
 
-			var embed = new Discord.RichEmbed().setColor(0xe86ae8).setAuthor(`${shared.prefix}${command.name}`, client.user.avatarURL)
+			var embed = new Discord.RichEmbed()
+        .setAuthor(`${shared.prefix}${command.name}`, client.user.avatarURL)
 
 			if (command.aliases) embed.addField(`Aliases`, command.aliases.join(', '))
 			if (command.description) embed.addField(`Description`, command.description)

@@ -14,10 +14,11 @@ const Discord = require('discord.js'),
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const defaultPrefix = "u!",
+      defaultEmbedColor = 0x708ad7,
       userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA")
 
-function formatDate(date) {
+function date(date = moment()) {
   return moment(date).format("D MMM Y HH:mm [GMT]")
 }
 
@@ -28,7 +29,7 @@ app.use(express.static('public'));
 
 app.get("/", function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
-  console.log(Date.now() + " Ping Received");
+  console.log(date() + " Ping Received");
 });
 
 const listener = app.listen(process.env.PORT, function() {
@@ -90,7 +91,12 @@ client.on('message', async message => {
     }
     userData.set(message.author.id, newUserData)
   }
-  
+  userData.set(message.author.id, {
+      botStaff: true,
+      blacklisted: false,
+      commandsUsed: 0,
+      createdTimestamp: moment()
+    })
   let user = userData.get(message.author.id)
   
   if (!guildData.has(message.guild.id)) {
@@ -134,12 +140,13 @@ client.on('message', async message => {
 
 		if (!command) return;
     
-    if (command.botStaffOnly)
+    if (command.botStaffOnly && !user.botStaff) return msg.reply("you do not have the permissions to use this command!")
+    if (command.guildPerms && !message.member.hasPermission(command.guildPerms)) return msg.reply("you do not have the permissions to use this command!")
 		
 		try {
 			await command.run(client, message, args, shared)
 		} catch (error) {
-			message.channel.send(error)
+			console.log(error)
 		}
     
     message.delete().catch()
