@@ -14,7 +14,7 @@ const Discord = require('discord.js'),
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const defaultPrefix = "u!",
-      defaultEmbedColor = 0x708ad7,
+      embedColor = 0x708ad7,
       userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA")
 
@@ -145,6 +145,7 @@ client.on('message', async message => {
 		
     shared.user = user
     shared.guild = guild
+    shared.embedColor = embedColor
     
 		try {
 			await command.run(client, message, args, shared)

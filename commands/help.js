@@ -9,32 +9,28 @@ module.exports = {
   run: async (client, msg, args, shared) => {
     
 		const { commands } = msg.client
+    let mapped = commands.map(command => `${shared.guild.prefix}${command.name}\n`)
     
-    console.log(commands)
-    
-    let displayCommandList = {}
-    let mapped = commands.map(command => `${shared.prefix}${command.name}\n`)
-    console.log(mapped)
     let perms = {}
     perms.bot = commands.map(command => !(command.botStaffOnly && !shared.user.botStaff))
-    perms.guild = commands.map(command => !(command.guildPerms && !msg.member.hasPermission(command.guildPerms) == undefined ? false : command.guildPerms && !msg.member.hasPermission(command.guildPerms)))
-    console.log(perms)
+    perms.guild = commands.map(command => !(command.guildPerms && !msg.member.hasPermission(command.guildPerms)))
     let cmdCats = commands.map(command => command.category)
-    console.log(cmdCats)
+    
+    let userCommands = {}
     for (var i = 0; i < mapped.length; i++) {
       if (perms.bot[i] && perms.guild[i]) {
-        if (!displayCommandList[cmdCats[i]]) displayCommandList[cmdCats[i]] = []
-        displayCommandList[cmdCats[i]].push(mapped[i])
+        if (!userCommands[cmdCats[i]]) userCommands[cmdCats[i]] = []
+        userCommands[cmdCats[i]].push(mapped[i])
       }
     }
 
 		if (args.length == 0) {
-      for (var i in displayCommandList) {
+      for (var i in userCommands) {
         let embed = new Discord.RichEmbed() 
           .setTitle(`${client.user.username} | ${i} Commands`)
-          .setColor(0xe86ae8)
+          .setColor(shared.embedColor)
           .setThumbnail(client.user.avatarURL)
-          .setDescription(displayCommandList[i].join('') + "\nDo `help [command]` to get information about specific commands!")
+          .setDescription(userCommands[i].join('') + "\nDo `help [command]` to get information about specific commands!")
           .setTimestamp()
         msg.author.send(embed)
           .catch(err => {
@@ -52,6 +48,7 @@ module.exports = {
 			}
 
 			var embed = new Discord.RichEmbed()
+        .setColor(shared.embedColor)
         .setAuthor(`${shared.prefix}${command.name}`, client.user.avatarURL)
 
 			if (command.aliases) embed.addField(`Aliases`, command.aliases.join(', '))
