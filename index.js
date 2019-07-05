@@ -1,23 +1,27 @@
+/* --- ALL PACKAGES --- */
+
 require('es6-shim')
 
-const Discord = require('discord.js')
-const express = require('express')
-const fs = require("fs")
-const http = require('http')
-const Enmap = require('enmap')
+const Discord = require('discord.js'),
+      express = require('express'),
+      fs = require("fs"),
+      http = require('http'),
+      moment = require('moment'),
+      db = require('quick.db')
 
-/* --- ALL PACKAGES BEFORE THIS LINE --- */
+/* --- ALL PACKAGES --- */
 
-/* ALL GLOBAL CONSTANTS HERE*/
+/* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
-const prefix = "u!"
+const defaultPrefix = "u!",
+      userData = new db.table("USERDATA"),
+      guildData = new db.table("GUILDDATA")
 
+function formatDate(date) {
+  return moment(date).format("D MMM Y HH:mm [GMT]")
+}
 
-
-
-
-
-/* ALL GLOBAL CONSTANTS HERE*/
+/* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const app = express()
 app.use(express.static('public'));
@@ -29,22 +33,11 @@ app.get("/", function(request, response) {
 
 const listener = app.listen(process.env.PORT, function() {
   setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 225000);
+    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+  }, 225000);
 });
 
 const bot = new Discord.Client()
-
-bot.settings = new Enmap({
-  name: "settings",
-  fetchAll: false,
-  autoFetch: true,
-  cloneLevel: 'deep'
-});
-
-const defaultSettings = {   
-  prefix: "u!"
-};
 
 bot.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
@@ -58,7 +51,7 @@ const token = process.env.DISCORD_BOT_TOKEN
 bot.login(token)
 
 bot.on('ready', () => {
-  console.log("Unity is up!")
+  console.log(`${bot.user.username} is up!`)
 	bot.user.setPresence({
 		status: 'DND',
 		game: {
@@ -75,10 +68,10 @@ bot.on('guildDelete', guild => {
 bot.on('message', async message => {
   
   const msg = message.content.toLowerCase()
-  const guildConf = bot.settings.ensure(message.guild.id, defaultSettings)
-  const prefix = guildConf.prefix
-  const mention = "<@562910620664463365> "
-  const mention1 = "<@!562910620664463365> "
+  
+  const prefix = defaultPrefix,
+        mention = `<@${bot.user.id}> `,
+        mention1 = `<@!${bot.user.id}> `
   
   let shared = {}
   

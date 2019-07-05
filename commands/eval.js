@@ -4,11 +4,10 @@ module.exports = {
 	name: "eval",
 	usage: "eval <code>",
 	description: "Evaluate JavaScript code!",
-  // requirements: "**Bot Administrator**",
+  category: "Utility",
+  botStaffOnly: true,
 	run: async (bot, message, args, shared) => {
     const msg = message, client = bot
-    
-    if (message.author.id != "336389636878368770" && message.author.id != "344335337889464357") return;
 
 		try {
 			var out = eval(args.join(' '))
