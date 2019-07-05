@@ -61,6 +61,18 @@ bot.on('ready', () => {
 	})
 })
 
+bot.on('guildCreate', async guild => {
+  if (!guildData.has(guild.id)) {
+    let newGuildData = {
+      prefix: defaultPrefix,
+      blacklisted: false,
+      commandsUsed: 0,
+      createdTimestamp: moment()
+    }
+    guildData.set(guild.id, newGuildData)
+  }
+})
+
 bot.on('message', async message => {
   
   if (message.author.bot) return;
@@ -74,13 +86,17 @@ bot.on('message', async message => {
       botStaff: false,
       blacklisted: false,
       commandsUsed: 0,
-      
+      createdTimestamp: moment()
     }
+    userData.set(message.author.id, newUserData)
   }
+  
+  let user = userData.get(message.author.id)
+  let guild = guildData.get(message.guild.id)
   
   const msg = message.content.toLowerCase()
   
-  const prefix = defaultPrefix,
+  const prefix = guild.prefix || defaultPrefix,
         mention = `<@${bot.user.id}> `,
         mention1 = `<@!${bot.user.id}> `
   
