@@ -9,8 +9,8 @@ module.exports = {
 	description: "Evaluate JavaScript code!",
   category: "Bot Staff",
   botStaffOnly: true,
-	run: async (bot, message, args, shared) => {
-    const msg = message, client = bot
+	run: async (client, message, args, shared) => {
+    const msg = message, bot = client
 
 		try {
 			var out = eval(args.join(' '))
@@ -21,7 +21,7 @@ module.exports = {
         .setTitle(`<:green_tick:588269976658378768> Evaluation Success!`)
         .addField(`Expression`, '```js\n'+args.join(" ")+'```')
         .addField(`Result`, '```js\n'+out+'```')
-        .setFooter(bot.user.username, bot.user.avatarURL)
+        .setFooter(client.user.username, client.user.avatarURL)
 			message.channel.send(embed)
         .catch(console.error)
 		} catch (e) {
@@ -30,7 +30,7 @@ module.exports = {
         .setTitle(`<:red_tick:588269975798808588> Evaluation Failed!`)
         .addField(`Expression`, '```js\n'+args.join(" ")+'```')
         .addField(`Error Message`, '```js\n'+e+'```')
-        .setFooter(bot.user.username, bot.user.avatarURL)
+        .setFooter(client.user.username, client.user.avatarURL)
 			message.channel.send(embed)
         .catch(console.error)
 		}
