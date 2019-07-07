@@ -48,13 +48,22 @@ let send = (content, config) => {
   return undefined
 }
 
-let resolveUser = (data) => {
+let resolveUser = (client, data) => {
   if (data instanceof Discord.User) return data
   if (data instanceof Discord.GuildMember) return data.user
   if (data instanceof Discord.Message) return data.author
+  if (typeof data == "string") return client.users.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
+}
+
+let resolveMember = (guild, data) => {
+  if (data instanceof Discord.User) return guild.members.get(data)
+  if (data instanceof Discord.GuildMember) return data.user
+  if (data instanceof Discord.Message) return data.author
+  if (typeof data == "string") return client.users.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
 }
 
 module.exports = {
   date: date,
   send: send,
+  resolveUser: resolveUser,
 }
