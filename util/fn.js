@@ -1,6 +1,8 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
+const { defaultPrefix, embedColor } = require('./config.js')
+
 let date = async (date = moment()) => {
   return moment(date).format("D MMM Y HH:mm [GMT]")
 }
@@ -47,5 +49,6 @@ let send = async (content, config) => {
 }
 
 module.exports = {
-  
+  date: date,
+  send: send,
 }

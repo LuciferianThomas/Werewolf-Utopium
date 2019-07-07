@@ -14,7 +14,7 @@ const Discord = require('discord.js'),
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const client = new Discord.Client(),
-      { defaultPrefix, embedColor } = require('./util/config.json'),
+      { defaultPrefix, embedColor } = require('./util/config.js'),
       userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA")
 
