@@ -43,7 +43,7 @@ let send = (content, config) => {
       })
     })
   } else {
-    // Error('Invalid output type.\nAccepts Discord.RichEmbed, Object or String.')
+    Error('Invalid output type.\nAccepts Discord.RichEmbed, Object or String.')
   }
   return undefined
 }
