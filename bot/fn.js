@@ -33,7 +33,7 @@ let send = (content, config) => {
   } else if (typeof content == "string") {
     let embed = new Discord.RichEmbed()
       .setColor(embedColor)
-      .setTitle(content)
+      .setDescription(content)
       .setFooter(client.user.username, client.user.avatarURL)
       .setTimestamp()
     
@@ -48,22 +48,25 @@ let send = (content, config) => {
   return undefined
 }
 
-let resolveUser = (client, data) => {
+let getUser = (client, data) => {
   if (data instanceof Discord.User) return data
   if (data instanceof Discord.GuildMember) return data.user
   if (data instanceof Discord.Message) return data.author
   if (typeof data == "string") return client.users.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
+  return undefined
 }
 
-let resolveMember = (guild, data) => {
-  if (data instanceof Discord.User) return guild.members.get(data)
-  if (data instanceof Discord.GuildMember) return data.user
-  if (data instanceof Discord.Message) return data.author
-  if (typeof data == "string") return client.users.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
+let getMember = (guild, data) => {
+  if (data instanceof Discord.User) return guild.members.get(data.id)
+  if (data instanceof Discord.GuildMember) return data
+  if (data instanceof Discord.Message) return data.member
+  if (typeof data == "string") return guild.members.find(member => member.user.id == data || member.user.tag.toLowerCase() == data.toLowerCase())
+  return undefined
 }
 
 module.exports = {
   date: date,
   send: send,
-  resolveUser: resolveUser,
+  getUser: getUser,
+  getMember: getMember,
 }

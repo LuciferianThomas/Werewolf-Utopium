@@ -21,8 +21,10 @@ module.exports = {
     let reason = args.slice(1).join(' ') || "Unspecified"
     
     let target = message.mentions.members.first()
-    if (!target) fn.send({title: "Please mention the "})
-    if (target.user.id == client.user.id) target = message.mentions.members.first(2)[1]
+    if (message.mentions.members.size == 0) target = fn.getMember(args[0])
+    if (message.mentions.members.size == 1 && target.user.id == client.user.id) target = fn.getMember(args[1])
+    if (message.mentions.members.size > 1 && target.user.id == client.user.id) target = message.mentions.members.first(2)[1]
+    if (!target) fn.send("Please mention the user you want to ban.", {client: client, message: message})
     
     
 	}
