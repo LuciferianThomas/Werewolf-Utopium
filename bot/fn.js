@@ -9,6 +9,7 @@ let date = (date = moment()) => {
 }
 
 let send = (message, content) => {
+  if (!(message instanceof Discord.Message)) throw Error('Invalid message.')
   if (content instanceof Discord.RichEmbed) {
     message.channel.send(content).catch(e => {
       message.author.send(content).then(message.author.send("*I need the `Embed Links` permission!*"))
@@ -43,7 +44,36 @@ let send = (message, content) => {
       })
     })
   } else {
-    throw Error('Invalid output type.\nAccepts Discord.RichEmbed, Object or String.')
+    throw Error('Invalid content type.\nAccepts Discord.RichEmbed, Object or String.')
+  }
+  return undefined
+}
+
+let dm = (user, content) => {
+  if (user instanceof Discord.GuildMember) user = user.user
+  if (!(user instanceof Discord.User)) throw Error('Invalid user.')
+  if (content instanceof Discord.RichEmbed) {
+    user.send(content).catch()
+  } else if (content instanceof Object) {
+    let { title, description } = content
+    let embed = new Discord.RichEmbed()
+      .setColor(embedColor)
+      .setTitle(title)
+      .setDescription(description)
+      .setFooter(client.user.username, client.user.avatarURL)
+      .setTimestamp()
+    
+    user.send(embed).catch()
+  } else if (typeof content == "string") {
+    let embed = new Discord.RichEmbed()
+      .setColor(embedColor)
+      .setDescription(content)
+      .setFooter(client.user.username, client.user.avatarURL)
+      .setTimestamp()
+    
+    user.send(embed).catch()
+  } else {
+    throw Error('Invalid content type.\nAccepts Discord.RichEmbed, Object or String.')
   }
   return undefined
 }
@@ -85,6 +115,8 @@ let modCaseEmbed = (modCase) => {
       .addField("Moderator", moderator, true)
       .addField("Reason", modCase.reason)
       .setFooter(`Case #${modCase.id}`, client.user.avatarURL)
+    
+    return embed
   }
   throw Error("Passed an invalid modCase!")
 }
@@ -92,6 +124,7 @@ let modCaseEmbed = (modCase) => {
 module.exports = {
   date: date,
   send: send,
+  dm: dm,
   getUser: getUser,
   getMember: getMember,
   modCase: modCase

@@ -34,9 +34,8 @@ module.exports = {
     let reason = args.slice(1).join(' ') || "Unspecified"
     
     let modCase = new fn.modCase(cases.length+1, "BAN", target, message.member, reason)
+    let embed = fn.modCaseEmbed(modCase)
     
-    let embed = new Discord.RichEmbed()
-      .setColor(config.embedColor)
-    
+    fn.dm(target, `You have been banned from ${message.guild.name}!`)
 	}
 }

@@ -21,7 +21,7 @@ module.exports = {
       
       var embed = new Discord.RichEmbed()
         .setColor("GREEN")
-        .setTitle(`<:green_tick:588269976658378768> Evaluation Success!`)
+        .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'green_tick')} Evaluation Success!`)
         .addField(`Expression`, '```js\n'+args.join(" ")+'```')
         .addField(`Result`, '```js\n'+out+'```')
         .setFooter(client.user.username, client.user.avatarURL)
@@ -30,7 +30,7 @@ module.exports = {
 		} catch (e) {
       var embed = new Discord.RichEmbed()
         .setColor("RED")
-        .setTitle(`<:red_tick:588269975798808588> Evaluation Failed!`)
+        .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'red_tick')} Evaluation Failed!`)
         .addField(`Expression`, '```js\n'+args.join(" ")+'```')
         .addField(`Error Message`, '```js\n'+e+'```')
         .setFooter(client.user.username, client.user.avatarURL)
