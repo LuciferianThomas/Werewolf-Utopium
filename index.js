@@ -191,3 +191,5 @@ client.on('message', async message => {
   message.delete().catch()
 	
 })
+
+module.exports.client = client

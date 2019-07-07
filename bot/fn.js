@@ -1,7 +1,8 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
-const { defaultPrefix, embedColor } = require('./config.js')
+const { defaultPrefix, embedColor } = require('./config.js'),
+      { client } = require('../index.js')
 
 let date = (date = moment()) => {
   return moment(date).format("Y MMM D HH:mm [GMT]")
@@ -43,17 +44,17 @@ let send = (content, config) => {
       })
     })
   } else {
-    Error('Invalid output type.\nAccepts Discord.RichEmbed, Object or String.')
+    throw Error('Invalid output type.\nAccepts Discord.RichEmbed, Object or String.')
   }
   return undefined
 }
 
-let getUser = (client, data) => {
+let getUser = (data) => {
   if (data instanceof Discord.User) return data
   if (data instanceof Discord.GuildMember) return data.user
   if (data instanceof Discord.Message) return data.author
   if (typeof data == "string") return client.users.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
-  return undefined
+  throw Error('Cannot find user.')
 }
 
 let getMember = (guild, data) => {
@@ -61,7 +62,25 @@ let getMember = (guild, data) => {
   if (data instanceof Discord.GuildMember) return data
   if (data instanceof Discord.Message) return data.member
   if (typeof data == "string") return guild.members.find(member => member.user.id == data || member.user.tag.toLowerCase() == data.toLowerCase())
-  return undefined
+  throw Error('Cannot find member.')
+}
+
+let modCase = (type, member, moderator, reason) => {
+  this.type = type.toUpperCase()
+  this.user = member.user.id
+  this.moderator = moderator.id
+  this.reason = reason
+  this.time = moment()
+}
+
+let modCaseEmbed = (modCase) => {
+  if (modCase instanceof modCase) {
+    getUser()
+    let embed = new Discord.RichEmbed()
+      .setColor(embedColor)
+      .setAuthor()
+  }
+  throw Error("Passed an invalid modCase")
 }
 
 module.exports = {
@@ -69,4 +88,5 @@ module.exports = {
   send: send,
   getUser: getUser,
   getMember: getMember,
+  modCase: modCase
 }
