@@ -8,8 +8,7 @@ let date = (date = moment()) => {
   return moment(date).format("Y MMM D HH:mm [GMT]")
 }
 
-let send = (content, config) => {
-  let { client, message } = config
+let send = (message, content) => {
   if (content instanceof Discord.RichEmbed) {
     message.channel.send(content).catch(e => {
       message.author.send(content).then(message.author.send("*I need the `Embed Links` permission!*"))
@@ -65,22 +64,29 @@ let getMember = (guild, data) => {
   throw Error('Cannot find member.')
 }
 
-let modCase = (type, member, moderator, reason) => {
+let modCase = (id, type, member, moderator, reason) => {
+  this.id = parseInt(id)
   this.type = type.toUpperCase()
-  this.user = member.user.id
-  this.moderator = moderator.id
+  this.user = getUser(member).id
+  this.moderator = getUser(moderator).id
   this.reason = reason
   this.time = moment()
 }
 
 let modCaseEmbed = (modCase) => {
   if (modCase instanceof modCase) {
-    getUser()
+    let user = getUser(modCase.user)
+    let moderator = getUser(modCase.moderator)
+    
     let embed = new Discord.RichEmbed()
       .setColor(embedColor)
-      .setAuthor()
+      .setAuthor(`[${modCase.type}] ${user.tag}`, user.displayAvatarURL)
+      .addField("User", user, true)
+      .addField("Moderator", moderator, true)
+      .addField("Reason", modCase.reason)
+      .setFooter(`Case #${modCase.id}`, client.user.avatarURL)
   }
-  throw Error("Passed an invalid modCase")
+  throw Error("Passed an invalid modCase!")
 }
 
 module.exports = {
