@@ -4,7 +4,7 @@ const moment = require("moment")
 const { defaultPrefix, embedColor } = require('./config.js')
 
 let date = (date = moment()) => {
-  return moment(date).format("D MMM Y HH:mm [GMT]")
+  return moment(date).format("Y MMM D HH:mm [GMT]")
 }
 
 let send = (content, config) => {
@@ -46,6 +46,12 @@ let send = (content, config) => {
     Error('Invalid output type.\nAccepts Discord.RichEmbed, Object or String.')
   }
   return undefined
+}
+
+let resolveUser = (data) => {
+  if (data instanceof Discord.User) return data
+  if (data instanceof Discord.GuildMember) return data.user
+  if (data instanceof Discord.Message) return data.author
 }
 
 module.exports = {
