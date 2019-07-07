@@ -194,7 +194,7 @@ client.on('message', async message => {
 // for DMs
 client.on('message', async message => {
   
-  if (message.author.bot || msg.channel.type != 'dm') return;
+  if (message.author.bot || message.channel.type != 'dm') return;
   
   console.log(`${message.author.tag} > ${message.cleanContent}`)
   
