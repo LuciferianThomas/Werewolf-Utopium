@@ -14,10 +14,10 @@ const Discord = require('discord.js'),
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const client = new Discord.Client(),
-      config = require('./util/config.js'),
+      config = require('/app/bot/config.js'),
+      fn = require('/app/bot/fn.js'),
       userData = new db.table("USERDATA"),
-      guildData = new db.table("GUILDDATA"),
-      fn = require('./util/fn.js')
+      guildData = new db.table("GUILDDATA")
 
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 

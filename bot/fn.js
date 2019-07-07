@@ -3,11 +3,11 @@ const moment = require("moment")
 
 const { defaultPrefix, embedColor } = require('./config.js')
 
-let date = async (date = moment()) => {
+let date = (date = moment()) => {
   return moment(date).format("D MMM Y HH:mm [GMT]")
 }
 
-let send = async (content, config) => {
+let send = (content, config) => {
   let { client, message } = config
   if (content instanceof Discord.RichEmbed) {
     message.channel.send(content).catch(e => {
