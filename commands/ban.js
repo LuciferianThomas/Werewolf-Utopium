@@ -24,8 +24,11 @@ module.exports = {
     if (message.mentions.members.size == 0) target = fn.getMember(args[0])
     if (message.mentions.members.size == 1 && target.user.id == client.user.id) target = fn.getMember(args[1])
     if (message.mentions.members.size > 1 && target.user.id == client.user.id) target = message.mentions.members.first(2)[1]
-    if (!target) fn.send("Please mention the user you want to ban.", {client: client, message: message})
+    if (!target) return fn.send("Please mention the user you want to ban.", {client: client, message: message})
     
+    if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return fn.send("You cannot ban a moderator!", {client: client, message: message})
     
+    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0) return fn.send(`I do not have permissions to ban ${target.user.username}!`, {client: client, message: message})
+    if (!target.bannable) return fn.send(`I do not have permissions to ban ${target.user.username}!`, {client: client, message: message})
 	}
 }
