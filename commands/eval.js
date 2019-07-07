@@ -3,6 +3,9 @@ const db = require('quick.db')
 const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA")
 
+const config = require('../util/config.js'),
+      fn = require('../util/fn.js')
+
 module.exports = {
 	name: "eval",
 	usage: "eval <code>",

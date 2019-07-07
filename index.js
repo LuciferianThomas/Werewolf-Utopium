@@ -14,10 +14,10 @@ const Discord = require('discord.js'),
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const client = new Discord.Client(),
-      { defaultPrefix, embedColor } = require('./util/config.js'),
+      config = require('./util/config.js'),
       userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
-      fn = require('./util')
+      fn = require('./util/fn.js')
 
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
@@ -26,7 +26,7 @@ app.use(express.static('public'));
 
 app.get("/", function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
-  console.log(date() + " Ping Received");
+  console.log(fn.date() + " Ping Received");
 });
 
 const listener = app.listen(process.env.PORT, function() {
@@ -51,7 +51,7 @@ client.on('ready', () => {
 	client.user.setPresence({
 		status: 'online',
 		game: {
-			name: `for ${defaultPrefix}help`,
+			name: `for ${config.defaultPrefix}help`,
       type: "WATCHING"
 		}
 	})
@@ -60,7 +60,7 @@ client.on('ready', () => {
 client.on('guildCreate', async guild => {
   if (!guildData.has(guild.id)) {
     let newGuildData = {
-      prefix: defaultPrefix,
+      prefix: config.defaultPrefix,
       blacklisted: false,
       commandsUsed: 0,
       createdTimestamp: moment()
@@ -89,7 +89,7 @@ client.on('message', async message => {
   
   if (!guildData.has(message.guild.id)) {
     let newGuildData = {
-      prefix: defaultPrefix,
+      prefix: config.defaultPrefix,
       blacklisted: false,
       commandsUsed: 0,
       createdTimestamp: moment()
@@ -100,7 +100,7 @@ client.on('message', async message => {
   
   const msg = message.content.toLowerCase()
   
-  const prefix = guild.prefix || defaultPrefix,
+  const prefix = guild.prefix || config.defaultPrefix,
         mention = `<@${client.user.id}> `,
         mention1 = `<@!${client.user.id}> `
   
@@ -132,9 +132,8 @@ client.on('message', async message => {
 		
     shared.user = user
     shared.guild = guild
-    shared.defaultPrefix = defaultPrefix
-    shared.embedColor = embedColor
-    shared.date = date
+    shared.defaultPrefix = config.defaultPrefix
+    shared.embedColor = config.embedColor
     
 		try {
 			await command.run(client, message, args, shared)
@@ -180,9 +179,8 @@ client.on('message', async message => {
   if (command.guildPerms) return msg.reply("this command is only available on servers!")
 
   shared.user = user
-  shared.defaultPrefix = defaultPrefix
-  shared.embedColor = embedColor
-  shared.date = date
+  shared.defaultPrefix = config.defaultPrefix
+  shared.embedColor = config.embedColor
 
   try {
     await command.run(client, message, args, shared)
