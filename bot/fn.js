@@ -1,14 +1,13 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
-const { defaultPrefix, embedColor } = require('./config.js'),
-      { client } = require('../index.js')
+const { defaultPrefix, embedColor } = require('./config.js')
 
 let date = (date = moment()) => {
   return moment(date).format("Y MMM D HH:mm [GMT]")
 }
 
-let send = (message, content) => {
+let send = (client, message, content) => {
   if (!(message instanceof Discord.Message)) throw Error('Invalid message.')
   if (content instanceof Discord.RichEmbed) {
     message.channel.send(content).catch(e => {
@@ -49,7 +48,7 @@ let send = (message, content) => {
   return undefined
 }
 
-let dm = (user, content) => {
+let dm = (client, user, content) => {
   if (user instanceof Discord.GuildMember) user = user.user
   if (!(user instanceof Discord.User)) throw Error('Invalid user.')
   if (content instanceof Discord.RichEmbed) {
@@ -78,7 +77,7 @@ let dm = (user, content) => {
   return undefined
 }
 
-let getUser = (data) => {
+let getUser = (client, data) => {
   if (data instanceof Discord.User) return data
   if (data instanceof Discord.GuildMember) return data.user
   if (data instanceof Discord.Message) return data.author
@@ -103,7 +102,7 @@ let modCase = (id, type, member, moderator, reason) => {
   this.time = moment()
 }
 
-let modCaseEmbed = (modCase) => {
+let modCaseEmbed = (client, modCase) => {
   if (modCase instanceof modCase) {
     let user = getUser(modCase.user)
     let moderator = getUser(modCase.moderator)

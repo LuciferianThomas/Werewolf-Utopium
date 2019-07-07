@@ -16,12 +16,12 @@ module.exports = {
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
 		let target = message.mentions.members.first()
-    if (message.mentions.members.size == 0) target = fn.getMember(args[0])
-    if (message.mentions.members.size == 1 && target.user.id == client.user.id) target = fn.getMember(args[1])
+    if (message.mentions.members.size == 0 && args[0]) target = fn.getMember(message.guild, args[0])
+    if (message.mentions.members.size == 1 && target.user.id == client.user.id) target = fn.getMember(message.guild, args[1])
     if (message.mentions.members.size > 1 && target.user.id == client.user.id) target = message.mentions.members.first(2)[1]
-    if (!target) return fn.send("Please mention the user you want to ban.", {client: client, message: message})
+    if (!target) return fn.send(client, message, "Please mention the user you want to ban.")
     
-    if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return fn.send(message, "You cannot ban a moderator!")
+    if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return fn.send(client, message, "You cannot ban a moderator!")
     
     if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0) return fn.send(message, `You do not have permissions to ban ${target.user.username}!`)
     if (!target.bannable) return fn.send(message, `I do not have permissions to ban ${target.user.username}!`)

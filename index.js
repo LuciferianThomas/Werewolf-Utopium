@@ -192,4 +192,4 @@ client.on('message', async message => {
 	
 })
 
-module.exports.client = client
+module.exports = client
