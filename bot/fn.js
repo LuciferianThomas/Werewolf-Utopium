@@ -93,19 +93,21 @@ let getMember = (guild, data) => {
   throw Error('Cannot find member.')
 }
 
-let modCase = (id, type, member, moderator, reason) => {
-  this.id = parseInt(id)
-  this.type = type.toUpperCase()
-  this.user = getUser(member).id
-  this.moderator = getUser(moderator).id
-  this.reason = reason
-  this.time = moment()
+class modCase {
+  constructor (id, type, member, moderator, reason) {
+    this.id = parseInt(id)
+    this.type = type.toUpperCase()
+    this.user = getUser(member).id
+    this.moderator = getUser(moderator).id
+    this.reason = reason
+    this.time = moment()
+  }
 }
 
 let modCaseEmbed = (client, modCase) => {
   if (modCase instanceof modCase) {
-    let user = getUser(modCase.user)
-    let moderator = getUser(modCase.moderator)
+    let user = getUser(client, modCase.user)
+    let moderator = getUser(client, modCase.moderator)
     
     let embed = new Discord.RichEmbed()
       .setColor(embedColor)

@@ -15,8 +15,8 @@ module.exports = {
   botStaffOnly: false,
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
-    console.log(message.mentions.members)
-		let target = message.mentions.members.filter(member => member.user.id != client.user.id)[0]
+    console.log(message.mentions.members.filter(member => member.user.id != client.user.id).first())
+		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
     if (!target) return fn.send(client, message, "Please mention the user you want to ban.")
     
     if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return fn.send(client, message, "You cannot ban a moderator!")
