@@ -40,11 +40,10 @@ module.exports = {
         modCases.push(message.guild.id, modCase)
         message.channel.send(fn.embed(client, `${target.user.tag} has been banned from ${message.guild.name}!`))
         message.channel.send(embed)
-        if (shared.guild.modlog && message.guild.channels.get(shared.guild.modlog)) {
-          message.guild.channels.get(shared.guild.modlog).send(embed)
-            .catch(() => message.channel.send(fn.embed(client, `I cannot log in ${message.guild.channels.get(shared.guild.modlog)}!`)))
-        } else if (shared.guild.modlog && message.guild.channels.get(shared.guild.modlog)) {
-          message.channel.send(fn.embed(client, {title: `Your moderator log channel is invalid!`, description: `Please set a new moderator log channel with \`${shared.guild.prefix}setconfig modlog <#channel>\`.`}))
+        
+        if (modlog) {
+          modlog.send(embed)
+            .catch(() => message.channel.send(fn.embed(client, `I cannot log in ${modlog}!`)))
         }
       }).catch(error => {
         message.channel.send(fn.error(client, `I cannot ban ${target.user.tag}!`, error))
