@@ -27,7 +27,10 @@ module.exports = {
     let muteRole = message.guild.roles.get(shared.guild.muteRole)
     if (!muteRole) {
       muteRole = message.guild.roles.find(role => role.name.toLowerCase().startsWith("mute"))
-      if (!muteRole) muteRole = await message.guild.createRole({name: 'Muted', color: 0xa8a8a8}, `I was told to mute someone when there is no mute role!`)
+      if (!muteRole) {
+        muteRole = await message.guild.createRole({name: 'Muted', color: 0xa8a8a8}, `I was told to mute someone when there is no mute role!`)
+        message.channel.send(fn.embed(client, {title: `I cannot find a mute role, so I made one for you!`, description: `${muteRole}`}))
+      }
       if (!muteRole) return message.channel.send(fn.embed(client, `I cannot find a mute role, nor can I create one!`))
       guildData.set(`${message.guild.id}.muteRole`, muteRole.id)
     }
@@ -45,11 +48,20 @@ module.exports = {
     target.addRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
       
-      message.channel.send(fn.embed(client, `${target.user.id} has been muted!`))
+      message.channel.send(fn.embed(client, `${target} has been muted!`))
       message.channel.send(embed)
       
       target.user.send(fn.embed(client, `You have been muted from ${message.guild.name}!`))
       target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
+      
+      let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
+        
+      if (modlog) {
+        modlog.send(embed)
+          .catch(() => message.channel.send(fn.embed(client, `I cannot log in ${modlog}!`)))
+      }
+    }).catch(error => {
+      message.channel.send(fn.error(client, `I was unable to give the ${muteRole} to ${target}!`))
     })
     
     return undefined
