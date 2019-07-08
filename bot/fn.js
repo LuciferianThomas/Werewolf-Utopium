@@ -53,13 +53,14 @@ let getMember = (guild, data) => {
   throw Error('Cannot find member.')
 }
 
-function ModCase (client, id, type, member, moderator, reason) {
+function ModCase (client, id, type, member, moderator, reason, tmlength = null) {
   this.id = parseInt(id)
   this.type = type.toUpperCase()
   this.user = getUser(client, member).id
   this.moderator = getUser(client, moderator).id
   this.reason = reason
   this.time = moment()
+  if (type.toUpperCase == "TEMPMUTE" && tmlength) this.tmlength = tmlength
 }
 
 let modCaseEmbed = (client, thisCase) => {
@@ -72,7 +73,8 @@ let modCaseEmbed = (client, thisCase) => {
       .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
       .addField("User", user, true)
       .addField("Moderator", moderator, true)
-      .addField("Reason", thisCase.reason)
+    if (thisCase.tmlength) embed.addField("Length", `${thisCase.tmlength/1000/60} minutes`, true)
+    embed.addField("Reason", thisCase.reason)
       .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
       .setTimestamp(moment(thisCase.time))
     

@@ -5,7 +5,8 @@ const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
 const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
-      modCases = new db.table("MODCASES")
+      modCases = new db.table("MODCASES"),
+      tempmutes = new db.table("TEMPMUTES")
 
 module.exports = {
 	name: "mute",
@@ -42,29 +43,28 @@ module.exports = {
     let cases = []
     if (modCases.has(message.guild.id)) cases = modCases.get(message.guild.id)
     
-    let time = args[1]
-    if (!time) return;
+    let time = args[1].toLowerCase()
+    if (!time) return message.channel.send(
+      fn.embed(client, {
+        title: `You did not state a time length to mute ${target}!`,
+        description: "`d` for days, `h` for hours, `m` for minutes\nExample: `3d12h` = 3 days and 12 hours"}
+      )
+    )
     
-    var days = parseInt(args[1].match(/\d+d/g));
-		var hours = parseInt(args[1].match(/\d+h/g));
-		var mins = parseInt(args[1].match(/\d+m/g));
+    var days = parseInt(time.match(/\d+d/g));
+		var hours = parseInt(time.match(/\d+h/g));
+		var mins = parseInt(time.match(/\d+m/g));
 		if (Number.isNaN(days)) days = 0;
 		if (Number.isNaN(hours)) hours = 0;
 		if (Number.isNaN(mins)) mins = 0;
 		var length = ((days * 24 + hours) * 60 + mins) * 60 * 1000;
 
-		if (Number.isNaN(length)) {
-      
-			var error = new Discord.RichEmbed()
-				.setColor(0xff0000)
-				.setAuthor("Bad arguments")
-				.setDescription("You did not state a time length to mute this user!")
-				.addField("Arguments", `\`${shared.guild.prefix}tempmute <user> <length> <reason>\``)
-				.addField("`<length>` Format", "- `3d` for 3 days\n- `12h` for 12 hours\n- `30m` for 30 minutes\nStacking of different units is allowed, i.e. `3d12h` = 3 days and 12 hours")
-				.setTimestamp()
-				.setFooter(``, client.user.avatarURL)
-			return message.channel.send(fn.embed(client, {title: "You did not state a time length to mute this user!", }))
-		}
+		if (Number.isNaN(length) || length == 0) return message.channel.send(
+      fn.embed(client, {
+        title: `You did not state a time length to mute ${target}!`,
+        description: "- `3d` for 3 days\n- `12h` for 12 hours\n- `30m` for 30 minutes\nStacking of different units is allowed, i.e. `3d12h` = 3 days and 12 hours"}
+      )
+    )
     
     let reason = args.slice(2).join(' ') || "Unspecified"
     
@@ -74,12 +74,12 @@ module.exports = {
     target.addRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
         
-      console.log(`${message.guild.name} | Muted ${target.user.tag} (${target.user.id})`)
+      console.log(`${message.guild.name} | Tempmuted ${target.user.tag} (${target.user.id}) for ${length / 1000 / 60} minutes.`)
 
-      message.channel.send(fn.embed(client, `${target} has been muted!`))
+      message.channel.send(fn.embed(client, `${target} has been temporarily muted!`))
       message.channel.send(embed)
       
-      target.user.send(fn.embed(client, `You have been muted from ${message.guild.name}!`))
+      target.user.send(fn.embed(client, `You have been temporarily muted from ${message.guild.name}!`))
       target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
       
       let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
