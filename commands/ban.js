@@ -16,6 +16,7 @@ module.exports = {
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
+    if (!target) target = fn.getMember(message.guild, args[0])
     if (!target) return message.channel.send(fn.embed(client, "Please mention the user you want to ban."))
     
     if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return message.channel.send(fn.embed(client, "You cannot ban a moderator!"))
@@ -33,20 +34,18 @@ module.exports = {
     let modCase = new fn.ModCase(client, cases.length+1, "BAN", target, message.member, reason)
     let embed = fn.modCaseEmbed(client, modCase)
     
-    target.user.send(fn.embed(client, `You have been banned from ${message.guild.name}!`), embed).then(() => {
+    target.user.send(fn.embed(client, `You have been banned from ${message.guild.name}!`))
+    target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`))).then(() => {
       target.ban(reason).then(() => {
-        message.channel.send(fn.embed(client, `${target.user.tag} has been banned from ${message.guild.name}!`), embed)
-        modCases.push(message.guild.id, modCase)
-      }).catch(error => {
-        fn.error(client, error)
-      })
-    }).catch(error => {
-      target.ban(reason).then(() => {
-        message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`), fn.embed(client, `${target.user.tag} has been banned from ${message.guild.name}!`), embed)
+        message.channel.send(fn.embed(client, `${target.user.tag} has been banned from ${message.guild.name}!`))
+        message.channel.send(embed)
         modCases.push(message.guild.id, modCase)
       }).catch(error => {
         fn.error(client, error)
       })
     })
+    
+    
+    return undefined
 	}
 }
