@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const db = require("quick.db")
-const modcases = new db.table("MODCASES")
+const modCases = new db.table("MODCASES")
 
 const fn = require('/app/bot/fn.js')
 
@@ -12,11 +12,11 @@ module.exports = {
   category: "Moderation",
   botStaffOnly: false, // required
   run: async (client, message, args, shared) => {
-    let cases = modcases.fetch(message.guild.id)
+    let cases = modCases.get(message.guild.id)
     
     if (!cases || cases.length == 0) {
       message.channel.send(fn.embed(client, "There are no cases yet!"))
-      modcases.set(message.guild.id, [])
+      modCases.set(message.guild.id, [])
       return undefined
     }
     
@@ -25,8 +25,8 @@ module.exports = {
       return undefined
     }
     
-    var thisCase = cases.find(thisCase => thisCase.id == parseInt(args[0])-1)
-    console.log(thisCase)
+    var thisCase = cases[parseInt(args[0])-1]
+    console.log(cases)
     
     let embed = fn.modCaseEmbed(client, thisCase)
     
