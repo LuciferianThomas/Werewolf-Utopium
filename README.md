@@ -1,3 +1,2 @@
-# Discord Bot Format by LuciferianThomas
+# Project Unity Bot by LuciferianThomas
 
-This is a 

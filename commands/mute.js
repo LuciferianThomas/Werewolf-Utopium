@@ -28,7 +28,7 @@ module.exports = {
     if (!muteRole) {
       muteRole = message.guild.roles.find(role => role.name.toLowerCase().startsWith("mute"))
       if (!muteRole) muteRole = await message.guild.createRole({name: 'Muted', color: 0xa8a8a8}, `I was told to mute someone when there is no mute role!`)
-      if (!muteRole) return message.channel.send(fn.error)
+      if (!muteRole) return message.channel.send(fn.embed(client, `I cannot find a mute role, nor can I create one!`))
       guildData.set(`${message.guild.id}.muteRole`, muteRole.id)
     }
     
@@ -42,9 +42,12 @@ module.exports = {
     let modCase = new fn.ModCase(client, cases.length+1, "MUTE", target, message.member, reason)
     let embed = fn.modCaseEmbed(client, modCase)
     
-    
-    target.user.send(fn.embed(client, `You have been kicked from ${message.guild.name}!`))
-    target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
+    target.addRole(muteRole).then(() => {
+      modCases.push(message.guild.id, modCase)
+      
+      target.user.send(fn.embed(client, `You have been muted from ${message.guild.name}!`))
+      target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
+    })
     
     return undefined
 	}
