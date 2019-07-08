@@ -64,24 +64,21 @@ function ModCase (client, id, type, member, moderator, reason, tmlength) {
   this.active = true
 }
 
-let modCaseEmbed = (client, thisCase) => {
-  if (thisCase instanceof ModCase) {
-    let user = getUser(client, thisCase.user)
-    let moderator = getUser(client, thisCase.moderator)
-    
-    let embed = new Discord.RichEmbed()
-      .setColor(embedColor)
-      .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
-      .addField("User", user, true)
-      .addField("Moderator", moderator, true)
-    if (thisCase.tmlength) embed.addField("Length", `${thisCase.tmlength/1000/60} minute${thisCase.tmlength/1000/60 == 1 ? "" : "s"}`, true)
-    embed.addField("Reason", thisCase.reason)
-      .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
-      .setTimestamp(moment(thisCase.time))
-    
-    return embed
-  }
-  else throw Error("Passed an invalid modCase!")
+let modCaseEmbed = (client, thisCase) => {  
+  let user = getUser(client, thisCase.user)
+  let moderator = getUser(client, thisCase.moderator)
+
+  let embed = new Discord.RichEmbed()
+    .setColor(embedColor)
+    .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
+    .addField("User", user, true)
+    .addField("Moderator", moderator, true)
+  if (thisCase.length) embed.addField("Length", `${thisCase.tmlength/1000/60} minute${thisCase.tmlength/1000/60 == 1 ? "" : "s"}`, true)
+  embed.addField("Reason", thisCase.reason)
+    .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
+    .setTimestamp(moment(thisCase.time))
+
+  return embed
 }
 
 module.exports = {
