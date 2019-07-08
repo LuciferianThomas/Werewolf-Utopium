@@ -47,7 +47,7 @@ module.exports = {
       message.channel.send(fn.embed(client, `${target} has been unmuted!`))
       message.channel.send(embed)
       
-      target.user.send(fn.embed(client, `You have been muted from ${message.guild.name}!`))
+      target.user.send(fn.embed(client, `You have been unmuted from ${message.guild.name}!`))
       target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
       
       let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
@@ -57,7 +57,7 @@ module.exports = {
           .catch(() => message.channel.send(fn.embed(client, `I cannot log in ${modlog}!`)))
       }
     }).catch(error => {
-      message.channel.send(fn.error(client, `I was unable to give the ${muteRole} to ${target}!`))
+      message.channel.send(fn.error(client, `I was unable to remove ${muteRole} from ${target}!`))
     })
     
     return undefined

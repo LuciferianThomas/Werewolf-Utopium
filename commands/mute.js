@@ -35,6 +35,8 @@ module.exports = {
       guildData.set(`${message.guild.id}.muteRole`, muteRole.id)
     }
     
+    if (target.roles.has(muteRole.id)) return message.channel.send(fn.embed(client, `${target} is already muted!`))
+    
     let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
     
     let cases = []
@@ -47,7 +49,9 @@ module.exports = {
     
     target.addRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
-      
+        
+      console.log(`${message.guild.name} | Muted ${target.user.tag} (${target.user.id})`)
+
       message.channel.send(fn.embed(client, `${target} has been muted!`))
       message.channel.send(embed)
       
@@ -61,7 +65,7 @@ module.exports = {
           .catch(() => message.channel.send(fn.embed(client, `I cannot log in ${modlog}!`)))
       }
     }).catch(error => {
-      message.channel.send(fn.error(client, `I was unable to give the ${muteRole} to ${target}!`))
+      message.channel.send(fn.error(client, `I was unable to give ${muteRole} to ${target}!`))
     })
     
     return undefined

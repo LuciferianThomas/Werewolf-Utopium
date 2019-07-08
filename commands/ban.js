@@ -38,7 +38,10 @@ module.exports = {
     target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`))).then(() => {
       target.ban(reason).then(() => {
         modCases.push(message.guild.id, modCase)
-        message.channel.send(fn.embed(client, `${target.user.tag} has been banned from ${message.guild.name}!`))
+        
+        console.log(`${message.guild.name} | Banned ${target.user.tag} (${target.user.id})`)
+        
+        message.channel.send(fn.embed(client, `${target.user.tag} has been banned!`))
         message.channel.send(embed)
         
         if (modlog) {
