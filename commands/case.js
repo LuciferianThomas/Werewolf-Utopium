@@ -26,7 +26,7 @@ module.exports = {
     }
     
     var thisCase = cases[parseInt(args[0])-1]
-    console.log(cases)
+    console.log(cases.find(r => r.id == 1))
     
     let embed = fn.modCaseEmbed(client, thisCase)
     
