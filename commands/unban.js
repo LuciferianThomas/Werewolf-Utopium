@@ -14,7 +14,6 @@ module.exports = {
   category: "Moderation",
   botStaffOnly: false,
   guildPerms: ["BAN_MEMBERS"],
-  moderatorOverride: true,
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please input the User ID of the user you want to unban."))
     
