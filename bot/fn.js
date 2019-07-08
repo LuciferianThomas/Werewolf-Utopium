@@ -73,6 +73,7 @@ let modCaseEmbed = (client, thisCase) => {
       .addField("Moderator", moderator, true)
       .addField("Reason", thisCase.reason)
       .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
+      .setTimestamp(moment(thisCase.time))
     
     return embed
   }
