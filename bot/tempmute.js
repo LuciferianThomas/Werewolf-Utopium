@@ -9,7 +9,6 @@ const guildData = new db.table("GUILDDATA"),
 
 module.exports = (client) => {
   client.on('ready', () => {
-    return;
     setInterval(() => {
       
       let guilds = guildData.all()
@@ -27,7 +26,7 @@ module.exports = (client) => {
             if (!guild) return;
             
             let TMCase = guildData.get(`${guild.id}.tempmutes`)
-            
+            guildData.set(`${guild.id}.tempmutes`, TMCase.filter(c => guildTMs[j].case != c.case))
             
             let muteRole = guild.roles.get(guildData.get(`${guilds[i].ID}.muteRole`))
             let member = guild.members.get(guildTMs[j].user)
