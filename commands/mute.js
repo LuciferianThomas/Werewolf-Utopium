@@ -28,7 +28,7 @@ module.exports = {
     if (!muteRole) {
       muteRole = message.guild.roles.find(role => role.name.toLowerCase().startsWith("mute"))
       if (!muteRole) muteRole = await message.guild.createRole({name: 'Muted', color: 0xa8a8a8}, `I was told to mute someone when there is no mute role!`)
-      if (!muteRole) return message.channel.send()
+      if (!muteRole) return message.channel.send(fn.error)
       guildData.set(`${message.guild.id}.muteRole`, muteRole.id)
     }
     
