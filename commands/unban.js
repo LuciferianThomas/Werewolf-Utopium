@@ -16,7 +16,6 @@ module.exports = {
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to unban."))
-    if (!args[0]) return message.channel.send(fn.embed(client, "Please input the User ID of the user you want to unban."))
     
     message.guild.fetchBan(args[0]).then(({ user }) => {
       let reason = args.slice(1).join(' ') || "Unspecified"
