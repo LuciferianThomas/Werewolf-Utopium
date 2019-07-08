@@ -10,7 +10,7 @@ const userData = new db.table("USERDATA"),
 
 module.exports = (client) => {
   
-  client.on('guildMemberAdd', member => {
+  client.on('guildMemberAdd', async member => {
     let log = guildData.get(`${member.guild.id}.botlog`)
     if (!log) return;
     
@@ -28,7 +28,7 @@ module.exports = (client) => {
     log.send(embed)
   })
   
-  client.on('guildMemberRemove', member => {
+  client.on('guildMemberRemove', async member => {
     let log = guildData.get(`${member.guild.id}.botlog`)
     if (!log) return;
     
@@ -46,10 +46,10 @@ module.exports = (client) => {
     log.send(embed)
   })
   
-  client.on('messageUpdate', (oldMessage, newMessage) => {
-    if (newMessage.channel.type != 'text') return;
+  client.on('messageUpdate', async (oldMessage, newMessage) => {
+    if (newMessage.author.bot) return;
     
-    let log = guildData.get(`${newMessage.guild.id}.botlog`)
+    let log = newMessage.guild.channels.get(guildData.get(`${newMessage.guild.id}.botlog`))
     if (!log) return;
     
     let embed = new Discord.RichEmbed()
