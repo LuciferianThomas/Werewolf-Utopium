@@ -17,7 +17,9 @@ module.exports = {
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please input the User ID of the user you want to unban."))
     
-    message.guild.fetchBan(args[0]).then(({ user, reason }) => {
+    message.guild.fetchBan(args[0]).then(({ user }) => {
+      let reason = args.slice(1).join(' ') || "Unspecified"
+      
       message.guild.unban(user.id).then(() => {
         let cases = []
         if (modCases.has(message.guild.id)) cases = modCases.get(message.guild.id)
