@@ -22,10 +22,17 @@ module.exports = {
         let modCase = new fn.ModCase(client, cases.length+1, "UNBAN", target, message.member, reason)
         let embed = fn.modCaseEmbed(client, modCase)
         
+        modCases.push(message.guild.id, modCase)
+        
         message.channel.send(fn.embed(client, `${user.tag} has been unbanned from ${message.guild.name}!`))
         message.channel.send(embed)
         
-        modCases.push(message.guild.id, modCase)
+        if (shared.guild.modlog && message.guild.channels.get(shared.guild.modlog)) {
+          message.guild.channels.get(shared.guild.modlog).send(embed)
+            .catch(() => message.channel.send(fn.embed(client, `I cannot log in ${message.guild.channels.get(shared.guild.modlog)}!`)))
+        } else if (shared.guild.modlog && message.guild.channels.get(shared.guild.modlog)) {
+          message.channel.send(fn.embed(client, {title: `Your moderator log channel is invalid!`, description: `Please set a new moderator log channel with \`${shared.guild.prefix}setconfig modlog <#channel>\`.`}))
+        }
         return undefined
       }).catch(error => {
         message.channel.send(fn.error(client, `I cannot unban ${user.tag}!`, error))
@@ -36,7 +43,7 @@ module.exports = {
     
     return;
     
-		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
+/*		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
     if (!target) target = fn.getMember(message.guild, args[0])
     if (!target) return message.channel.send(fn.embed(client, "Please mention the user you want to ban."))
     
@@ -67,6 +74,6 @@ module.exports = {
     })
     
     
-    return undefined
+    return undefined */
 	}
 }
