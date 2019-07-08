@@ -9,11 +9,11 @@ const guildData = new db.table("GUILDDATA"),
 
 module.exports = (client) => {
   client.on('ready', () => {
+    return;
     setInterval(() => {
       
       let guilds = guildData.all()
         .filter(guild => guild.data.tempmutes)
-      console.log(guilds)
       
       for (var i = 0; i < guilds.length; i++) {
         
@@ -21,10 +21,13 @@ module.exports = (client) => {
         
         for (var j = 0; j < guildTMs.length; j++) {
           
-          if (moment(guildTMs[j].unmute) > moment()) {
+          if (moment(guildTMs[j].unmute) <= moment()) {
             
             let guild = client.guilds.get(guilds[i].ID)
             if (!guild) return;
+            
+            let TMCase = guildData.get(`${guild.id}.tempmutes`)
+            
             
             let muteRole = guild.roles.get(guildData.get(`${guilds[i].ID}.muteRole`))
             let member = guild.members.get(guildTMs[j].user)
