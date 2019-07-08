@@ -13,7 +13,7 @@ module.exports = {
     message.channel.send(fn.embed(client, {title: "Reloading commands and functions...", description: `${client.user.username} is now reloading. Please wait.`})).then(() => {
       setTimeout(() => {
         process.exit(2)
-      }, 500)
+      }, 100)
     })
   }
 }
