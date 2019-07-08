@@ -57,8 +57,8 @@ module.exports = (client) => {
       .setTitle("Message Edited")
       .addField("Before", oldMessage.content)
       .addField("After", newMessage.content)
-      .addField("Sent by", `${newMessage.author}`, true)
-      .addField("In channel", fn.date(member.joinedAt))
+      .addField("Author", `${newMessage.author}`, true)
+      .addField("Channel", `${newMessage.channel} • [Jump to message](${newMessage.url})`, true)
       .setFooter(client.user.username, client.user.avatarURL)
       .setTimestamp()
     
