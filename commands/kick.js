@@ -14,6 +14,7 @@ module.exports = {
   category: "Moderation",
   botStaffOnly: false,
   guildPerms: ["KICK_MEMBERS"],
+  moderatorOverride: true,
 	run: async (client, message, args, shared) => {
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
     if (!target) target = fn.getMember(message.guild, args[0])
