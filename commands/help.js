@@ -6,14 +6,14 @@ module.exports = {
   description: "Commands information.",
   category: "Utility",
   botStaffOnly: false,
-  run: async (client, msg, args, shared) => {
+  run: async (client, message, args, shared) => {
     
-		const { commands } = msg.client
+		const { commands } = message.client
     let mapped = commands.map(command => `${shared.guild.prefix}${command.name}\n`)
     
     let perms = {}
     perms.bot = commands.map(command => !(command.botStaffOnly && !shared.user.botStaff))
-    perms.guild = commands.map(command => !(command.guildPerms && !msg.member.hasPermission(command.guildPerms)))
+    perms.guild = commands.map(command => !(command.guildPerms && !message.member.hasPermission(command.guildPerms)))
     let cmdCats = commands.map(command => command.category)
     
     let userCommands = {}
@@ -32,10 +32,10 @@ module.exports = {
           .setThumbnail(client.user.avatarURL)
           .setDescription(userCommands[i].join('') + "\nDo `help [command]` to get information about specific commands!")
           .setTimestamp()
-        msg.author.send(embed)
+        message.author.send(embed)
           .catch(err => {
-          msg.channel.send(embed).catch(error => {
-            msg.channel.send("I can't DM you, nor can I send my help information here!\nThe `Embed Links` permissions is crucial to me, so please enable it whereever I should be!")
+          message.channel.send(embed).catch(error => {
+            message.channel.send("I can't DM you, nor can I send my help information here!\nThe `Embed Links` permissions is crucial to me, so please enable it whereever I should be!")
           })
         })
       }
@@ -44,8 +44,8 @@ module.exports = {
 			const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name))
 
 			if (!command) {
-				return msg.reply('that\'s not a valid command!')
-			}
+				return message.reply('that\'s not a valid command!')
+      }
 
 			var embed = new Discord.RichEmbed()
         .setColor(shared.embedColor)
@@ -55,7 +55,7 @@ module.exports = {
 			if (command.description) embed.addField(`Description`, command.description)
 			if (command.usage) embed.addField(`Usage`,`\`${command.usage}\``)
 
-			msg.channel.send(embed).then(msg.delete())
+			message.channel.send(embed).then(message.delete())
 		}
   }
 }
