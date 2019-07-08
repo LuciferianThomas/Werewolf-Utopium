@@ -141,7 +141,7 @@ client.on('message', async message => {
 			console.log(error)
 		}
     
-    message.delete().catch()
+    message.delete().catch(error => {})
 	}
 })
 
