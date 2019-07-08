@@ -8,23 +8,30 @@ const userData = new db.table("USERDATA"),
       modCases = new db.table("MODCASES")
 
 module.exports = {
-	name: "ban",
-	usage: "ban <user> [reason]",
-	description: "Ban rule-breakers.",
+	name: "unban",
+	usage: "unban <user> [reason]",
+	description: "Unban those who learnt their lessons.",
   category: "Moderation",
   botStaffOnly: false,
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
+    if (!args[0]) return message.channel.send(fn.embed(client, "Please input the User ID of the user you want to unban."))
+    
     message.guild.fetchBan(args[0]).then(({ user, reason }) => {
-      if (!user) return message.channel.send(fn.embed(client, "Please input the User ID of the user you want to unban."))
-      
       message.guild.unban(user.id).then(() => {
         let modCase = new fn.ModCase(client, cases.length+1, "UNBAN", target, message.member, reason)
         let embed = fn.modCaseEmbed(client, modCase)
         
         message.channel.send(fn.embed(client, `${user.tag} has been unbanned from ${message.guild.name}!`))
-        message
+        message.channel.send(embed)
+        
+        modCases.push(message.guild.id, modCase)
+        return undefined
+      }).catch(error => {
+        message.channel.send(fn.error(client, `I cannot unban ${user.tag}!`, error))
       })
+    }).catch(error => {
+      message.channel.send(fn.embed(client, `${args[0]} is not banned!`))
     })
     
     return;
@@ -55,7 +62,7 @@ module.exports = {
         message.channel.send(embed)
         modCases.push(message.guild.id, modCase)
       }).catch(error => {
-        fn.error(client, error)
+        fn.error(client, `I cannot `, error)
       })
     })
     

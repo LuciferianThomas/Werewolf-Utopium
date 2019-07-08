@@ -28,10 +28,11 @@ let embed = (client, content) => {
   return undefined
 }
 
-let error = (client, error) => {
+let error = (client, message, error) => {
   return new Discord.RichEmbed()
     .setColor(embedColor)
-    .setTitle(`[ERROR] ${error}`)
+    .setTitle(message)
+    .setDescription(`${error}`)
     .setFooter(client.user.username, client.user.avatarURL)
     .setTimestamp()
 }

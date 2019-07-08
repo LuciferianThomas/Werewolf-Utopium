@@ -41,7 +41,7 @@ module.exports = {
         message.channel.send(embed)
         modCases.push(message.guild.id, modCase)
       }).catch(error => {
-        fn.error(client, error)
+        message.channel.send(fn.error(client, `I cannot ban ${target.user.tag}!`, error))
       })
     })
     
