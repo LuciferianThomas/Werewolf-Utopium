@@ -15,13 +15,13 @@ module.exports = {
   botStaffOnly: false,
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
-		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
+		let target = message.mentions.members.filter(member => member.user.id != client.user.id)[0]
     if (!target) return fn.send(client, message, "Please mention the user you want to ban.")
     
     if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return fn.send(client, message, "You cannot ban a moderator!")
     
-    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0) return fn.send(message, `You do not have permissions to ban ${target.user.username}!`)
-    if (!target.bannable) return fn.send(message, `I do not have permissions to ban ${target.user.username}!`)
+    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0) return fn.send(client, message, `You do not have permissions to ban ${target.user.username}!`)
+    if (!target.bannable) return fn.send(client, message, `I do not have permissions to ban ${target.user.username}!`)
     
     let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
     
@@ -33,6 +33,6 @@ module.exports = {
     let modCase = new fn.modCase(cases.length+1, "BAN", target, message.member, reason)
     let embed = fn.modCaseEmbed(modCase)
     
-    fn.dm(target, `You have been banned from ${message.guild.name}!`)
+    fn.dm(target, `You have been banned from ${message.guild.name}!`).then()
 	}
 }

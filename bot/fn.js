@@ -7,7 +7,7 @@ let date = (date = moment()) => {
   return moment(date).format("Y MMM D HH:mm [GMT]")
 }
 
-let send = (client, message, content) => {
+let send = async (client, message, content) => {
   if (!(message instanceof Discord.Message)) throw Error('Invalid message.')
   if (content instanceof Discord.RichEmbed) {
     message.channel.send(content).catch(e => {
@@ -48,7 +48,7 @@ let send = (client, message, content) => {
   return undefined
 }
 
-let dm = (client, user, content) => {
+let dm = async (client, user, content) => {
   if (user instanceof Discord.GuildMember) user = user.user
   if (!(user instanceof Discord.User)) throw Error('Invalid user.')
   if (content instanceof Discord.RichEmbed) {
@@ -70,11 +70,11 @@ let dm = (client, user, content) => {
       .setFooter(client.user.username, client.user.avatarURL)
       .setTimestamp()
     
-    user.send(embed).catch()
+    return user.send(embed).catch()
   } else {
     throw Error('Invalid content type.\nAccepts Discord.RichEmbed, Object or String.')
-  }
   return undefined
+  }
 }
 
 let getUser = (client, data) => {
