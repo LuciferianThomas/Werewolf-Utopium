@@ -74,7 +74,11 @@ module.exports = {
     target.addRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
       if (!guildData.has(`${message.guild.id}.tempmutes`)) guildData.set(`${message.guild.id}.tempmutes`, [])
-      guildData.push(`${message.guild.id}.tempmutes`, {user: target.user.id, unmute: moment().add(length/1000/60, 'm')})
+      guildData.push(`${message.guild.id}.tempmutes`, {
+        case: modCase.id,
+        user: target.user.id,
+        unmute: moment().add(length/1000/60, 'm')
+      })
         
       console.log(`${message.guild.name} | Tempmuted ${target.user.tag} (${target.user.id}) for ${length / 1000 / 60} minutes.`)
 
