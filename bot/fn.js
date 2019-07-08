@@ -7,16 +7,8 @@ let date = (date = moment()) => {
   return moment(date).format("Y MMM D HH:mm [GMT]")
 }
 
-let send = async (client, message, content) => {
-  if (!(message instanceof Discord.Message)) throw Error('Invalid message.')
-  if (content instanceof Discord.RichEmbed) {
-    message.channel.send(content).catch(e => {
-      message.author.send(content).then(message.author.send("*I need the `Embed Links` permission!*"))
-        .catch(er => {
-          message.channel.send("I need the `Embed Links` permission!").catch(console.error)
-        })
-    })
-  } else if (content instanceof Object) {
+let embed = async (content) => {
+  if (content instanceof Object) {
     let { title, description } = content
     let embed = new Discord.RichEmbed()
       .setColor(embedColor)
@@ -43,36 +35,7 @@ let send = async (client, message, content) => {
       })
     })
   } else {
-    throw Error('Invalid content type.\nAccepts Discord.RichEmbed, Object or String.')
-  }
-  return undefined
-}
-
-let dm = async (client, user, content) => {
-  if (user instanceof Discord.GuildMember) user = user.user
-  if (!(user instanceof Discord.User)) throw Error('Invalid user.')
-  if (content instanceof Discord.RichEmbed) {
-    user.send(content).catch()
-  } else if (content instanceof Object) {
-    let { title, description } = content
-    let embed = new Discord.RichEmbed()
-      .setColor(embedColor)
-      .setTitle(title)
-      .setDescription(description)
-      .setFooter(client.user.username, client.user.avatarURL)
-      .setTimestamp()
-    
-    user.send(embed).catch()
-  } else if (typeof content == "string") {
-    let embed = new Discord.RichEmbed()
-      .setColor(embedColor)
-      .setDescription(content)
-      .setFooter(client.user.username, client.user.avatarURL)
-      .setTimestamp()
-    
-    user.send(embed).catch()
-  } else {
-    throw Error('Invalid content type.\nAccepts Discord.RichEmbed, Object or String.')
+    throw Error('Invalid content type.\nAccepts DObject or String.')
   }
   return undefined
 }
@@ -117,13 +80,12 @@ let modCaseEmbed = (client, thisCase) => {
     
     return embed
   }
-  throw Error("Passed an invalid modCase!")
+  else throw Error("Passed an invalid modCase!")
 }
 
 module.exports = {
   date: date,
-  send: send,
-  dm: dm,
+  embed: embed,
   getUser: getUser,
   getMember: getMember,
   ModCase: ModCase,
