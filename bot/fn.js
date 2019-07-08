@@ -60,12 +60,11 @@ function ModCase (client, id, type, member, moderator, reason, tmlength) {
   this.moderator = getUser(client, moderator).id
   this.reason = reason
   this.time = moment()
-  if (type.toUpperCase() == "TEMPMUTE" && tmlength) this.tmlength = tmlength
+  if (tmlength) this.tmlength = tmlength
   this.active = true
 }
 
 let modCaseEmbed = (client, thisCase) => {
-  console.log(thisCase)
   if (thisCase instanceof ModCase) {
     let user = getUser(client, thisCase.user)
     let moderator = getUser(client, thisCase.moderator)
@@ -75,7 +74,7 @@ let modCaseEmbed = (client, thisCase) => {
       .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
       .addField("User", user, true)
       .addField("Moderator", moderator, true)
-    if (thisCase.tmlength) embed.addField("Length", `${thisCase.tmlength/1000/60} minutes`, true)
+    if (thisCase.tmlength) embed.addField("Length", `${thisCase.tmlength/1000/60} minute${thisCase.tmlength/1000/60 == 1 ? "" : "s"}`, true)
     embed.addField("Reason", thisCase.reason)
       .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
       .setTimestamp(moment(thisCase.time))
