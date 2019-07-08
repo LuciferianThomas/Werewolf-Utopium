@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 
+const fn = require('/app/bot/fn.js')
+
 module.exports = {
   name: "reload",
   usage: "reload",
@@ -8,13 +10,8 @@ module.exports = {
   category: "Bot Staff",
   botStaffOnly: true,
   run: async (client, message, args, shared) => {
-    let embed = new Discord.RichEmbed()
-      .setColor(shared.embedColor)
-      .setTitle("Reloading commands and functions...")
-    
-    message.channel.send(embed).then(() => {
-      console.log("[INFO] Reloading...")
-      process.exit(2)
+    fn.send(client, message, {title: "Reloading commands and functions...", description: `${client.user.username} is now reload. Please wait.`}).then(() => {
+      process.ex
     })
   }
 }

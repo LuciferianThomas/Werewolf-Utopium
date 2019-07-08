@@ -15,6 +15,7 @@ module.exports = {
   botStaffOnly: false,
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
+    console.log(message.mentions.members)
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id)[0]
     if (!target) return fn.send(client, message, "Please mention the user you want to ban.")
     
@@ -33,6 +34,8 @@ module.exports = {
     let modCase = new fn.modCase(cases.length+1, "BAN", target, message.member, reason)
     let embed = fn.modCaseEmbed(modCase)
     
-    fn.dm(target, `You have been banned from ${message.guild.name}!`).then()
+    fn.dm(target, `You have been banned from ${message.guild.name}!`).then(() => {
+      // target.ban(reason)
+    })
 	}
 }

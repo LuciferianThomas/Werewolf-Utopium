@@ -70,11 +70,11 @@ let dm = async (client, user, content) => {
       .setFooter(client.user.username, client.user.avatarURL)
       .setTimestamp()
     
-    return user.send(embed).catch()
+    user.send(embed).catch()
   } else {
     throw Error('Invalid content type.\nAccepts Discord.RichEmbed, Object or String.')
-  return undefined
   }
+  return undefined
 }
 
 let getUser = (client, data) => {
