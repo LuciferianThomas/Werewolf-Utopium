@@ -53,7 +53,7 @@ let getMember = (guild, data) => {
   throw Error('Cannot find member.')
 }
 
-function ModCase (client, id, type, member, moderator, reason, tmlength = null) {
+function ModCase (client, id, type, member, moderator, reason, tmlength) {
   this.id = parseInt(id)
   this.type = type.toUpperCase()
   this.user = getUser(client, member).id
