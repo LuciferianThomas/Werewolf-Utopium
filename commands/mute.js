@@ -25,7 +25,12 @@ module.exports = {
     if (!message.guild.members.get(client.user.id).hasPermission("MANAGE_ROLES")) return message.channel.send(fn.embed(client, `I do not have permissions to mute ${target.user.username}!`))
     
     let muteRole = message.guild.roles.get(shared.guild.muteRole)
-    // if (!muteRole) 
+    if (!muteRole) {
+      muteRole = message.guild.roles.find(role => role.name.toLowerCase().startsWith("mute"))
+      if (!muteRole) muteRole = await message.guild.createRole({name: 'Muted', color: 0xa8a8a8}, `I was told to mute someone when there is no mute role!`)
+      if (!muteRole) return message.channel.send()
+      guildData.set(`${message.guild.id}.muteRole`, muteRole.id)
+    }
     
     let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
     
