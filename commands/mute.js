@@ -45,6 +45,9 @@ module.exports = {
     target.addRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
       
+      message.channel.send(fn.embed(client, `${target.user.id} has been muted!`))
+      message.channel.send(embed)
+      
       target.user.send(fn.embed(client, `You have been muted from ${message.guild.name}!`))
       target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
     })

@@ -2,6 +2,9 @@ const Discord = require('discord.js')
 const db = require('quick.db')
 const userData = new db.table("USERDATA")
 
+const config = require('/app/bot/config.js'),
+      fn = require('/app/bot/fn.js')
+
 module.exports = {
   name: "info",
   usage: "info",
@@ -24,8 +27,8 @@ module.exports = {
       .setThumbnail(client.user.avatarURL)
       .addField("Name", client.user.username, true)
       .addField("Prefix", `Default: \`${shared.defaultPrefix}\`\nMention: ${client.user}\nServer: \`${shared.guild.prefix}\``, true)
-      .addField("Developer", botStaff.join(', '), true)
-      .addField("Created", shared.date(client.user.createdAt), true)
+      .addField(`Developer${botStaff.length > 1 ? "s" : ""}`, botStaff.join(', '), true)
+      .addField("Created", fn.date(client.user.createdAt), true)
       .addField("Servers", client.guilds.size, true)
       .addField("Users", client.users.size, true)
       .addField("Bot Latency", `${botLatency}ms`, true)
@@ -35,6 +38,7 @@ module.exports = {
       .addField("ID", client.user.id)
       .setFooter(client.user.username, client.user.avatarURL)
     
+    m.delete()
     message.channel.send(embed)
       
     
