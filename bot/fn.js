@@ -61,6 +61,7 @@ function ModCase (client, id, type, member, moderator, reason, tmlength) {
   this.reason = reason
   this.time = moment()
   if (type.toUpperCase == "TEMPMUTE" && tmlength) this.tmlength = tmlength
+  this.active = true
 }
 
 let modCaseEmbed = (client, thisCase) => {

@@ -5,7 +5,8 @@ const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
 const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
-      modCases = new db.table("MODCASES")
+      modCases = new db.table("MODCASES"),
+      tempmutes = new db.table("TEMPMUTES")
 
 module.exports = {
 	name: "mute",
@@ -72,6 +73,7 @@ module.exports = {
     
     target.addRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
+      if (!guildData.has(`${message.guild.id}.tempmutes`))
         
       console.log(`${message.guild.name} | Tempmuted ${target.user.tag} (${target.user.id}) for ${length / 1000 / 60} minutes.`)
 
