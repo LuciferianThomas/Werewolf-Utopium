@@ -33,14 +33,14 @@ module.exports = (client) => {
             if (!muteRole || !member) return;
             
             member.removeRole(muteRole).then(() => {
-              let modCase = new fn.ModCase(client, modCases.get(guild.id).length, "UNMUTE", member, client.user, "Auto")
+              let modCase = new fn.ModCase(client, modCases.get(guild.id).length+1, "UNMUTE", member, client.user, "Auto")
               let embed = fn.modCaseEmbed(client, modCase)
               modCases.push(guild.id, modCase)
               
               member.user.send(fn.embed(client, `You have been unmuted on ${guild.name}!`)).catch(error => {})
               member.user.send(embed).catch(error => {})
               
-              let modlog = guild.channels.get(guilds[i].data.modlog)
+              let modlog = guild.channels.get(guildData.get(`${guild.id}.modlog`))
               if (modlog) modlog.send(embed)
             }).catch(error => {})
             
