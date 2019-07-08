@@ -52,13 +52,13 @@ module.exports = {
       )
     )
     
-    var days = parseInt(time.toLowerCase().match(/\d+d/g));
-		var hours = parseInt(time.toLowerCase().match(/\d+h/g));
-		var mins = parseInt(time.toLowerCase().match(/\d+m/g));
-		if (Number.isNaN(days)) days = 0;
-		if (Number.isNaN(hours)) hours = 0;
-		if (Number.isNaN(mins)) mins = 0;
-		var length = ((days * 24 + hours) * 60 + mins) * 60 * 1000;
+    var days = parseInt(time.toLowerCase().match(/\d+d/g))
+		var hours = parseInt(time.toLowerCase().match(/\d+h/g))
+		var mins = parseInt(time.toLowerCase().match(/\d+m/g))
+		if (Number.isNaN(days)) days = 0
+		if (Number.isNaN(hours)) hours = 0
+		if (Number.isNaN(mins)) mins = 0
+		var length = ((days * 24 + hours) * 60 + mins) * 60 * 1000
 
 		if (Number.isNaN(length) || length == 0) return message.channel.send(
       fn.embed(client, {
