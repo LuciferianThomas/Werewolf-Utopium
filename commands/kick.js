@@ -15,6 +15,7 @@ module.exports = {
   botStaffOnly: false,
   guildPerms: ["KICK_MEMBERS"],
 	run: async (client, message, args, shared) => {
+    if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to kick."))
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
     if (!target) target = fn.getMember(message.guild, args[0])
     if (!target) return message.channel.send(fn.embed(client, "Please mention the user you want to kick."))
