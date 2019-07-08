@@ -8,7 +8,7 @@ const guildData = new db.table("GUILDDATA"),
 module.exports = (client) => {
   client.on('ready', () => {
     setInterval(() => {
-      
+      let tempmutes = guildData.all().map()
     }, 5*1000)
   })
 }

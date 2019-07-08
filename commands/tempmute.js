@@ -1,12 +1,12 @@
 const Discord = require('discord.js')
 const db = require('quick.db')
+const moment = require('moment')
 
 const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
 const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
-      modCases = new db.table("MODCASES"),
-      tempmutes = new db.table("TEMPMUTES")
+      modCases = new db.table("MODCASES")
 
 module.exports = {
 	name: "mute",
@@ -73,7 +73,8 @@ module.exports = {
     
     target.addRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
-      if (!guildData.has(`${message.guild.id}.tempmutes`))
+      if (!guildData.has(`${message.guild.id}.tempmutes`)) guildData.set(`${message.guild.id}.tempmutes`, [])
+      guildData.push(`${message.guild.id}.tempmutes`, {user: target.user.id, unmute: moment().add(length/1000/60, 'm')})
         
       console.log(`${message.guild.name} | Tempmuted ${target.user.tag} (${target.user.id}) for ${length / 1000 / 60} minutes.`)
 
