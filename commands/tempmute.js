@@ -9,8 +9,8 @@ const userData = new db.table("USERDATA"),
       modCases = new db.table("MODCASES")
 
 module.exports = {
-	name: "mute",
-	usage: "mute <user> [reason]",
+	name: "tempmute",
+	usage: "tempmute <user> [reason]",
 	description: "Mute rule-breakers.",
   category: "Moderation",
   botStaffOnly: false,
@@ -43,7 +43,7 @@ module.exports = {
     let cases = []
     if (modCases.has(message.guild.id)) cases = modCases.get(message.guild.id)
     
-    let time = args[1].toLowerCase()
+    let time = args[1]
     if (!time) return message.channel.send(
       fn.embed(client, {
         title: `You did not state a time length to mute ${target}!`,
@@ -51,9 +51,9 @@ module.exports = {
       )
     )
     
-    var days = parseInt(time.match(/\d+d/g));
-		var hours = parseInt(time.match(/\d+h/g));
-		var mins = parseInt(time.match(/\d+m/g));
+    var days = parseInt(time.toLowerCase().match(/\d+d/g));
+		var hours = parseInt(time.toLowerCase().match(/\d+h/g));
+		var mins = parseInt(time.toLowerCase().match(/\d+m/g));
 		if (Number.isNaN(days)) days = 0;
 		if (Number.isNaN(hours)) hours = 0;
 		if (Number.isNaN(mins)) mins = 0;

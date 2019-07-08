@@ -60,11 +60,12 @@ function ModCase (client, id, type, member, moderator, reason, tmlength) {
   this.moderator = getUser(client, moderator).id
   this.reason = reason
   this.time = moment()
-  if (type.toUpperCase == "TEMPMUTE" && tmlength) this.tmlength = tmlength
+  if (type.toUpperCase() == "TEMPMUTE" && tmlength) this.tmlength = tmlength
   this.active = true
 }
 
 let modCaseEmbed = (client, thisCase) => {
+  console.log(thisCase)
   if (thisCase instanceof ModCase) {
     let user = getUser(client, thisCase.user)
     let moderator = getUser(client, thisCase.moderator)
