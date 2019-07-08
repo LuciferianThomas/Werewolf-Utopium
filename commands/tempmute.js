@@ -46,7 +46,7 @@ module.exports = {
     let time = args[1]
     if (!time) return message.channel.send(
       fn.embed(client, {
-        title: `You did not state a time length to mute ${target}!`,
+        title: `You did not state a time length to mute ${target.user.tag}!`,
         description: "`d` for days, `h` for hours, `m` for minutes\nExample: `3d12h` = 3 days and 12 hours"}
       )
     )
