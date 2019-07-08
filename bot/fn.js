@@ -93,29 +93,27 @@ let getMember = (guild, data) => {
   throw Error('Cannot find member.')
 }
 
-class modCase {
-  constructor (id, type, member, moderator, reason) {
-    this.id = parseInt(id)
-    this.type = type.toUpperCase()
-    this.user = getUser(member).id
-    this.moderator = getUser(moderator).id
-    this.reason = reason
-    this.time = moment()
-  }
+function ModCase (client, id, type, member, moderator, reason) {
+  this.id = parseInt(id)
+  this.type = type.toUpperCase()
+  this.user = getUser(client, member).id
+  this.moderator = getUser(client, moderator).id
+  this.reason = reason
+  this.time = moment()
 }
 
-let modCaseEmbed = (client, modCase) => {
-  if (modCase instanceof modCase) {
-    let user = getUser(client, modCase.user)
-    let moderator = getUser(client, modCase.moderator)
+let modCaseEmbed = (client, thisCase) => {
+  if (thisCase instanceof ModCase) {
+    let user = getUser(client, thisCase.user)
+    let moderator = getUser(client, thisCase.moderator)
     
     let embed = new Discord.RichEmbed()
       .setColor(embedColor)
-      .setAuthor(`[${modCase.type}] ${user.tag}`, user.displayAvatarURL)
+      .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
       .addField("User", user, true)
       .addField("Moderator", moderator, true)
-      .addField("Reason", modCase.reason)
-      .setFooter(`Case #${modCase.id}`, client.user.avatarURL)
+      .addField("Reason", thisCase.reason)
+      .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
     
     return embed
   }
@@ -128,5 +126,6 @@ module.exports = {
   dm: dm,
   getUser: getUser,
   getMember: getMember,
-  modCase: modCase
+  ModCase: ModCase,
+  modCaseEmbed: modCaseEmbed,
 }
