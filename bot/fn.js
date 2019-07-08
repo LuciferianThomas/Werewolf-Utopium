@@ -7,37 +7,33 @@ let date = (date = moment()) => {
   return moment(date).format("Y MMM D HH:mm [GMT]")
 }
 
-let embed = async (content) => {
+let embed = (client, content) => {
   if (content instanceof Object) {
     let { title, description } = content
-    let embed = new Discord.RichEmbed()
+    return new Discord.RichEmbed()
       .setColor(embedColor)
       .setTitle(title)
       .setDescription(description)
       .setFooter(client.user.username, client.user.avatarURL)
       .setTimestamp()
-    
-    message.channel.send(embed).catch(e => {
-      message.channel.send(`**${title}**\n${description}\n\n*I need the \`Embed Links\` permission!`).catch(er => {
-        message.author.send(embed).then(message.author.send("*I need the `Send Messages` and `Embed Links` permissions!*")).catch(console.error)
-      })
-    })
   } else if (typeof content == "string") {
-    let embed = new Discord.RichEmbed()
+    return new Discord.RichEmbed()
       .setColor(embedColor)
       .setDescription(content)
       .setFooter(client.user.username, client.user.avatarURL)
       .setTimestamp()
-    
-    message.channel.send(embed).catch(e => {
-      message.channel.send(`${content}\n\n*I need the \`Embed Links\` permission!`).catch(er => {
-        message.author.send(embed).then(message.author.send("*I need the `Send Messages` and `Embed Links` permissions!*")).catch(console.error)
-      })
-    })
   } else {
-    throw Error('Invalid content type.\nAccepts DObject or String.')
+    throw Error('Invalid content type.\nAccepts Object or String.')
   }
   return undefined
+}
+
+let error = (client, error) => {
+  return new Discord.RichEmbed()
+    .setColor(embedColor)
+    .setTitle(`[ERROR] ${error}`)
+    .setFooter(client.user.username, client.user.avatarURL)
+    .setTimestamp()
 }
 
 let getUser = (client, data) => {
