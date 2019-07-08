@@ -19,8 +19,6 @@ const client = new Discord.Client(),
       userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA")
 
-/* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
-
 const app = express()
 app.use(express.static('public'));
 
@@ -43,6 +41,10 @@ for (const file of commandFiles) {
 }
 
 const token = process.env.DISCORD_BOT_TOKEN
+
+const tempmutes = require('/app/bot/tempmute.js')(client)
+
+/* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 client.login(token)
 

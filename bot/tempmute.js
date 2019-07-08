@@ -12,11 +12,12 @@ module.exports = (client) => {
     setInterval(() => {
       
       let guilds = guildData.all()
-        .filter(guild => JSON.parse(guild.data).tempmutes)
+        .filter(guild => guild.data.tempmutes)
+      console.log(guilds)
       
       for (var i = 0; i < guilds.length; i++) {
         
-        let guildTMs = JSON.parse(guilds[i].data).tempmutes
+        let guildTMs = guilds[i].data.tempmutes
         
         for (var j = 0; j < guildTMs.length; j++) {
           
@@ -37,7 +38,7 @@ module.exports = (client) => {
               member.user.send(fn.embed(client, `You have been unmuted on ${guild.name}!`)).catch(error => {})
               member.user.send(embed).catch(error => {})
               
-              let modlog = guild.channels.get(JSON.parse(guilds[i].data).modlog)
+              let modlog = guild.channels.get(guilds[i].data.modlog)
               if (modlog) modlog.send(embed)
             }).catch(error => {})
             
