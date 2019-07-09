@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const db = require("quick.db")
+
 const modCases = new db.table("MODCASES")
 
 const fn = require('/app/bot/fn.js')

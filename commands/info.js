@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const db = require('quick.db')
+
 const userData = new db.table("USERDATA")
 
 const config = require('/app/bot/config.js'),

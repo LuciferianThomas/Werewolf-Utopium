@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const db = require('quick.db')
+
 const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
       modCases = new db.table("MODCASES")
