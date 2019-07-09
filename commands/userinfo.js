@@ -17,19 +17,23 @@ module.exports = {
   description: "User Information",
   category: "Utility",
   run: async (client, message, args, shared) => {
-    let target = message.author
+    let target = message.member
     if (args[0]) target = fn.getUser(client, args[0])
-    if (message.mentions.users.filter(user => user.id != client.user.id).size) target = message.mentions.users.filter(user => user.id != client.user.id).first()
+    if (message.mentions.members.filter(member => member.id != client.user.id).size) target = message.mentions.members.filter(member => member.id != client.user.id).first()
+    
+    let user = userData.get()
     
     let embed = new Discord.RichEmbed()
       .setColor(config.embedColor)
-      .setTitle(`${target.tag} | Information`)
-      .setThumbnail(target.displayAvatarURL)
+      .setTitle(`${target.user.tag} | Information`)
+      .setThumbnail(target.user.displayAvatarURL)
       .addField(target.bot ? "Bot" : "User", `${target}`, true)
-      .addField("Joined Discord", fn.formatDate(target.createdTimestamp), true)
-      .addField('Current Status', `${target.presence.status.charAt(0).toUpperCase()}`, true)
-      .addField('Current Activity', target.presence.game ? `${activities[target.presence.game.type]} ${target.presence.game.name}` : "None", true)
-      .addField("Bot Staff", shared.user.botStaff ? "Yes" : "No" + '\n' + shared.user.blacklisted ? "Yes" : "No", true)
+      .addField("Joined Discord", fn.date(target.user.createdAt), true)
+      .addField('Current Status', `${target.user.presence.status.toUpperCase()}`, true)
+      .addField('Current Activity', target.user.presence.game ? `${activities[target.user.presence.game.type]} ${target.user.presence.game.name}` : "None", true)
+      .addField(`${client.user.username} Tags`, shared.user.botStaff || shared.user.blacklisted ? (shared.user.botStaff ? "Bot Staff" : "" + '\n' + shared.user.blacklisted ? "Blacklsited" : "") : "None", true)
+      .addField(`${client.user.username} Commands Used`, shared.user.commandsUsed, true)
+      .addField(`Roles [${target.roles.size-1}]`, target.roles.map(r => `${r}`).slice(1).join(' '), true)
     
     message.channel.send(embed)
   }
