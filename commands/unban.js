@@ -11,18 +11,8 @@ module.exports = {
 	name: "unban",
 	usage: "unban <user> [reason]",
 	description: "Unban those who learnt their lessons.",
-  group: "Moderation",
-  userPermissions: ["BAN_MEMBERS"],
-  clientPermissions: ["BAN_MEMBERS"],
-  args: [{
-    key: "user",
-    prompt: "Please mention the user you want to ban.",
-    type: "member"
-  }, {
-    key: "reason",
-    type: "string",
-    default: 'Unspecified'
-  }],
+  category: "Moderation",
+  guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to unban."))
     

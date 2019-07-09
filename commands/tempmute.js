@@ -12,21 +12,8 @@ module.exports = {
 	name: "tempmute",
 	usage: "tempmute <user> [reason]",
 	description: "Mute rule-breakers.",
-  userPermissions: ["KICK_MEMBERS"],
-  clientPermissions: ["MANAGE_ROLES"],
-  args: [{
-    key: "user",
-    prompt: "Please mention the user you want to ban.",
-    type: "member"
-  },{
-    key: "period",
-    prompt: "How long do you want to mute this user?",
-    type: "member"
-  },{
-    key: "reason",
-    type: "string",
-    default: 'Unspecified'
-  }],
+  category: "Moderation",
+  guildPerms: ["KICK_MEMBERS"],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to mute."))
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
