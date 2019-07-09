@@ -11,8 +11,17 @@ module.exports = {
 	name: "unmute",
 	usage: "unmute <user> [reason]",
 	description: "Unmute those who learnt their lessons.",
-  category: "Moderation",
-  guildPerms: ["KICK_MEMBERS"],
+  userPermissions: ["KICK_MEMBERS"],
+  clientPermissions: ["MANAGE_ROLES"],
+  args: [{
+    key: "user",
+    prompt: "Please mention the user you want to ban.",
+    type: "member"
+  }, {
+    key: "reason",
+    type: "string",
+    default: 'Unspecified'
+  }],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to unmute."))
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()

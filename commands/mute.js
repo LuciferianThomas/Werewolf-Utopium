@@ -11,8 +11,17 @@ module.exports = {
 	name: "mute",
 	usage: "mute <user> [reason]",
 	description: "Mute rule-breakers.",
-  category: "Moderation",
-  guildPerms: ["KICK_MEMBERS"],
+  userPermissions: ["KICK_MEMBERS"],
+  clientPermissions: ["MANAGE_ROLES"],
+  args: [{
+    key: "user",
+    prompt: "Please mention the user you want to ban.",
+    type: "member"
+  }, {
+    key: "reason",
+    type: "string",
+    default: 'Unspecified'
+  }],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to mute."))
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
