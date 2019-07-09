@@ -10,23 +10,25 @@ const config = require('/app/bot/config.js'),
 
 module.exports = {
 	name: "eval",
-	description: "Evaluate JavaScript code!",
+	group: "Evaluate JavaScript code!",
   botStaffOnly: true,
   args: [{
-    key: "expression",
-    
+    key: "expr",
+    label: "expression",
+    prompt: 'What expression do you want to evaluate?',
+    type: 'string'
   }],
-	run: async (client, message, args, shared) => {
+	run: async (client, message, { expr }, shared) => {
     const msg = message, bot = client
 
 		try {
-			var out = eval(args.join(' '))
+			var out = eval(expr)
 			out = JSON.stringify(out)
       
       var embed = new Discord.RichEmbed()
         .setColor("GREEN")
         .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'green_tick')} Evaluation Success!`)
-        .addField(`Expression`, '```js\n'+args.join(" ")+'```')
+        .addField(`Expression`, '```js\n'+expr+'```')
         .addField(`Result`, '```js\n'+out+'```')
         .setFooter(client.user.username, client.user.avatarURL)
 			message.channel.send(embed)
@@ -35,7 +37,7 @@ module.exports = {
       var embed = new Discord.RichEmbed()
         .setColor("RED")
         .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'red_tick')} Evaluation Failed!`)
-        .addField(`Expression`, '```js\n'+args.join(" ")+'```')
+        .addField(`Expression`, '```js\n'+expr+'```')
         .addField(`Error Message`, '```js\n'+e+'```')
         .setFooter(client.user.username, client.user.avatarURL)
 			message.channel.send(embed)
