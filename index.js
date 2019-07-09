@@ -202,48 +202,40 @@ module.exports = client
 
 // UNRELATED
 
-function calcPolygonArea(vertices) {
-    var total = 0;
+function calcPolygonArea(X, Y, numPoints) { 
+  let area = 0         // Accumulates area in the loop
+  let j = numPoints-1  // The last vertex is the 'previous' one to the first
 
-    for (var i = 0, l = vertices.length; i < l; i++) {
-      var addX = vertices[i].x;
-      var addY = vertices[i == vertices.length - 1 ? 0 : i + 1].y;
-      var subX = vertices[i == vertices.length - 1 ? 0 : i + 1].x;
-      var subY = vertices[i].y;
-
-      total += (addX * addY * 0.5);
-      total -= (subX * subY * 0.5);
+  for (let i=0; i<numPoints; i++)
+    { area = area +  (X[j]+X[i]) * (Y[j]-Y[i]) 
+      j = i  //j is previous vertex to i
     }
-
-    return Math.abs(total);
+  return Math.abs(area/2)
 }
 
-const https = require('https');
-var townyop = {
+const https = require('https')
+var option = {
     host: 'earthmc.net',
     path: '/map/tiles/_markers_/marker_earth.json'
-}; 
- var townyreq = https.request(townyop, res => {
-    var data = '';
-    res.on('data', chunk => {
-      data += chunk;
-    });
+};
+var req = https.request(option, res => {
+  var data = ''
+  res.on('data', chunk => {
+    data += chunk
+  })
 
-    res.on('end', () => {
-      data = JSON.parse(data);
-      console.log(data.sets)
-      let vertices = []
-      // for (let i = 0; i < data.sets['towny.markerset'].areas["PortMacquarie__home"].x.length; i++){
-      //   // vertices.push({x : data.sets['towny.markerset'].areas["PortMacquarie__home"].x[i], y : data.sets['towny.markerset'].areas["PortMacquarie__home"].z[i]})
-      // }
-      console.log(calcPolygonArea(vertices)/16/16)
-    });
-  });
+  res.on('end', () => {
+    data = JSON.parse(data);
+    let town = data.sets['towny.markerset'].areas["Mildura__0"]
+    console.log(town)
+    console.log(town.x.length, calcPolygonArea(town.x, town.z, town.x.length)/16/16)
+  })
+})
 
-  townyreq.on('error', e => {
-    console.log(e.message)
-  });
+req.on('error', e => {
+  console.log(e.message)
+});
 
-  townyreq.end();
+req.end()
 
 let vertices 
