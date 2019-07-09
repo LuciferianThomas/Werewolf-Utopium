@@ -1,7 +1,5 @@
 /**
- *  This is a sample for command modules in /app/commands/
- *  
- *
+ *  This is a sample for command modules in /app/commands/*.js
 **/
 
 const Discord = require('discord.js'),

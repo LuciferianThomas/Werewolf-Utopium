@@ -15,6 +15,11 @@ module.exports = {
   description: "Get information of other users.",
   category: "Utility",
   run: async (client, message, args, shared) => {
+    let target = message.author
+    if (message.mentions.users.filter(user => user.id != client.user.id))
     
+    let embed = new Discord.RichEmbed()
+      .setColor(config.embedColor)
+      .setTitle(`${} | Information`)
   }
 }
