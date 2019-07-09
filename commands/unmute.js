@@ -12,7 +12,6 @@ module.exports = {
 	usage: "unmute <user> [reason]",
 	description: "Unmute those who learnt their lessons.",
   category: "Moderation",
-  botStaffOnly: false,
   guildPerms: ["KICK_MEMBERS"],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to unmute."))

@@ -9,9 +9,8 @@ module.exports = {
   name: "case",
   usage: "case <id>",
   description: "View mod case",
-  aliases: ["modcase", "cases"], // optional
+  aliases: ["modcase", "cases"],
   category: "Moderation",
-  botStaffOnly: false, // required
   run: async (client, message, args, shared) => {
     let cases = modCases.get(message.guild.id)
     

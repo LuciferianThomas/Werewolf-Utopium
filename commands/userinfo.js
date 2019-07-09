@@ -12,5 +12,9 @@ const userData = new db.table("USERDATA"),
 module.exports = {
   name: "userinfo",
   usage: "userinfo [user]",
-  
+  description: "Get information of other users.",
+  category: "Utility",
+  run: async (client, message, args, shared) => {
+    
+  }
 }

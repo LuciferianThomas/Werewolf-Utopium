@@ -5,7 +5,6 @@ module.exports = {
   usage: "help [command]",
   description: "Commands information.",
   category: "Utility",
-  botStaffOnly: false,
   run: async (client, message, args, shared) => {
     
 		const { commands } = message.client

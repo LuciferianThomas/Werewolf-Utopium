@@ -9,7 +9,6 @@ module.exports = {
   description: "Commands information.",
   aliases: ["embed", "rawembed"],
   category: "Utility",
-  botStaffOnly: false,
   run: async (client, message, args, shared) => {
     var content = message.content.slice(shared.prefix.length + shared.commandName.length).trim()
 

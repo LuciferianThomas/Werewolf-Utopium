@@ -11,7 +11,6 @@ module.exports = {
   usage: "info",
   description: "Bot information.",
   category: "Utility",
-  botStaffOnly: false,
   run: async (client, message, args, shared) => {
 
     let botStaff = userData.all().filter(i => JSON.parse(i.data).botStaff).map(i => client.users.get(i.ID).tag)

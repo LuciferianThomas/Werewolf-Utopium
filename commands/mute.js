@@ -12,7 +12,6 @@ module.exports = {
 	usage: "mute <user> [reason]",
 	description: "Mute rule-breakers.",
   category: "Moderation",
-  botStaffOnly: false,
   guildPerms: ["KICK_MEMBERS"],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to mute."))
