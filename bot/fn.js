@@ -83,6 +83,25 @@ let modCaseEmbed = (client, thisCase) => {
   return embed
 }
 
+let paginator = async (author, msg, embeds, pageNow) => {
+  msg.awaitReactions((reaction, user) => {
+    if (reaction.emoji.name == "◀" && user.id == author) {
+      msg.channel.send(embeds[Math.max(pageNow-1, 0)])
+        .then(m => {
+          msg.delete()
+          paginator(author, m, embeds, Math.max(pageNow-1, 0))
+        })
+    } else if (reaction.emoji.name == "▶" && user.id == author) {
+      msg.channel.send(embeds[Math.min(pageNow+1, embeds.length-1)])
+        .then(m => {
+          msg.delete()
+          paginator(author, m, embeds, Math.min(pageNow+1, embeds.length-1))
+        })
+    } else return false
+  }, {time: 20*1000})
+  msg.react("◀").then(() => msg.react("▶"))
+}
+
 module.exports = {
   date: date,
   embed: embed,
@@ -90,4 +109,5 @@ module.exports = {
   getMember: getMember,
   ModCase: ModCase,
   modCaseEmbed: modCaseEmbed,
+  paginator: paginator
 }
