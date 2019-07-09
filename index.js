@@ -202,6 +202,22 @@ module.exports = client
 
 // UNRELATED
 
+function calcPolygonArea(vertices) {
+    var total = 0;
+
+    for (var i = 0, l = vertices.length; i < l; i++) {
+      var addX = vertices[i].x;
+      var addY = vertices[i == vertices.length - 1 ? 0 : i + 1].y;
+      var subX = vertices[i == vertices.length - 1 ? 0 : i + 1].x;
+      var subY = vertices[i].y;
+
+      total += (addX * addY * 0.5);
+      total -= (subX * subY * 0.5);
+    }
+
+    return Math.abs(total);
+}
+
 const https = require('https');
 var townyop = {
     host: 'earthmc.net',
@@ -215,7 +231,12 @@ var townyop = {
 
     res.on('end', () => {
       data = JSON.parse(data);
-      console.log(data.sets['towny.markerset'].areas["Canberra"])
+      console.log(data.sets)
+      let vertices = []
+      // for (let i = 0; i < data.sets['towny.markerset'].areas["PortMacquarie__home"].x.length; i++){
+      //   // vertices.push({x : data.sets['towny.markerset'].areas["PortMacquarie__home"].x[i], y : data.sets['towny.markerset'].areas["PortMacquarie__home"].z[i]})
+      // }
+      console.log(calcPolygonArea(vertices)/16/16)
     });
   });
 
@@ -224,3 +245,5 @@ var townyop = {
   });
 
   townyreq.end();
+
+let vertices 
