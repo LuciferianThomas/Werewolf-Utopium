@@ -118,24 +118,28 @@ client.on('message', async message => {
   
   if (msg.startsWith(prefix) || msg.startsWith(mention) || msg.startsWith(mention1)) {
     
-    var args
+    var content
     
     if (msg.startsWith(prefix)) {
-      args = message.content.slice(prefix.length).split(/\s+/u)
+      content = message.content.slice(prefix.length).split(/\s+/u)
       shared.prefix = prefix
     } else if (msg.startsWith(mention)) {
-      args = message.content.slice(mention.length).split(/\s+/u)
+      content = message.content.slice(mention.length).split(/\s+/u)
       shared.prefix = mention
     } else if (msg.startsWith(mention1)) {
-      args = message.content.slice(mention1.length).split(/\s+/u)
+      content = message.content.slice(mention1.length).split(/\s+/u)
       shared.prefix = mention1
     }
     
-		const commandName = args.shift().toLowerCase()
+		const commandName = content.shift().toLowerCase()
 		shared.commandName = commandName
 		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
 
 		if (!command) return;
+    
+    for (var i = 0; i < content.length; i++) {
+      
+    }
     
     if (command.botStaffOnly && !user.botStaff) return message.channel.send(fn.embed(client, "You do not have permissions to use this command!"))
     if (command.guildPerms && !message.member.hasPermission(command.guildPerms)) return message.channel.send(fn.embed(client, "You do not have permissions to use this command!"))
