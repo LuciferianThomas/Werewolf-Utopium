@@ -12,6 +12,11 @@ module.exports = {
 	name: "ban",
 	usage: "ban <user> [reason]",
 	description: "Ban rule-breakers.",
+  args: [{
+    name: "user",
+    type: "UserResolvable",
+    
+  }],
   category: "Moderation",
   guildPerms: ["BAN_MEMBERS"],
 	run: async (client, message, args, shared) => {
