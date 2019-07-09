@@ -20,7 +20,8 @@ module.exports = {
   run: async (client, message, args, shared) => {
     let target = message.member
     if (args[0]) target = fn.getMember(message.guild, args[0])
-    if (message.mentions.members.first().user.id == client.user.id) target = message.mentions.members.filter(member => member.id != client.user.id).first()
+    if ([`<@${client.user.id}> `,`<@!${client.user.id}> `].includes(shared.prefix) && message.mentions.members.first().user.id == client.user.id) target = message.mentions.members.first(2)[1]
+    else if (message.mentions.members) target = message.mentions.members.first()
     
     if (userData.has(target.user.id)) var user = userData.get(target.user.id)
     else var user = {botStaff: false, blacklisted: false, commandsUsed: 0}
