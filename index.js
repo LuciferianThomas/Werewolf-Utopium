@@ -237,5 +237,3 @@ req.on('error', e => {
 });
 
 req.end()
-
-let vertices 
