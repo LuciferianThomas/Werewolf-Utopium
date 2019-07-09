@@ -11,6 +11,7 @@ module.exports = {
 	name: "unban",
 	usage: "unban <user> [reason]",
 	description: "Unban those who learnt their lessons.",
+  group: "Moderation",
   userPermissions: ["BAN_MEMBERS"],
   clientPermissions: ["BAN_MEMBERS"],
   args: [{

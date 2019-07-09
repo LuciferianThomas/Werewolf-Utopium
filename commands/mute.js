@@ -11,6 +11,7 @@ module.exports = {
 	name: "mute",
 	usage: "mute <user> [reason]",
 	description: "Mute rule-breakers.",
+  group: "Moderation",
   userPermissions: ["KICK_MEMBERS"],
   clientPermissions: ["MANAGE_ROLES"],
   args: [{

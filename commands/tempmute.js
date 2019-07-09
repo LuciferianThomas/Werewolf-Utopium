@@ -20,7 +20,7 @@ module.exports = {
     type: "member"
   },{
     key: "period",
-    prompt: "Please mention the user you want to ban.",
+    prompt: "How long do you want to mute this user?",
     type: "member"
   },{
     key: "reason",

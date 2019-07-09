@@ -11,6 +11,7 @@ module.exports = {
 	name: "unmute",
 	usage: "unmute <user> [reason]",
 	description: "Unmute those who learnt their lessons.",
+  group: "Moderation",
   userPermissions: ["KICK_MEMBERS"],
   clientPermissions: ["MANAGE_ROLES"],
   args: [{

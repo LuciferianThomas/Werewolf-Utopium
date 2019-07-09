@@ -33,6 +33,13 @@ const listener = app.listen(process.env.PORT, function() {
   }, 225000);
 });
 
+client.oldcommands = new Discord.Collection()
+const oldcommandFiles = fs.readdirSync('./oldcommands').filter(file => file.endsWith('.js'))
+for (const file of oldcommandFiles) {
+	const command = require(`./oldcommands/${file}`)
+	client.oldcommands.set(command.name, command)
+}
+
 client.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 for (const file of commandFiles) {
@@ -72,7 +79,7 @@ client.on('guildCreate', async guild => {
   }
 })
 
-// for guilds
+
 client.on('message', async message => {
   
   if (message.author.bot || message.channel.type != 'text') return;
@@ -148,12 +155,12 @@ client.on('message', async message => {
 	}
 })
 
-// for DMs
+// for guilds
 client.on('message', async message => {
   
-  if (message.author.bot || message.channel.type != 'dm') return;
+  if (message.author.bot || message.channel.type != 'text') return;
   
-  console.log(`${message.author.tag} > ${message.cleanContent}`)
+  // console.log(`${message.guild.name} #${message.channel.name} | ${message.author.tag} > ${message.cleanContent}`)
   
   if (!userData.has(message.author.id)) {
     let newUserData = {
@@ -166,33 +173,107 @@ client.on('message', async message => {
   }
   let user = userData.get(message.author.id)
   
+  if (!guildData.has(message.guild.id)) {
+    let newGuildData = {
+      prefix: config.defaultPrefix,
+      blacklisted: false,
+      commandsUsed: 0,
+      createdTimestamp: moment()
+    }
+    guildData.set(message.guild.id, newGuildData)
+  }
+  let guild = guildData.get(message.guild.id)
+  
   const msg = message.content.toLowerCase()
   
+  const prefix = guild.prefix || config.defaultPrefix,
+        mention = `<@${client.user.id}> `,
+        mention1 = `<@!${client.user.id}> `
+  
   let shared = {}
+  
+  if (msg.startsWith(prefix) || msg.startsWith(mention) || msg.startsWith(mention1)) {
     
-  var args = message.content.split(/\s+/u)
+    var args
     
-  const commandName = args.shift().toLowerCase()
-  shared.commandName = commandName
-  const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
+    if (msg.startsWith(prefix)) {
+      args = message.content.slice(prefix.length).split(/\s+/u)
+      shared.prefix = prefix
+    } else if (msg.startsWith(mention)) {
+      args = message.content.slice(mention.length).split(/\s+/u)
+      shared.prefix = mention
+    } else if (msg.startsWith(mention1)) {
+      args = message.content.slice(mention1.length).split(/\s+/u)
+      shared.prefix = mention1
+    }
+    
+		const commandName = args.shift().toLowerCase()
+		shared.commandName = commandName
+		const command = client.oldcommands.get(commandName) || client.oldcommands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
 
-  if (!command) return;
-
-  if (command.botStaffOnly && !user.botStaff) return msg.reply("you do not have the permissions to use this command!")
-  if (command.guildPerms) return msg.reply("this command is only available on servers!")
-
-  shared.user = user
-  shared.defaultPrefix = config.defaultPrefix
-  shared.embedColor = config.embedColor
-
-  try {
-    await command.run(client, message, args, shared)
-  } catch (error) {
-    console.log(error)
-  }
-
-  message.delete().catch()
-	
+		if (!command) return;
+    
+    if (command.botStaffOnly && !user.botStaff) return message.channel.send(fn.embed(client, "You do not have permissions to use this command!"))
+    if (command.guildPerms && !message.member.hasPermission(command.guildPerms)) return message.channel.send(fn.embed(client, "You do not have permissions to use this command!"))
+		
+    shared.user = user
+    shared.guild = guild
+    shared.defaultPrefix = config.defaultPrefix
+    shared.embedColor = config.embedColor
+    
+		try {
+			await command.run(client, message, args, shared)
+		} catch (error) {
+			console.log(error)
+		}
+    
+    message.delete().catch(error => {})
+	}
 })
 
-module.exports = client
+// for DMs
+// client.on('message', async message => {
+  
+//   if (message.author.bot || message.channel.type != 'dm') return;
+  
+//   console.log(`${message.author.tag} > ${message.cleanContent}`)
+  
+//   if (!userData.has(message.author.id)) {
+//     let newUserData = {
+//       botStaff: false,
+//       blacklisted: false,
+//       commandsUsed: 0,
+//       createdTimestamp: moment()
+//     }
+//     userData.set(message.author.id, newUserData)
+//   }
+//   let user = userData.get(message.author.id)
+  
+//   const msg = message.content.toLowerCase()
+  
+//   let shared = {}
+    
+//   var args = message.content.split(/\s+/u)
+    
+//   const commandName = args.shift().toLowerCase()
+//   shared.commandName = commandName
+//   const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
+
+//   if (!command) return;
+
+//   if (command.botStaffOnly && !user.botStaff) return msg.reply("you do not have the permissions to use this command!")
+//   if (command.guildPerms) return msg.reply("this command is only available on servers!")
+
+//   shared.user = user
+//   shared.defaultPrefix = config.defaultPrefix
+//   shared.embedColor = config.embedColor
+
+//   try {
+//     await command.run(client, message, args, shared)
+//   } catch (error) {
+//     console.log(error)
+//   }
+
+//   message.delete().catch()
+	
+// })
