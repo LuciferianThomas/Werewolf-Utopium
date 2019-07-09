@@ -196,3 +196,31 @@ client.on('message', async message => {
 })
 
 module.exports = client
+
+
+
+
+// UNRELATED
+
+const https = require('https');
+var townyop = {
+    host: 'earthmc.net',
+    path: '/map/tiles/_markers_/marker_earth.json'
+}; 
+ var townyreq = https.request(townyop, res => {
+    var data = '';
+    res.on('data', chunk => {
+      data += chunk;
+    });
+
+    res.on('end', () => {
+      data = JSON.parse(data);
+      console.log(data.sets['towny.markerset'].areas["Canberra"])
+    });
+  });
+
+  townyreq.on('error', e => {
+    console.log(e.message)
+  });
+
+  townyreq.end();
