@@ -202,38 +202,38 @@ module.exports = client
 
 // UNRELATED
 
-function calcPolygonArea(X, Y, numPoints) { 
-  let area = 0         // Accumulates area in the loop
-  let j = numPoints-1  // The last vertex is the 'previous' one to the first
+// function calcPolygonArea(X, Y, numPoints) { 
+//   let area = 0         // Accumulates area in the loop
+//   let j = numPoints-1  // The last vertex is the 'previous' one to the first
 
-  for (let i=0; i<numPoints; i++)
-    { area = area +  (X[j]+X[i]) * (Y[j]-Y[i]) 
-      j = i  //j is previous vertex to i
-    }
-  return Math.abs(area/2)
-}
+//   for (let i=0; i<numPoints; i++)
+//     { area = area +  (X[j]+X[i]) * (Y[j]-Y[i]) 
+//       j = i  //j is previous vertex to i
+//     }
+//   return Math.abs(area/2)
+// }
 
-const https = require('https')
-var option = {
-    host: 'earthmc.net',
-    path: '/map/tiles/_markers_/marker_earth.json'
-};
-var req = https.request(option, res => {
-  var data = ''
-  res.on('data', chunk => {
-    data += chunk
-  })
+// const https = require('https')
+// var option = {
+//     host: 'earthmc.net',
+//     path: '/map/tiles/_markers_/marker_earth.json'
+// };
+// var req = https.request(option, res => {
+//   var data = ''
+//   res.on('data', chunk => {
+//     data += chunk
+//   })
 
-  res.on('end', () => {
-    data = JSON.parse(data);
-    let town = data.sets['towny.markerset'].areas["Mildura__0"]
-    console.log(town)
-    console.log(town.x.length, calcPolygonArea(town.x, town.z, town.x.length)/16/16)
-  })
-})
+//   res.on('end', () => {
+//     data = JSON.parse(data);
+//     let town = data.sets['towny.markerset'].areas["Mildura__0"]
+//     console.log(town)
+//     console.log(town.x.length, calcPolygonArea(town.x, town.z, town.x.length)/16/16)
+//   })
+// })
 
-req.on('error', e => {
-  console.log(e.message)
-});
+// req.on('error', e => {
+//   console.log(e.message)
+// });
 
-req.end()
+// req.end()
