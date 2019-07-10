@@ -258,7 +258,7 @@ var req = https.request({
         }
       }
       let thisTown = towns[info[0].split(" (")[0]]
-      if ((thisTown.x >= 23700 && thisTown.z >= -800 && thisTown.z <= 2048) || (thisTown.x >= 20000 && thisTown.z >= -800 && thisTown.z <= 2048)) {}
+      if ((thisTown.x >= 23700 && thisTown.z >= -800 && thisTown.z <= 2048) || (thisTown.x >= 20000 && thisTown.z >= 2048 && thisTown.z <= 10000) && thisTown.nation == '') console.log(`${thisTown.name}`)
     }
   })
 })
