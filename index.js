@@ -227,7 +227,12 @@ var req = https.request(option, res => {
   res.on('end', () => {
     data = JSON.parse(data);
     
-    console.log(typeof data.sets['towny.markerset'].areas)
+    let townData = data.sets['towny.markerset'].areas
+    let townNames = Object.keys(townData)
+    
+    for (let i = 0; i < townNames.length; i++) {
+      let town = townData[townNames[]]
+    }
     
     // for (const townName of data.sets['towny.markerset'].areas) {
     //   console.log(townName)
