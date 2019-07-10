@@ -202,6 +202,9 @@ module.exports = client
 
 // UNRELATED
 
+const https = require('https'),
+      striptags = require("striptags")
+
 function calcPolygonArea(X, Y, numPoints) { 
   let area = 0         // Accumulates area in the loop
   let j = numPoints-1  // The last vertex is the 'previous' one to the first
@@ -213,13 +216,10 @@ function calcPolygonArea(X, Y, numPoints) {
   return Math.abs(area/2)
 }
 
-const https = require('https'),
-      striptags = require("striptags")
-var option = {
+var req = https.request({
     host: 'earthmc.net',
     path: '/map/tiles/_markers_/marker_earth.json'
-};
-var req = https.request(option, res => {
+}, res => {
   var data = ''
   res.on('data', chunk => {
     data += chunk
@@ -247,17 +247,18 @@ var req = https.request(option, res => {
         nation: info[0].split(" (")[1].slice(0, -1),
         mayor: info[1].slice(7),
         residents: info[2].slice(12).split(', '),
-        hasUpkeep:
+        flags: {
+          hasUpkeep: info[4].slice('hasUpkeep: '.length),
+          pvp: info[5].slice('pvp: '.length),
+          mobs: info[6].slice('mobs: '.length),
+          public: info[7].slice('public: '.length),
+          explosion: info[8].slice('explosion: '.length),
+          fire: info[9].slice('fire: '.length),
+          capital: info[10].slice('capital: '.length),
+        }
       }
     }
     console.log(towns["Canberra"])
-    
-    // for (const townName of data.sets['towny.markerset'].areas) {
-    //   console.log(townName)
-    //   // let town = data.sets['towny.markerset'].areas[townName]
-    //   // console.log(town)
-    //   // console.log(town.x.length, calcPolygonArea(town.x, town.z, town.x.length)/16/16)
-    // }
   })
 })
 
