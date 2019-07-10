@@ -257,8 +257,9 @@ var req = https.request({
           capital: info[10].slice('capital: '.length),
         }
       }
+      let thisTown = towns[info[0].split(" (")[0]]
+      if ((thisTown.x >= 23700 && thisTown.z >= -800 && thisTown.z <= 2048) || (thisTown.x >= 20000 && thisTown.z >= -800 && thisTown.z <= 2048)) {}
     }
-    console.log(towns["Canberra"])
   })
 })
 
