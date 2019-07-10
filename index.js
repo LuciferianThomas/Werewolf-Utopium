@@ -233,7 +233,7 @@ var req = https.request(option, res => {
     let towns = {}
     for (let i = 0; i < townNames.length; i++) {
       let town = townData[townNames[i]]
-      towns[townNames[i].substring(0,townNames[i].length-4)] = {
+      towns[townNames[i].replace("_")] = {
         area: calcPolygonArea(town.x, town.z, town.x.length)/16/16,
         x: town.x[0],
         z: town.z[0]
