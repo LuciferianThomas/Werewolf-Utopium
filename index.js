@@ -230,9 +230,16 @@ var req = https.request(option, res => {
     let townData = data.sets['towny.markerset'].areas
     let townNames = Object.keys(townData)
     
+    let towns = {}
     for (let i = 0; i < townNames.length; i++) {
-      let town = townData[townNames[]]
+      let town = townData[townNames[i]]
+      towns[townNames[i].substring(0,townNames[i].length-4)] = {
+        area: calcPolygonArea(town.x, town.z, town.x.length)/16/16,
+        x: town.x[0],
+        z: town.z[0]
+      }
     }
+    console.log(towns['Canberra'])
     
     // for (const townName of data.sets['towny.markerset'].areas) {
     //   console.log(townName)
