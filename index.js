@@ -239,16 +239,18 @@ var req = https.request(option, res => {
       rawinfo.forEach(x => {
         info.push(striptags(x))
       })
-      console.log(info)
-      towns[townNames[i].replace(/_+0/gi, "")] = {
+      towns[info[0].split(" (")[0]] = {
         area: calcPolygonArea(town.x, town.z, town.x.length)/16/16,
         x: town.x[0],
         z: town.z[0],
-        name: townNames[i].replace(/_+0/gi,""),
-        // nation: townData
+        name: info[0].split(" (")[0],
+        nation: info[0].split(" (")[1].slice(0, -1),
+        mayor: info[1].slice(7),
+        residents: info[2].slice(12).split(', '),
+        hasUpkeep:
       }
     }
-    console.log(Object.keys(towns))
+    console.log(towns["Canberra"])
     
     // for (const townName of data.sets['towny.markerset'].areas) {
     //   console.log(townName)
