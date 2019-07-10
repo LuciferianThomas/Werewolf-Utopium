@@ -213,7 +213,8 @@ function calcPolygonArea(X, Y, numPoints) {
   return Math.abs(area/2)
 }
 
-const https = require('https')
+const https = require('https'),
+      striptags = require("striptags")
 var option = {
     host: 'earthmc.net',
     path: '/map/tiles/_markers_/marker_earth.json'
@@ -233,13 +234,21 @@ var req = https.request(option, res => {
     let towns = {}
     for (let i = 0; i < townNames.length; i++) {
       let town = townData[townNames[i]]
-      towns[townNames[i].replace("_")] = {
+      let rawinfo = town.desc.split("<br />")
+      let info = []
+      rawinfo.forEach(x => {
+        info.push(striptags(x))
+      })
+      console.log(info)
+      towns[townNames[i].replace(/_+0/gi, "")] = {
         area: calcPolygonArea(town.x, town.z, town.x.length)/16/16,
         x: town.x[0],
-        z: town.z[0]
+        z: town.z[0],
+        name: townNames[i].replace(/_+0/gi,""),
+        // nation: townData
       }
     }
-    console.log(towns['Canberra'])
+    console.log(Object.keys(towns))
     
     // for (const townName of data.sets['towny.markerset'].areas) {
     //   console.log(townName)
