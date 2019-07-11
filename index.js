@@ -205,6 +205,8 @@ module.exports = client
 const https = require('https'),
       striptags = require("striptags")
 
+let csvstring = ""
+
 function calcPolygonArea(X, Y, numPoints) { 
   let area = 0         // Accumulates area in the loop
   let j = numPoints-1  // The last vertex is the 'previous' one to the first
@@ -258,8 +260,10 @@ var req = https.request({
         }
       }
       let thisTown = towns[info[0].split(" (")[0]]
-      if ((thisTown.x >= 23700 && thisTown.z >= -800 && thisTown.z <= 2048) || (thisTown.x >= 20000 && thisTown.z >= 2048 && thisTown.z <= 10000) && thisTown.nation == '') console.log(`${thisTown.name}`)
+      if (thisTown.name.endsWith("(Shop)")) continue;
+      if ((thisTown.x >= 23700 && thisTown.z >= -800 && thisTown.z <= 2048) || (thisTown.x >= 20000 && thisTown.z >= 2048 && thisTown.z <= 10000) && thisTown.nation == '') csvstring += `${thisTown.name},${thisTown.residents.length},${thisTown.area},${thisTown.nation==''?'Independent':thisTown.nation}\n`
     }
+    console.log(csvstring)
   })
 })
 
