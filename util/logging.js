@@ -5,8 +5,8 @@ const Discord = require('discord.js'),
 const guildData = new db.table("GUILDDATA")
 
 module.exports = (client) => {
-  let logs = fs.readdirSync('./logging').filter(file => file.endsWith(".js"))
-  for (const file of logs) {
-    let require(`./logging/${file}`)(client)
+  let loggingModules = fs.readdirSync('./logging').filter(file => file.endsWith(".js")), logs = {}
+  for (const file of loggingModules) {
+    require(`./logging/${file}`)(client)
   }
 }
