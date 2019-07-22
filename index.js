@@ -43,13 +43,11 @@ for (const file of commandFiles) {
 const token = process.env.DISCORD_BOT_TOKEN
 
 const tempmutes = require('/app/bot/tempmute.js')(client)
-const botlog = require('/app/bot/botlog.js')(client)
+const logs = require('/app/util/logging.js')(client)
 
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 client.login(token)
-
-const logs = require('./util/logging.js')
 
 client.on('ready', () => {
   console.log(`[INFO] ${client.user.username} is up!`)

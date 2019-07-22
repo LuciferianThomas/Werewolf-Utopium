@@ -7,7 +7,7 @@ const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
 
 module.exports = (client) => {
-  client.on('guildMemberAdd', member => {
+  client.on('messageUpdate', member => {
     let logChannelID = guildData.get(`${member.guild.id}.botlogs`)
     let logChannel = client.channels.get(logChannelID)
     if (!logChannel) return;
