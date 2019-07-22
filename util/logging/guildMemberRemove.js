@@ -21,6 +21,7 @@ module.exports = (client) => {
         .addField("ID", member.id, true)
         .addField("Joined", fn.date(member.joinedTimestamp))
         .setFooter(client.user.username, client.user.avatarURL)
+        .setTimestamp()
     )
   })
 }

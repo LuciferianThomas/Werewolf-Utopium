@@ -22,6 +22,7 @@ module.exports = (client) => {
         .addField("Before", oldMessage.content)
         .addField("After", newMessage.content)
         .setFooter(client.user.username, client.user.avatarURL)
+        .setTimestamp()
     )
   })
 }
