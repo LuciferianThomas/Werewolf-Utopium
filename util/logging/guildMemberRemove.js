@@ -4,10 +4,10 @@ const Discord = require('discord.js'),
 const guildData = new db.table("GUILDDATA")
 
 const config = require('/app/bot/config.js'),
-      fn = require('app/bot/fn.js')
+      fn = require('/app/bot/fn.js')
 
 module.exports = (client) => {
-  client.on('guildMemberAdd', member => {
+  client.on('guildMemberRemove', member => {
     let logChannelID = guildData.get(`${member.guild.id}.botlogs`)
     let logChannel = client.channels.get(logChannelID)
     if (!logChannel) return;
@@ -15,7 +15,7 @@ module.exports = (client) => {
     logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)
-        .setAuthor("Member Joined", member.guild.iconURL)
+        .setAuthor("Member Left", member.guild.iconURL)
         .setIcon(member.user.displayAvatarURL)
         .addField(member.user.bot ? "Bot" : "User", `${member} (${member.user.tag})`, true)
         .addField("ID", member.id, true)
