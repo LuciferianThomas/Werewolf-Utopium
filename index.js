@@ -49,6 +49,8 @@ const botlog = require('/app/bot/botlog.js')(client)
 
 client.login(token)
 
+const logs = require('./util/logging.js')
+
 client.on('ready', () => {
   console.log(`[INFO] ${client.user.username} is up!`)
 	client.user.setPresence({
@@ -195,7 +197,7 @@ client.on('message', async message => {
 	
 })
 
-module.exports = client
+
 
 
 
