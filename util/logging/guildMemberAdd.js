@@ -8,7 +8,7 @@ const config = require('/app/bot/config.js'),
 
 module.exports = (client) => {
   client.on('guildMemberAdd', member => {
-    let logChannelID = guildData.get(`${member.guild.id}.botlogs`)
+    let logChannelID = guildData.get(`${member.guild.id}.botlog`)
     let logChannel = client.channels.get(logChannelID)
     if (!logChannel) return;
     
@@ -21,6 +21,7 @@ module.exports = (client) => {
         .addField("ID", member.id, true)
         .addField("Joined", fn.date(member.joinedTimestamp))
         .setFooter(client.user.username, client.user.avatarURL)
+        .setTimestamp()
     )
   })
 }

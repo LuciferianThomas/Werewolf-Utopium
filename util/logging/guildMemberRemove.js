@@ -8,7 +8,7 @@ const config = require('/app/bot/config.js'),
 
 module.exports = (client) => {
   client.on('guildMemberRemove', member => {
-    let logChannelID = guildData.get(`${member.guild.id}.botlogs`)
+    let logChannelID = guildData.get(`${member.guild.id}.botlog`)
     let logChannel = client.channels.get(logChannelID)
     if (!logChannel) return;
     

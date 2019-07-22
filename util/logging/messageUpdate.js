@@ -7,9 +7,10 @@ const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
 
 module.exports = (client) => {
-  client.on('messageUpdate', (oldMessage, newMessage) => {
+  client.on('messageUpdate', async (oldMessage, newMessage) => {
     if (newMessage.author.bot || newMessage.channel.type == "dm") return;
-    let logChannelID = guildData.get(`${newMessage.guild.id}.botlogs`)
+    
+    let logChannelID = guildData.get(`${newMessage.guild.id}.botlog`)
     let logChannel = client.channels.get(logChannelID)
     if (!logChannel) return;
     
@@ -17,9 +18,9 @@ module.exports = (client) => {
       new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setAuthor("Message Edited", newMessage.author.displayAvatarURL)
-        .setDescription(`${newMessage.author.tag} edited a [message](${newMessage.url}) in ${newMessage.channel}.`)
-        .addField("Before", oldMessage.content, true)
-        .addField("After", newMessage.content, true)
+        .setDescription(`${newMessage.author} (${newMessage.author.tag}) edited a [message](${newMessage.url}) in ${newMessage.channel}.`)
+        .addField("Before", oldMessage.content)
+        .addField("After", newMessage.content)
         .setFooter(client.user.username, client.user.avatarURL)
     )
   })
