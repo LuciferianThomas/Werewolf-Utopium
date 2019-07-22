@@ -9,6 +9,9 @@ const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA")
 
 module.exports = (client) => {
+  return;
+  
+  // redoing
   
   client.on('guildMemberAdd', async member => {
     let log = guildData.get(`${member.guild.id}.botlog`)
