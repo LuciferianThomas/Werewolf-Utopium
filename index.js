@@ -42,7 +42,7 @@ for (const file of commandFiles) {
 
 const token = process.env.DISCORD_BOT_TOKEN
 
-const tempmutes = require('/app/bot/tempmute.js')(client)
+const tempmute = require('/app/util/tempmute.js')(client)
 const logs = require('/app/util/logging.js')(client)
 
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */

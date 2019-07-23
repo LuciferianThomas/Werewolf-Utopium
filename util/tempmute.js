@@ -4,8 +4,8 @@ const moment = require('moment')
 
 const guildData = new db.table("GUILDDATA"),
       modCases = new db.table("MODCASES"),
-      config = require('./config.js'),
-      fn = require('./fn.js')
+      config = require('/app/bot/config.js'),
+      fn = require('/app/bot/fn.js')
 
 module.exports = (client) => {
   client.on('ready', () => {
