@@ -12,21 +12,63 @@ module.exports = (client) => {
     let logChannel = client.channels.get(logChannelID)
     if (!logChannel) return;
     
+    // Check for given roles
     newMember.roles.forEach(role => {
       if (!oldMember.roles.find(r => r.id == role.id)) {
         logChannel.send(
           new Discord.RichEmbed()
             .setColor(config.embedColor)
-            .setAuthor("Role Given")
-            .setIcon(channel.guild.iconURL)
-            .addField((channel.type == "text" || channel.type == "news" || channel.type == "store") ? "Text Channel" : channel.type == 'voice' ? "Voice Channel" : "Category", `${channel} (${channel.name})`, true)
-            .addField("ID", channel.id, true)
-            .addField("Created", fn.date(channel.createdTimestamp))
+            .setAuthor("Role Given", newMember.guild.iconURL)
+            .setIcon(newMember.user.displayAvatarURL)
+            .addField(newMember.user.bot ? "Bot" : "User", `${newMember} (${newMember.user.tag})`, true)
+            .addField("Role", `${role} (${role.name})`, true)
             .setFooter(client.user.username, client.user.avatarURL)
             .setTimestamp()
         )
       }
     })
+    
+    // Check for removed roles
+    oldMember.roles.forEach(role => {
+      if (!newMember.roles.find(r => r.id == role.id)) {
+        logChannel.send(
+          new Discord.RichEmbed()
+            .setColor(config.embedColor)
+            .setAuthor("Role Removed", newMember.guild.iconURL)
+            .setIcon(newMember.user.displayAvatarURL)
+            .addField(newMember.user.bot ? "Bot" : "User", `${newMember} (${newMember.user.tag})`, true)
+            .addField("Role", `${role} (${role.name})`, true)
+            .setFooter(client.user.username, client.user.avatarURL)
+            .setTimestamp()
+        )
+      }
+    })
+    
+    if (oldMember.user.tag != newMember.user.tag) logChannel.send(
+      new Discord.RichEmbed()
+        .setColor(config.embedColor)
+        .setAuthor("User Tag Updated")
+        .setIcon(newMember.user.displayAvatarURL)
+        .addField(newMember.user.bot ? "Bot" : "User", `${newMember} (${newMember.user.tag})`,)
+        .addField("Before", `${oldMember.user.tag}`, true)
+        .addField("After", `${newMember.user.tag}`, true)
+        .setFooter(client.user.username, client.user.avatarURL)
+        .setTimestamp()
+    )
+    
+    if (oldMember.nickname != newMember.nickname) logChannel.send(
+      new Discord.RichEmbed()
+        .setColor(config.embedColor)
+        .setAuthor("Member Nickname Updated")
+        .setIcon(newMember.user.displayAvatarURL)
+        .addField(newMember.user.bot ? "Bot" : "User", `${newMember} (${newMember.user.tag})`,)
+        .addField("Before", `${oldMember.nickname ? oldMember.nickname : oldMember.user.username}`, true)
+        .addField("After", `${newMember.nickname ? newMember.nickname : newMember.user.username}`, true)
+        .setFooter(client.user.username, client.user.avatarURL)
+        .setTimestamp()
+    )
+    
+    
   })
 }
 
