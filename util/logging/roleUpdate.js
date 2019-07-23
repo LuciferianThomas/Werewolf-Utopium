@@ -63,6 +63,8 @@ module.exports = (client) => {
         .setAuthor("Role Permissions Updated")
         .setIcon(newRole.guild.iconURL)
         .addField("Role", `${newRole} (${newRole.name})`)
+        .addField("Permissions Given", `${new Discord.Permissions(oldRole.permissions ^ newRole.permissions & newRole.permissions).toArray().join('\n')}`)
+        .addField("Permissions Removed", `${new Discord.Permissions(oldRole.permissions ^ newRole.permissions & oldRole.permissions).toArray().join('\n')}`)
         .setFooter(client.user.username, client.user.avatarURL)
         .setTimestamp()
     )
