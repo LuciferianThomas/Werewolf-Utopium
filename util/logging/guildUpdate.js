@@ -88,15 +88,5 @@ module.exports = (client) => {
         .setFooter(client.user.username, client.user.avatarURL)
         .setTimestamp()
     )
-    
-    logChannel.send(
-      new Discord.RichEmbed()
-        .setColor(config.embedColor)
-        .setAuthor("Server Updated")
-        .setDescription("Something changed, but I'm not sure...")
-        .setThumbnail(newGuild.iconURL)
-        .setFooter(client.user.username, client.user.avatarURL)
-        .setTimestamp()
-    )
   })
 }

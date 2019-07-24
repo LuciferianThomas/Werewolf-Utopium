@@ -79,16 +79,5 @@ module.exports = (client) => {
         .setFooter(client.user.username, client.user.avatarURL)
         .setTimestamp()
     )
-    
-    logChannel.send(
-      new Discord.RichEmbed()
-        .setColor(config.embedColor)
-        .setAuthor("User Updated")
-        .setDescription("Something changed, but I'm not sure...")
-        .setThumbnail(newMember.user.displayAvatarURL)
-        .addField(newMember.user.bot ? "Bot" : "User", `${newMember} (${newMember.user.tag})`)
-        .setFooter(client.user.username, client.user.avatarURL)
-        .setTimestamp()
-    )
   })
 }

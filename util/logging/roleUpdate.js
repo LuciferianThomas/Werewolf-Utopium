@@ -68,16 +68,5 @@ module.exports = (client) => {
         .setFooter(client.user.username, client.user.avatarURL)
         .setTimestamp()
     )
-    
-    logChannel.send(
-      new Discord.RichEmbed()
-        .setColor(config.embedColor)
-        .setAuthor("Role Updated")
-        .setDescription("Something changed, but I'm not sure...")
-        .addField("Role", `${newRole}`)
-        .setThumbnail(newRole.guild.iconURL)
-        .setFooter(client.user.username, client.user.avatarURL)
-        .setTimestamp()
-    )
   })
 }
