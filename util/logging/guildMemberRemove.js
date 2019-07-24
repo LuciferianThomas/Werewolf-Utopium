@@ -16,7 +16,7 @@ module.exports = (client) => {
       new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setAuthor("Member Left", member.guild.iconURL)
-        .setIcon(member.user.displayAvatarURL)
+        .setThumbnail(member.user.displayAvatarURL)
         .addField(member.user.bot ? "Bot" : "User", `${member} (${member.user.tag})`, true)
         .addField("ID", member.id, true)
         .addField("Joined", fn.date(member.joinedTimestamp))

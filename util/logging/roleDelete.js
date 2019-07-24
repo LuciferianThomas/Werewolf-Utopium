@@ -16,7 +16,7 @@ module.exports = (client) => {
       new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setAuthor("Role Deleted")
-        .setIcon(role.guild.iconURL)
+        .setThumbnail(role.guild.iconURL)
         .addField("Role", `${role} (${role.name})`, true)
         .addField("ID", role.id, true)
         .addField("Created", fn.date(role.createdTimestamp))

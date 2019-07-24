@@ -16,7 +16,7 @@ module.exports = (client) => {
       new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setAuthor("User Unbanned", guild.iconURL)
-        .setIcon(user.displayAvatarURL)
+        .setThumbnail(user.displayAvatarURL)
         .addField(user.bot ? "Bot" : "User", `${user} (${user.tag})`, true)
         .addField("ID", user.id, true)
         .setFooter(client.user.username, client.user.avatarURL)
