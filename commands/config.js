@@ -9,7 +9,26 @@ const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
       modCases = new db.table("MODCASES")
 
-const configItems = ["prefix", "modlog", "botlog", "muteRole"]
+const configItem = ["prefix", "modlog", "botlog", "muteRole"]
+const displayNames = {prefix: "Prefix", modlog: "Moderator Log", botlog: "Action Log", muteRole: "Muted Role"}
+
+const configItems = [{
+  name: "prefix",
+  displayName: "Prefix",
+  type: "string"
+}, {
+  name: "modlog",
+  displayName: "Moderator Log",
+  type: "channel"
+}, {
+  name: "botlog",
+  displayName: "Action Log",
+  type: "channel"
+}, {
+  name: "muteRole",
+  displayName: "Muted Role",
+  type: "role"
+}, ]
 
 module.exports = {
   name: "config",
@@ -21,20 +40,30 @@ module.exports = {
     let guild = guildData.get(message.guild.id)
     
     if (!args.length) {
-      let allEmbed = new Discord.RichEmbed()
+      let embed = new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setTitle(`Configuration | ${message.guild.name}`)
         .setThumbnail(message.guild.iconURL)
-        .addField("Prefix [prefix]", `\`${shared.guild.prefix}\` ${client.user}`)
-        .addField("Moderator Log [modlog]", `<#${shared.guild.modlog}>`)
-        .addField("Action Logs [botlog]", `<#${shared.guild.botlog}>`)
-        .addField("Muted Role [muteRole]", `<@&${shared.guild.muteRole}>`)
         .setFooter(client.user.username, client.user.avatarURL)
-      return message.channel.send(allEmbed)
+      for (let i = 0; i < configItems.length; i++) embed.addField(`${configItems[i].displayName} [${configItems[i].name}]`,
+                                                                  `${configItems[i].type == "channel" ? `<#${shared.guild[configItems[i].name]}>` :
+                                                                     configItems[i].type == "role" ? `<@&${shared.guild[configItems[i].name]}>` :
+                                                                     shared.guild[configItems[i].name]}`)
+      return message.channel.send(embed)
     }
     
     if (args.length == 1) {
-      if (!configItems.includes(args[0])) return message.channel.send(fn.embed(client, {title: "Accepted Values", description: `${configItems.join(', ')}`})
+      let item = args[0]
+      if (!configItems.includes(item)) return message.channel.send(fn.embed(client, {title: "Accepted Values", description: `${configItems.map(i => `\`${i}\``).join(', ')}`}))
+      
+      return message.channel.send(
+        new Discord.RichEmbed()
+          .setColor(config.embedColor)
+          .setTitle(`Configuration | ${message.guild.name}`)
+          .setThumbnail(message.guild.iconURL)
+          .addField(`${item} [${displayNames[item]}]`, `\`${shared.guild.prefix}\` ${client.user}`)
+          .setFooter(client.user.username, client.user.avatarURL)
+      )
     }
   }
 }
