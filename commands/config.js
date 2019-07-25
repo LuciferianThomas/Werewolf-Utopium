@@ -18,11 +18,14 @@ module.exports = {
   run: async (client, message, args, shared) => {
     let guild = guildData.get(message.guild.id)
     
-    if (!args.length) return message.channel.send(
-      new Discord.RichEmbed()
+    if (!args.length) {
+      let allEmbed = new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setTitle(`Configuration | ${message.guild.name}`)
         .setThumbnail(message.guild.iconURL)
-    )
+        .addField("Prefix", `\`${guild.prefix} ${}`)
+        .setFooter(client.user.username, client.user.avatarURL)
+      return message.channel.send(allEmbed)
+    }
   }
 }
