@@ -24,7 +24,7 @@ app.use(express.static('public'));
 
 app.get("/", function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
-  console.log(fn.date() + " Ping Received");
+  console.log(`${fn.time()} | Ping Received`);
 });
 
 const listener = app.listen(process.env.PORT, function() {
@@ -50,7 +50,7 @@ const logs = require('/app/util/logging.js')(client)
 client.login(token)
 
 client.on('ready', () => {
-  console.log(`[INFO] ${client.user.username} is up!`)
+  console.log(`${fn.time()} | ${client.user.username} is up!`)
 	client.user.setPresence({
 		status: 'online',
 		game: {
@@ -77,7 +77,7 @@ client.on('message', async message => {
   
   if (message.author.bot || message.channel.type != 'text') return;
   
-  console.log(`${message.guild.name} #${message.channel.name} | ${message.author.tag} > ${message.cleanContent}`)
+  console.log(`${fn.time()} | ${message.guild.name} #${message.channel.name} | ${message.author.tag} > ${message.cleanContent}`)
   
   if (!userData.has(message.author.id)) {
     let newUserData = {
@@ -153,7 +153,7 @@ client.on('message', async message => {
   
   if (message.author.bot || message.channel.type != 'dm') return;
   
-  console.log(`${message.author.tag} > ${message.cleanContent}`)
+  console.log(`${fn.time()} | ${message.author.tag} > ${message.cleanContent}`)
   
   if (!userData.has(message.author.id)) {
     let newUserData = {

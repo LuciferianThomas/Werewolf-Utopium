@@ -3,8 +3,8 @@ const moment = require("moment")
 
 const { defaultPrefix, embedColor } = require('./config.js')
 
-let date = (date = moment()) => {
-  return moment(date).format("Y MMM D HH:mm [GMT]")
+let time = (date = moment()) => {
+  return moment(date).utcOffset(8).format("YYYY/MM/DD HH:mm:ss")
 }
 
 let embed = (client, content) => {
@@ -103,7 +103,7 @@ let paginator = async (author, msg, embeds, pageNow) => {
 }
 
 module.exports = {
-  date: date,
+  time: time,
   embed: embed,
   getUser: getUser,
   getMember: getMember,

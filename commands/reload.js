@@ -10,10 +10,7 @@ module.exports = {
   category: "Bot Staff",
   botStaffOnly: true,
   run: async (client, message, args, shared) => {
-    message.channel.send(fn.embed(client, {title: "Reloading commands and functions...", description: `${client.user.username} is now reloading. Please wait.`})).then(() => {
-      setTimeout(() => {
-        process.exit(2)
-      }, 100)
-    })
+    await message.channel.send(fn.embed(client, {title: "Reloading commands and functions...", description: `${client.user.username} is now reloading. Please wait.`}))
+    process.exit(2)
   }
 }
