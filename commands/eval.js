@@ -37,12 +37,13 @@ module.exports = {
       ).catch(console.error)
       else if (out.length <= 2000-8 && (modifier == "-t" || (modifier == "-e" && out.length > 1024-8))) message.channel.send('```js\n'+out+'```')
       else {
+        console.log(out)
         message.channel.send(
           new Discord.RichEmbed()
             .setColor("GREEN")
             .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'green_tick')} Evaluation Success!`)
             .addField(`Expression`, '```js\n'+args.join(" ")+'```')
-            .addField(`Result`, '```js\n'+out+'```')
+            .addField(`Result`, '```js\nOutput too long. Check console log.```')
             .setFooter(client.user.username, client.user.avatarURL)
         ).catch(console.error)
       }
