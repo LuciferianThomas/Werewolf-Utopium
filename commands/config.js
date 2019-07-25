@@ -91,9 +91,15 @@ module.exports = {
       
       let cfgItem = configItems.find(i => i.name == item)
       let newVal
-      if (cfgItem.type == "channel") newVal = message.mentions.channels.filter(x => x.type == 'text').first() || message.guild.channels.filter(x => x.type == 'text').find(channel => channel.id == args[2] || channel.name.startsWith(args[2].toLowerCase()))
-      else if (cfgItem.type == "role") newVal = message.mentions.roles.filter(x => x.name != '@everyone').first() || message.guild.roles.filter(x => x.name != '@everyone').find(role => role.id == args[2] || role.name.toLowerCase().startsWith(args[2].toLowerCase()))
+      if (cfgItem.type == "channel") {
+        let { id } = message.mentions.channels.filter(x => x.type == 'text').first() || message.guild.channels.filter(x => x.type == 'text').find(channel => channel.id == args[2] || channel.name.startsWith(args[2].toLowerCase()))
+        newVal = id
+      } else if (cfgItem.type == "role") {
+        let { id } = message.mentions.roles.filter(x => x.name != '@everyone').first() || message.guild.roles.filter(x => x.name != '@everyone').find(role => role.id == args[2] || role.name.toLowerCase().startsWith(args[2].toLowerCase()))
+        newVal = id
+      }
       else newVal = args[2]
+      
       
       if (!newVal) return message.channel.send(fn.embed(client, {title: "Invalid Input", description: cfgItem.type != "string" ? `Please mention the ${cfgItem.type} or input the ID or name of the ${cfgItem.type}.` : "Please input the new value."}))
       
@@ -106,9 +112,8 @@ module.exports = {
         .addField(`${cfgItem.displayName} [\`${cfgItem.name}\`]`,
                   `${cfgItem.type == "channel" ? (shared.guild[cfgItem.name] ? `<#${shared.guild[cfgItem.name]}>` : "None set") :
                      cfgItem.type == "role" ? (shared.guild[cfgItem.name] ? `<@&${shared.guild[cfgItem.name]}>` : "None set") :
-                     shared.guild[cfgItem.name] ? shared.guild[cfgItem.name] : "None set"} **>** ${cfgItem.type == "channel" ? `<#${shared.guild[cfgItem.name]}>` :
-                     cfgItem.type == "role" ? shared.guild[cfgItem.name] :
-                     shared.guild[cfgItem.name]}`)
+                     shared.guild[cfgItem.name] ? shared.guild[cfgItem.name] : "None set"} **>** ${cfgItem.type == "channel" ? `<#${newVal}>` :
+                     cfgItem.type == "role" ? `<@&${newVal}>` : newVal}`)
       return message.channel.send(embed)
     }
   }
