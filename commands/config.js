@@ -12,8 +12,9 @@ const userData = new db.table("USERDATA"),
 module.exports = {
   name: "config",
   usage: "config [item] [set <newValue>]",
-  description: "User Information",
+  description: "Get and set configuration of this server.",
   category: "Utility",
+  guildPerms: ["ADMINISTRATOR"],
   run: async (client, message, args, shared) => {
     
   }
