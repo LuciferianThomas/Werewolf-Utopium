@@ -106,7 +106,9 @@ module.exports = {
         .addField(`${cfgItem.displayName} [\`${cfgItem.name}\`]`,
                   `${cfgItem.type == "channel" ? (shared.guild[cfgItem.name] ? `<#${shared.guild[cfgItem.name]}>` : "None set") :
                      cfgItem.type == "role" ? (shared.guild[cfgItem.name] ? `<@&${shared.guild[cfgItem.name]}>` : "None set") :
-                     (shared.guild[cfgItem.name] ? shared.guild[cfgItem.name] : "None set")} **>** ${newVal}`)
+                     shared.guild[cfgItem.name] ? shared.guild[cfgItem.name] : "None set"} **>** ${cfgItem.type == "channel" ? `<#${shared.guild[cfgItem.name]}>` :
+                     cfgItem.type == "role" ? shared.guild[cfgItem.name] :
+                     shared.guild[cfgItem.name]}`)
       return message.channel.send(embed)
     }
   }
