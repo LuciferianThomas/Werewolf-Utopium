@@ -9,9 +9,6 @@ const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
       modCases = new db.table("MODCASES")
 
-const configItem = ["prefix", "modlog", "botlog", "muteRole"]
-const displayNames = {prefix: "Prefix", modlog: "Moderator Log", botlog: "Action Log", muteRole: "Muted Role"}
-
 const configItems = [{
   name: "prefix",
   displayName: "Prefix",
@@ -83,7 +80,7 @@ module.exports = {
         .addField(`${item.displayName} [\`${item.name}\`]`,
                   `${item.type == "channel" ? `<#${shared.guild[item.name]}>` :
                      item.type == "role" ? `<@&${shared.guild[item.name]}>` :
-                     shared.guild[item.name]} > None set`)
+                     shared.guild[item.name]} **>** None set`)
       return message.channel.send(embed)
     }
     
@@ -94,18 +91,22 @@ module.exports = {
       
       let cfgItem = configItems.find(i => i.name == item)
       let newVal
-      if (cfgItem.type == "channel") newVal = message.mentions.channels.filter(x => x.type == 'text').first()
-      else if (cfgItem.type == "role")
-      guildData.set(`${message.guild.id}.${item}`, null)
+      if (cfgItem.type == "channel") newVal = message.mentions.channels.filter(x => x.type == 'text').first() || message.guild.channels.filter(x => x.type == 'text').find(channel => channel.id == args[2] || channel.name.startsWith(args[2].toLowerCase()))
+      else if (cfgItem.type == "role") newVal = message.mentions.roles.filter(x => x.name != '@everyone').first() || message.guild.roles.filter(x => x.name != '@everyone').find(role => role.id == args[2] || role.name.toLowerCase().startsWith(args[2].toLowerCase()))
+      else newVal = args[2]
+      
+      if (!newVal) return message.channel.send(fn.embed(client, {title: "Invalid Input", description: cfgItem.type != "string" ? `Please mention the ${cfgItem.type} or input the ID or name of the ${cfgItem.type}.` : "Please input the new value."}))
+      
+      guildData.set(`${message.guild.id}.${item}`, newVal)
       let embed = new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setTitle(`Configuration | ${message.guild.name}`)
         .setThumbnail(message.guild.iconURL)
         .setFooter(client.user.username, client.user.avatarURL)
-        .addField(`${item.displayName} [\`${item.name}\`]`,
-                  `${item.type == "channel" ? `<#${shared.guild[item.name]}>` :
-                     item.type == "role" ? `<@&${shared.guild[item.name]}>` :
-                     shared.guild[item.name]} > None set`)
+        .addField(`${cfgItem.displayName} [\`${cfgItem.name}\`]`,
+                  `${cfgItem.type == "channel" ? (shared.guild[cfgItem.name] ? `<#${shared.guild[cfgItem.name]}>` : "None set") :
+                     cfgItem.type == "role" ? (shared.guild[cfgItem.name] ? `<@&${shared.guild[cfgItem.name]}>` : "None set") :
+                     (shared.guild[cfgItem.name] ? shared.guild[cfgItem.name] : "None set")} **>** ${newVal}`)
       return message.channel.send(embed)
     }
   }
