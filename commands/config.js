@@ -16,6 +16,13 @@ module.exports = {
   category: "Utility",
   guildPerms: ["ADMINISTRATOR"],
   run: async (client, message, args, shared) => {
+    let guild = guildData.get(message.guild.id)
     
+    if (!args.length) return message.channel.send(
+      new Discord.RichEmbed()
+        .setColor(config.embedColor)
+        .setTitle(`Configuration | ${message.guild.name}`)
+        .setThumbnail(message.guild.iconURL)
+    )
   }
 }
