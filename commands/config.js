@@ -45,25 +45,28 @@ module.exports = {
         .setTitle(`Configuration | ${message.guild.name}`)
         .setThumbnail(message.guild.iconURL)
         .setFooter(client.user.username, client.user.avatarURL)
-      for (let i = 0; i < configItems.length; i++) embed.addField(`${configItems[i].displayName} [${configItems[i].name}]`,
+      for (let i = 0; i < configItems.length; i++) embed.addField(`${configItems[i].displayName} [\`${configItems[i].name}\`]`,
                                                                   `${configItems[i].type == "channel" ? `<#${shared.guild[configItems[i].name]}>` :
                                                                      configItems[i].type == "role" ? `<@&${shared.guild[configItems[i].name]}>` :
-                                                                     shared.guild[configItems[i].name]}`)
+                                                                     shared.guild[configItems[i].name]}`, true)
       return message.channel.send(embed)
     }
     
     if (args.length == 1) {
       let item = args[0]
-      if (!configItems.includes(item)) return message.channel.send(fn.embed(client, {title: "Accepted Values", description: `${configItems.map(i => `\`${i}\``).join(', ')}`}))
+      if (!configItems.map(i => i.name).includes(item)) return message.channel.send(fn.embed(client, {title: "Accepted Values", description: `${configItems.map(i => `\`${i.name}\``).join(', ')}`}))
       
-      return message.channel.send(
-        new Discord.RichEmbed()
-          .setColor(config.embedColor)
-          .setTitle(`Configuration | ${message.guild.name}`)
-          .setThumbnail(message.guild.iconURL)
-          .addField(`${item} [${displayNames[item]}]`, `\`${shared.guild.prefix}\` ${client.user}`)
-          .setFooter(client.user.username, client.user.avatarURL)
-      )
+      item = configItems.find(i => i.name == item)
+      let embed = new Discord.RichEmbed()
+        .setColor(config.embedColor)
+        .setTitle(`Configuration | ${message.guild.name}`)
+        .setThumbnail(message.guild.iconURL)
+        .setFooter(client.user.username, client.user.avatarURL)
+        .addField(`${item.displayName} [\`${item.name}\`]`,
+                  `${item.type == "channel" ? `<#${shared.guild[item.name]}>` :
+                     item.type == "role" ? `<@&${shared.guild[item.name]}>` :
+                     shared.guild[item.name]}`)
+      return message.channel.send(embed)
     }
   }
 }
