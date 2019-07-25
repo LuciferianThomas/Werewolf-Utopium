@@ -16,19 +16,36 @@ module.exports = {
   botStaffOnly: true,
 	run: async (client, message, args, shared) => {
     const msg = message, bot = client
+    
+    let modifier = "-e"
+    
+    if (args[args.length-1] == "-t" || args[args.length-1] == "-l" || args[args.length-1] == "-e") {
+      modifier = args.pop()
+    }
 
 		try {
 			var out = eval(args.join(' '))
 			out = JSON.stringify(out)
       
-      var embed = new Discord.RichEmbed()
-        .setColor("GREEN")
-        .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'green_tick')} Evaluation Success!`)
-        .addField(`Expression`, '```js\n'+args.join(" ")+'```')
-        .addField(`Result`, '```js\n'+out+'```')
-        .setFooter(client.user.username, client.user.avatarURL)
-			message.channel.send(embed)
-        .catch(console.error)
+      if (modifier == "-e" && out.length <= 1024-8) message.channel.send(
+        new Discord.RichEmbed()
+          .setColor("GREEN")
+          .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'green_tick')} Evaluation Success!`)
+          .addField(`Expression`, '```js\n'+args.join(" ")+'```')
+          .addField(`Result`, '```js\n'+out+'```')
+          .setFooter(client.user.username, client.user.avatarURL)
+      ).catch(console.error)
+      else if (out.length <= 2000-8 && (modifier == "-t" || (modifier == "-e" && out.length > 1024-8))) message.channel.send('```js\n'+out+'```')
+      else {
+        message.channel.send(
+          new Discord.RichEmbed()
+            .setColor("GREEN")
+            .setTitle(`${client.guilds.get(config.support).emojis.find(emoji => emoji.name == 'green_tick')} Evaluation Success!`)
+            .addField(`Expression`, '```js\n'+args.join(" ")+'```')
+            .addField(`Result`, '```js\n'+out+'```')
+            .setFooter(client.user.username, client.user.avatarURL)
+        ).catch(console.error)
+      }
 		} catch (e) {
       var embed = new Discord.RichEmbed()
         .setColor("RED")
