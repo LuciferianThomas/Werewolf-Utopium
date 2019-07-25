@@ -101,7 +101,7 @@ client.on('message', async message => {
   }
   let guild = guildData.get(message.guild.id)
   
-  const msg = message.content.toLowerCase()
+  const msg = message.content.trim().toLowerCase()
   
   const prefix = guild.prefix || config.defaultPrefix,
         mention = `<@${client.user.id}> `,
@@ -114,13 +114,13 @@ client.on('message', async message => {
     var args
     
     if (msg.startsWith(prefix)) {
-      args = message.content.slice(prefix.length).split(/\s+/u)
+      args = message.content.trim().slice(prefix.length).split(/\s+/u)
       shared.prefix = prefix
     } else if (msg.startsWith(mention)) {
-      args = message.content.slice(mention.length).split(/\s+/u)
+      args = message.content.trim().slice(mention.length).split(/\s+/u)
       shared.prefix = mention
     } else if (msg.startsWith(mention1)) {
-      args = message.content.slice(mention1.length).split(/\s+/u)
+      args = message.content.trim().slice(mention1.length).split(/\s+/u)
       shared.prefix = mention1
     }
     
