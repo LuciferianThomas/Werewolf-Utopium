@@ -19,7 +19,7 @@ module.exports = (client) => {
         .setThumbnail(user.displayAvatarURL)
         .addField(user.bot ? "Bot" : "User", `${user} (${user.tag})`, true)
         .addField("ID", user.id, true)
-        .addField("Joined", fn.date(user.joinedTimestamp))
+        .addField("Joined", fn.time(user.joinedTimestamp))
         .setFooter(client.user.username, client.user.avatarURL)
         .setTimestamp()
     )

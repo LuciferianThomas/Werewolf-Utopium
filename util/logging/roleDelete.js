@@ -19,7 +19,7 @@ module.exports = (client) => {
         .setThumbnail(role.guild.iconURL)
         .addField("Role", `${role} (${role.name})`, true)
         .addField("ID", role.id, true)
-        .addField("Created", fn.date(role.createdTimestamp))
+        .addField("Created", fn.time(role.createdTimestamp))
         .setFooter(client.user.username, client.user.avatarURL)
         .setTimestamp()
     )

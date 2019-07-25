@@ -20,7 +20,7 @@ module.exports = (client) => {
         .setThumbnail(channel.guild.iconURL)
         .addField((channel.type == "text" || channel.type == "news" || channel.type == "store") ? "Text Channel" : channel.type == 'voice' ? "Voice Channel" : "Category", `${channel} (${channel.name})`, true)
         .addField("ID", channel.id, true)
-        .addField("Created", fn.date(channel.createdTimestamp))
+        .addField("Created", fn.time(channel.createdTimestamp))
         .setFooter(client.user.username, client.user.avatarURL)
         .setTimestamp()
     )
