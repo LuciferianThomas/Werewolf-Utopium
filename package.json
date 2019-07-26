@@ -23,7 +23,6 @@
     "start": "node index.js"
   },
   "keywords": [
-    "rpg",
     "unity"
   ],
   "author": "LuciferianThomas",

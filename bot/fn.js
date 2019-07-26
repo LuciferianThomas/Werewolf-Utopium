@@ -53,6 +53,12 @@ let getMember = (guild, data) => {
   throw Error('Cannot find member.')
 }
 
+let getRole = (guild, data) => {
+  if (data instanceof Discord.Role) return data
+  if (typeof data == "string") return guild.members.find(member => member.user.id == data || member.user.tag.toLowerCase() == data.toLowerCase())
+  throw Error('Cannot find role.')
+}
+
 function ModCase (client, id, type, member, moderator, reason, period) {
   this.id = parseInt(id)
   this.type = type.toUpperCase()
