@@ -27,6 +27,9 @@ module.exports = {
     if (!role) role = fn.getRole(message.guild, args[1])
     if (!role) return message.channel.send(fn.embed(client, "Please mention the role you want to remove."))
     
+    if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.channel.send(fn.embed(client, "I do not have permissions to remove roles."))
+    if (role.position >= message.guild.me.highestRole.position) return message.channel.send(fn.embed(client, "I do not have permissions to remove this role."))
+    
     target.removeRole(role).then(() => {
       message.channel.send(
         new Discord.RichEmbed()

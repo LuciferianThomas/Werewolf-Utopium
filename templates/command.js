@@ -17,10 +17,10 @@ module.exports = {
   name: "command",
   usage: "command <req args> [opt args]",
   description: "A Sample Command.",
-  aliases: ["cmd"],                               // optional
+  aliases: ["cmd"],                                // optional
   category: "Utility",
-  guildPerms: ["BAN_MEMBERS", "KICK_MEMBERS"],    // optional, array of Discord.PermissionResolvable | Used when command is limited to Discord.GuildMember with these permissions
-  botStaffOnly: true,                             // required for true, optional for false | Used when command is limited to bot staff or command is work in progress
+  guildPerms: ["BAN_MEMBERS", "KICK_MEMBERS"],     // optional, array of Discord.PermissionResolvable | Used when command is limited to Discord.GuildMember with these permissions
+  botStaffOnly: true,                              // required for true, optional for false | Used when command is limited to bot staff or command is work in progress
   run: async (client, message, args, shared) => {
     // ...
     // command code

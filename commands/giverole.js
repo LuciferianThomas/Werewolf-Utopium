@@ -10,11 +10,11 @@ const userData = new db.table("USERDATA"),
       modCases = new db.table("MODCASES")
 
 module.exports = {
-  name: "addrole",
-  usage: "addrole <user> <role>",
+  name: "giverole",
+  usage: "giverole <user> <role>",
   description: "Give role to users.",
   category: "Moderation",
-  aliases: ["giverole"],
+  aliases: ["addrole"],
   guildPerms: ["MANAGE_ROLES"],
   run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to give a role to."))
@@ -27,7 +27,8 @@ module.exports = {
     if (!role) role = fn.getRole(message.guild, args[1])
     if (!role) return message.channel.send(fn.embed(client, "Please mention the role you want to give."))
     
-    if (role.position >= message.guild.me.highestRole.position)return message.channel.send(fn.embed(client, "Please mention the role you want to give."))
+    if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.channel.send(fn.embed(client, "I do not have permissions to give roles."))
+    if (role.position >= message.guild.me.highestRole.position) return message.channel.send(fn.embed(client, "I do not have permissions to give this role."))
     
     target.addRole(role).then(() => {
       message.channel.send(
