@@ -55,7 +55,7 @@ let getMember = (guild, data) => {
 
 let getRole = (guild, data) => {
   if (data instanceof Discord.Role) return data
-  if (typeof data == "string") return guild.members.find(member => member.user.id == data || member.user.tag.toLowerCase() == data.toLowerCase())
+  if (typeof data == "string") return guild.roles.find(role => role.id == data || role.name.toLowerCase().startsWith(data.toLowerCase()))
   throw Error('Cannot find role.')
 }
 
@@ -116,7 +116,7 @@ let paginator = async (author, msg, embeds, pageNow) => {
           paginator(author, m, embeds, embeds.length-1)
         })
     } else return false
-  }, {time: 20*1000})
+  }, {time: 30*1000})
   await msg.react("⏪")
   await msg.react("◀")
   await msg.react("▶")
@@ -126,8 +126,10 @@ let paginator = async (author, msg, embeds, pageNow) => {
 module.exports = {
   time: time,
   embed: embed,
+  error: error,
   getUser: getUser,
   getMember: getMember,
+  getRole: getRole,
   ModCase: ModCase,
   modCaseEmbed: modCaseEmbed,
   paginator: paginator

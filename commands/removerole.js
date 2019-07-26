@@ -10,37 +10,35 @@ const userData = new db.table("USERDATA"),
       modCases = new db.table("MODCASES")
 
 module.exports = {
-  name: "addrole",
-  usage: "addrole <user> <role>",
-  description: "Give role to users.",
+  name: "removerole",
+  usage: "removerole <user> <role>",
+  description: "Remove role from users.",
   category: "Moderation",
-  aliases: ["giverole"],
+  aliases: ["delrole"],
   guildPerms: ["MANAGE_ROLES"],
   run: async (client, message, args, shared) => {
-    if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to give a role to."))
+    if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to remove a role from."))
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
     if (!target) target = fn.getMember(message.guild, args[0])
-    if (!target) return message.channel.send(fn.embed(client, "Please mention the user you want to give a role to."))
+    if (!target) return message.channel.send(fn.embed(client, "Please mention the user you want to remove a role from."))
     
-    if (!args[1]) return message.channel.send(fn.embed(client, "Please mention the role you want to give."))
+    if (!args[1]) return message.channel.send(fn.embed(client, "Please mention the role you want to remove."))
 		let role = message.mentions.roles.filter(role => role.name != "@everyone").first()
     if (!role) role = fn.getRole(message.guild, args[1])
-    if (!role) return message.channel.send(fn.embed(client, "Please mention the role you want to give."))
+    if (!role) return message.channel.send(fn.embed(client, "Please mention the role you want to remove."))
     
-    if (role.position >= message.guild.me.highestRole.position)return message.channel.send(fn.embed(client, "Please mention the role you want to give."))
-    
-    target.addRole(role).then(() => {
+    target.removeRole(role).then(() => {
       message.channel.send(
         new Discord.RichEmbed()
           .setColor(config.embedColor)
-          .setTitle("Give Role Success")
+          .setTitle("Remove Role Success")
           .setThumbnail(target.user.displayAvatarURL)
           .addField(target.user.bot ? "Bot" : "User", `${target}`, true)
           .addField("Role", `${role}`, true)
           .setFooter(client.user.username, client.user.avatarURL)
       )
     }).catch(error => {
-      message.channel.send(fn.error(client, `I cannot give ${role.name} to ${target.user.tag}!`, error))
+      message.channel.send(fn.error(client, `I cannot remove ${role.name} from ${target.user.tag}!`, error))
     })
   }
 }
