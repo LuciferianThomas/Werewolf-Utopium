@@ -11,6 +11,7 @@ module.exports = {
   botStaffOnly: true,
   run: async (client, message, args, shared) => {
     await message.channel.send(fn.embed(client, {title: "Reloading commands and functions...", description: `${client.user.username} is now reloading. Please wait.`}))
+    await message.delete()
     process.exit(2)
   }
 }

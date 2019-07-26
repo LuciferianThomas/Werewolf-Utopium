@@ -125,6 +125,7 @@ let paginator = async (author, msg, embeds, pageNow) => {
 
 module.exports = {
   time: time,
+  date: time,
   embed: embed,
   error: error,
   getUser: getUser,
