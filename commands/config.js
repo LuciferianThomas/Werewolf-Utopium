@@ -33,6 +33,7 @@ module.exports = {
   description: "Get and set configuration of this server.",
   category: "Utility",
   guildPerms: ["ADMINISTRATOR"],
+  aliases: ["cfg", "conf"],
   run: async (client, message, args, shared) => {
     let guild = guildData.get(message.guild.id)
     

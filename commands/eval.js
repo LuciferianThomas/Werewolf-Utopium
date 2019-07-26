@@ -36,8 +36,9 @@ module.exports = {
           .setFooter(client.user.username, client.user.avatarURL)
       ).catch(console.error)
       else if (out.length <= 2000-8 && (modifier == "-t" || (modifier == "-e" && out.length > 1024-8))) message.channel.send('```js\n'+out+'```')
+      else if (modifier = "-l") console.log(`${fn.time()} | Evaluation Result | ${out}`)
       else {
-        console.log(out)
+        console.log(`${fn.time()} | Evaluation Result | ${out}`)
         message.channel.send(
           new Discord.RichEmbed()
             .setColor("GREEN")
