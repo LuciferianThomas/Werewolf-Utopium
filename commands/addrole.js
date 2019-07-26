@@ -28,6 +28,12 @@ module.exports = {
     
     target.addRole(role).then(() => {
       message.channel.send(
+        new Discord.RichEmbed()
+          .setColor(config.embedColor)
+          .setTitle("Give Role Success")
+          .setThumbnail(target.user.displayAvatarURL)
+          .addField(target.user.bot ? "Bot" : "User", `${target}`, true)
+          .addField("Role", `${role}`, true)
       )
     }).catch(error => {
       message.channel.send(fn.error(client, `I cannot give ${role.name} to ${target.user.tag}!`, error))

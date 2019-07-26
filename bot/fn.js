@@ -79,7 +79,7 @@ let modCaseEmbed = (client, thisCase) => {
   let embed = new Discord.RichEmbed()
     .setColor(embedColor)
     .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
-    .addField("User", user, true)
+    .addField(user.bot ? "Bot" : "User", user, true)
     .addField("Moderator", moderator, true)
   if (thisCase.period) embed.addField("Period", `${thisCase.period/1000/60} minute${thisCase.period/1000/60 == 1 ? "" : "s"}`, true)
   embed.addField("Reason", thisCase.reason)
@@ -103,9 +103,24 @@ let paginator = async (author, msg, embeds, pageNow) => {
           msg.delete()
           paginator(author, m, embeds, Math.min(pageNow+1, embeds.length-1))
         })
+    } else if (reaction.emoji.name == "⏪" && user.id == author) {
+      msg.channel.send(embeds[0])
+        .then(m => {
+          msg.delete()
+          paginator(author, m, embeds, 0)
+        })
+    } else if (reaction.emoji.name == "▶" && user.id == author) {
+      msg.channel.send(embeds[embeds.length-1])
+        .then(m => {
+          msg.delete()
+          paginator(author, m, embeds, embeds.length-1)
+        })
     } else return false
   }, {time: 20*1000})
-  msg.react("◀").then(() => msg.react("▶"))
+  await msg.react("⏪")
+  await msg.react("◀")
+  await msg.react("▶")
+  await msg.react("⏩")
 }
 
 module.exports = {

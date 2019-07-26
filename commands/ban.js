@@ -1,5 +1,5 @@
-const Discord = require('discord.js')
-const db = require('quick.db')
+const Discord = require('discord.js'),
+      db = require('quick.db')
 
 const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
