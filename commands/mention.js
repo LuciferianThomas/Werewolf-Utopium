@@ -22,7 +22,7 @@ module.exports = {
 		for (let i = 0; i < args.length; i++) {
       let role = fn.getRole(message.guild, args[i])
       if (!role) {
-        message.channel.send(fn.error(client, `${args[i]} is not a role!`))
+        message.channel.send(fn.embed(client, `${args[i]} is not a role!`))
       }
       roles.push(role)
     }
