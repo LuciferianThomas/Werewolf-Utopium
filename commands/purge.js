@@ -1,5 +1,5 @@
-const Discord = require('discord.js')
-const db = require('quick.db')
+const Discord = require('discord.js'),
+      db = require('quick.db')
 
 const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
@@ -18,11 +18,11 @@ module.exports = {
 		let amount = parseInt(args[0])
     if (!amount) return message.channel.send(fn.embed(client, "Please mention the number of messages to remove."))
     
-    message.delete().catch(error => {})
+    await message.delete()
     message.channel.bulkDelete(amount).then(deleted => {
       message.channel.send(fn.embed(client, `Successfully purged ${deleted.size} messages from ${message.channel}.`)).then(m => setTimeout(m.delete, 5*1000))
     }).catch(error => {
-      message.channel.send(fn.error(client, `I was unable to give ${muteRole} to ${target}!`))
+      message.channel.send(fn.error(client, `I was unable to purge messages in this channel!`, error))
     })
     
     return undefined

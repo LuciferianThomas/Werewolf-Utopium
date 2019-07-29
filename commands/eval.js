@@ -1,5 +1,6 @@
 const Discord = require('discord.js'),
-      db = require('quick.db')
+      db = require('quick.db'),
+      moment = require('moment')
 
 const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
