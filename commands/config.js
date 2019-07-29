@@ -32,7 +32,7 @@ module.exports = {
   usage: "config [item]\nconfig <item> reset\nconfig <item> set <newValue>",
   description: "Get and set configuration of this server.",
   category: "Utility",
-  guildPerms: ["MANAGE_SERVER"],
+  guildPerms: ["MANAGE_GUILD"],
   aliases: ["cfg", "conf"],
   run: async (client, message, args, shared) => {
     let guild = guildData.get(message.guild.id)
