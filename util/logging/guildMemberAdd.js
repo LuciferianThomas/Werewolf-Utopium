@@ -12,6 +12,10 @@ module.exports = (client) => {
     let logChannel = client.channels.get(logChannelID)
     if (!logChannel) return;
     
+    let autoRoleID = guildData.get(`${member.guild.id}.autoRole`)
+    let autoRole = member.guild.roles.get(autoRoleID)
+    if (autoRole) member.addRole(autoRole)
+    
     logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)

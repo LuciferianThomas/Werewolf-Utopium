@@ -25,6 +25,10 @@ const configItems = [{
   name: "muteRole",
   displayName: "Muted Role",
   type: "role"
+}, {
+  name: "autoRole",
+  displayName: "Role Given on Join",
+  type: "role"
 }, ]
 
 module.exports = {
