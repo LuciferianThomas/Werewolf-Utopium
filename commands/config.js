@@ -48,9 +48,9 @@ module.exports = {
         .setThumbnail(message.guild.iconURL)
         .setFooter(client.user.username, client.user.avatarURL)
       for (let i = 0; i < configItems.length; i++) embed.addField(`${configItems[i].displayName} [\`${configItems[i].name}\`]`,
-                                                                  `${configItems[i].type == "channel" ? `<#${shared.guild[configItems[i].name]}>` :
-                                                                     configItems[i].type == "role" ? `<@&${shared.guild[configItems[i].name]}>` :
-                                                                     shared.guild[configItems[i].name]}`, true)
+                                                                  `${configItems[i].type == "channel" ? (shared.guild[configItems[i].name] ? `<#${shared.guild[configItems[i].name]}>` : "None set") :
+                                                                     configItems[i].type == "role" ? (shared.guild[configItems[i].name] ? `<@&${shared.guild[configItems[i].name]}>` : "None set") :
+                                                                     shared.guild[configItems[i].name] ? shared.guild[configItems[i].name] : "None set"}`, true)
       return message.channel.send(embed)
     }
     
@@ -65,9 +65,9 @@ module.exports = {
         .setThumbnail(message.guild.iconURL)
         .setFooter(client.user.username, client.user.avatarURL)
         .addField(`${item.displayName} [\`${item.name}\`]`,
-                  `${item.type == "channel" ? `<#${shared.guild[item.name]}>` :
-                     item.type == "role" ? `<@&${shared.guild[item.name]}>` :
-                     shared.guild[item.name]}`)
+                  `${item.type == "channel" ? (shared.guild[item.name] ? `<#${shared.guild[item.name]}>` : "None set") :
+                     item.type == "role" ? (shared.guild[item.name] ? `<@&${shared.guild[item.name]}>` : "None set") :
+                     (shared.guild[item.name] ? shared.guild[item.name] : "None set")}`)
       return message.channel.send(embed)
     }
     
@@ -89,7 +89,7 @@ module.exports = {
       return message.channel.send(embed)
     }
     
-    if (args.length == 3) {
+    if (args.length >= 3) {
       let item = args[0]
       if (!configItems.map(i => i.name).includes(item)) return message.channel.send(fn.embed(client, {title: "Accepted Values", description: `${configItems.map(i => `\`${i.name}\``).join(', ')}`}))
       if (args[1] != "set") return message.channel.send(fn.embed(client, {title: "Usage", description: "`config [item]\nconfig <item> reset\nconfig <item> set <newValue>`"}))
