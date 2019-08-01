@@ -22,6 +22,10 @@ const configItems = [{
   displayName: "Action Log",
   type: "channel"
 }, {
+  name: "memberlog",
+  displayName: "Member Log",
+  type: "channel"
+}, {
   name: "muteRole",
   displayName: "Muted Role",
   type: "role"
