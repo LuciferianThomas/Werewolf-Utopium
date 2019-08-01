@@ -193,3 +193,31 @@ client.on('message', async message => {
   message.delete().catch()
 	
 })
+
+
+
+
+
+const 
+			https = require('https');
+var op = {
+	host: 'namemc.com',
+	path: '/profile/TCCGPlayz'
+};
+	
+var req = https.request(op, res => {
+		var data = '';
+		res.on('data', chunk => {
+			data += chunk;
+		});
+
+		res.on('end', () => {
+			console.log(data);
+		});
+	})
+
+	req.on('error', e => {
+		console.log(e.message);
+	});
+
+	req.end();
