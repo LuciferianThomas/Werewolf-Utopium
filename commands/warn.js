@@ -40,7 +40,7 @@ module.exports = {
     
     console.log(`${message.guild.name} | Warned ${target.user.tag} (${target.user.id})`)
         
-    message.channel.send(fn.embed(client, `${target.user.tag} has been kicked!`))
+    message.channel.send(fn.embed(client, `${target.user.tag} has been warned!`))
     message.channel.send(embed)
         
     if (modlog) {
