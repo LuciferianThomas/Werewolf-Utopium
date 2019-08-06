@@ -33,6 +33,10 @@ const configItems = [{
   name: "autoRole",
   displayName: "Role Given on Join",
   type: "role"
+}, {
+  name: "autoRole",
+  displayName: "Role Given on Join",
+  type: "role"
 }, ]
 
 module.exports = {
