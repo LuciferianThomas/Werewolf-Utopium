@@ -17,10 +17,14 @@ module.exports = {
   guildPerms: ["MANAGE_CHANNELS"],
   run: async (client, message, args, shared) => {
 		let time = parseInt(args[0]), reason = args.slice(1).join(" ") || ""
-    reason =+ `\nSet by ${message.member.displayName} (${message.author.tag})`
+    reason += `\nSet by ${message.member.displayName} (${message.author.tag})`
+    
+    if (!time && time != 0) return message.channel.send(fn.embed(client, `Please input the slowmode time in seconds.`))
     
     message.channel.setRateLimitPerUser(time, reason).then(() => {
-      message.channel.send(fn.embed(client, `Slowmode set to ${}`))
+      message.channel.send(fn.embed(client, `Slowmode set to ${time} seconds in ${message.channel}.`))
+    }).catch(error => {
+      message.channel.send(fn.error(client, `I cannot set slowmode of this channel!`, error))
     })
   }
 }
