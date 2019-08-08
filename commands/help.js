@@ -39,7 +39,9 @@ module.exports = {
           })
         })
       }
-      message.channel.send(fn.embed(client, "Check your DMs!")).the
+      message.channel.send(fn.embed(client, "Check your DMs!")).then(m => {
+        setTimeout(() => m.delete(), 5*1000)
+      })
 		} else {
 			const name = args[0].toLowerCase();
 			const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name))
