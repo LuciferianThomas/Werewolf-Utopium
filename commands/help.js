@@ -1,5 +1,7 @@
 const Discord = require('discord.js')
 
+const fn = require('/app/bot/fn.js')
+
 module.exports = {
   name: "help",
   usage: "help [command]",
@@ -31,13 +33,13 @@ module.exports = {
           .setThumbnail(client.user.avatarURL)
           .setDescription(userCommands[i].join('') + "\nDo `help [command]` to get information about specific commands!")
           .setTimestamp()
-        message.author.send(embed)
-          .catch(err => {
+        await message.author.send(embed).catch(err => {
           message.channel.send(embed).catch(error => {
             message.channel.send("I can't DM you, nor can I send my help information here!\nThe `Embed Links` permissions is crucial to me, so please enable it whereever I should be!")
           })
         })
       }
+      message.channel.send(fn.embed(client, "Check your DMs!")).the
 		} else {
 			const name = args[0].toLowerCase();
 			const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name))
