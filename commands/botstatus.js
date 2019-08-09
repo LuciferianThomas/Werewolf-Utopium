@@ -41,7 +41,5 @@ module.exports = {
     
     m.delete()
     message.channel.send(embed)
-      
-    
   }
 }
