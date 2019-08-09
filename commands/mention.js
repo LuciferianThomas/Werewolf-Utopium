@@ -14,7 +14,6 @@ module.exports = {
   usage: "mention <role1> [role2...]",
   description: "Mention roles.",
   category: "Utility",
-  aliases: ["ping"],
   guildPerms: ["MANAGE_ROLES"],
   run: async (client, message, args, shared) => {
 		let roles = []

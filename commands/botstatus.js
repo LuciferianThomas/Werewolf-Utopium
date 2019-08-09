@@ -7,10 +7,10 @@ const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
 
 module.exports = {
-  name: "botinfo",
-  usage: "botinfo",
+  name: "botstatus",
+  usage: "botstatus",
   description: "Bot information.",
-  aliases: ["info", "status"],
+  aliases: ["status"],
   category: "Utility",
   run: async (client, message, args, shared) => {
 
