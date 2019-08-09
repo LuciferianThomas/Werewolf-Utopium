@@ -7,10 +7,10 @@ const config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js')
 
 module.exports = {
-  name: "botstatus",
-  usage: "botstatus",
+  name: "status",
+  usage: "status",
   description: "Bot information.",
-  aliases: ["status"],
+  aliases: ["botstatus", "botinfo", "links", "invite"],
   category: "Utility",
   run: async (client, message, args, shared) => {
 
@@ -18,7 +18,7 @@ module.exports = {
     
     let m = await message.channel.send("Pinging...")
     
-    let botLatency = m.createdTimestamp - message.createdTimestamp,
+    let botLatency = Math.abs(m.createdTimestamp - message.createdTimestamp),
         ping = client.ping,
         memory = (process.memoryUsage().heapUsed / (1024 * 1024)).toFixed(2)
     
@@ -37,6 +37,7 @@ module.exports = {
       .addField("Memory Used", `${memory}MB`, true)
       .addField("Library", "discord.js", true)
       .addField("ID", client.user.id)
+      .addField("Links", "[Invite](https://discordapp.com/api/oauth2/authorize?client_id=562910620664463365&permissions=2146958847&scope=bot)", true)
       .setFooter(client.user.username, client.user.avatarURL)
     
     m.delete()
