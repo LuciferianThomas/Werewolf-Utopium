@@ -21,7 +21,7 @@ module.exports = {
     
     if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return message.channel.send(fn.embed(client, "You cannot warn a moderator!"))
     
-    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0) return message.channel.send(fn.embed(client, `You do not have permissions to warn ${target.user.username}!`))
+    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0 && message.guild.ownerID != message.author.id) return message.channel.send(fn.embed(client, `You do not have permissions to warn ${target.user.username}!`))
     
     let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
     
