@@ -20,9 +20,9 @@ module.exports = {
     if (!target) target = fn.getMember(message.guild, args[0])
     if (!target) return message.channel.send(fn.embed(client, "Please mention the user you want to ban."))
     
-    if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return message.channel.send(fn.embed(client, "You cannot ban a moderator!"))
+    if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR") && message.guild.ownerID != message.author.id) return message.channel.send(fn.embed(client, "You cannot ban a moderator!"))
     
-    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0) return message.channel.send(fn.embed(client, `You do not have permissions to ban ${target.user.username}!`))
+    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0 && message.guild.ownerID != message.author.id) return message.channel.send(fn.embed(client, `You do not have permissions to ban ${target.user.username}!`))
     if (!target.bannable) return message.channel.send(fn.embed(client, `I do not have permissions to ban ${target.user.username}!`))
     
     let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)

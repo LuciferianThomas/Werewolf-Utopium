@@ -20,9 +20,9 @@ module.exports = {
     if (!target) target = fn.getMember(message.guild, args[0])
     if (!target) return message.channel.send(fn.embed(client, "Please mention the user you want to mute."))
     
-    if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR")) return message.channel.send(fn.embed(client, "You cannot mute a moderator!"))
+    if (target.hasPermission("BAN_MEMBERS") || target.hasPermission("KICK_MEMBERS") || target.hasPermission("ADMINISTRATOR") && message.guild.ownerID != message.author.id) return message.channel.send(fn.embed(client, "You cannot mute a moderator!"))
     
-    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0) return message.channel.send(fn.embed(client, `You do not have permissions to mute ${target.user.username}!`))
+    if (target.highestRole.comparePositionTo(message.member.highestRole) >= 0 && message.guild.ownerID != message.author.id) return message.channel.send(fn.embed(client, `You do not have permissions to mute ${target.user.username}!`))
     if (!message.guild.members.get(client.user.id).hasPermission("MANAGE_ROLES")) return message.channel.send(fn.embed(client, `I do not have permissions to mute ${target.user.username}!`))
     
     let muteRole = message.guild.roles.get(shared.guild.muteRole)

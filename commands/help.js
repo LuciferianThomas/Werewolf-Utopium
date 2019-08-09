@@ -37,8 +37,8 @@ module.exports = {
             .setTimestamp()
         )
       }
-      await message.author.send(embeds[0]).then(() => {
-        fn.paginator(message.author, message, embeds, 0)
+      await message.author.send(embeds[0]).then(msg => {
+        fn.paginator(message.author, msg, embeds, 0)
         message.channel.send(fn.embed(client, "Check your DMs!")).then(m => {
           setTimeout(() => m.delete(), 5*1000)
         })
