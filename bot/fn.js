@@ -109,7 +109,7 @@ let paginator = async (author, msg, embeds, pageNow) => {
           msg.delete()
           paginator(author, m, embeds, 0)
         })
-    } else if (reaction.emoji.name == "▶" && user.id == author) {
+    } else if (reaction.emoji.name == "⏩" && user.id == author) {
       msg.channel.send(embeds[embeds.length-1])
         .then(m => {
           msg.delete()
