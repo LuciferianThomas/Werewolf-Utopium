@@ -4,7 +4,7 @@ const moment = require("moment")
 const { defaultPrefix, embedColor } = require('./config.js')
 
 let time = (date = moment()) => {
-  return moment(date).format("YYYY/MM/DD HH:mm:ss")
+  return moment(date).format("YYYY/MM/DD HH:mm:ss [UTC]")
 }
 
 let embed = (client, content) => {

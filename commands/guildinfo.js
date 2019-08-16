@@ -14,6 +14,7 @@ module.exports = {
   usage: "guildinfo",
   description: "Guild Information",
   category: "Utility",
+  aliases: ["serverinfo"],
   guildPerms: ["SEND_MESSAGES"],
   run: async (client, message, args, shared) => {
     let guild = message.guild

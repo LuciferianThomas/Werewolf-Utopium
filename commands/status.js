@@ -33,7 +33,7 @@ module.exports = {
       .addField("Servers", client.guilds.size, true)
       .addField("Users", client.users.size, true)
       .addField("Bot Latency", `${botLatency}ms`, true)
-      .addField("Ping", `${ping}ms`, true)
+      .addField("Ping", `${Math.round(ping)}ms`, true)
       .addField("Memory Used", `${memory}MB`, true)
       .addField("Library", "discord.js", true)
       .addField("ID", client.user.id)
