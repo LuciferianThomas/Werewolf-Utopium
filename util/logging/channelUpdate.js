@@ -15,8 +15,7 @@ module.exports = (client) => {
     if (oldChannel.name != newChannel.name) return logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)
-        .setAuthor("Channel Name Updated")
-        .setThumbnail(newChannel.guild.iconURL)
+        .setAuthor("Channel Name Updated", newChannel.guild.iconURL)
         .addField("Channel", `${newChannel} (${newChannel.name})`)
         .addField("Before", `${oldChannel.name}`, true)
         .addField("After", `${newChannel.name}`, true)
@@ -27,8 +26,7 @@ module.exports = (client) => {
     if (newChannel.type == 'text' && oldChannel.topic != newChannel.topic) return logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)
-        .setAuthor("Text Channel Topic Updated")
-        .setThumbnail(newChannel.guild.iconURL)
+        .setAuthor("Text Channel Topic Updated", newChannel.guild.iconURL)
         .addField("Channel", `${newChannel} (${newChannel.name})`)
         .addField("Before", `${oldChannel.topic}`, true)
         .addField("After", `${newChannel.topic}`, true)
@@ -39,8 +37,7 @@ module.exports = (client) => {
     if (newChannel.type == 'text' && oldChannel.nsfw != newChannel.nsfw) return logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)
-        .setAuthor("Text Channel NSFW Updated")
-        .setThumbnail(newChannel.guild.iconURL)
+        .setAuthor("Text Channel NSFW Updated", newChannel.guild.iconURL)
         .addField("Channel", `${newChannel} (${newChannel.name})`)
         .addField("Before", `${oldChannel.nsfw ? "Yes" : "No"}`, true)
         .addField("After", `${newChannel.nsfw ? "Yes" : "No"}`, true)
@@ -51,8 +48,7 @@ module.exports = (client) => {
     if (newChannel.type == 'text' && oldChannel.rateLimitPerUser != newChannel.rateLimitPerUser) return logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)
-        .setAuthor("Text Channel Slowmode Updated")
-        .setThumbnail(newChannel.guild.iconURL)
+        .setAuthor("Text Channel Slowmode Updated", newChannel.guild.iconURL)
         .addField("Channel", `${newChannel} (${newChannel.name})`)
         .addField("Before", `${oldChannel.rateLimitPerUser} seconds`, true)
         .addField("After", `${newChannel.rateLimitPerUser} seconds`, true)
@@ -63,8 +59,7 @@ module.exports = (client) => {
     if (newChannel.type == 'voice' && oldChannel.bitrate != newChannel.bitrate) return logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)
-        .setAuthor("Voice Channel Bitrate Updated")
-        .setThumbnail(newChannel.guild.iconURL)
+        .setAuthor("Voice Channel Bitrate Updated", newChannel.guild.iconURL)
         .addField("Channel", `${newChannel} (${newChannel.name})`)
         .addField("Before", `${oldChannel.bitrate} kbps`, true)
         .addField("After", `${newChannel.bitrate} kbps`, true)
@@ -75,8 +70,7 @@ module.exports = (client) => {
     if (newChannel.type == 'voice' && oldChannel.userLimit != newChannel.userLimit) return logChannel.send(
       new Discord.RichEmbed()
         .setColor(config.embedColor)
-        .setAuthor("Voice Channel User Limit Updated")
-        .setThumbnail(newChannel.guild.iconURL)
+        .setAuthor("Voice Channel User Limit Updated", newChannel.guild.iconURL)
         .addField("Channel", `${newChannel} (${newChannel.name})`)
         .addField("Before", `${oldChannel.userLimit} users`, true)
         .addField("After", `${newChannel.userLimit} users`, true)
