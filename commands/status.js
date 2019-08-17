@@ -29,7 +29,7 @@ module.exports = {
       .addField("Name", client.user.username, true)
       .addField("Prefix", `Default: \`${shared.defaultPrefix}\`\nMention: ${client.user}\nServer: \`${shared.guild.prefix}\``, true)
       .addField(`Developer${botStaff.length > 1 ? "s" : ""}`, botStaff.join('\n'), true)
-      .addField("Created", fn.date(client.user.createdAt), true)
+      .addField("Created", `${fn.date(client.user.createdAt)}\n${fn.ago(client.user.createdAt)}`, true)
       .addField("Servers", client.guilds.size, true)
       .addField("Users", client.users.size, true)
       .addField("Bot Latency", `${botLatency}ms`, true)

@@ -37,7 +37,7 @@ module.exports = {
         .addField("Mutes", cases.filter(c => c.type == "MUTE").length, true)
         .addField("Kicks", cases.filter(c => c.type == "KICK").length, true)
         .addField("Bans", cases.filter(c => c.type == "BAN").length, true)
-        .addField("Last 10 Records", cases.splice(-10, 10).map(c => `#${c.id} **[${c.type}] ${c.reason}** (${moment(c.time).fromNow()})`).join("\n"))
+        .addField("Last 10 Records", cases.splice(-10, 10).map(c => `#${c.id} **[${c.type}] ${c.reason}** (${fn.ago(c.time)})`).join("\n"))
         .setTimestamp()
     )
   }
