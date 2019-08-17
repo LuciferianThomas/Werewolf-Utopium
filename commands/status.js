@@ -14,7 +14,7 @@ module.exports = {
   category: "Utility",
   run: async (client, message, args, shared) => {
 
-    let botStaff = userData.all().filter(i => JSON.parse(i.data).botStaff).map(i => client.users.get(i.ID).tag)
+    let botStaff = userData.all().filter(i => typeof i.data == "string" ? JSON.parse(i.data).botStaff : i.data.botStaff).map(i => client.users.get(i.ID).tag)
     
     let m = await message.channel.send("Pinging...")
     
