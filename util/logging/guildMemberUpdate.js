@@ -18,7 +18,7 @@ module.exports = (client) => {
         return logChannel.send(
           new Discord.RichEmbed()
             .setColor(config.embedColor)
-            .setAuthor("Role Given", ail(newMember.user.displayAvatarURL)
+            .setAuthor("Role Given", newMember.user.displayAvatarURL)
             .addField(newMember.user.bot ? "Bot" : "User", `${newMember} (${newMember.user.tag})`, true)
             .addField("Role", `${role} (${role.name})`, true)
             .setFooter(client.user.username, client.user.avatarURL)
@@ -33,7 +33,7 @@ module.exports = (client) => {
         return logChannel.send(
           new Discord.RichEmbed()
             .setColor(config.embedColor)
-            .setAuthor("Role Removed", ail(newMember.user.displayAvatarURL)
+            .setAuthor("Role Removed", newMember.user.displayAvatarURL)
             .addField(newMember.user.bot ? "Bot" : "User", `${newMember} (${newMember.user.tag})`, true)
             .addField("Role", `${role} (${role.name})`, true)
             .setFooter(client.user.username, client.user.avatarURL)
