@@ -31,7 +31,7 @@ module.exports = {
       .setTitle(`${target.user.tag} | Information`)
       .setThumbnail(target.user.displayAvatarURL)
       .addField(target.user.bot ? "Bot" : "User", `${target}`, true)
-      .addField("Joined Discord", fn.date(target.user.createdAt), true)
+      .addField(target.user.bot ? "Created" "Joined Discord", fn.date(target.user.createdAt), true)
       .addField('Current Status', `${statuses[target.user.presence.status]}`, true)
       .addField('Current Activity', target.user.presence.game ? `${activities[target.user.presence.game.type]} ${target.user.presence.game.name}` : "None", true)
       .addField(`${client.user.username} Tags`, (user.botStaff || user.blacklisted) ? (user.botStaff ? "Bot Staff" : "" + '\n' + user.blacklisted ? "Blacklisted" : "") : "None", true)
