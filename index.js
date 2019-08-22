@@ -51,10 +51,17 @@ client.login(token)
 
 client.on('ready', () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
-	client.user.setPresence({
+	if (!botData.get('maintenance')) client.user.setPresence({
 		status: 'online',
 		game: {
 			name: `for ${config.defaultPrefix}help`,
+      type: "WATCHING"
+		}
+	})
+  else client.user.setPresence({
+		status: 'dnd',
+		game: {
+			name: `maintenance work`,
       type: "WATCHING"
 		}
 	})
