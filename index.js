@@ -17,7 +17,8 @@ const client = new Discord.Client(),
       config = require('/app/bot/config.js'),
       fn = require('/app/bot/fn.js'),
       userData = new db.table("USERDATA"),
-      guildData = new db.table("GUILDDATA")
+      guildData = new db.table("GUILDDATA"),
+      botData = new db.table("BOTDATA")
 
 const app = express()
 app.use(express.static('public'));
