@@ -10,7 +10,7 @@ module.exports = (client) => {
   client.on('guildMemberAdd', async member => {
     let autoRoleID = guildData.get(`${member.guild.id}.autoRole`)
     let autoRole = member.guild.roles.get(autoRoleID)
-    if (autoRole) member.addRole(autoRole)
+    if (autoRole && !member.user.bot) member.addRole(autoRole)
     
     let logChannelID = guildData.get(`${member.guild.id}.botlog`)
     let logChannel = client.channels.get(logChannelID)
