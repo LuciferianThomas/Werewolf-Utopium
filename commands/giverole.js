@@ -24,7 +24,7 @@ module.exports = {
     
     if (!args[1]) return message.channel.send(fn.embed(client, "Please mention the role you want to give."))
 		let role = message.mentions.roles.filter(role => role.name != "@everyone").first()
-    if (!role) role = fn.getRole(message.guild, args[1])
+    if (!role) role = fn.getRole(message.guild, args.slice(1).join(" "))
     if (!role) return message.channel.send(fn.embed(client, "Please mention the role you want to give."))
     
     if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.channel.send(fn.embed(client, "I do not have permissions to give roles."))
