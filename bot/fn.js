@@ -59,7 +59,7 @@ let getMember = (guild, data) => {
 
 let getRole = (guild, data) => {
   if (data instanceof Discord.Role) return data
-  if (typeof data == "string") return guild.roles.find(r => r.name.toLowerCase() == data.toLowerCase()) || guild.roles.find(role => role.id == data || role.name.toLowerCase().startsWith(data.toLowerCase()))
+  if (typeof data == "string") return guild.roles.find(role => role.name.toLowerCase() == data.toLowerCase() || role.id == data || role.name.toLowerCase().startsWith(data.toLowerCase()))
   throw Error('Cannot find role.')
 }
 
