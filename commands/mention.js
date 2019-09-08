@@ -27,10 +27,10 @@ module.exports = {
       roles.push(role)
     }
 
-		for (let i = 0; i < args.length; i++) await roles[i].setMentionable(true).catch(error => {})
+		for (let i = 0; i < args.length; i++) await roles[i].setMentionable(true).catch(() => {})
 
 		await message.channel.send(`${roles.map(r => `${r}`).join(' ')}`)
 
-		for (let i = 0; i < args.length; i++) await roles[i].setMentionable(false).catch(error => {})
+		for (let i = 0; i < args.length; i++) await roles[i].setMentionable(false).catch(() => {})
   }
 }
