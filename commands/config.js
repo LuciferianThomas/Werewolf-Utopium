@@ -32,7 +32,12 @@ const configItems = [{
 }, {
   name: "autoRole",
   displayName: "Role Given on Join",
-  type: "role"
+  type: "role",
+  list: true
+}, {
+  name: "automod",
+  displayName: "Auto Moderation",
+  type: "boolean"
 }]
 
 module.exports = {
@@ -94,11 +99,13 @@ module.exports = {
     }
     
     if (args.length >= 3) {
-      let item = args[0]
+      let item = args[0],
+          arg = args[1].toLowerCase()
       if (!configItems.map(i => i.name).includes(item)) return message.channel.send(fn.embed(client, {title: "Accepted Values", description: `${configItems.map(i => `\`${i.name}\``).join(', ')}`}))
-      if (args[1] != "set") return message.channel.send(fn.embed(client, {title: "Usage", description: "`config [item]\nconfig <item> reset\nconfig <item> set <newValue>`"}))
+      if (!["set","add","remove"].includes(arg) return message.channel.send(fn.embed(client, {title: "Usage", description: "`config [item]\nconfig <item> reset\nconfig <item> set <newValue>`"}))
       
       let cfgItem = configItems.find(i => i.name == item)
+      if (cfgItem.list && arg == "set") return message.channel.send(fn.embed(client))
       let newVal
       if (cfgItem.type == "channel") {
         let { id } = message.mentions.channels.filter(x => x.type == 'text').first() || message.guild.channels.filter(x => x.type == 'text').find(channel => channel.id == args[2] || channel.name.startsWith(args[2].toLowerCase()))
@@ -106,11 +113,12 @@ module.exports = {
       } else if (cfgItem.type == "role") {
         let { id } = message.mentions.roles.filter(x => x.name != '@everyone').first() || message.guild.roles.filter(x => x.name != '@everyone').find(role => role.id == args[2] || role.name.toLowerCase().startsWith(args[2].toLowerCase()))
         newVal = id
-      }
-      else newVal = args[2]
+      } else if (cfgItem.type == "boolean") {
+        newVal = args[2].toLowerCase() == "true" ? true
+               : args[2].toLowerCase() == "false" ? false : undefined
+      } else newVal = args[2]
       
-      
-      if (!newVal) return message.channel.send(fn.embed(client, {title: "Invalid Input", description: cfgItem.type != "string" ? `Please mention the ${cfgItem.type} or input the ID or name of the ${cfgItem.type}.` : "Please input the new value."}))
+      if (newVal === null || newVal === undefined) return message.channel.send(fn.embed(client, {title: "Invalid Input", description: cfgItem.type != "string" ? `Please mention the ${cfgItem.type} or input the ID or name of the ${cfgItem.type}.` : "Please input the new value."}))
       
       guildData.set(`${message.guild.id}.${item}`, newVal)
       let embed = new Discord.RichEmbed()
