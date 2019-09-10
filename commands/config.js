@@ -121,9 +121,9 @@ module.exports = {
       
       if (newVal === null || newVal === undefined) return message.channel.send(fn.embed(client, {title: "Invalid Input", description: cfgItem.type != "string" ? `Please mention the ${cfgItem.type} or input the ID or name of the ${cfgItem.type}.` : "Please input the new value."}))
       
-      guildData.set(`${message.guild.id}.${item}`, newVal)
+      if (arg == "set") guildData.set(`${message.guild.id}.${item}`, newVal)
       if (arg == "add") {
-        if (!guildData.get(`${message.guild.id}.${item}`)) guildData.set(`${message.guild.id}.${item}`, [])
+        if (!shared.guild[item] || typeof shared.guild[item] != "array") guildData.set(`${message.guild.id}.${item}`, [])
         guildData.push(`${message.guild.id}.${item}`, newVal)
       }
       
