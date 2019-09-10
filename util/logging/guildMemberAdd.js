@@ -9,7 +9,7 @@ const config = require('/app/bot/config.js'),
 module.exports = (client) => {
   client.on('guildMemberAdd', async member => {
     let autoRole = guildData.get(`${member.guild.id}.autoRole`)
-    let autoRole = member.guild.roles.get(autoRoleID)
+   // let autoRole = member.guild.roles.get(autoRoleID)
     if (autoRole && !member.user.bot) {
       if (typeof autoRole == "string") member.addRole(fn.getRole(member.guild, autoRole))
       else for (var i in autoRole) member.addRole(fn.getRole(member.guild, autoRole[i]))
