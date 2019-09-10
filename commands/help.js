@@ -61,7 +61,7 @@ module.exports = {
 
 			if (command.aliases) embed.addField(`Aliases`, command.aliases.join(', '))
 			if (command.description) embed.addField(`Description`, command.description)
-			if (command.usage) embed.addField(`Usage`,`\`${command.usage}\``)
+			if (command.usage) embed.addField(`Usage`, typeof command.usage == "string" ? `\`${command.usage}\`` : command.usage.map(i => `\`${i}\``).join("\n"))
 
 			message.channel.send(embed).then(message.delete())
 		}

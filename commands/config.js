@@ -33,11 +33,11 @@ const configItems = [{
   name: "autoRole",
   displayName: "Role Given on Join",
   type: "role"
-}, ]
+}]
 
 module.exports = {
   name: "config",
-  usage: "config [item]\nconfig <item> reset\nconfig <item> set <newValue>",
+  usage: ["config [item]","config <item> reset","config <item> set <newValue>"],
   description: "Get and set configuration of this server.",
   category: "Utility",
   guildPerms: ["MANAGE_GUILD"],
