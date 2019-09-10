@@ -102,10 +102,11 @@ module.exports = {
       let item = args[0],
           arg = args[1].toLowerCase()
       if (!configItems.map(i => i.name).includes(item)) return message.channel.send(fn.embed(client, {title: "Accepted Values", description: `${configItems.map(i => `\`${i.name}\``).join(', ')}`}))
-      if (!["set","add","remove"].includes(arg) return message.channel.send(fn.embed(client, {title: "Usage", description: "`config [item]\nconfig <item> reset\nconfig <item> set <newValue>`"}))
+      if (!["set","add","remove"].includes(arg)) return message.channel.send(fn.embed(client, {title: "Usage", description: "`config [item]\nconfig <item> reset\nconfig <item> set <newValue>`"}))
       
       let cfgItem = configItems.find(i => i.name == item)
-      if (cfgItem.list && arg == "set") return message.channel.send(fn.embed(client))
+      if ((cfgItem.list && arg == "set") || (!cfgItem.list && (arg == "add" || arg == "remove"))) return message.channel.send(fn.embed(client, "You can only `add` and `remove` items from lists!"))
+    
       let newVal
       if (cfgItem.type == "channel") {
         let { id } = message.mentions.channels.filter(x => x.type == 'text').first() || message.guild.channels.filter(x => x.type == 'text').find(channel => channel.id == args[2] || channel.name.startsWith(args[2].toLowerCase()))
@@ -121,6 +122,11 @@ module.exports = {
       if (newVal === null || newVal === undefined) return message.channel.send(fn.embed(client, {title: "Invalid Input", description: cfgItem.type != "string" ? `Please mention the ${cfgItem.type} or input the ID or name of the ${cfgItem.type}.` : "Please input the new value."}))
       
       guildData.set(`${message.guild.id}.${item}`, newVal)
+      if (arg == "add") {
+        if (!guildData.get(`${message.guild.id}.${item}`)) guildData.set(`${message.guild.id}.${item}`, [])
+        guildData.push(`${message.guild.id}.${item}`, newVal)
+      }
+      
       let embed = new Discord.RichEmbed()
         .setColor(config.embedColor)
         .setTitle(`Configuration | ${message.guild.name}`)
