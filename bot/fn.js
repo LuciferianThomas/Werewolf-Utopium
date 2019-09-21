@@ -85,7 +85,7 @@ let modCaseEmbed = (client, thisCase) => {
     .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
     .addField(user.bot ? "Bot" : "User", user, true)
     .addField("Moderator", moderator, true)
-  if (thisCase.period) embed.addField("Period", `${thisCase.period/1000/60} minute${thisCase.period/1000/60 == 1 ? "" : "s"}`, true)
+  if (thisCase.period) embed.addField("Duration", `${thisCase.period/1000/60} minute${thisCase.period/1000/60 == 1 ? "" : "s"}`, true)
   embed.addField("Reason", thisCase.reason)
     .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
     .setTimestamp(moment(thisCase.time))
