@@ -94,11 +94,15 @@ let modCaseEmbed = (client, thisCase) => {
 }
 
 let paginator = async (author, msg, embeds, pageNow) => {
-  if (pageNow != 0) await msg.react("⏪")
-  await msg.react("◀")
-  await msg.react("▶")
-  await msg.react("⏩")
-  let reaction = await msg.awaitReactions((reaction, user) => user.id == author && ["◀","▶","⏪","⏩"].includes(reaction.emoji.name), {time: 30*1000, max:1, errors: ['time']}).catch(() => msg.clearReactions())
+  if (pageNow != 0) {
+    await msg.react("⏪")
+    await msg.react("◀")
+  }
+  if (pageNow != embeds.length-1) {
+    await msg.react("▶")
+    await msg.react("⏩")
+  }
+  let reaction = await msg.awaitReactions((reaction, user) => user.id == author && ["◀","▶","⏪","⏩"].includes(reaction.emoji.name), {time: 30*1000, max:1, errors: ['time']}).catch(() => msg.clearReactions().catch(() => {}))
   if (!reaction.size) return undefined
   reaction = reaction.first()
   if (reaction.emoji.name == "◀") {
