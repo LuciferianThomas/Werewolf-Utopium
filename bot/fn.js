@@ -94,37 +94,30 @@ let modCaseEmbed = (client, thisCase) => {
 }
 
 let paginator = async (author, msg, embeds, pageNow) => {
-  msg.awaitReactions((reaction, user) => {
-    if (reaction.emoji.name == "◀" && user.id == author) {
-      msg.channel.send(embeds[Math.max(pageNow-1, 0)])
-        .then(m => {
-          msg.delete()
-          paginator(author, m, embeds, Math.max(pageNow-1, 0))
-        })
-    } else if (reaction.emoji.name == "▶" && user.id == author) {
-      msg.channel.send(embeds[Math.min(pageNow+1, embeds.length-1)])
-        .then(m => {
-          msg.delete()
-          paginator(author, m, embeds, Math.min(pageNow+1, embeds.length-1))
-        })
-    } else if (reaction.emoji.name == "⏪" && user.id == author) {
-      msg.channel.send(embeds[0])
-        .then(m => {
-          msg.delete()
-          paginator(author, m, embeds, 0)
-        })
-    } else if (reaction.emoji.name == "⏩" && user.id == author) {
-      msg.channel.send(embeds[embeds.length-1])
-        .then(m => {
-          msg.delete()
-          paginator(author, m, embeds, embeds.length-1)
-        })
-    } else return false
-  }, {time: 30*1000})
-  await msg.react("⏪")
+  if (pageNow != 0) await msg.react("⏪")
   await msg.react("◀")
   await msg.react("▶")
   await msg.react("⏩")
+  let reaction = await msg.awaitReactions((reaction, user) => user.id == author && ["◀","▶","⏪","⏩"].includes(reaction.emoji.name), {time: 30*1000, max:1, errors: ['time']}).catch(() => msg.clearReactions())
+  if (!reaction.size) return undefined
+  reaction = reaction.first()
+  if (reaction.emoji.name == "◀") {
+    let m = await msg.channel.send(embeds[Math.max(pageNow-1, 0)])
+    msg.delete()
+    paginator(author, m, embeds, Math.max(pageNow-1, 0))
+  } else if (reaction.emoji.name == "▶") {
+    let m = await msg.channel.send(embeds[Math.min(pageNow+1, embeds.length-1)])
+    msg.delete()
+    paginator(author, m, embeds, Math.min(pageNow+1, embeds.length-1))
+  } else if (reaction.emoji.name == "⏪") {
+    let m = await msg.channel.send(embeds[0])
+    msg.delete()
+    paginator(author, m, embeds, 0)
+  } else if (reaction.emoji.name == "⏩") {
+    let m = await msg.channel.send(embeds[embeds.length-1])
+    msg.delete()
+    paginator(author, m, embeds, embeds.length-1)
+  }
 }
 
 module.exports = {
