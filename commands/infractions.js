@@ -4,8 +4,8 @@ const Discord = require('discord.js'),
 
 const modCases = new db.table("MODCASES")
 
-const fn = require('/app/bot/fn.js'),
-      config = require('/app/bot/config.js')
+const config = require('/app/util/config'),
+      fn = require('/app/util/fn')
 
 module.exports = {
   name: "infractions",

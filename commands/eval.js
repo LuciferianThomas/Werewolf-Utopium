@@ -7,8 +7,8 @@ const userData = new db.table("USERDATA"),
       modCases = new db.table("MODCASES"),
       botData = new db.table("BOTDATA")
 
-const config = require('/app/util/config.js'),
-      fn = require('/app/util/fn.js')
+const config = require('/app/util/config'),
+      fn = require('/app/util/fn')
 
 module.exports = {
 	name: "eval",

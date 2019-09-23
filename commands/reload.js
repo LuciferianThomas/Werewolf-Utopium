@@ -1,6 +1,7 @@
-const Discord = require('discord.js');
+const Discord = require('discord.js')
 
-const fn = require('/app/bot/fn.js')
+const config = require('/app/util/config'),
+      fn = require('/app/util/fn')
 
 module.exports = {
   name: "reload",

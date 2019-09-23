@@ -14,8 +14,8 @@ const Discord = require('discord.js'),
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const client = new Discord.Client(),
-      config = require('/app/bot/config.js'),
-      fn = require('/app/bot/fn.js'),
+      config = require('/app/util/config'),
+      fn = require('/app/util/fn'),
       userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
       botData = new db.table("BOTDATA")
