@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 
-const config = require('/app/bot/config.js'),
-      fn = require('/app/bot/fn.js')
+const config = require('/app/util/config.js'),
+      fn = require('/app/util/fn.js')
 
 module.exports = {
   name: "echo",

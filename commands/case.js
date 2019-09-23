@@ -3,7 +3,7 @@ const Discord = require('discord.js'),
 
 const modCases = new db.table("MODCASES")
 
-const fn = require('/app/bot/fn.js')
+const fn = require('/app/util/fn')
 
 module.exports = {
   name: "case",
