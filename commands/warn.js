@@ -31,7 +31,9 @@ module.exports = {
     
     let reason = args.slice(1).join(' ') || "Unspecified"
     
-    let modCase = new fn.ModCase(client, cases.length+1, "WARN", target, message, reason)
+    if (!guildData.get(`${message.guild.id}.cases`)) guildData.set(`${message.guild.id}.cases`, 1)
+    let modCase = new fn.ModCase(client, guildData.get(`${message.guild.id}.cases`), "WARN", target, message, reason)
+    guildData.add(`${message.guild.id}.cases`, 1)
     let embed = fn.modCaseEmbed(client, modCase)
     
     target.user.send(fn.embed(client, `You have been kicked from ${message.guild.name}!`))
