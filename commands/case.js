@@ -20,10 +20,15 @@ module.exports = {
       return undefined
     }
     
-    if (!args[0] || isNaN(parseInt(args[0]))) return message.channel.send(fn.embed(client, `There has been ${cases.length} cases!`))
+    let caseID = args[0], mod = args[1].toLowerCase(), newVal = args.slice(2).join(" ")
     
-    var thisCase = cases.find(r => r.id == parseInt(args[0]))
-    if (!thisCase) return message.channel.send(fn.embed(client, `Case #${args[0]} does not exist!`))
+    if (!caseID || isNaN(parseInt(caseID))) return message.channel.send(fn.embed(client, `There has been ${cases.length} cases!`))
+    
+    var thisCase = cases.find(r => r.id == parseInt(caseID))
+    if (!thisCase) return message.channel.send(fn.embed(client, `Case #${caseID} does not exist!`))
+    
+    if (mod == "delete") cases.splice(cases.indexOf(cases.find(r => r.id == parseInt(caseID))), 1)
+    if (mod == "edit") cases[cases.indexOf(cases.find(r => r.id == parseInt(caseID)))] = newVal
     
     let embed = fn.modCaseEmbed(client, thisCase)
     
