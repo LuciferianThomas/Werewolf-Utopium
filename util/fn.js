@@ -63,11 +63,11 @@ let getRole = (guild, data) => {
   throw Error('Cannot find role.')
 }
 
-function ModCase (client, id, type, member, moderator, reason, period, message) {
+function ModCase (client, id, type, member, message, reason, period) {
   this.id = parseInt(id)
   this.type = type.toUpperCase()
   this.user = getUser(client, member).id
-  this.moderator = getUser(client, moderator).id
+  this.moderator = getUser(client, message.member).id
   this.reason = reason
   this.time = moment()
   this.period = period

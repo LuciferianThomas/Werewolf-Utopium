@@ -32,7 +32,7 @@ module.exports = {
     
     let reason = args.slice(1).join(' ') || "Unspecified"
     
-    let modCase = new fn.ModCase(client, cases.length+1, "BAN", target, message.member, reason)
+    let modCase = new fn.ModCase(client, cases.length+1, "BAN", target, message, reason)
     let embed = fn.modCaseEmbed(client, modCase)
     
     target.user.send(fn.embed(client, `You have been banned from ${message.guild.name}!`))

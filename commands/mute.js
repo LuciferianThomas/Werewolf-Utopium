@@ -45,7 +45,7 @@ module.exports = {
     
     let reason = args.slice(1).join(' ') || "Unspecified"
     
-    let modCase = new fn.ModCase(client, cases.length+1, "MUTE", target, message.member, reason)
+    let modCase = new fn.ModCase(client, cases.length+1, "MUTE", target, message, reason)
     let embed = fn.modCaseEmbed(client, modCase)
     
     target.addRole(muteRole).then(() => {

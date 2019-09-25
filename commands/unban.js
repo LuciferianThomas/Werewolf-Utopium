@@ -24,7 +24,7 @@ module.exports = {
         let cases = []
         if (modCases.has(message.guild.id)) cases = modCases.get(message.guild.id)
         
-        let modCase = new fn.ModCase(client, cases.length+1, "UNBAN", user, message.member, reason)
+        let modCase = new fn.ModCase(client, cases.length+1, "UNBAN", user, message, reason)
         let embed = fn.modCaseEmbed(client, modCase)
         
         modCases.push(message.guild.id, modCase)

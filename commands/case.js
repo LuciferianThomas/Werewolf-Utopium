@@ -2,7 +2,8 @@ const Discord = require('discord.js'),
       db = require("quick.db"),
       moment = require("moment")
 
-const modCases = new db.table("MODCASES")
+const modCases = new db.table("MODCASES"),
+      guildData = new db.table("GUILDDATA")
 
 const fn = require('/app/util/fn')
 
@@ -35,6 +36,9 @@ module.exports = {
           cases[cases.indexOf(thisCase)].reason = newVal
           break;
         case "duration": case "period":
+          if (!["TEMPMUTE", "MUTE"].includes(thisCase.type))
+            return message.channel.send(fn.embed(client, `You can only modify the durations of a mute!`))
+          
           let time = args[3].toLowerCase()
           if (!time) return message.channel.send(
             fn.embed(client, {
@@ -71,11 +75,17 @@ module.exports = {
         default:
           return message.channel.send(fn.embed(client, `\`${item}\` is either not editable or is invalid!`))
       }
+      let msg
+      if (thisCase.message) {
+        let c = client.channels.get(guildData.get(`${message.guild.id}.modlog`))
+        if (c) {
+          let m = c.fetchMessage(thisCase.message).catch(() => {})
+          if (m) m.edit(fn.modCaseEmbed(client, thisCase))
+        }
+      }
     }
     
-    let embed = fn.modCaseEmbed(client, thisCase)
-    
-    message.channel.send(embed)
+    message.channel.send(fn.modCaseEmbed(client, thisCase))
     return undefined
   }
 }
