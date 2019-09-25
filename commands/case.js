@@ -22,21 +22,27 @@ module.exports = {
       return undefined
     }
     
-    let caseID = args[0], mod = args[1].toLowerCase(), item = args[2].toLowerCase(), newVal = args.slice(3).join(" ")
+    let caseID = args[0],
+        mod = args[1] ? args[1].toLowerCase() : null,
+        item = args[2] ? args[2].toLowerCase() : null,
+        newVal = args[3] ? args.slice(3).join(" ") : null
     
     if (!caseID || isNaN(parseInt(caseID))) return message.channel.send(fn.embed(client, `There has been ${cases.length} cases!`))
     
     var thisCase = cases.find(r => r.id == parseInt(caseID))
     if (!thisCase) return message.channel.send(fn.embed(client, `Case #${caseID} does not exist!`))
     
-    if (mod == "delete") cases.splice(cases.indexOf(thisCase), 1)
+    if (mod == "delete") {
+      cases.splice(cases.indexOf(thisCase), 1)
+      modCases.set(message.guild.id, cases)
+    }
     if (mod == "edit") {
       switch (item) {
         case "reason":
           cases[cases.indexOf(thisCase)].reason = newVal
           break;
         case "duration": case "period":
-          if (!["TEMPMUTE", "MUTE"].includes(thisCase.type))
+          if (thisCase.type != "MUTE")
             return message.channel.send(fn.embed(client, `You can only modify the durations of a mute!`))
           
           let time = args[3].toLowerCase()
@@ -63,9 +69,9 @@ module.exports = {
           )
           
           cases[cases.indexOf(thisCase)].period = length
-          cases[cases.indexOf(thisCase)].type = "TEMPMUTE"
           
           if (!guildData.has(`${message.guild.id}.tempmutes`)) guildData.set(`${message.guild.id}.tempmutes`, [])
+          let tempmutes = guildData.get(`${message.guild.id}.tempmutes`).filter(x => x.user != thisCase.user)
           guildData.push(`${message.guild.id}.tempmutes`, {
             case: thisCase.id,
             user: thisCase.user,
@@ -83,7 +89,9 @@ module.exports = {
           if (m) m.edit(fn.modCaseEmbed(client, thisCase))
         }
       }
+      modCases.set(message.guild.id, cases)
     }
+    console.log(modCases.get(message.guild.id))
     
     message.channel.send(fn.modCaseEmbed(client, thisCase))
     return undefined
