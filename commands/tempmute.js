@@ -14,6 +14,7 @@ module.exports = {
 	usage: "tempmute <user> [reason]",
 	description: "Mute rule-breakers.",
   category: "Moderation",
+  aliases: ["stempmute", "stmute", "tmute"],
   guildPerms: ["KICK_MEMBERS"],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to mute."))
@@ -83,8 +84,10 @@ module.exports = {
         
       console.log(`${message.guild.name} | Tempmuted ${target.user.tag} (${target.user.id}) for ${length / 1000 / 60} minutes.`)
 
-      message.channel.send(fn.embed(client, `${target} has been temporarily muted!`))
-      message.channel.send(embed)
+      if (shared.commandName == "stmute" || shared.commandName == "stempmute") {
+        message.channel.send(fn.embed(client, `${target} has been temporarily muted!`))
+        message.channel.send(embed)
+      }
       
       target.user.send(fn.embed(client, `You have been temporarily muted from ${message.guild.name}!`))
       target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))

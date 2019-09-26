@@ -13,6 +13,7 @@ module.exports = {
 	usage: "mute <user> [reason]",
 	description: "Mute rule-breakers.",
   category: "Moderation",
+  aliases: ["smute"],
   guildPerms: ["KICK_MEMBERS"],
 	run: async (client, message, args, shared) => {
     if (!args[0]) return message.channel.send(fn.embed(client, "Please mention the user you want to mute."))
@@ -53,8 +54,10 @@ module.exports = {
         
       console.log(`${message.guild.name} | Muted ${target.user.tag} (${target.user.id})`)
 
-      message.channel.send(fn.embed(client, `${target} has been muted!`))
-      message.channel.send(embed)
+      if (shared.commandName == "smute") {
+        message.channel.send(fn.embed(client, `${target} has been muted!`))
+        message.channel.send(embed)
+      }
       
       target.user.send(fn.embed(client, `You have been muted from ${message.guild.name}!`))
       target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
