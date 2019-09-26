@@ -20,7 +20,7 @@ module.exports = {
     else if (message.mentions.members.size) target = message.mentions.members.first()
     let user = target.user
     
-    let cases = modCases.get(message.guild.id)
+    let cases = modCases.get(message.guild.id).filter(c => c.active)
     if (!cases || cases.length == 0) return await message.channel.send(fn.embed(client, `${target} has no infractions yet!`))
     cases = cases.filter(thisCase => thisCase.user == user.id && !thisCase.type.includes("UN"))
     if (!cases || cases.length == 0) return await message.channel.send(fn.embed(client, `${target} has no infractions yet!`))

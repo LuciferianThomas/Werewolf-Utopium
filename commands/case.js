@@ -30,10 +30,10 @@ module.exports = {
     if (!caseID || isNaN(parseInt(caseID))) return message.channel.send(fn.embed(client, `There has been ${cases.length} cases!`))
     
     var thisCase = cases.find(r => r.id == parseInt(caseID))
-    if (!thisCase) return message.channel.send(fn.embed(client, `Case #${caseID} does not exist!`))
+    if (!thisCase || !thisCase.active) return message.channel.send(fn.embed(client, `Case #${caseID} does not exist!`))
     
     if (mod == "delete") {
-      cases.splice(cases.indexOf(thisCase), 1)
+      cases[cases.indexOf(thisCase)].active = false
       modCases.set(message.guild.id, cases)
     }
     if (mod == "edit") {
