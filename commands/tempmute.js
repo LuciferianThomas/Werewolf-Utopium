@@ -84,7 +84,7 @@ module.exports = {
         
       console.log(`${message.guild.name} | Tempmuted ${target.user.tag} (${target.user.id}) for ${length / 1000 / 60} minutes.`)
 
-      if (shared.commandName == "stmute" || shared.commandName == "stempmute") {
+      if (shared.commandName != "stmute" && shared.commandName != "stempmute") {
         message.channel.send(fn.embed(client, `${target} has been temporarily muted!`))
         message.channel.send(embed)
       }

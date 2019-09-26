@@ -54,7 +54,7 @@ module.exports = {
         
       console.log(`${message.guild.name} | Muted ${target.user.tag} (${target.user.id})`)
 
-      if (shared.commandName == "smute") {
+      if (shared.commandName != "smute") {
         message.channel.send(fn.embed(client, `${target} has been muted!`))
         message.channel.send(embed)
       }
