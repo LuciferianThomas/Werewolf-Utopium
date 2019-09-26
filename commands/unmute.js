@@ -37,9 +37,7 @@ module.exports = {
     
     let reason = args.slice(1).join(' ') || "Unspecified"
     
-    if (!guildData.get(`${message.guild.id}.cases`)) guildData.set(`${message.guild.id}.cases`, 1)
-    let modCase = new fn.ModCase(client, guildData.get(`${message.guild.id}.cases`), "UNMUTE", target, message, reason)
-    guildData.add(`${message.guild.id}.cases`, 1)
+    let modCase = new fn.ModCase(client, cases.length+1, "UNMUTE", target, message, reason)
     let embed = fn.modCaseEmbed(client, modCase)
     
     if (!target.roles.has(muteRole.id)) return message.channel.send(fn.embed(client, `${target} is not muted!`))
