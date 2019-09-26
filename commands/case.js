@@ -33,7 +33,7 @@ module.exports = {
     if (!thisCase) return message.channel.send(fn.embed(client, `Case #${caseID} does not exist!`))
     
     if (mod == "delete") {
-      cases.splice(cases.indexOf(thisCase), 1)
+      cases[cases.indexOf(thisCase)].active = false
       modCases.set(message.guild.id, cases)
     }
     if (mod == "edit") {
