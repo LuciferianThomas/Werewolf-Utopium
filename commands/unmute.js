@@ -45,11 +45,11 @@ module.exports = {
     target.removeRole(muteRole).then(() => {
       modCases.push(message.guild.id, modCase)
       
-      message.channel.send(fn.embed(client, `${target} has been unmuted!`))
-      message.channel.send(embed)
+      //message.channel.send(fn.embed(client, `${target} has been unmuted!`))
+      message.channel.send(`${target}`, embed)
       
-      target.user.send(fn.embed(client, `You have been unmuted from ${message.guild.name}!`))
-      target.user.send(embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
+      //target.user.send(fn.embed(client, `You have been unmuted from ${message.guild.name}!`))
+      target.user.send(`You are unmuted in **${message.guild.name}**!`, embed).catch(error => message.channel.send(fn.embed(client, `I cannot DM ${target.user.tag}!`)))
       
       let modlog = message.guild.channels.find(channel => channel.id == shared.guild.modlog)
         

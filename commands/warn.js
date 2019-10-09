@@ -35,7 +35,7 @@ module.exports = {
     let embed = fn.modCaseEmbed(client, modCase)
     
     //target.user.send(fn.embed(client, `You have been warned from ${message.guild.name}!`))
-    target.user.send(""embed)
+    target.user.send(`You have been warned in **${message.guild.name}** for **${reason}**!`,embed)
     
     modCases.push(message.guild.id, modCase)
     
