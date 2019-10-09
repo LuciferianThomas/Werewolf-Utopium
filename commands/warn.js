@@ -34,8 +34,8 @@ module.exports = {
     let modCase = new fn.ModCase(client, cases.length+1, "WARN", target, message, reason)
     let embed = fn.modCaseEmbed(client, modCase)
     
-    target.user.send(fn.embed(client, `You have been kicked from ${message.guild.name}!`))
-    target.user.send(embed)
+    //target.user.send(fn.embed(client, `You have been warned from ${message.guild.name}!`))
+    target.user.send(""embed)
     
     modCases.push(message.guild.id, modCase)
     
