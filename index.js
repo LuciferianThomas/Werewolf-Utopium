@@ -82,7 +82,13 @@ client.on('guildCreate', async guild => {
 client.on('guildMemberAdd', async member => {
   if (member.guild.id != "522638136635817986") return;
   
-  member.guild.channels.get("640530363587887104").send(`${member} has joined`)
+  member.guild.channels.get("640530363587887104").send(`${member} has entered Utopia!`)
+})
+
+client.on('guildMemberRemove', async member => {
+  if (member.guild.id != "522638136635817986") return;
+  
+  member.guild.channels.get("640530363587887104").send(`**${member.user.username}** has sadly returned to`)
 })
 
 // for guilds
