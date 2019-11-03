@@ -79,6 +79,12 @@ client.on('guildCreate', async guild => {
   }
 })
 
+client.on('guildMemberAdd', async member => {
+  if (member.guild.id != "522638136635817986") return;
+  
+  member.guild.channels.get("640530363587887104").send(`${member} has joined`)
+})
+
 // for guilds
 client.on('message', async message => {
   
