@@ -37,7 +37,7 @@ module.exports = {
       .setFooter(`ID: ${target.id} | ${client.user.username}`, client.user.avatarURL)
     if (!target.user.bot) embed.addField(`${client.user.username} Tags`, (user.botStaff || user.blacklisted) ? (user.botStaff ? "Bot Staff" : "" + '\n' + user.blacklisted ? "Blacklisted" : "") : "None", true)
       .addField(`${client.user.username} Commands Used`, user.commandsUsed, true)
-    if (target.roles.size > 1) embed.addField(`Role${target.roles.size == 2 ? "" : "s"} [${target.roles.size-1}]`, target.roles.sort((a, b) => {if (a.position < b.position) return 1; if (a.position > b.position) return -1}).map(r => `${r}`).slice(1).join(' '), true)
+    if (target.roles.size > 1) embed.addField(`Role${target.roles.size == 2 ? "" : "s"} [${target.roles.size-1}]`, target.roles.sort((a, b) => {if (a.position < b.position) return -1; if (a.position > b.position) return 1}).map(r => `${r}`).slice(1).reverse().join(' '), true)
     
     message.channel.send(embed)
   }
