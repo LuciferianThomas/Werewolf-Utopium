@@ -9,7 +9,7 @@ const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),
       modCases = new db.table("MODCASES")
 
-let activities = ['Playing', 'Streaming', 'Listening', 'Watching']
+let activities = ['Playing', 'Streaming', 'Listening', 'Watching', '']
 let statuses = {online: "Online", idle: "Idle", dnd: "DND", offline: "Offline"}
 
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
       .addField(target.user.bot ? "Bot" : "User", `${target}`, true)
       .addField(target.user.bot ? "Created" : "Joined Discord", fn.date(target.user.createdAt), true)
       .addField('Current Status', `${statuses[target.user.presence.status]}`, true)
-      .addField('Current Activity', target.user.presence.game ? `${activities[target.user.presence.game.type]} ${target.user.presence.game.name}` : "None", true)
+      .addField(target.user.presence.game.type == 4 ? "Custom Status" : 'Current Activity', target.user.presence.game ? `${activities[target.user.presence.game.type]} ${target.user.presence.game.type == 4 ? target.user.presence.game.state : target.user.presence.game.name}` : "None", true)
       .setFooter(`ID: ${target.id} | ${client.user.username}`, client.user.avatarURL)
     if (!target.user.bot) embed.addField(`${client.user.username} Tags`, (user.botStaff || user.blacklisted) ? (user.botStaff ? "Bot Staff" : "" + '\n' + user.blacklisted ? "Blacklisted" : "") : "None", true)
       .addField(`${client.user.username} Commands Used`, user.commandsUsed, true)
