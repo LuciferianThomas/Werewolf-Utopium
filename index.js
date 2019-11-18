@@ -61,20 +61,20 @@ client.on('ready', async () => {
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
     now.tsi = await tsi_res.text()
     
-    if (last.alert !== now.alert) {
-      let added = diff.diffLines(last.alert, now.alert).filter(x => x.added && !x.value.includes("This message issued"))
+    let alertDifference = diff.diffLines(last.alert, now.alert).filter(x => x.added && !x.value.includes("This message issued"))
+    let tsiDifference = diff.diffLines(last.tsi, now.tsi).filter(x => x.added && !x.value.includes("This message issued"))
+    if (alertDifference.length) {
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0xEC4783)
           .setTitle("Train Service Delay/Disruption Announcement Updated")
           .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-          .setDescription("Please go and check for any updates.")
-          .
+          .setDescription(`Changes:\n${striptags(alertDifference.map(x => x.value).join("\n"))}`)
           .setFooter("Updated")
           .setTimestamp()
       )
     }
-    if (last.tsi !== now.tsi) {
+    if (tsiDifference.length) {
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0x323592)
