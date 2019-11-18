@@ -55,11 +55,11 @@ client.on('ready', async () => {
   setInterval(async () => {
     last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-    now.alert = (await alert_res.text()).replace(/ *\([^)]*\) */g, "");
+    now.alert = (await alert_res.text()).replace(/\<script.*\>.*\<\/script\>/g, "");
     
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
-    now.tsi = (await tsi_res.text()).replace(/ *\([^)]*\) */g, "");
+    now.tsi = (await tsi_res.text()).replace(/\<\/script.*\>.*\<\/script\>/g, "");
     
     let alertDifference = diff.diffLines(last.alert, now.alert).filter(x => x.added && !x.value.includes("This message issued"))
     let tsiDifference = diff.diffLines(last.tsi, now.tsi).filter(x => x.added && !x.value.includes("This message issued"))
