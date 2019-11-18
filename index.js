@@ -55,14 +55,14 @@ client.on('ready', async () => {
   setInterval(async () => {
     last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-    now.alert = striptags(await alert_res.text())
+    now.alert = await alert_res.text()
     
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
-    now.tsi = striptags(await tsi_res.text())
+    now.tsi = await tsi_res.text()
     
     if (last.alert !== now.alert) {
-      console.log(diff.diffLines(last.alert, now.alert))
+      console.log(last.alert, now.alert)
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0xEC4783)
@@ -74,7 +74,6 @@ client.on('ready', async () => {
       )
     }
     if (last.tsi !== now.tsi) {
-      console.log(diff.diffLines(last.tsi, now.tsi))
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0x323592)
@@ -86,7 +85,7 @@ client.on('ready', async () => {
       )
     }
     all.set("last", last)
-  }, 1000*30)
+  }, 1000*10)
 })
 
 // for guilds
