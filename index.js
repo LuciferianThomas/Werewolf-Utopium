@@ -61,8 +61,8 @@ client.on('ready', async () => {
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
     now.tsi = (await tsi_res.text()).replace(/\<script.*\>(.|\n)*?\<\/script\>/g, "");
     
-    let alertDifference = diff.diffLines(last.alert, now.alert).filter(x => x.added && x.value.trim().substring(1).toLowerCase() == x.value.trim().substring(1) && !x.value.includes("This message issued"))
-    let tsiDifference = diff.diffLines(last.tsi, now.tsi).filter(x => x.added && x.value.trim().substring(1).toLowerCase() == x.value.trim().substring(1) && !x.value.includes("This message issued"))
+    let alertDifference = diff.diffLines(last.alert, now.alert).filter(x => x.added && !x.value.includes("This message issued") && !x.value.includes("="))
+    let tsiDifference = diff.diffLines(last.tsi, now.tsi).filter(x => x.added && !x.value.includes("This message issued") && !x.value.included("="))
     if (alertDifference.length) {
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
