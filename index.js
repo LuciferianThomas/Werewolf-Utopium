@@ -62,13 +62,14 @@ client.on('ready', async () => {
     now.tsi = await tsi_res.text()
     
     if (last.alert !== now.alert) {
-      console.log(diff.diffLines(last.alert, now.alert))
+      let added = diff.diffLines(last.alert, now.alert).filter(x => x.added && !x.value.includes("This message issued"))
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0xEC4783)
           .setTitle("Train Service Delay/Disruption Announcement Updated")
           .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
           .setDescription("Please go and check for any updates.")
+          .
           .setFooter("Updated")
           .setTimestamp()
       )
