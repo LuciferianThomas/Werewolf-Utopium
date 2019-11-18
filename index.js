@@ -9,7 +9,7 @@ const Discord = require('discord.js'),
       moment = require('moment'),
       fetch = require('node-fetch'),
       db = require("quick.db"),
-      all = new db.table("all")
+      all = new db.table("allData")
 
 /* --- ALL PACKAGES --- */
 
@@ -45,7 +45,7 @@ const token = process.env.DISCORD_BOT_TOKEN
 
 client.login(token)
 
-let last = {alert: "", tsi:""}, now = {alert: "", tsi:""}
+let last = all.get("last"), now = {alert: "", tsi:""}
 
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
@@ -59,10 +59,28 @@ client.on('ready', async () => {
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
     now.tsi = await tsi_res.text()
     
-    all.set("last", )
+    // all.set("last", last)
     
-    if (last.alert !== now.alert && last.alert !== "") console.log("alert updated")
-    if (last.tsi !== now.tsi && last.tsi !== "") console.log("tsi updated")
+    if (last.alert !== now.alert && last.alert !== "") 
+      await client.users.get("336389636878368770").send(
+        new Discord.RichEmbed()
+          .setColor(0x323592)
+          .setTitle("Service Update Announcement Updated")
+          .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
+          .setDescription("Please go and check for any updates.")
+          .setFooter("Updated")
+          .setTimestamp()
+      )
+    if (last.tsi !== now.tsi && last.tsi !== "") 
+      await client.users.get("336389636878368770").send(
+        new Discord.RichEmbed()
+          .setColor(0xEC4783)
+          .setTitle("Train Service Delay/Disruption Announcement Updated")
+          .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
+          .setDescription("Please go and check for any updates.")
+          .setFooter("Updated")
+          .setTimestamp()
+      )
   }, 1000*10)
 })
 
