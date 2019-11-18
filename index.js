@@ -9,7 +9,9 @@ const Discord = require('discord.js'),
       moment = require('moment'),
       fetch = require('node-fetch'),
       db = require("quick.db"),
-      all = new db.table("allData")
+      all = new db.table("allData"),
+      striptags = require("striptags"),
+      diff = require("diff")
 
 /* --- ALL PACKAGES --- */
 
@@ -53,15 +55,14 @@ client.on('ready', async () => {
   setInterval(async () => {
     last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-    now.alert = await alert_res.text()
+    now.alert = striptags(await alert_res.text())
     
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
-    now.tsi = await tsi_res.text()
+    now.tsi = striptags(await tsi_res.text())
     
-    // all.set("last", last)
-    
-    if (last.alert !== now.alert && last.alert !== "") 
+    if (last.alert !== now.alert && last.alert !== "") {
+      console.log(diff.diffLines(last.alert, now.alert))
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0xEC4783)
@@ -71,7 +72,9 @@ client.on('ready', async () => {
           .setFooter("Updated")
           .setTimestamp()
       )
-    if (last.tsi !== now.tsi && last.tsi !== "") 
+    }
+    if (last.tsi !== now.tsi && last.tsi !== "") {
+      console.log(diff.diffLines(last.tsi, now.tsi))
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0x323592)
@@ -81,6 +84,8 @@ client.on('ready', async () => {
           .setFooter("Updated")
           .setTimestamp()
       )
+    }
+    all.set("last", last)
   }, 1000*10)
 })
 
