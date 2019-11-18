@@ -7,7 +7,9 @@ const Discord = require('discord.js'),
       fs = require("fs"),
       http = require('http'),
       moment = require('moment'),
-      fetch = require('node-fetch')
+      fetch = require('node-fetch'),
+      db = require("quick.db"),
+      all = new db.table("all")
 
 /* --- ALL PACKAGES --- */
 
@@ -43,16 +45,25 @@ const token = process.env.DISCORD_BOT_TOKEN
 
 client.login(token)
 
-let last = ''
+let last = {alert: "", tsi:""}, now = {alert: "", tsi:""}
 
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
-  // setInterval(async () => {
+  setInterval(async () => {
+    last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-    let alert_text = await alert_res.text()
-    console.log(alert_text)
-  // }, 1000)
+    now.alert = await alert_res.text()
+    
+    last.tsi = now.tsi
+    let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
+    now.tsi = await tsi_res.text()
+    
+    all.set("last", )
+    
+    if (last.alert !== now.alert && last.alert !== "") console.log("alert updated")
+    if (last.tsi !== now.tsi && last.tsi !== "") console.log("tsi updated")
+  }, 1000*10)
 })
 
 // for guilds
