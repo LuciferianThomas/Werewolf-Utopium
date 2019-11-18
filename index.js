@@ -55,7 +55,7 @@ client.on('ready', async () => {
   setInterval(async () => {
     last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-    now.alert = await alert_res.text()
+    now.alert = (await alert_res.text()).split("<body>")[1].split("</body>")
     
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
