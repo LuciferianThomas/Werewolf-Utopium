@@ -1,11 +1,5 @@
 const Discord = require('discord.js'),
-      db = require('quick.db'),
       moment = require('moment')
-
-const userData = new db.table("USERDATA"),
-      guildData = new db.table("GUILDDATA"),
-      modCases = new db.table("MODCASES"),
-      botData = new db.table("BOTDATA")
 
 const config = require('/app/util/config'),
       fn = require('/app/util/fn')
