@@ -62,7 +62,7 @@ client.on('ready', async () => {
     now.tsi = await tsi_res.text()
     
     if (last.alert !== now.alert) {
-      console.log(last.alert, now.alert)
+      console.log(diff.diffLines(last.alert, now.alert))
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0xEC4783)
