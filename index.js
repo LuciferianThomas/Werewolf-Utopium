@@ -61,7 +61,7 @@ client.on('ready', async () => {
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
     now.tsi = striptags(await tsi_res.text())
     
-    if (last.alert !== now.alert && last.alert !== "") {
+    if (last.alert !== now.alert) {
       console.log(diff.diffLines(last.alert, now.alert))
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
@@ -73,7 +73,7 @@ client.on('ready', async () => {
           .setTimestamp()
       )
     }
-    if (last.tsi !== now.tsi && last.tsi !== "") {
+    if (last.tsi !== now.tsi) {
       console.log(diff.diffLines(last.tsi, now.tsi))
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
@@ -86,7 +86,7 @@ client.on('ready', async () => {
       )
     }
     all.set("last", last)
-  }, 1000*10)
+  }, 1000*30)
 })
 
 // for guilds
