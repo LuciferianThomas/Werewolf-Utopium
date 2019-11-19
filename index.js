@@ -58,7 +58,7 @@ client.on('ready', async () => {
     now.alert = (await alert_res.text())
       .replace(/\<script.*\>(.|\n)*?\<\/script\>/g, "")
       .replace(/&nbsp;/g, " ")
-      .replace(/\<img.*to.*\>/g, "↔")
+      .replace(/\<img.*?to.*?\>/g, "↔")
       .replace(/\<\/tr\>/g, "\n")
       .replace(/\<\/td\>/g, "\t")
     
