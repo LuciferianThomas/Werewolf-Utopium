@@ -73,7 +73,7 @@ client.on('ready', async () => {
     
     let alertDifference = diff.diffLines(last.alert, now.alert).filter(x => x.added && !x.value.includes("This message issued") && !x.value.trim().endsWith(";"))
     let tsiDifference = diff.diffLines(last.tsi, now.tsi).filter(x => x.added && !x.value.includes("This message issued") && !x.value.trim().endsWith(";"))
-    if (alertDifference.length) {
+    if (striptags(alertDifference.map(x => x.value.trim()).join("\n")).length) {
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0xEC4783)
@@ -85,14 +85,14 @@ client.on('ready', async () => {
           .setTimestamp()
       )
     }
-    if (tsiDifference.length) {
+    if (striptags(tsiDifference.map(x => x.value.trim()).join("\n")).length) {
       await client.users.get("336389636878368770").send(
         new Discord.RichEmbed()
           .setColor(0x323592)
           .setTitle("Service Update Announcement Updated")
           .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
           .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-          .setDescription(`${striptags(tsiDifference.map(x => x.value).join("\n"))}`)
+          .setDescription(`${striptags(tsiDifference.map(x => x.value.trim()).join("\n"))}`)
           .setFooter("Updated")
           .setTimestamp()
       )
