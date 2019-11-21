@@ -59,7 +59,8 @@ client.on('ready', async () => {
     now.alert = now.alert.match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<table (?:.|\s)*?<\/table>/g)
       
     for (var i = 0; i < now.alert.length; i++)
-      now.alert[i] = now.alert[i].replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
+      now.alert[i] = now.alert[i].replace(/(\n|\r)+/g, "\n")
+          .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
           .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
           .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t")
           .replace(/<div><\/div>/g, "")
@@ -78,7 +79,7 @@ client.on('ready', async () => {
           .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
             
       
-    console.log(now.alert)
+    console.log(now.alert[now.alert.length-1])
 
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
