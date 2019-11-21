@@ -56,8 +56,10 @@ client.on('ready', async () => {
     last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
     now.alert = (await alert_res.text())
-    
-      
+      .matchAll(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<table (?:.|\s)*?<\/table>/g)
+      .forEach(alert => {
+        alert.replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, /$1/)
+      })
 
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
