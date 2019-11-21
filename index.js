@@ -52,10 +52,9 @@ let last = all.get("last"), now = {alert: "", tsi:""}
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
-  console.log(last)
-  
   setInterval(async () => {
-    last.alert = now.alert
+    last = all.get("last")
+    
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
     now.alert = await alert_res.text()
     now.alert = now.alert.match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<table (?:.|\s)*?<\/table>/g)
@@ -82,7 +81,7 @@ client.on('ready', async () => {
       
       now.alert[i] = {
         title: text.split("\n")[0],
-        timestamp: moment(text.split("\n")[1].split("This message issued  : ")[1].trim()),
+        timestamp: moment(text.split("\n")[1].split("This message issued  : ")[1].trim()+"+0800"),
         content: text.split("\n").slice(2).join("\n")
       }
       
@@ -100,7 +99,7 @@ client.on('ready', async () => {
       }
     }
 
-    last.tsi = now.tsi
+    // last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
     now.tsi = (await tsi_res.text())
       .replace(/\<script.*\>(.|\n)*?\<\/script\>/g, "")
@@ -137,7 +136,7 @@ client.on('ready', async () => {
           .setTimestamp()
       )
     }
-    all.set("last", last)
+    all.set("last", now)
   }, 1000*10)
 })
 
