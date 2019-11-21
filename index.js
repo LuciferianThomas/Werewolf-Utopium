@@ -57,10 +57,12 @@ client.on('ready', async () => {
     
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
     now.alert = await alert_res.text()
-    now.alert = now.alert.match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<table (?:.|\s)*?<\/table>/g)
+    now.alert = now.alert
+      .replace(/(\n|\r)+/g, "\n")
+      .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:<table |<div style=\"\"><br><p>)(?:.|\s)*?(?:<\/table>|<\/p>\n<\/div>)/g)
       
     for (var i = 0; i < now.alert.length; i++) {
-      let text = now.alert[i].replace(/(\n|\r)+/g, "\n")
+      let text = now.alert[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
         .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t").replace(/<div><\/div>/g, "")
@@ -83,7 +85,7 @@ client.on('ready', async () => {
         content: text.split("\n").slice(2).join("\n")
       }
       
-      console.log(now.alert[i])
+      // console.log(now.alert[i])
       
       if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content)) {
         await client.users.get("336389636878368770").send(
