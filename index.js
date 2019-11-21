@@ -56,11 +56,8 @@ client.on('ready', async () => {
     last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
     now.alert = (await alert_res.text())
-      .replace(/\<script.*\>(.|\n)*?\<\/script\>/g, "")
-      .replace(/&nbsp;/g, " ")
-      .replace(/\<img.*?to.*?\>/g, "↔")
-      .replace(/\<\/tr\>/g, "\n")
-      .replace(/\<\/td\>/g, "\t")
+    
+      
 
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
