@@ -85,6 +85,8 @@ client.on('ready', async () => {
         content: text.split("\n").slice(2).join("\n")
       }
       
+      console.log(now.alert[i])
+      
       if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content)) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
