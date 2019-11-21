@@ -52,6 +52,8 @@ let last = all.get("last"), now = {alert: "", tsi:""}
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
+  console.log(last)
+  
   setInterval(async () => {
     last.alert = now.alert
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
@@ -84,7 +86,7 @@ client.on('ready', async () => {
         content: text.split("\n").slice(2).join("\n")
       }
       
-      if (!last.alert.find(alert => alert.title == now.alert[i].title)) {
+      if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content)) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
             .setColor(0xEC4783)
