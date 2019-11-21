@@ -57,16 +57,16 @@ client.on('ready', async () => {
     let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
     now.alert = await alert_res.text()
     now.alert = now.alert.match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<table (?:.|\s)*?<\/table>/g)
-    //console.log(now.alert)
+      
     for (var i = 0; i < now.alert.length; i++)
-      console.log(now.alert[i].replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
+      now.alert[i] = now.alert[i].replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
           .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
           .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t")
           .replace(/<div><\/div>/g, "")
           .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n")
-    /*      .replace(/<br.*?>/g, "\n")
-          .replace(/<table.*?>((?:.|\s)*?)<\/table>"/g, "$1")
-          .replace(/<p><!--.*?--><\/p>"/g, "").replace(/<img.*?to.*?>/g, "↔")
+          .replace(/<br.*?>/g, "\n")
+          .replace(/<table.*?>((?:.|\s)*?)<\/table>/g, "$1")
+          .replace(/<p><!--.*?--><\/p>/g, "").replace(/<img.*?to.*?>/g, "↔")
           .replace(/<img.*?sign_alert.png.*?>/g, "⚠").replace(/\n( |\t)*?\n/g, "\n")
           .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
           .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
@@ -75,10 +75,10 @@ client.on('ready', async () => {
           .replace(/<div c.*?>((?:.|\s)*?)<\/div>/g, "")
           .replace(/⚠\n<strong>(.*?)<\/strong>/g, "⚠ $1").replace(/<!--.*?-->/g, "")
           .replace(/<div i.*?>/g, "").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
-          .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n") */
-                 )
+          .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
+            
       
-    //console.log(now.alert)
+    console.log(now.alert)
 
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
