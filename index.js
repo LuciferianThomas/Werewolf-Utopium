@@ -61,7 +61,7 @@ client.on('ready', async () => {
       .replace(/\<img.*?to.*?\>/g, "↔")
       .replace(/\<\/tr\>/g, "\n")
       .replace(/\<\/td\>/g, "\t")
-    
+
     last.tsi = now.tsi
     let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
     now.tsi = (await tsi_res.text())
@@ -70,7 +70,7 @@ client.on('ready', async () => {
       .replace(/\<img.*\>/g, "↔")
       .replace(/\<\/tr\>/g, "\n")
       .replace(/\<\/td\>/g, "\t")
-    
+
     let alertDifference = diff.diffLines(last.alert, now.alert).filter(x => x.added && !x.value.includes("This message issued") && !x.value.trim().endsWith(";"))
     let tsiDifference = diff.diffLines(last.tsi, now.tsi).filter(x => x.added && !x.value.includes("This message issued") && !x.value.trim().endsWith(";"))
     if (striptags(alertDifference.map(x => x.value.trim()).join("\n")).length) {
