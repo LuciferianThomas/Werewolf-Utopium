@@ -77,6 +77,7 @@ client.on('ready', async () => {
         .replace(/⚠\n<strong>(.*?)<\/strong>/g, "⚠ $1").replace(/<!--.*?-->/g, "")
         .replace(/<div i.*?>/g, "").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
+        .replace(/&.*?;/g, "")
         .trim()
       
       now.alert[i] = {
