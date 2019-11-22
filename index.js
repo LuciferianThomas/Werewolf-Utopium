@@ -84,7 +84,7 @@ client.on('ready', async () => {
         title: text.split("\n")[0],
         timestamp: moment(text.split("\n")[1].split("This message issued  : ")[1].trim()+"+0800"),
         content: text.split("\n").slice(2).join("\n"),
-        lines: text.split("\n")[0].match(/(?!Train)[A-Z].+? Line|Light Rail/g)
+        lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
       }
       
       console.log(now.alert[i])
