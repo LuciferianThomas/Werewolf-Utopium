@@ -87,7 +87,7 @@ client.on('ready', async () => {
         lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
       }
       
-      console.log(now.alert[i])
+      // console.log(now.alert[i])
       
       if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content)) {
         await client.users.get("336389636878368770").send(
@@ -136,7 +136,7 @@ client.on('ready', async () => {
         // lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
       }
       
-      console.log(now.tsi[i])
+      // console.log(now.tsi[i])
       
       if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
         await client.users.get("336389636878368770").send(
@@ -151,6 +151,8 @@ client.on('ready', async () => {
         )
       }
     }
+    
+    console.log(now)
     
     all.set("last", now)
   }, 1000*10)
