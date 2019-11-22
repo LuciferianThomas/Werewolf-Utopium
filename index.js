@@ -55,7 +55,7 @@ client.on('ready', async () => {
   setInterval(async () => {
     last = all.get("last")
     
-    let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
+    let alert_res = await fetch("http://www.mtr.com.hk/alert/alert_simpletxt_tc_title.html")
     now.alert = await alert_res.text()
     now.alert = now.alert
       .replace(/(\n|\r)+/g, "\n")
@@ -103,7 +103,7 @@ client.on('ready', async () => {
     }
 
     // last.tsi = now.tsi
-    let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
+    let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_tc_title.html")
     now.tsi = (await tsi_res.text())
       .replace(/\<script.*\>(.|\n)*?\<\/script\>/g, "")
       .replace(/&nbsp;/g, " ")
