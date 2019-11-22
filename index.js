@@ -141,7 +141,7 @@ client.on('ready', async () => {
       if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
-            .setColor(0xEC4783)
+            .setColor(0x323592)
             .setTitle(now.tsi[i].title)
             .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_titletsi.html")
             .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
