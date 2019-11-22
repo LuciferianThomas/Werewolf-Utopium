@@ -84,7 +84,7 @@ client.on('ready', async () => {
         title: text.split("\n")[0],
         timestamp: moment(text.split("\n")[1].split("This message issued  : ")[1].trim()+"+0800"),
         content: text.split("\n").slice(2).join("\n"),
-        line: text.replace(/.+?the (.+?Line)(.|\n)+?/i, "$1")
+        line: text.split("\n")[0].match(/((Kwun Tong|Tsuen Wan|Island|Tseung Kwan O|South Island|East Rail|West Rail|Ma On Shan|Tung Chung|Disneyland Resort) Line)|Airport Express|Light Rail/g)[0]
       }
       
       console.log(now.alert[i])
