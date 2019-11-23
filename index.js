@@ -60,8 +60,7 @@ client.on('ready', async () => {
     now.alert = now.alert
       .replace(/(\n|\r)+/g, "\n")
       .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:<table |<div style=\"\"><br><p>)(?:.|\s)*?(?:<\/table>|<\/p>\n<\/div>)/g)
-      
-    for (var i = 0; i < now.alert.length; i++) {
+        for (var i = 0; i < now.alert.length; i++) {
       let text = now.alert[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
@@ -199,4 +198,4 @@ client.on('ready', async () => {
     
 //     message.delete().catch(error => {})
 // 	}
-// })
+// })…
