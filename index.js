@@ -125,6 +125,7 @@ client.on('ready', async () => {
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/🔊\n<strong>(.*?)<\/strong>/g, "🔊 $1").replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
+        .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
         .replace(/&.*?;\s*/g, "")
         .trim()
