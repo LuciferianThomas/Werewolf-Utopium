@@ -75,6 +75,7 @@ client.on('ready', async () => {
         .replace(/<div c.*?>((?:.|\s)*?)<\/div>/g, "")
         .replace(/⚠\n<strong>(.*?)<\/strong>/g, "⚠ $1").replace(/<!--.*?-->/g, "")
         .replace(/<div i.*?>/g, "").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
+        .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
         .replace(/&.*?;\s*/g, "")
         .trim()
