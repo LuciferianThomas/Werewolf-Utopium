@@ -124,7 +124,7 @@ client.on('ready', async () => {
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/🔊\n<strong>(.*?)<\/strong>/g, "🔊 $1").replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
-        .replace(/\t\n/g, "\n").replace(/\n{1,}/g, "\n")
+        .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
         .replace(/&.*?;\s*/g, "")
         .trim()
       
@@ -142,7 +142,7 @@ client.on('ready', async () => {
           new Discord.RichEmbed()
             .setColor(0x323592)
             .setTitle(now.tsi[i].title)
-            .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_titletsi.html")
+            .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
             .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
             .setDescription(now.tsi[i].content)
             .setFooter("Updated")
