@@ -119,7 +119,6 @@ client.on('ready', async () => {
         .replace(/<table.*?>((?:.|\s)*?)<\/table>/g, "$1")
         .replace(/<img.*?ico_speaker_bak.png.*?>/g, "🔊")
         .replace(/<img.*?sign_message.png.*?>/g, "✉️")
-        .replace(/\n( |\t)*?\n/g, "\n")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div class=".*?tsi_title">((?:.|\s)*?)<\/div>/g, "$1")
