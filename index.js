@@ -89,7 +89,7 @@ client.on('ready', async () => {
       
       // console.log(now.alert[i])
       
-      if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content)) {
+      if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.timestamp == now.alert[i].timestamp)) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
             .setColor(0xEC4783)
@@ -134,7 +134,7 @@ client.on('ready', async () => {
         .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
-      // console.log(text)
+      console.log(text)
       
       now.tsi[i] = {
         title: text.split("\n")[0],
@@ -145,7 +145,7 @@ client.on('ready', async () => {
       
       // console.log(now.tsi[i])
       
-      if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
+      if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.timestamp == now.tsi[i].timestamp)) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
             .setColor(0x323592)
