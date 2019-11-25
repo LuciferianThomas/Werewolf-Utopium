@@ -89,7 +89,7 @@ client.on('ready', async () => {
       
       // console.log(now.alert[i])
       
-      if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.timestamp == now.alert[i].timestamp)) {
+      if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content)) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
             .setColor(0xEC4783)
@@ -126,15 +126,15 @@ client.on('ready', async () => {
         .replace(/<div c.*?>((?:.|\s)*?)<\/div>/g, "")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
-        .replace(/🔊\n<strong>(.*?)<\/strong>/g, "🔊 $1")
-        .replace(/✉️\n<strong>(.*?)<\/strong>/g, "✉️ $1").replace(/<!--.*?-->/g, "")
+        .replace(/🔊\s+<strong>(.*?)<\/strong>/g, "🔊 $1")
+        .replace(/✉️\s+<strong>(.*?)<\/strong>/g, "✉️ $1").replace(/<!--.*?-->/g, "")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)").replace(/<span(?:.|\s)*?>(.|\s)*?<\/span>/g, "$1")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
         .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
-      console.log(text)
+     // console.log(text)
       
       now.tsi[i] = {
         title: text.split("\n")[0],
@@ -145,7 +145,7 @@ client.on('ready', async () => {
       
       // console.log(now.tsi[i])
       
-      if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.timestamp == now.tsi[i].timestamp)) {
+      if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
             .setColor(0x323592)
