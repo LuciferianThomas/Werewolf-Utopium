@@ -123,20 +123,21 @@ client.on('ready', async () => {
         .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div class=".*?tsi_title">((?:.|\s)*?)<\/div>/g, "$1")
+        .replace(/<div class="content_text">((?:.|\s)*?)<\/div>/g, "$1").replace(/\t<strong><\/strong>\n\t/g,"")
         .replace(/<div c.*?>((?:.|\s)*?)<\/div>/g, "")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/🔊\n<strong>(.*?)<\/strong>/g, "🔊 $1")
-        .replace(/✉️\n<strong>(.*?)<\/strong>/g, "✉️ $1")
+        .replace(/✉️\n<strong>(.*?)<\/strong>/g, "✉️ $1").replace(/<!--.*?-->/g, "")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)").replace(/<span(?:.|\s)*?>(.|\s)*?<\/span>/g, "$1")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
         .replace(/&.*?;\s*/g, "")
         .trim()
       
-      console.log(text)
+      // console.log(text)
       
-      last.tsi[i] = now.tsi[i] = {
+      now.tsi[i] = {
         title: text.split("\n")[0],
         timestamp: moment(text.split("\n")[1].split(/This message issued\s+:\s+/g)[1].trim()+"+0800"),
         content: text.split("\n").slice(2).join("\n"),
@@ -145,18 +146,18 @@ client.on('ready', async () => {
       
       // console.log(now.tsi[i])
       
-      // if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
-      //   await client.users.get("336389636878368770").send(
-      //     new Discord.RichEmbed()
-      //       .setColor(0x323592)
-      //       .setTitle(now.tsi[i].title)
-      //       .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
-      //       .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-      //       .setDescription(now.tsi[i].content)
-      //       .setFooter("Updated")
-      //       .setTimestamp(now.tsi[i].timestamp)
-      //   )
-      // }
+      if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
+        await client.users.get("336389636878368770").send(
+          new Discord.RichEmbed()
+            .setColor(0x323592)
+            .setTitle(now.tsi[i].title)
+            .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
+            .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
+            .setDescription(now.tsi[i].content)
+            .setFooter("Updated")
+            .setTimestamp(now.tsi[i].timestamp)
+        )
+      }
     }
     
     console.log(now)
