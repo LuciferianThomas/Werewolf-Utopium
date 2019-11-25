@@ -82,7 +82,7 @@ client.on('ready', async () => {
       
       now.alert[i] = {
         title: text.split("\n")[0],
-        timestamp: moment(text.split("\n")[1].split("This message issued  : ")[1].trim()+"+0800"),
+        timestamp: moment(text.split("\n")[1].split(/This message issued\s+:\s+/g)[1].trim()+"+0800"),
         content: text.split("\n").slice(2).join("\n"),
         lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
       }
@@ -107,7 +107,7 @@ client.on('ready', async () => {
     now.tsi = await tsi_res.text()
     now.tsi = now.tsi
       .replace(/(\n|\r)+/g, "\n")
-      .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div id="sliding.*?">(?:.|\s)*?<\/div>/g)
+      .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div (id="sliding.*?"|class="content_text")>(?:.|\s)*?<\/div>/g)
       
     for (var i = 0; i < now.tsi.length; i++) {
       let text = now.tsi[i]
@@ -117,22 +117,27 @@ client.on('ready', async () => {
         .replace(/<div><\/div>/g, "")
         .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n").replace(/<br.*?>/g, "\n")
         .replace(/<table.*?>((?:.|\s)*?)<\/table>/g, "$1")
-        .replace(/<img.*?ico_speaker_bak.png.*?>/g, "🔊").replace(/\n( |\t)*?\n/g, "\n")
+        .replace(/<img.*?ico_speaker_bak.png.*?>/g, "🔊")
+        .replace(/<img.*?sign_message.png.*?>/g, "🔊")
+        .replace(/\n( |\t)*?\n/g, "\n")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div class=".*?tsi_title">((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/<div c.*?>((?:.|\s)*?)<\/div>/g, "")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
-        .replace(/🔊\n<strong>(.*?)<\/strong>/g, "🔊 $1").replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
-        .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)")
+        .replace(/🔊\n<strong>(.*?)<\/strong>/g, "🔊 $1")
+        .replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
+        .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)").replace(/<span(?:.|\s)*?>(.|\s)*?<\/span>/g, "$1")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
         .replace(/&.*?;\s*/g, "")
         .trim()
       
-      now.tsi[i] = {
+      console.log(text)
+      
+      last.tsi[i] = now.tsi[i] = {
         title: text.split("\n")[0],
-        timestamp: moment(text.split("\n")[1].split("This message issued : ")[1].trim()+"+0800"),
+        timestamp: moment(text.split("\n")[1].split(/This message issued\s+:\s+/g)[1].trim()+"+0800"),
         content: text.split("\n").slice(2).join("\n"),
         // lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
       }
