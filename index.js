@@ -77,7 +77,7 @@ client.on('ready', async () => {
         .replace(/<div i.*?>/g, "").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
-        .replace(/&.*?;\s*/g, "")
+        .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
       now.alert[i] = {
@@ -123,7 +123,7 @@ client.on('ready', async () => {
         .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div class=".*?tsi_title">((?:.|\s)*?)<\/div>/g, "$1")
-        .replace(/<div class="content_text">((?:.|\s)*?)<\/div>/g, "$1").replace(/\t<strong><\/strong>\n\t/g,"")
+        .replace(/<div class="content_text">((?:.|\s)*?)<\/div>/g, "$1").replace(/<strong><\/strong>/g,"")
         .replace(/<div c.*?>((?:.|\s)*?)<\/div>/g, "")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
@@ -132,7 +132,7 @@ client.on('ready', async () => {
         .replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)").replace(/<span(?:.|\s)*?>(.|\s)*?<\/span>/g, "$1")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
-        .replace(/&.*?;\s*/g, "")
+        .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
       // console.log(text)
