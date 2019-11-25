@@ -107,7 +107,7 @@ client.on('ready', async () => {
     now.tsi = await tsi_res.text()
     now.tsi = now.tsi
       .replace(/(\n|\r)+/g, "\n")
-      .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div (id="sliding.*?"|class="content_text")>(?:.|\s)*?<\/div>/g)
+      .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div id="sliding.*?">(?:.|\s)*?<\/div>/g)
       
     for (var i = 0; i < now.tsi.length; i++) {
       let text = now.tsi[i]
@@ -118,7 +118,7 @@ client.on('ready', async () => {
         .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n").replace(/<br.*?>/g, "\n")
         .replace(/<table.*?>((?:.|\s)*?)<\/table>/g, "$1")
         .replace(/<img.*?ico_speaker_bak.png.*?>/g, "🔊")
-        .replace(/<img.*?sign_message.png.*?>/g, "🔊")
+        .replace(/<img.*?sign_message.png.*?>/g, "✉️")
         .replace(/\n( |\t)*?\n/g, "\n")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
@@ -127,6 +127,7 @@ client.on('ready', async () => {
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/🔊\n<strong>(.*?)<\/strong>/g, "🔊 $1")
+        .replace(/✉️\n<strong>(.*?)<\/strong>/g, "✉️ $1")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)").replace(/<span(?:.|\s)*?>(.|\s)*?<\/span>/g, "$1")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
@@ -144,18 +145,18 @@ client.on('ready', async () => {
       
       // console.log(now.tsi[i])
       
-      if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
-        await client.users.get("336389636878368770").send(
-          new Discord.RichEmbed()
-            .setColor(0x323592)
-            .setTitle(now.tsi[i].title)
-            .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
-            .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-            .setDescription(now.tsi[i].content)
-            .setFooter("Updated")
-            .setTimestamp(now.tsi[i].timestamp)
-        )
-      }
+      // if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
+      //   await client.users.get("336389636878368770").send(
+      //     new Discord.RichEmbed()
+      //       .setColor(0x323592)
+      //       .setTitle(now.tsi[i].title)
+      //       .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
+      //       .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
+      //       .setDescription(now.tsi[i].content)
+      //       .setFooter("Updated")
+      //       .setTimestamp(now.tsi[i].timestamp)
+      //   )
+      // }
     }
     
     console.log(now)
