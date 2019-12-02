@@ -60,7 +60,7 @@ client.on('ready', async () => {
     now.alert = now.alert
       .replace(/(\n|\r)+/g, "\n")
       .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:<table |<div style=\"\"><br><p>)(?:.|\s)*?(?:<\/table>|<\/p>\n<\/div>)/g)
-        for (var i = 0; i < now.alert.length; i++) {
+        for (var i = 0; i < (now.alert ? now.alert.length : 0); i++) {
       let text = now.alert[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
@@ -109,7 +109,7 @@ client.on('ready', async () => {
       .replace(/(\n|\r)+/g, "\n")
       .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div id="sliding.*?">(?:.|\s)*?<\/div>/g)
       
-    for (var i = 0; i < now.tsi.length; i++) {
+    for (var i = 0; i < (now.tsi ? now.tsi.length : 0); i++) {
       let text = now.tsi[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
