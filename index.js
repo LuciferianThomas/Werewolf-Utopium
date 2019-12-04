@@ -89,7 +89,7 @@ client.on('ready', async () => {
       
       // console.log(now.alert[i])
       
-      if (!last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content)) {
+      if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content))) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
             .setColor(0xEC4783)
@@ -145,7 +145,7 @@ client.on('ready', async () => {
       
       // console.log(now.tsi[i])
       
-      if (!last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content)) {
+      if (!last.tsi || (last.tsi && !last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content))) {
         await client.users.get("336389636878368770").send(
           new Discord.RichEmbed()
             .setColor(0x323592)
