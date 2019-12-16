@@ -59,7 +59,7 @@ client.on('ready', async () => {
     now.alert = await alert_res.text()
     now.alert = now.alert
       .replace(/(\n|\r)+/g, "\n")
-      .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:((?:<div style=""><br><p>)(?:.|\s)*?(?:<\/p>\n<\/div>))(?:.|\s)*?((?:<table )(?:.|\s)*?(?:<\/table>))|(?:))/g)
+      .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:((?:<div style=""><br><p>)(?:.|\s)*?(?:<\/p>\n<\/div>))(?:.|\s)*?((?:<table )(?:.|\s)*?(?:<\/table>))|(?:<table |<div style=\"\"><br><p>)(?:.|\s)*?(?:<\/table>|<\/p>\n<\/div>))/g)
     
     console.log(now.alert)
     for (var i = 0; i < (now.alert ? now.alert.length : 0); i++) {
