@@ -63,6 +63,7 @@ client.on('ready', async () => {
         for (var i = 0; i < (now.alert ? now.alert.length : 0); i++) {
       let text = now.alert[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
+//        .replace(/<tr class="red_serviceaffected"><td.*?>((?:.|\s)*?)<\/td><td.*?>((?:.|\s)*?)<\/td>/g, "❖ $1 | $2\n")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
         .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t").replace(/<div><\/div>/g, "")
         .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n").replace(/<br.*?>/g, "\n")
