@@ -59,13 +59,13 @@ client.on('ready', async () => {
     now.alert = await alert_res.text()
     now.alert = now.alert
       .replace(/(\n|\r)+/g, "\n")
-      .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:((?:<div style=""><br><p>)(?:.|\s)*?(?:<\/p>\n<\/div>))(?:.|\s)*?((?:<table )(?:.|\s)*?(?:<\/table>))|(?:<table |<div style=\"\"><br><p>)(?:.|\s)*?(?:<\/table>|<\/p>\n<\/div>))(?:(?:.|\s)*?(?:<div class="content_text">\n<p>)(?:.|\s)*?(?:<\/p>)){0,1}/g)
+      .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:((?:<div style=""><br><p>)(?:.|\s)*?(?:<\/p>\n<\/div>))(?:.|\s)*?((?:<table )(?:.|\s)*?(?:<\/table>))|(?:<table |<div style=\"\"><br><p>)(?:.|\s)*?(?:<\/table>|<\/p>\n<\/div>))(?:.|\s)*?(?:(?:<div class="content_text">\s*?<p>)(?:.|\s)*?(?:<\/p>))/g)
     
     console.log(now.alert)
     for (var i = 0; i < (now.alert ? now.alert.length : 0); i++) {
       let text = now.alert[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
-        .replace(/<div class="content_text">\n<p>((?:.|\s)*?)<\/p>/, "$1")
+        .replace(/<div class="content_text">\n<p>((?:.|\s)*?)<\/p>/g, "$1")
         .replace(/<tr class="red_serviceaffected"><td.*?>((?:.|\s)*?)<\/td><td.*?>((?:.|\s)*?)<\/td><\/tr>/g, "❖ $1 | $2\n")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
         .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t").replace(/<div><\/div>/g, "")
