@@ -63,7 +63,7 @@ client.on('ready', async () => {
         for (var i = 0; i < (now.alert ? now.alert.length : 0); i++) {
       let text = now.alert[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
-//        .replace(/<tr class="red_serviceaffected"><td.*?>((?:.|\s)*?)<\/td><td.*?>((?:.|\s)*?)<\/td>/g, "❖ $1 | $2\n")
+        .replace(/<tr class="red_serviceaffected"><td.*?>((?:.|\s)*?)<\/td><td.*?>((?:.|\s)*?)<\/td><\/tr>/g, "❖ $1 | $2\n")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
         .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t").replace(/<div><\/div>/g, "")
         .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n").replace(/<br.*?>/g, "\n")
@@ -92,12 +92,13 @@ client.on('ready', async () => {
       
       if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content))) {
         await client.users.get("336389636878368770").send(
-          new Discord.RichEmbed()
-            .setColor(0xEC4783)
+          new Discord.RichEmbed({
+            fields: now.alert[i].content.split("❖").slice(1).map(x => {return { name: x.split("|")[0].replace(/\[(.+?)\]\((.+?)\)/g, "$1: $2"), value: x.split("|")[1]}})
+          }).setColor(0xEC4783)
             .setTitle(now.alert[i].title)
             .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
             .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-            .setDescription(now.alert[i].content)
+            .setDescription(now.alert[i].content.split("❖")[0])
             .setFooter("Updated")
             .setTimestamp(now.alert[i].timestamp)
         )
