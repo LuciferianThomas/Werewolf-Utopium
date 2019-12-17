@@ -84,14 +84,16 @@ client.on('ready', async () => {
         .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
+      console.log(now.alert[i])
+      
+      continue;
+      
       now.alert[i] = {
         title: text.split("\n")[0],
         timestamp: moment(text.split("\n")[1].split(/This message issued\s+:\s+/g)[1].trim()+"+0800"),
         content: text.split("\n").slice(2).join("\n"),
         lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
       }
-      
-      // console.log(now.alert[i])
       
       if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content))) {
         await client.users.get("336389636878368770").send(
