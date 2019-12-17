@@ -92,7 +92,7 @@ client.on('ready', async () => {
       }
       
       if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content))) {
-        await client.users.get("336389636878368770").send(
+        await client.channels.get("656367046837141525").send(
           new Discord.RichEmbed({
             fields: now.alert[i].content.split("❖").slice(1).map(x => {return { name: x.split("|")[0].replace(/\[(.+?)\]\((.+?)\)/g, "$1: $2"), value: x.split("|")[1]}})
           }).setColor(0xEC4783)
@@ -153,7 +153,7 @@ client.on('ready', async () => {
       // console.log(now.tsi[i])
       
       if (!last.tsi || (last.tsi && !last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content))) {
-        await client.users.get("336389636878368770").send(
+        await client.channels.get("656367046837141525").send(
           new Discord.RichEmbed()
             .setColor(0x323592)
             .setTitle(now.tsi[i].title)
@@ -167,7 +167,7 @@ client.on('ready', async () => {
     }
     
     console.log(now)
-    
+    // all.set("last", {})
     all.set("last", now)
   }, 1000*10)
 })
