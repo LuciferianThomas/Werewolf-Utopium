@@ -61,7 +61,7 @@ client.on('ready', async () => {
       .replace(/(\n|\r)+/g, "\n")
       .match(/<div class=\"title_sign3\">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?(?:((?:<div style=""><br><p>)(?:.|\s)*?(?:<\/p>\n<\/div>))(?:.|\s)*?((?:<table )(?:.|\s)*?(?:<\/table>))|(?:<table |<div style=\"\"><br><p>)(?:.|\s)*?(?:<\/table>|<\/p>\n<\/div>))/g)
     
-    //console.log(now.alert)
+    console.log(now.alert)
     for (var i = 0; i < (now.alert ? now.alert.length : 0); i++) {
       let text = now.alert[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
@@ -71,7 +71,7 @@ client.on('ready', async () => {
         .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t").replace(/<div><\/div>/g, "")
         .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n").replace(/<br.*?>/g, "\n")
         .replace(/<table.*?>((?:.|\s)*?)<\/table>/g, "$1")
-        .replace(/<p><!--.*?--><\/p>/g, "").replace(/<img.*?to.*?>/g, "↔")
+        .replace(/<p><!--.*?--><\/p>/g, "").replace(/<img.*?to.*?>/g, "\\↔")
         .replace(/<img.*?sign_alert.png.*?>/g, "⚠").replace(/\n( |\t)*?\n/g, "\n")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
