@@ -84,10 +84,6 @@ client.on('ready', async () => {
         .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
-      console.log(now.alert[i])
-      
-      continue;
-      
       now.alert[i] = {
         title: text.split("\n")[0],
         timestamp: moment(text.split("\n")[1].split(/This message issued\s+:\s+/g)[1].trim()+"+0800"),
@@ -96,17 +92,17 @@ client.on('ready', async () => {
       }
       
       if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content))) {
-        await client.users.get("336389636878368770").send(
-          new Discord.RichEmbed({
-            fields: now.alert[i].content.split("❖").slice(1).map(x => {return { name: x.split("|")[0].replace(/\[(.+?)\]\((.+?)\)/g, "$1: $2"), value: x.split("|")[1]}})
-          }).setColor(0xEC4783)
-            .setTitle(now.alert[i].title)
-            .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-            .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-            .setDescription(now.alert[i].content.split("❖")[0])
-            .setFooter("Updated")
-            .setTimestamp(now.alert[i].timestamp)
-        )
+        // await client.users.get("336389636878368770").send(
+        //   new Discord.RichEmbed({
+        //     fields: now.alert[i].content.split("❖").slice(1).map(x => {return { name: x.split("|")[0].replace(/\[(.+?)\]\((.+?)\)/g, "$1: $2"), value: x.split("|")[1]}})
+        //   }).setColor(0xEC4783)
+        //     .setTitle(now.alert[i].title)
+        //     .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
+        //     .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
+        //     .setDescription(now.alert[i].content.split("❖")[0])
+        //     .setFooter("Updated")
+        //     .setTimestamp(now.alert[i].timestamp)
+        // )
       }
     }
     
@@ -115,8 +111,11 @@ client.on('ready', async () => {
     now.tsi = now.tsi
       .replace(/(\n|\r)+/g, "\n")
       .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div id="sliding.*?">(?:.|\s)*?<\/div>/g)
+    
+    console.log(now.tsi)
       
     for (var i = 0; i < (now.tsi ? now.tsi.length : 0); i++) {
+      if (!now.tsi[i].match(/<img.*?ico_speaker_bak.png.*?>/g))
       let text = now.tsi[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
@@ -141,7 +140,7 @@ client.on('ready', async () => {
         .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
-     // console.log(text)
+     console.log(text)
       
       now.tsi[i] = {
         title: text.split("\n")[0],
