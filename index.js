@@ -92,17 +92,17 @@ client.on('ready', async () => {
       }
       
       if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content))) {
-        // await client.users.get("336389636878368770").send(
-        //   new Discord.RichEmbed({
-        //     fields: now.alert[i].content.split("❖").slice(1).map(x => {return { name: x.split("|")[0].replace(/\[(.+?)\]\((.+?)\)/g, "$1: $2"), value: x.split("|")[1]}})
-        //   }).setColor(0xEC4783)
-        //     .setTitle(now.alert[i].title)
-        //     .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-        //     .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-        //     .setDescription(now.alert[i].content.split("❖")[0])
-        //     .setFooter("Updated")
-        //     .setTimestamp(now.alert[i].timestamp)
-        // )
+        await client.users.get("336389636878368770").send(
+          new Discord.RichEmbed({
+            fields: now.alert[i].content.split("❖").slice(1).map(x => {return { name: x.split("|")[0].replace(/\[(.+?)\]\((.+?)\)/g, "$1: $2"), value: x.split("|")[1]}})
+          }).setColor(0xEC4783)
+            .setTitle(now.alert[i].title)
+            .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
+            .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
+            .setDescription(now.alert[i].content.split("❖")[0])
+            .setFooter("Updated")
+            .setTimestamp(now.alert[i].timestamp)
+        )
       }
     }
     
@@ -111,11 +111,12 @@ client.on('ready', async () => {
     now.tsi = now.tsi
       .replace(/(\n|\r)+/g, "\n")
       .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div id="sliding.*?">(?:.|\s)*?<\/div>/g)
-    
-    console.log(now.tsi)
       
     for (var i = 0; i < (now.tsi ? now.tsi.length : 0); i++) {
-      if (!now.tsi[i].match(/<img.*?ico_speaker_bak.png.*?>/g))
+      if (!(now.tsi[i].match(/<img.*?ico_speaker_bak.png.*?>/g) || now.tsi[i].match(/<img.*?sign_message.png.*?>/g))) {
+        now.tsi[i] = "Unused"
+        continue;
+      }
       let text = now.tsi[i]
         .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
         .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
@@ -171,45 +172,44 @@ client.on('ready', async () => {
   }, 1000*10)
 })
 
-// for guilds
-// client.on('message', async message => {
+client.on('message', async message => {
   
-//   if (message.author.bot || message.channel.type != 'text') return;
+  if (message.author.bot) return;
   
-//   const msg = message.content.trim().toLowerCase()
+  const msg = message.content.trim().toLowerCase()
   
-//   const mention = `<@${client.user.id}> `,
-//         mention1 = `<@!${client.user.id}> `
+  const mention = `<@${client.user.id}> `,
+        mention1 = `<@!${client.user.id}> `
   
-//   let shared = {}
+  let shared = {}
   
-//   if (message.content.startsWith(mention) || message.content.startsWith(mention1)) {
+  if (message.content.startsWith(mention) || message.content.startsWith(mention1)) {
     
-//     var args
+    var args
     
-//     if (msg.startsWith(mention)) {
-//       args = message.content.trim().slice(mention.length).split(/\s+/u)
-//       shared.prefix = mention
-//     } else if (msg.startsWith(mention1)) {
-//       args = message.content.trim().slice(mention1.length).split(/\s+/u)
-//       shared.prefix = mention1
-//     }
+    if (msg.startsWith(mention)) {
+      args = message.content.trim().slice(mention.length).split(/\s+/u)
+      shared.prefix = mention
+    } else if (msg.startsWith(mention1)) {
+      args = message.content.trim().slice(mention1.length).split(/\s+/u)
+      shared.prefix = mention1
+    }
     
-// 		const commandName = args.shift().toLowerCase()
-// 		shared.commandName = commandName
-// 		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
+		const commandName = args.shift().toLowerCase()
+		shared.commandName = commandName
+		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
 
-// 		if (!command) return;
+		if (!command) return;
     
-//     // shared.defaultPrefix = config.defaultPrefix
-//     // shared.embedColor = config.embedColor
+    // shared.defaultPrefix = config.defaultPrefix
+    // shared.embedColor = config.embedColor
     
-// 		try {
-// 			await command.run(client, message, args, shared)
-// 		} catch (error) {
-// 			console.log(error)
-// 		}
+		try {
+			await command.run(client, message, args, shared)
+		} catch (error) {
+			console.log(error)
+		}
     
-//     message.delete().catch(error => {})
-// 	}
-// })…
+    message.delete().catch(error => {})
+	}
+})
