@@ -71,7 +71,7 @@ client.on('ready', async () => {
         .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t").replace(/<div><\/div>/g, "")
         .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n").replace(/<br.*?>/g, "\n")
         .replace(/<table.*?>((?:.|\s)*?)<\/table>/g, "$1")
-        .replace(/<p><!--.*?--><\/p>/g, "").replace(/<img.*?to.*?>/g, "\\\↔")
+        .replace(/<p><!--.*?--><\/p>/g, "").replace(/<img.*?to.*?>/g, "\\↔")
         .replace(/<img.*?sign_alert.png.*?>/g, "⚠").replace(/\n( |\t)*?\n/g, "\n")
         .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
         .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
