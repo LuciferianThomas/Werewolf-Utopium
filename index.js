@@ -51,7 +51,7 @@ let last = all.get("last"), now = {alert: "", tsi:""}
 
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
-  
+  /*
   setInterval(async () => {
     last = all.get("last")
     
@@ -81,7 +81,6 @@ client.on('ready', async () => {
         .replace(/<div i.*?>/g, "").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
-        .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
       now.alert[i] = {
@@ -138,7 +137,6 @@ client.on('ready', async () => {
         .replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
         .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)").replace(/<span(?:.|\s)*?>(.|\s)*?<\/span>/g, "$1")
         .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
-        .replace(/&nbsp;\s*/g, " ").replace(/&.*?;\s*/g, "")
         .trim()
       
      console.log(text)
@@ -170,6 +168,7 @@ client.on('ready', async () => {
     // all.set("last", {})
     all.set("last", now)
   }, 1000*10)
+  */
 })
 
 client.on('message', async message => {
