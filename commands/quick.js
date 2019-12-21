@@ -13,6 +13,10 @@ module.exports = {
     if (QuickGames.find(game => game.players.length <= 16))
       QuickGames[QuickGames.indexOf(QuickGames.find(game => game.players.length <= 16))].players.push({ id: message.author.id })
     else
-      QuickGames.push({ })
+      QuickGames.push({
+        nextDay: null,
+        nextNight: null,
+        roles: ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter", "Bodyguard", "]
+      })
   }
 }
