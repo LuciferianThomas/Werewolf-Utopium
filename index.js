@@ -90,86 +90,8 @@ client.on('ready', async () => {
         lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
       }
       
-      if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].title && alert.content == now.alert[i].content))) {
-        await client.channels.get("656367046837141525").send(
-          new Discord.RichEmbed({
-            fields: now.alert[i].content.split("❖").slice(1).map(x => {return { name: x.split("|")[0].replace(/\[(.+?)\]\((.+?)\)/g, "$1: $2"), value: x.split("|")[1]}})
-          }).setColor(0xEC4783)
-            .setTitle(now.alert[i].title)
-            .setURL("http://www.mtr.com.hk/alert/alert_simpletxt_title.html")
-            .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-            .setDescription(now.alert[i].content.split("❖")[0])
-            .setFooter("Updated")
-            .setTimestamp(now.alert[i].timestamp)
-        )
-      }
-    }
-    
-    let tsi_res = await fetch("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
-    now.tsi = await tsi_res.text()
-    now.tsi = now.tsi
-      .replace(/(\n|\r)+/g, "\n")
-      .match(/<div class=".*?tsi_title">\s*?<table>(?:.|\s)*?<\/table>\s*?<\/div>(?:.|\s)*?<div id="sliding.*?">(?:.|\s)*?<\/div>/g)
-      
-    for (var i = 0; i < (now.tsi ? now.tsi.length : 0); i++) {
-      if (!(now.tsi[i].match(/<img.*?ico_speaker_bak.png.*?>/g) || now.tsi[i].match(/<img.*?sign_message.png.*?>/g))) {
-        now.tsi[i] = "Unused"
-        continue;
-      }
-      let text = now.tsi[i]
-        .replace(/<div s.*?>((?:.|\s)*?)<\/div>/g, "$1")
-        .replace(/<td.*?>((?:.|\s)*?)<\/td>/g, "$1\t")
-        .replace(/<th.*?>((?:.|\s)*?)<\/th>/g, "$1\t")
-        .replace(/<div><\/div>/g, "")
-        .replace(/<tr.*?>((?:.|\s)*?)<\/tr>/g, "$1\n").replace(/<br.*?>/g, "\n")
-        .replace(/<table.*?>((?:.|\s)*?)<\/table>/g, "$1")
-        .replace(/<img.*?ico_speaker_bak.png.*?>/g, "🔊")
-        .replace(/<img.*?sign_message.png.*?>/g, "✉️")
-        .replace(/\n( |\t)*?\n/g, "\n").replace(/ {3,}/g, "").replace(/\n\t/g, "\n")
-        .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
-        .replace(/<div class=".*?tsi_title">((?:.|\s)*?)<\/div>/g, "$1")
-        .replace(/<div class="content_text">((?:.|\s)*?)<\/div>/g, "$1").replace(/<strong><\/strong>/g,"")
-        .replace(/<div c.*?>((?:.|\s)*?)<\/div>/g, "")
-        .replace(/<p.*?>((?:.|\s)*?)<\/p>/g, "$1")
-        .replace(/<div i.*?>((?:.|\s)*?)<\/div>/g, "$1")
-        .replace(/🔊\s+<strong>(.*?)<\/strong>/g, "🔊 $1")
-        .replace(/✉️\s+<strong>(.*?)<\/strong>/g, "✉️ $1").replace(/<!--.*?-->/g, "")
-        .replace(/\n( |\t)*?\n/g, "\n").replace(/<sup><\/sup>/g, "").replace(/\n /g, " ")
-        .replace(/<a href=\"((?:.|\s)+?)\"(?:.|\s)*?>((?:.|\s)+?)<\/a>/g, "[$2]($1)").replace(/<span(?:.|\s)*?>(.|\s)*?<\/span>/g, "$1")
-        .replace(/\t\n/g, "\n").replace(/\n{2,}/g, "\n")
-        .trim()
-      
-     console.log(text)
-      
-      now.tsi[i] = {
-        title: text.split("\n")[0],
-        timestamp: moment(text.split("\n")[1].split(/This message issued\s+:\s+/g)[1].trim()+"+0800"),
-        content: text.split("\n").slice(2).join("\n"),
-        // lines: text.split("\n")[0].match(/([A-Z].+?)+ Line|Light Rail/g)
-      }
-      
-      // console.log(now.tsi[i])
-      
-      if (!last.tsi || (last.tsi && !last.tsi.find(tsi => tsi.title == now.tsi[i].title && tsi.content == now.tsi[i].content))) {
-        await client.channels.get("656367046837141525").send(
-          new Discord.RichEmbed()
-            .setColor(0x323592)
-            .setTitle(now.tsi[i].title)
-            .setURL("http://www.mtr.com.hk/alert/tsi_simpletxt_title.html")
-            .setThumbnail("https://cdn.glitch.com/d7b6f4af-db94-4fb0-9341-aa45140f4d36%2FMTR.png?v=1574086190653")
-            .setDescription(now.tsi[i].content)
-            .setFooter("Updated")
-            .setTimestamp(now.tsi[i].timestamp)
-        )
-      }
-    }
-    
-    console.log(now)
-    // all.set("last", {})
-    all.set("last", now)
-  }, 1000*10)
-  */
-})
+      if (!last.alert || (last.alert && !last.alert.find(alert => alert.title == now.alert[i].t
+*/})
 
 client.on('message', async message => {
   
