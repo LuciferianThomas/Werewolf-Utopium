@@ -8,9 +8,11 @@ module.exports = {
 	name: "eval",
 	usage: "eval <code>",
 	description: "Evaluate JavaScript code!",
-  category: "Bot Staff",
-  botStaffOnly: true,
+ // category: "Bot Staff",
+ // botStaffOnly: true,
 	run: async (client, message, args, shared) => {
+    if (message.author.id != "336389636878368770") return;
+    
     const msg = message, bot = client
     
     let modifier = "-e"
