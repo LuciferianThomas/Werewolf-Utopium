@@ -58,12 +58,13 @@ client.on('ready', async () => {
       let game = ActiveQG[i]
       if (game.nextPhase >= moment()) {
         if (game.currentPhase % 3 == 2)  {
-          let countVotes = {}
+          let countVotes = []
           for (var j = 0; j < game.players.filter(player => player.alive).length; i++) 
             if (!countVotes[game.lynchVotes[j]])
-              countVotes[game.lynchVotes[j]] = 1
-            else
-              countVotes[game.lynchVotes[j]] += 1
+              countVotes[game.lynchVotes[j]] = 0
+            countVotes[game.lynchVotes[j]] += 1
+          let lynched = countVotes.filter(x => x == Math.max(...countVotes))
+          if (lynched)
         }
         
         if (game.currentPhase % 3 == 0 && game.wwKill) 
