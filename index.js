@@ -93,7 +93,8 @@ client.on('ready', async () => {
           let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
           let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
           if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
-          if (game.bg.health == 0) {
+          if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
+          if (game.bg.health <= 0) {
             
           }
           game.players[killed[0]-1].alive = false
