@@ -23,6 +23,8 @@ module.exports = {
       await client.users.get(game.players[i].id).send(`**${message.author.username}** voted to start! (${votes+1}/${game.players.length})\nDo \`w!start\` if you want the game to start.`)
     }
     
+    games.add(`${player.currentGame}.startVotes`, 1)
+    
     //if (votes+1 == game.players.length)
   }
 }
