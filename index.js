@@ -58,7 +58,12 @@ client.on('ready', async () => {
       let game = ActiveQG[i]
       if (game.nextPhase >= moment()) {
         if (game.currentPhase % 3 == 2)  {
-          
+          let countVotes = {}
+          for (var j = 0; j < game.players.filter(player => player.alive).length; i++) 
+            if (!countVotes[game.lynchVotes[j]])
+              countVotes[game.lynchVotes[j]] = 1
+            else
+              countVotes[game.lynchVotes[j]] += 1
         }
         
         if (game.currentPhase % 3 == 0 && game.wwKill) 
@@ -70,7 +75,7 @@ client.on('ready', async () => {
           client, game, 
           game.currentPhase % 3 == 0 ? `Night ${game.currentPhase/3+1} has started!` :
           game.currentPhase % 3 == 1 ? `Day ${game.currentPhase/3+1} has started!` :
-          `Voting time has started.`
+          `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)}`
         )
         
         if (game.currentPhase % 3 == 0 && !game.lynch) 
