@@ -57,9 +57,14 @@ client.on('ready', async () => {
     for (let i = 0; i < ActiveQG.length; i++) {
       let game = ActiveQG[i]
       if (game.nextPhase >= moment()) {
-        game.currentPhase += 1
-        if (game.currentPhase % 3 == 0 && !game.lynch) 
+        if (game.currentPhase % 3 == 2)  {
+          
+        }
+        
+        if (game.currentPhase % 3 == 0 && game.wwKill) 
           await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+        
+        game.currentPhase += 1
         
         await fn.broadcast(
           client, game, 
@@ -67,6 +72,9 @@ client.on('ready', async () => {
           game.currentPhase % 3 == 1 ? `Day ${game.currentPhase/3+1} has started!` :
           `Voting time has started.`
         )
+        
+        if (game.currentPhase % 3 == 0 && !game.lynch) 
+          await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
       }
     }
   }, 250)
