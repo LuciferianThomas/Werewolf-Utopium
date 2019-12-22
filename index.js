@@ -58,10 +58,14 @@ client.on('ready', async () => {
       let game = ActiveQG[i]
       if (game.nextPhase >= moment()) {
         game.currentPhase += 1
+        if (game.currentPhase % 3 == 0 && !game.lynch) 
+          await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+        
         await fn.broadcast(
           client, game, 
           game.currentPhase % 3 == 0 ? `Night ${game.currentPhase/3+1} has started!` :
           game.currentPhase % 3 == 1 ? `Day ${game.currentPhase/3+1} has started!` :
+          `Voting time has started.`
         )
       }
     }
