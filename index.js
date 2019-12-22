@@ -92,7 +92,10 @@ client.on('ready', async () => {
           }
           let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
           let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
-          if (game.bgTarget == killed[0] || game.docTarget == killed[0] || game.players[killed[0]-1].role)
+          if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
+          if (game.bg.health == 0) {
+            
+          }
           game.players[killed[0]-1].alive = false
           await fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
         }
