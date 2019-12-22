@@ -10,6 +10,8 @@ const broadcast = async (client, game, content) => {
 }
 
 module.export = async (client, game) => {
+  let ModeGames = games.get(game.mode)
+  
   await broadcast(client, game, "Game is starting...")
   
   for (var i = 0; i < game.players.length; i++) {
@@ -19,4 +21,11 @@ module.export = async (client, game) => {
   }
   
   game.currentPhase += 1
+  game.nextPhase = moment().add(1, "m")
+  
+  ModeGames[ModeGames.indexOf(ModeGames.find(g => g.id == game.id))] = game
+  
+  await broadcase(client, game, "Night 1 has begun.")
+  
+  games.set(game.mode, ModeGames)
 }

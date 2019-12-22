@@ -49,6 +49,16 @@ client.login(token)
 
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
+  
+  setInterval(async () => {
+    let QuickGames = games.get("quick")
+    
+    let ActiveQG = QuickGames.filter(game => game.currentPhase >= 0)
+    for (let i = 0; i < ActiveQG.length; i++) {
+      let game = ActiveQG[i]
+      if (game.nextPhase >= moment()) game.currentPhase += 1
+    }
+  }, 250)
 })
 
 client.on('message', async message => {
