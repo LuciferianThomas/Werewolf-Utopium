@@ -75,6 +75,8 @@ client.on('ready', async () => {
             }
           } else
             await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+          
+          for (var j = 0; j < game.players.length; j++) game.players.lynchVote = null
         }
         
         game.currentPhase += 1
@@ -87,7 +89,7 @@ client.on('ready', async () => {
         )
         
         if (game.currentPhase % 3 == 1)  {
-          let wwVotes = game.players.filter(player => player.alive &&).map(player => player.lynchVote),
+          let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.lynchVote),
               wwVotesCount = []
           for (var j = 0; j < wwVotes.length; j++) {
             if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
