@@ -87,7 +87,7 @@ client.on('ready', async () => {
         )
         
         if (game.currentPhase % 3 == 1)  {
-          let wwVotes = game.players.filter(player => player.alive).map(player => player.lynchVote),
+          let wwVotes = game.players.filter(player => player.alive &&).map(player => player.lynchVote),
               wwVotesCount = []
           for (var j = 0; j < wwVotes.length; j++) {
             if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
@@ -95,11 +95,7 @@ client.on('ready', async () => {
           }
           let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
           let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
-          if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
-          //if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
-          if (game.bg.health <= 0) {
-            
-          }
+          
           game.players[killed[0]-1].alive = false
           await fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
         }
