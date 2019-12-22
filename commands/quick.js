@@ -10,16 +10,15 @@ module.exports = {
   run: async (client, message, args, shared) => {
     if (!games.get("count")) games.set("count", 0)
     if (!games.get("quick")) games.set("quick", [])
-    let QuickGames = games.get("quick"), gameID
+    let QuickGames = games.get("quick"), gameID, currentGame
     
     let game = QuickGames.find(game => game.players.length <= 16)
     if (game) {
-      gameID = game.gameID
       QuickGames[QuickGames.indexOf(game)].players.push({ id: message.author.id })
+      currentGame = QuickGames.find(game => game.gameID == gameID)
     } else {
-      gameID = games.add("count", 1)
-      QuickGames.push({
-        gameID: gameID,
+      currentGame = {
+        gameID: games.add("count", 1),
         nextDay: null,
         nextNight: null,
         roles: ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
@@ -27,7 +26,8 @@ module.exports = {
         players: [{
           id: message.author.id
         }]
-      })
+      }
+      QuickGames.push(currentGame)
     }
     
     games.set("quick", QuickGames)
@@ -35,12 +35,13 @@ module.exports = {
     if (!players.get(message.author.id)) 
       players.set(message.author.id, {
         xp: 0,
-        currentGame: gameID
+        currentGame: currentGame.gameID
       })
     
     message.author.send(
       new Discord.RichEmbed()
-        .setAuthor(`You have joined Game #${gameID}.`)
+        .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
+        .addField("Current Players", currentGame.players.map(player => `${client.users.get(player.id).username}`))
     )
   }
 }

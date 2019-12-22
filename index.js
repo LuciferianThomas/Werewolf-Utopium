@@ -8,10 +8,10 @@ const Discord = require('discord.js'),
       http = require('http'),
       moment = require('moment'),
       fetch = require('node-fetch'),
-      db = require("quick.db"),
-      all = new db.table("allData"),
-      striptags = require("striptags"),
-      diff = require("diff")
+      db = require("quick.db")
+
+const games = new db.table("Games"),
+      players = new db.table("Players")
 
 /* --- ALL PACKAGES --- */
 
@@ -74,8 +74,8 @@ client.on('message', async message => {
 
 		if (!command) return;
     
-    // shared.defaultPrefix = config.defaultPrefix
-    // shared.embedColor = config.embedColor
+    if (!players.get(message.author.id)) 
+      players.set(message.author.id, {})
     
 		try {
 			await command.run(client, message, args, shared)
