@@ -33,7 +33,6 @@ module.exports = {
       QuickGames.push(currentGame)
     }
     
-    
     let m = await message.author.send(
       new Discord.RichEmbed()
         .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
@@ -43,6 +42,14 @@ module.exports = {
       return undefined
     })
     if (!m) return undefined
+    
+    for (var i = 0; i < currentGame.players.length; i++) {
+      await client.users.get(currentGame.players[i].id).send(
+        new Discord.RichEmbed()
+          .setAuthor(`${message.author.username} joined the game.`, message.author.displayAvatarURL)         
+          .addField("Current Players", currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
+      )
+    }
     
     games.set("quick", QuickGames)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)
