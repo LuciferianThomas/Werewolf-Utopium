@@ -64,14 +64,17 @@ client.on('ready', async () => {
             if (!lynchCount[lynchVotes[j]]) lynchCount[lynchVotes[j]] = 0
             lynchCount[lynchVotes[j]] += 1
           }
-          let max = lynchCount.reduce((m, n) => Math.max(m, n))
-          let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
-          if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2)
+          if (lynchCount.length) {
+            let max = lynchCount.reduce((m, n) => Math.max(m, n))
+            let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
+            if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2)
+              await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+            else {
+              game.players[lynched[0]-1].alive = false
+              await fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
+            }
+          } else
             await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
-          else {
-            game.players[lynched[0]-1].alive = false
-            await fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
-          }
         }
         
         game.currentPhase += 1
@@ -93,7 +96,7 @@ client.on('ready', async () => {
           let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
           let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
           if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
-          if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
+          //if (game.bg.target == killed[0] || game.players[killed[0]-1].role == "Bodyguard") game.bg.health -= 1
           if (game.bg.health <= 0) {
             
           }
