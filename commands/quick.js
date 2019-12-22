@@ -21,6 +21,7 @@ module.exports = {
       currentGame = QuickGames.find(game => game.gameID == currentGame.gameID)
     } else {
       currentGame = {
+        mode: "quick",
         gameID: games.add("count", 1),
         nextPhase: null,
         currentPhase: -1,
