@@ -36,7 +36,7 @@ module.exports = {
     let m = await message.author.send(
       new Discord.RichEmbed()
         .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
-        .addField(`Current Players [${currentGame.playsers.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
+        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
     ).catch(async error => {
       await message.channel.send("**I cannot DM you!**\nPlease make sure you enabled Direct Messages on at least one server the bot is on.")
       return undefined
