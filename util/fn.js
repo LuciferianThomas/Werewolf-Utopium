@@ -129,6 +129,11 @@ let paginator = async (author, msg, embeds, pageNow) => {
   }
 }
 
+const broadcast = async (client, game, content) => {
+  for (var i = 0; i < game.players.length; i++) 
+    await client.users.get(game.players[i].id).send(content)
+}
+
 module.exports = {
   time: time,
   utcTime: utcTime,

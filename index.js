@@ -56,7 +56,14 @@ client.on('ready', async () => {
     let ActiveQG = QuickGames.filter(game => game.currentPhase >= 0)
     for (let i = 0; i < ActiveQG.length; i++) {
       let game = ActiveQG[i]
-      if (game.nextPhase >= moment()) game.currentPhase += 1
+      if (game.nextPhase >= moment()) {
+        game.currentPhase += 1
+        await fn.broadcast(
+          client, game, 
+          game.currentPhase % 3 == 0 ? `Night ${game.currentPhase/3+1} has started!` :
+          game.currentPhase % 3 == 1 ? `Day ${game.currentPhase/3+1} has started!` :
+        )
+      }
     }
   }, 250)
 })

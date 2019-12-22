@@ -4,15 +4,12 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games")
 
-const broadcast = async (client, game, content) => {
-  for (var i = 0; i < game.players.length; i++)
-    await client.users.get(game.players[i].id).send(content)
-}
+const fn = require("/app/util/fn")
 
 module.export = async (client, game) => {
   let ModeGames = games.get(game.mode)
   
-  await broadcast(client, game, "Game is starting...")
+  await fn.broadcast(client, game, "Game is starting...")
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].role = game.roles.splice(Math.floor(Math.random() * game.roles.length), 1)
@@ -25,7 +22,7 @@ module.export = async (client, game) => {
   
   ModeGames[ModeGames.indexOf(ModeGames.find(g => g.id == game.id))] = game
   
-  await broadcase(client, game, "Night 1 has begun.")
+  await fn.broadcast(client, game, "Night 1 has started.")
   
   games.set(game.mode, ModeGames)
 }
