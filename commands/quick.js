@@ -8,7 +8,7 @@ module.exports = {
   name: "quick",
   aliases: ["joingame", "q"],
   run: async (client, message, args, shared) => {
-    if (players.get(`${message.author.id}`)) 
+    if (players.get(`${message.author.id}.currentGame`)) 
       return await message.author.send("You are already in a game!")
     
     if (!games.get("count")) games.set("count", 0)
@@ -36,7 +36,7 @@ module.exports = {
     let m = await message.author.send(
       new Discord.RichEmbed()
         .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
-        .addField("Current Players", currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
+        .addField(`Current Players [${currentGame.playsers.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
     ).catch(async error => {
       await message.channel.send("**I cannot DM you!**\nPlease make sure you enabled Direct Messages on at least one server the bot is on.")
       return undefined
@@ -47,7 +47,7 @@ module.exports = {
       await client.users.get(currentGame.players[i].id).send(
         new Discord.RichEmbed()
           .setAuthor(`${message.author.username} joined the game.`, message.author.displayAvatarURL)         
-          .addField("Current Players", currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
+          .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
       )
     }
     
