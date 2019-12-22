@@ -74,9 +74,6 @@ client.on('ready', async () => {
           }
         }
         
-        if (game.currentPhase % 3 == 0 && game.wwKill) 
-          await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
-        
         game.currentPhase += 1
         
         await fn.broadcast(
@@ -86,8 +83,19 @@ client.on('ready', async () => {
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)}`
         )
         
-        if (game.currentPhase % 3 == 0 && !game.lynch) 
-          await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+        if (game.currentPhase % 3 == 1)  {
+          let wwVotes = game.players.filter(player => player.alive).map(player => player.lynchVote),
+              wwVotesCount = []
+          for (var j = 0; j < wwVotes.length; j++) {
+            if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
+            wwVotesCount[wwVotes[j]] += 1
+          }
+          let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
+          let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
+          if (game.bgTarget == killed[0] || game.docTarget == killed[0] || game.players[killed[0]-1].role)
+          game.players[killed[0]-1].alive = false
+          await fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+        }
       }
     }
   }, 250)
