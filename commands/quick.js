@@ -8,7 +8,7 @@ module.exports = {
   name: "quick",
   aliases: ["joingame", "q"],
   run: async (client, message, args, shared) => {
-    if (players.get(`${message.author.id}.currentGame`)) 
+    if (players.get(`${message.author.id}`)) 
       return await message.author.send("You are already in a game!")
     
     if (!games.get("count")) games.set("count", 0)
