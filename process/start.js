@@ -19,6 +19,7 @@ module.export = async (client, game) => {
   
   game.currentPhase += 1
   game.nextPhase = moment().add(1, "m")
+  game.bgHealth = 2
   
   ModeGames[ModeGames.indexOf(ModeGames.find(g => g.id == game.id))] = game
   
