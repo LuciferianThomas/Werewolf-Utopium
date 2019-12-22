@@ -60,7 +60,18 @@ client.on('ready', async () => {
         if (game.currentPhase % 3 == 2)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.lynchVote),
               lynchCount = []
-          for (var j = 0; j < lynchVotes.length; j++) {}
+          for (var j = 0; j < lynchVotes.length; j++) {
+            if (!lynchCount[lynchVotes[j]]) lynchCount[lynchVotes[j]] = 0
+            lynchCount[lynchVotes[j]] += 1
+          }
+          let max = lynchCount.reduce((m, n) => Math.max(m, n))
+          let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
+          if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2)
+            await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+          else {
+            game.players[lynched[0]-1].alive = false
+            await fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role})`)
+          }
         }
         
         if (game.currentPhase % 3 == 0 && game.wwKill) 
