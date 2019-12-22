@@ -1,5 +1,9 @@
 const Discord = require('discord.js'),
-      moment = require('moment')
+      moment = require('moment'),
+      db = require("quick.db")
+
+const games = new db.table("Games"),
+      players = new db.table("Players")
 
 const config = require('/app/util/config'),
       fn = require('/app/util/fn')
