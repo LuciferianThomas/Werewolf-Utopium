@@ -47,8 +47,6 @@ const token = process.env.DISCORD_BOT_TOKEN
 
 client.login(token)
 
-let last = all.get("last"), now = {alert: "", tsi:""}
-
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
 })
@@ -75,7 +73,10 @@ client.on('message', async message => {
 		if (!command) return;
     
     if (!players.get(message.author.id)) 
-      players.set(message.author.id, {})
+      players.set(message.author.id, {
+        xp: 0,
+        currentGame: null
+      })
     
 		try {
 			await command.run(client, message, args, shared)
