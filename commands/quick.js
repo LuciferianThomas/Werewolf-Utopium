@@ -22,8 +22,8 @@ module.exports = {
     } else {
       currentGame = {
         gameID: games.add("count", 1),
-        nextDay: null,
-        nextNight: null,
+        nextPhase: null,
+        currentPhase: -1,
         roles: ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
                 "Bodyguard", "Gunner", "Werewolf Shaman", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"],
         players: [{
