@@ -42,7 +42,7 @@ module.exports = {
         return await message.author.send("You cannot vote a dead player.")
       if (vote == gamePlayer.number) 
         return await message.author.send("You cannot vote yourself.")
-      game.player[gamePlayer.number-1].vote = vote
+      game.players[gamePlayer.number-1].vote = vote
     }
     QuickGames[index] = game
     
