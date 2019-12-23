@@ -53,11 +53,10 @@ client.on('ready', async () => {
   setInterval(async () => {
     let QuickGames = games.get("quick")
     
-    let ActiveQG = QuickGames.filter(game => game.currentPhase >= 0)
-    for (let i = 0; i < ActiveQG.length; i++) {
-      let game = ActiveQG[i]
-      if (moment(game.nextPhase) >= moment()) {
-        console.log(1)
+    for (let i = 0; i < QuickGames.length; i++) {
+      let game = QuickGames[i]
+      if (game.current == -1) continue;
+      if (moment(game.nextPhase) <= moment()) {
         if (game.currentPhase % 3 == 2)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
               lynchCount = []
@@ -93,8 +92,8 @@ client.on('ready', async () => {
         
         await fn.broadcast(
           client, game, 
-          game.currentPhase % 3 == 0 ? `Night ${game.currentPhase/3+1} has started!` :
-          game.currentPhase % 3 == 1 ? `Day ${game.currentPhase/3+1} has started!` :
+          game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
+          game.currentPhase % 3 == 1 ? `Day ${Math.floor(game.currentPhase/3)+1} has started!` :
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)}`
         )
         
@@ -131,9 +130,10 @@ client.on('ready', async () => {
           let skTarget = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote)
         }
       }
-      ActiveQG[i] = game
+      QuickGames[i] = game
     }
-  }, 250)
+    games.set('quick', QuickGames)
+  }, 1000)
 })
 
 client.on('message', async message => {

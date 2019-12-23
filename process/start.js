@@ -13,9 +13,10 @@ module.exports = async (client, game) => {
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
-    game.players[i].role = game.roles.splice(Math.floor(Math.random() * game.roles.length), 1)
+    game.players[i].role = game.roles.splice(Math.floor(Math.random() * game.players.length), 1)
     await client.users.get(game.players[i].id)
       .send(`You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
+    game.players[i].alive = true
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
   }
   
