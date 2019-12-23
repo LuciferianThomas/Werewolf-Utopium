@@ -76,12 +76,29 @@ client.on('ready', async () => {
               if (game.players[lynched[0]-1].role == "Fool") {
                 game.currentPhase = 999
                 fn.broadcast(client, game, `Game has ended. Fool wins!`)
+                continue;
               }
               if (lynched[0] == game.hhTarget) {
                 game.currentPhase = 999
                 fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
+                continue;
               }
-              if (game.players.filter(p => p.alive && ))
+              if (!game.players.filter(p => p.alive && (p.role.toLowerCase().includes("wolf") || ["Serial Killer"].includes(p.role))).length) {
+                game.currentPhase = 999
+                fn.broadcast(client, game, `Game has ended. The village wins!`)
+                continue;
+              }
+              if (game.players.filter(p => p.alive && p.role.toLowerCase().includes("wolf")).length >=
+                  game.players.filter(p => p.alive && !p.role.toLowerCase().includes("wolf")).length) {
+                game.currentPhase = 999
+                fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
+                continue;
+              }
+              if (game.players.filter(p => p.alive).map(p => p.role).length == 1 && ["Serial Killer"].includes(game.players.filter(p => p.alive).map(p => p.role)[0].role)) {
+                game.currentPhase = 999
+                fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
+                continue;
+              }
             }
           } else
             fn.broadcast(client, game, "The village cannot decide on who to lynch.")
@@ -98,6 +115,22 @@ client.on('ready', async () => {
         )
         
         if (game.currentPhase % 3 == 0) {
+          if (!game.players.filter(p => p.alive && (p.role.toLowerCase().includes("wolf") || ["Serial Killer"].includes(p.role))).length) {
+            game.currentPhase = 999
+            fn.broadcast(client, game, `Game has ended. The village wins!`)
+            continue;
+          }
+          if (game.players.filter(p => p.alive && p.role.toLowerCase().includes("wolf")).length >=
+              game.players.filter(p => p.alive && !p.role.toLowerCase().includes("wolf")).length) {
+            game.currentPhase = 999
+            fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
+            continue;
+          }
+          if (game.players.filter(p => p.alive).map(p => p.role).length == 1 && ["Serial Killer"].includes(game.players.filter(p => p.alive).map(p => p.role)[0].role)) {
+            game.currentPhase = 999
+            fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
+            continue;
+          }
           if (game.roles.includes("Gunner")) game.players[game.roles.indexOf("Gunner")].shotToday = false
           if (game.players.find(p => p.jailed && p.alive))
             client.users.get(game.players.find(p => p.jailed && p.alive).id)
