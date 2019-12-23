@@ -12,18 +12,25 @@ module.export = async (client, game) => {
   await fn.broadcast(client, game, "Game is starting...")
   
   for (var i = 0; i < game.players.length; i++) {
+    game.players[i].number = i+1
     game.players[i].role = game.roles.splice(Math.floor(Math.random() * game.roles.length), 1)
     await client.users.get(game.players[i].id)
       .send(`You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
-    if (game.players[i].role == "Serial Killer") {
-      
-    }
   }
   
   game.currentPhase += 1
   game.nextPhase = moment().add(1, "m")
-  // game.
+  if (game.players.map(player => player.role).includes("Headhunter")) {
+    let possibleTargets = game.players
+      .filter(player => 
+        !player.role.toLowerCase().includes("wolf") && 
+        !["Serial Killer", "Gunner", "Priest", "Mayor", "Cursed"].includes(player.role)
+      ).map(player => player.id)
+    game.hhTarget = possibleTargets[Math.floor(Math.random()*possibleTargets.length)]
+    await client.users.get(game.players.find(player => player.role == "Headhunter").id)
+      .send(`Your target is.`)
+  }
   
   ModeGames[ModeGames.indexOf(ModeGames.find(g => g.id == game.id))] = game
   
