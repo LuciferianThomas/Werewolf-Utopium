@@ -32,8 +32,12 @@ module.exports = {
       return await message.author.send("Invalid target.")
     if (!game.players[target-1].alive)
       return await message.author.send("You cannot jail an dead player.")
+    if (target == gamePlayer.number)
+      return await message.author.send("You cannot jail yourself.")
     
-    
+    for (var i = 0; i < game.players.length; i++) game.players[i].jailed = false
+    game.players[target-1].jailed = true
+    message.author.send(`You selected ${target} ${client.users.get(game.players[target-1].id).username} to be jailed.`)
     
     QuickGames[index] = game
     

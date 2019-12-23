@@ -26,7 +26,7 @@ module.exports = {
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only check on a player at night.")
     
-    if (gamePlayer.checkUsed)
+    if (gamePlayer.checkedTonight)
       return await message.author.send("You have already checked on a player tonight.")
     
     let target = parseInt(args[0])
@@ -45,7 +45,7 @@ module.exports = {
     else
       message.author.send(`${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}`)
     
-    game.players[gamePlayer.number-1].checkUsed = true
+    game.players[gamePlayer.number-1].checkedTonight = true
     
     QuickGames[index] = game
     

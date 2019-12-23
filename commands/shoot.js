@@ -38,6 +38,8 @@ module.exports = {
       return await message.author.send("Invalid target.")
     if (!game.players[target-1].alive)
       return await message.author.send("You cannot shoot an dead player.")
+    if (target == gamePlayer.number)
+      return await message.author.send("You cannot shoot yourself.")
     
     game.players[target-1].alive = false
     if (gamePlayer.role == "Gunner")

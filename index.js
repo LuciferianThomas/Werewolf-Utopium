@@ -95,7 +95,20 @@ client.on('ready', async () => {
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.`
         )
         
+        if (game.currentPhase % 3 == 0) {
+          game.players[game.roles.indexOf("Gunner")].shotToday = false
+          if (game.players.find(p => p.jailed && p.alive))
+            client.users.get(game.players.find(p => p.jailed && p.alive).id)
+              .send("**You are now jailed.**\nYou can talk to the jailer to prove your innocence or the jailer can execute you.")
+        }
+        
         if (game.currentPhase % 3 == 1)  {
+          for (var j = 0; j < game.players.length; j++) game.players[j].jailed = false
+          game.players[game.roles.indexOf("Aura Seer")].checkedTonight = false
+          game.players[game.roles.indexOf("Seer")].checkedTonight = false
+          game.players[game.roles.indexOf("Wolf Seer")].checkedTonight = false
+          
+          
           // console.log(game.players)
           let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.role == "Alpha Werewolf" ? player.vote*2 : player.vote),
               wwVotesCount = []
