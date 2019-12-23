@@ -64,6 +64,7 @@ client.on('ready', async () => {
             if (!lynchCount[lynchVotes[j]]) lynchCount[lynchVotes[j]] = 0
             lynchCount[lynchVotes[j]] += 1
           }
+          console.log()
           if (lynchCount.length) {
             let max = lynchCount.reduce((m, n) => Math.max(m, n))
             let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
@@ -149,7 +150,7 @@ client.on('ready', async () => {
         }
         
         for (var j = 0; j < game.players.length; j++) {
-          game.players.vote = null
+          game.players[j].vote = null
         }
       }
       QuickGames[i] = game

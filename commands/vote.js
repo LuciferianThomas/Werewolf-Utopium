@@ -34,6 +34,10 @@ module.exports = {
         return await message.author.send("You cannot vote at night!")
     }
     
+    if (game.currentPhase == 1) {
+      message.author.send("There is currently nothing to vote for!")
+    }
+    
     if (game.currentPhase == 2) {
       let vote = parseInt(args[0])
       if (isNaN(vote))
