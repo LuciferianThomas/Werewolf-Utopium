@@ -36,6 +36,9 @@ module.exports = {
           return await message.author.send("You cannot vote a dead player.")
         game.players[gamePlayer.number-1].vote = vote
         
+        let wolves = game.players.filter(p => p.role.toLowerCase().includes("wolf") && !p.jailed).map(p => p.id)
+        for (var i = 0; i < wolves.length; i++) 
+          client.users.get(wolves[i]).send(`${gamePlayer.number} voted ${vote}.`)
       } else 
         return await message.author.send("You cannot vote at night!")
     }

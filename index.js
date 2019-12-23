@@ -55,7 +55,7 @@ client.on('ready', async () => {
     
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
-      if (game.currentPhase == -1) continue;
+      if (game.currentPhase == -1 || game.currentPhase === 999) continue;
       if (moment(game.nextPhase) <= moment()) {
         if (game.currentPhase % 3 == 2)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
@@ -81,6 +81,7 @@ client.on('ready', async () => {
                 game.currentPhase = 999
                 fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
               }
+              if (game.players.filter(p => p.alive && ))
             }
           } else
             fn.broadcast(client, game, "The village cannot decide on who to lynch.")
@@ -253,8 +254,8 @@ client.on('message', async message => {
             .get(dead[i])
             .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
       if (game.players[game.roles.indexOf("Medium")].alive) 
-        client.users.get(game.players[game.roles.indexOf("Medium").id])
-          .send()`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`
+        client.users.get(game.players[game.roles.indexOf("Medium")].id)
+          .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
       return undefined
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive) {

@@ -34,6 +34,7 @@ module.exports = {
       return await message.author.send("You cannot shoot right now.")
     
     let target = parseInt(args[0])
+    if (gamePlayer.role == "Jailer") target = game.players.find(p => p.jailed && p.alive).number
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
     if (!game.players[target-1].alive)
