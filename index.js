@@ -210,45 +210,57 @@ client.on('message', async message => {
 
 client.on('message', async message => {
   
-  if (message.channel.type !== "dm") return;
+  if (message.channel.type !== "dm" || message.author.bot) return;
+  if (message.content.startsWith('w!')) return;
   
   let player = players.get(message.author.id)
   if (!player.currentGame) return;
   
-  let game = games.get("quick").find(game => game.id == player.currentGame)
+  let game = games.get("quick").find(game => game.gameID == player.currentGame)
   let gamePlayer = game.players.find(player => player.id == message.author.id)
+  if (game.currentPhase == -1)
+    return await fn.broadcast(client, game,`**${message.author.username}**: ${message.content}`, [message.author.id])
+  
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
-      fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+      return fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${message.content}`, [message.author.id])
     else {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
-        client.users.get(dead[i]).send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
+        client.users.get(dead[i]).send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`, [message.author.id])
+      return undefined
     }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
       let med_dead = game.players.filter(p => !p.alive).map(p => p.id).push(game.players.find(p => p.role == "Medium").id)
       for (var i = 0; i < med_dead.length; i++)
-        client.users
-          .get(med_dead[i])
-          .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
+        if (med_dead[i] != message.author.id)
+          client.users
+            .get(med_dead[i])
+            .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
+      return undefined
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive) {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
         client.users.get(dead[i]).send(`**Medium**: ${message.content}`)
+      return undefined
     }
-      
     
     if (gamePlayer.jailed && gamePlayer.alive) 
-      client.users.get(game.players.find(p => p.role == "Jailer").id).send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+      return client.users.get(game.players.find(p => p.role == "Jailer").id).send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+    
     if (gamePlayer.role == "Jailer" && gamePlayer.alive) 
       if (game.players.find(p => p.jailed && p.alive))
-        client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${message.content}`)
+        return client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${message.content}`)
       else
-        message.author.send("You did not jail anyone or your target cannot be jailed.")
+        return message.author.send("You did not jail anyone or your target cannot be jailed.")
     if (gamePlayer.role.toLowerCase().includes("wolf") && !gamePlayer.jailed) {
-      let wolves = game.players.filter(p => p.role.toLowerCase().includes("wolf"))
+      let wolves = game.players.filter(p => p.role.toLowerCase().includes("wolf") && !p.jailed).map(p => p.id)
+      for (var i = 0; i < wolves.length; i++)
+        if (wolves[i] != message.author.id) 
+          client.users.get(wolves[i])
+            .send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
     }
   }
 })

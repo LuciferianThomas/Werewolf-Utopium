@@ -129,9 +129,9 @@ let paginator = async (author, msg, embeds, pageNow) => {
   }
 }
 
-const broadcast = async (client, game, content) => {
+const broadcast = async (client, game, content, ignore = []) => {
   for (var i = 0; i < game.players.length; i++) 
-    await client.users.get(game.players[i].id).send(content)
+    if (!ignore.includes(game.players[i].id)) await client.users.get(game.players[i].id).send(content)
 }
 
 module.exports = {
