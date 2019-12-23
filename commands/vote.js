@@ -5,6 +5,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
+const fn = require('/app/util/fn')
+
 module.exports = {
   name: "vote",
   run: async (client, message, args, shared) => {
@@ -47,6 +49,7 @@ module.exports = {
       if (vote == gamePlayer.number) 
         return await message.author.send("You cannot vote yourself.")
       game.players[gamePlayer.number-1].vote = vote
+      fn.broadcast()
     }
     QuickGames[index] = game
     

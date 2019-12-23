@@ -194,3 +194,22 @@ client.on('message', async message => {
     message.delete().catch(error => {})
 	}
 })
+
+client.on('message', async message => {
+  
+  if (message.channel.type !== "dm") return;
+  
+  let player = players.get(message.author.id)
+  if (!player.currentGame) return;
+  
+  let game = games.get("quick").find(game => game.id == player.currentGame)
+  let gamePlayer = game.players.find(player => player.id == message.author.id)
+  if (gamePlayer.alive && game.currentPhase % 3 != 0)
+    fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+  if (gamePlayer.alive && game.currentPhase % 3 == 0) {
+    
+    if (gamePlayer.role.toLowerCase().includes("wolf") && !gamePlayer.jailed) {
+      let wolves = game.players.filter(p => p.role.toLowerCase().includes("wolf"))
+    }
+  }
+})
