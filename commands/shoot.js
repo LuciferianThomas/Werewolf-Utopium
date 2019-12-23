@@ -8,7 +8,7 @@ const games = new db.table("Games"),
 const fn = require('/app/util/fn')
 
 module.exports = {
-  name: "check",
+  name: "shoot",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -19,24 +19,34 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (gamePlayer.role != "Medium")
-      return await message.author.send("You do not have the abilities to revive a player.")
+    if (!["Gunner","Jailer"].includes(gamePlayer.role))
+      return await message.author.send("You do not have the abilities to shoot a player.")
     if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer revive a player.")
+      return await message.author.send("You are dead. You can no longer shoot a player.")
     
-    if (gamePlayer.revUsed)
-      return await message.author.send("You have already revived a player.")
+    if (!gamePlayer.bullets)
+      return await message.author.send("You have no more bullets.")
     
-    if (game.currentPhase % 3 != 0)
-      return await message.author.send("You can only revive on a player at night.")
+    if (gamePlayer.role == "Jailer" && game.currentPhase % 3 != 0 && !game.players.find(p => p.jailed && p.alive))
+      return await message.author.send("You can only shoot on a player in jail at night.")
+    
+    if (gamePlayer.role == "Gunner" && (game.currentPhase == 1 || game.currentPhase % 3 == 0 || gamePlayer.shotToday))
+      return await message.author.send("You cannot shoot right now.")
     
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
-    if (game.players[target-1].alive)
-      return await message.author.send("You cannot revive an alive player.")
+    if (!game.players[target-1].alive)
+      return await message.author.send("You cannot shoot an dead player.")
     
-    game.players[gamePlayer.number-1].revUsed = true
+    game.players[target-1].alive = false
+    if (gamePlayer.role == "Gunner")
+      fn.broadcast(client, game, `Gunner **${gamePlayer.number} ${message.author}** shot **${target} ${client.users.get(game.players[target-1].id).username}**.`)
+    if (gamePlayer.role == "Jailer")
+      fn.broadcast(client, game, `Jailer executed his prisoner **${target} ${client.users.get(game.players[target-1].id).username}**.`)
+    
+    game.players[gamePlayer.number-1].bullets -= 1
+    if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true
     
     QuickGames[index] = game
     
