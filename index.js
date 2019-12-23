@@ -64,7 +64,6 @@ client.on('ready', async () => {
             if (!lynchCount[lynchVotes[j]]) lynchCount[lynchVotes[j]] = 0
             lynchCount[lynchVotes[j]] += 1
           }
-          console.log()
           if (lynchCount.length) {
             let max = lynchCount.reduce((m, n) => Math.max(m, n))
             let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
