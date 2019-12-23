@@ -260,7 +260,7 @@ client.on('message', async message => {
 })
 
 client.on('message', async message => {
-  if (!message.author.bot) console.log(message.author.tag + ' | ' + message.content)
+  if (!message.author.bot) console.log(message.author.tag + ' | ' + message.cleanContent)
   
   if (message.channel.type !== "dm" || message.author.bot) return;
   if (message.content.startsWith('w!')) return;
