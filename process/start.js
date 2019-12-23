@@ -13,7 +13,7 @@ module.exports = async (client, game) => {
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
-    game.players[i].role = game.roles.splice(Math.floor(Math.random() * game.players.length), 1)
+    game.players[i].role = game.roles.splice(Math.floor(Math.random() * game.players.length-i), 1)[0]
     await client.users.get(game.players[i].id)
       .send(`You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
     game.players[i].alive = true

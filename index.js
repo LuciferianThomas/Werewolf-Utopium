@@ -94,10 +94,11 @@ client.on('ready', async () => {
           client, game, 
           game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
           game.currentPhase % 3 == 1 ? `Day ${Math.floor(game.currentPhase/3)+1} has started!` :
-          `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)}`
+          `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.`
         )
         
         if (game.currentPhase % 3 == 1)  {
+          // console.log(game.players)
           let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),
               wwVotesCount = []
           for (var j = 0; j < wwVotes.length; j++) {
