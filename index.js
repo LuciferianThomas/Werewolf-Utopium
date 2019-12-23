@@ -204,10 +204,32 @@ client.on('message', async message => {
   
   let game = games.get("quick").find(game => game.id == player.currentGame)
   let gamePlayer = game.players.find(player => player.id == message.author.id)
-  if (gamePlayer.alive && game.currentPhase % 3 != 0)
-    fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
-  if (gamePlayer.alive && game.currentPhase % 3 == 0) {
+  if (game.currentPhase % 3 != 0)
+    if (gamePlayer.alive)
+      fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+  if (game.currentPhase % 3 == 0) {
+    if (!gamePlayer.alive) {
+      let  = game.players.filter(p => !p.alive).map(p => p.id).push(game.players.find(p => p.role == "Medium").id)
+      client.users
+        .get(med_dead[i])
+        .send(
+          `***${gamePlayer.number} ${message.author.username}**: ${message.content}*`
+        )
+    }
+    if (gamePlayer.role == "Medium" && gamePlayer.alive) {
+      let dead = game.players.filter(p => !p.alive).map(p => p.id)
+      for (var i = 0; i < dead.length; i++)
+        client.users.get(dead[i]).send(`**Medium**: ${message.content}`)
+    }
+      
     
+    if (gamePlayer.jailed && gamePlayer.alive) 
+      client.users.get(game.players.find(p => p.role == "Jailer").id).send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+    if (gamePlayer.role == "Jailer" && gamePlayer.alive) 
+      if (game.players.find(p => p.jailed && p.alive))
+        client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${message.content}`)
+      else
+        message.author.send("You did not jail anyone or your target cannot be jailed.")
     if (gamePlayer.role.toLowerCase().includes("wolf") && !gamePlayer.jailed) {
       let wolves = game.players.filter(p => p.role.toLowerCase().includes("wolf"))
     }
