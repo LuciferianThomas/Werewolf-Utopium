@@ -56,8 +56,8 @@ client.on('ready', async () => {
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
       if (game.currentPhase === 999) {
-        for (var )
-        players.set
+        for (var j = 0; j < game.players.length; j++)
+          players.set(`${game.players[j].id}.currentGame`, null)
       }
       if (game.currentPhase == -1 || game.currentPhase === 999) continue;
       if (moment(game.nextPhase) <= moment()) {
@@ -260,6 +260,7 @@ client.on('message', async message => {
 })
 
 client.on('message', async message => {
+  if (!message.author.bot) console.log(message.author.tag + ' | ' + message.content)
   
   if (message.channel.type !== "dm" || message.author.bot) return;
   if (message.content.startsWith('w!')) return;
