@@ -15,11 +15,15 @@ module.export = async (client, game) => {
     game.players[i].role = game.roles.splice(Math.floor(Math.random() * game.roles.length), 1)
     await client.users.get(game.players[i].id)
       .send(`You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
+    if (game.players[i].role == "Bodyguard") game.players[i].health = 2
+    if (game.players[i].role == "Serial Killer") {
+      
+    }
   }
   
   game.currentPhase += 1
   game.nextPhase = moment().add(1, "m")
-  game.bgHealth = 2
+  // game.
   
   ModeGames[ModeGames.indexOf(ModeGames.find(g => g.id == game.id))] = game
   
