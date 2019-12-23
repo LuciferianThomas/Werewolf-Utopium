@@ -28,6 +28,6 @@ module.exports = {
     games.set("quick", QuickGames)
     //games.add(`${player.currentGame}.startVotes`, 1)
     
-    //if (votes+1 == game.players.length)
+    if (votes+1 == game.players.length)
   }
 }

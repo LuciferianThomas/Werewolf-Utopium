@@ -29,7 +29,7 @@ module.export = async (client, game) => {
       ).map(player => player.id)
     game.hhTarget = possibleTargets[Math.floor(Math.random()*possibleTargets.length)]
     await client.users.get(game.players.find(player => player.role == "Headhunter").id)
-      .send(`Your target is.`)
+      .send(`Your target is ${game.hhTarget} ${game.players[game.hhTarget-1]}.`)
   }
   
   ModeGames[ModeGames.indexOf(ModeGames.find(g => g.id == game.id))] = game

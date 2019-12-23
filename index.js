@@ -129,6 +129,7 @@ client.on('ready', async () => {
           let skTarget = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote)
         }
       }
+      ActiveQG[i] = game
     }
   }, 250)
 })
