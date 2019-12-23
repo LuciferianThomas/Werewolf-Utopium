@@ -50,7 +50,16 @@ const roles = {
     team: "Village"
   },
   "Fool": {
-    
+    desc: "The Fool has no special abilities besides talking and voting during the day." +
+          "The Fool wins the game if they are lynched by the village.",
+    aura: "Unknown",
+    team: "Solo"
+  },
+  "Headhunter": {
+    desc: "The Headhunter has no special abilities. On the first night of the game they receive a target on a random village roles." +
+          " If their target dies in a way other than being lynched, they become a regular villager.",
+    aura: "Unknown",
+    team: "Solo/Village"
   }
 }
 // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
