@@ -29,7 +29,7 @@ module.exports = {
                            `${p.alive ? "" : "*"}${p.number} ${client.users.get(p.id).username}${p.roleRevealed ? ` (${p.role})` : ""}${p.alive ? "" : "*"}`)
                     .join('\n')
                  )
-        .addField(`Roles`, game.roles.join(', '))
+        .addField(`Roles`, game.roles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1}).join(', '))
     )
   }
 }
