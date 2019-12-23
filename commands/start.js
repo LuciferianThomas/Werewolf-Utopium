@@ -11,7 +11,7 @@ module.exports = {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
       return await message.author.send("**You are not currently in a game!**\nDo `w!quick` to join a Quick Game!")
-    console.log(player)
+    
     let QuickGames = games.get("quick"),
         game = QuickGames.find(g => g.gameID == player.currentGame)
     if (game.players.length < 4) 
@@ -26,7 +26,7 @@ module.exports = {
       await message.author.send(`You have already voted to start.`)
     
     for (var i = 0; i < game.players.length; i++) {
-      await client.users.get(game.players[i].id).send(`**${message.author.username}** voted to start! (${votes+1}/${game.players.length})\nDo \`w!start\` if you want the game to start.`)
+      await client.users.get(game.players[i].id).send(`**${message.author.username}** voted to start! (${votes.length}/${game.players.length})\nDo \`w!start\` if you want the game to start.`)
     }
     
     games.set("quick", QuickGames)

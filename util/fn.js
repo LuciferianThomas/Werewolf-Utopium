@@ -146,5 +146,6 @@ module.exports = {
   getRole: getRole,
   ModCase: ModCase,
   modCaseEmbed: modCaseEmbed,
-  paginator: paginator
+  paginator: paginator,
+  broadcast: broadcast
 }

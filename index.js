@@ -56,7 +56,8 @@ client.on('ready', async () => {
     let ActiveQG = QuickGames.filter(game => game.currentPhase >= 0)
     for (let i = 0; i < ActiveQG.length; i++) {
       let game = ActiveQG[i]
-      if (game.nextPhase >= moment()) {
+      if (moment(game.nextPhase) >= moment()) {
+        console.log(1)
         if (game.currentPhase % 3 == 2)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
               lynchCount = []
@@ -78,7 +79,7 @@ client.on('ready', async () => {
               }
               if (lynched[0] == game.hhTarget) {
                 game.currentPhase = -1
-                await fn.broadcast(client, game, `Game has ended. Fool wins!`)
+                await fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
               }
             }
           } else
@@ -88,6 +89,7 @@ client.on('ready', async () => {
         }
         
         game.currentPhase += 1
+        game.nextPhase = moment().add(game.currentPhase == 2 ? 30 : 60, 's')
         
         await fn.broadcast(
           client, game, 

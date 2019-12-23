@@ -6,7 +6,7 @@ const games = new db.table("Games")
 
 const fn = require("/app/util/fn")
 
-module.export = async (client, game) => {
+module.exports = async (client, game) => {
   let ModeGames = games.get(game.mode)
   
   await fn.broadcast(client, game, "Game is starting...")
