@@ -17,17 +17,22 @@ module.exports = {
     if (game.players.length < 4) 
       return await message.author.send("**There are insufficient players to start a game!**\nInvite your friends to join the game!")
     
-    if (!game.startVotes) game.startVotes = 0
-    let votes = game.startVotes
+    if (!QuickGames[QuickGames.indexOf(game)].startVotes) QuickGames[QuickGames.indexOf(game)].startVotes = []
+    let votes = QuickGames[QuickGames.indexOf(game)].startVotes
+    
+    if (!QuickGames[QuickGames.indexOf(game)].startVotes.includes(message.author.id)) 
+      QuickGames[QuickGames.indexOf(game)].startVotes.push(message.author.id)
+    else
+      await message.author.send(`You have already voted to start.`)
     
     for (var i = 0; i < game.players.length; i++) {
       await client.users.get(game.players[i].id).send(`**${message.author.username}** voted to start! (${votes+1}/${game.players.length})\nDo \`w!start\` if you want the game to start.`)
     }
     
-    QuickGames[QuickGames.indexOf(game)].startVotes += 1
     games.set("quick", QuickGames)
     //games.add(`${player.currentGame}.startVotes`, 1)
     
-    if (votes+1 == game.players.length)
+    if (QuickGames[QuickGames.indexOf(game)].startVotes.length == game.players.length)
+      require('/app/process/start')(client, game)
   }
 }
