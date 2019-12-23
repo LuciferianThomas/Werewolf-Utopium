@@ -207,14 +207,18 @@ client.on('message', async message => {
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
       fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+    else {
+      let dead = game.players.filter(p => !p.alive).map(p => p.id)
+      for (var i = 0; i < dead.length; i++)
+        client.users.get(dead[i]).send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
+    }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
-      let  = game.players.filter(p => !p.alive).map(p => p.id).push(game.players.find(p => p.role == "Medium").id)
-      client.users
-        .get(med_dead[i])
-        .send(
-          `***${gamePlayer.number} ${message.author.username}**: ${message.content}*`
-        )
+      let med_dead = game.players.filter(p => !p.alive).map(p => p.id).push(game.players.find(p => p.role == "Medium").id)
+      for (var i = 0; i < med_dead.length; i++)
+        client.users
+          .get(med_dead[i])
+          .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive) {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)

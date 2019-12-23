@@ -18,11 +18,15 @@ module.exports = async (client, game) => {
       .send(`You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
     game.players[i].alive = true
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
+    if (game.players[i].role == "Medium") game.players[i].revUsed = false
+    if (game.players[i].role == "Jailer") game.players[i].bullets = 1
+    if (game.players[i].role == "Gunner") game.players[i].bullets = 2
   }
   
+  game.roles = game.players.map(player => player.role)
   game.currentPhase += 1
   game.nextPhase = moment().add(1, "m")
-  if (game.players.map(player => player.role).includes("Headhunter")) {
+  if (game.roles.includes("Headhunter")) {
     let possibleTargets = game.players
       .filter(player => 
         !player.role.toLowerCase().includes("wolf") && 
