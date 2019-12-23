@@ -36,12 +36,16 @@ module.exports = {
       return await message.author.send("You cannot protect yourself.")
     
     for (var i = 0; i < game.players.length; i++) {
-      if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt.push(gamePlayer.number)
-      else if (gamePlayer.role == "Doctor") game.players[target-1].docProt.push(gamePlayer.number)
+      if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = null
+      else if (gamePlayer.role == "Doctor") game.players[target-1].docProt = null
     }
-    if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt.push(gamePlayer.number)
-    else if (gamePlayer.role == "Doctor") game.players[target-1].docProt.push(gamePlayer.number)
-    message.author.send(`You selected ${target} ${client.users.get(game.players[target-1].id).username} to be protected.`)
+    if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = gamePlayer.number
+    else if (gamePlayer.role == "Doctor") game.players[target-1].docProt = gamePlayer.number
+    
+    message.author.send(`${gamePlayer.role == "Doctor" 
+                          ? client.emojis.find(e => e.name == "Doctor_Protect" && e.guild.id == "658631194870677553")
+                          : client.emojis.find(e => e.name == "Bodyguard_Shield" && e.guild.id == "658631194870677553")
+                         } You selected ${target} ${client.users.get(game.players[target-1].id).username} to be protected.`)
     
     QuickGames[index] = game
     

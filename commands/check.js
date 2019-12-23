@@ -38,12 +38,14 @@ module.exports = {
       return await message.author.send("You cannot check on yourself.")
     
     if (gamePlayer.role == "Aura Seer")
-      message.author.send(`${target} ${client.users.get(game.players[target-1].id).username} has a${
+      message.author.send(`${client.emojis.find(e => e.name == game.players[target-1].role[0].replace(/ /g, "_") && e.guild.id == "658631194870677553")
+                        } ${target} ${client.users.get(game.players[target-1].id).username} has a${
                             ["Medium","Jailer","Alpha Werewolf","Fool","Headhunter","Gunner","Serial Killer"].includes(game.players[target-1].role) ? "n unknown" :
                             ["Werewolf","Shaman Werewolf","Wolf Seer"].includes(game.players[target-1].role) ? "n evil" : " good"
                           } aura.`)
     else
-      message.author.send(`${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}`)
+      message.author.send(`${client.emojis.find(e => e.name == game.players[target-1].role[0].replace(/ /g, "_") && e.guild.id == "658631194870677553")
+                        } ${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}`)
     
     game.players[gamePlayer.number-1].checkedTonight = true
     
