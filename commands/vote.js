@@ -32,6 +32,7 @@ module.exports = {
         if (!game.players[vote-1].alive) 
           return await message.author.send("You cannot vote a dead player.")
         game.players[gamePlayer.number-1].vote = vote
+        
       } else 
         return await message.author.send("You cannot vote at night!")
     }

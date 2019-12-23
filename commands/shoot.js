@@ -27,7 +27,7 @@ module.exports = {
     if (!gamePlayer.bullets)
       return await message.author.send("You have no more bullets.")
     
-    if (gamePlayer.role == "Jailer" && game.currentPhase % 3 != 0 && !game.players.find(p => p.jailed && p.alive))
+    if (gamePlayer.role == "Jailer" && (game.currentPhase % 3 != 0 || !game.players.find(p => p.jailed && p.alive)))
       return await message.author.send("You can only shoot on a player in jail at night.")
     
     if (gamePlayer.role == "Gunner" && (game.currentPhase == 1 || game.currentPhase % 3 == 0 || gamePlayer.shotToday))
