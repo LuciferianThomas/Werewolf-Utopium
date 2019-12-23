@@ -104,6 +104,11 @@ client.on('ready', async () => {
         }
         
         if (game.currentPhase % 3 == 1)  {
+          if (game.players.find(p => p.reved)) {
+            game.players[game.players.find(p => p.reved).number-1].alive = true
+            game.players[game.players.find(p => p.reved).number-1].reved = false
+            fn.broadcast(client, game, `Medium revived ${game.players.find(p => p.reved).number} ${game.players.find(p => p.reved).id}`)
+          }
           for (var j = 0; j < game.players.length; j++) {
             game.players[j].jailed = false
             game.players[j].bgProt = null
@@ -235,12 +240,13 @@ client.on('message', async message => {
     else {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
-        client.users.get(dead[i]).send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`, [message.author.id])
+        if (dead[i] != message.author.id)
+          client.users.get(dead[i]).send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`, [message.author.id])
       return undefined
     }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
-      let med_dead = game.players.filter(p => !p.alive).map(p => p.id).push(game.players.find(p => p.role == "Medium").id)
+      let med_dead = game.players.filter(p => !p.alive).map(p => p.id)//.push(game.players[game.roles.indexOf("Medium")].id)
       for (var i = 0; i < med_dead.length; i++)
         if (med_dead[i] != message.author.id)
           client.users

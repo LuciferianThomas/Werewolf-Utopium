@@ -24,8 +24,8 @@ module.exports = {
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer revive a player.")
     
-    if (gamePlayer.revUsed)
-      return await message.author.send("You have already revived a player.")
+    // if (gamePlayer.revUsed)
+    //   return await message.author.send("You have already revived a player.")
     
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only revive on a player at night.")
@@ -37,6 +37,7 @@ module.exports = {
       return await message.author.send("You cannot revive an alive player.")
     
     game.players[gamePlayer.number-1].revUsed = true
+    game.players[target-1].reved = true
     
     QuickGames[index] = game
     
