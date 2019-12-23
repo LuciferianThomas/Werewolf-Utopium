@@ -105,9 +105,9 @@ client.on('ready', async () => {
         
         if (game.currentPhase % 3 == 1)  {
           if (game.players.find(p => p.reved)) {
+            fn.broadcast(client, game, `Medium revived ${game.players.find(p => p.reved).number} ${client.users.get(game.players.find(p => p.reved).id).username} (${game.players.find(p => p.reved).role}).`)
             game.players[game.players.find(p => p.reved).number-1].alive = true
             game.players[game.players.find(p => p.reved).number-1].reved = false
-            fn.broadcast(client, game, `Medium revived ${game.players.find(p => p.reved).number} ${game.players.find(p => p.reved).id}`)
           }
           for (var j = 0; j < game.players.length; j++) {
             game.players[j].jailed = false
@@ -246,12 +246,15 @@ client.on('message', async message => {
     }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
-      let med_dead = game.players.filter(p => !p.alive).map(p => p.id)//.push(game.players[game.roles.indexOf("Medium")].id)
-      for (var i = 0; i < med_dead.length; i++)
-        if (med_dead[i] != message.author.id)
+      let dead = game.players.filter(p => !p.alive).map(p => p.id)//.push(game.players[game.roles.indexOf("Medium")].id)
+      for (var i = 0; i < dead.length; i++)
+        if (dead[i] != message.author.id)
           client.users
-            .get(med_dead[i])
+            .get(dead[i])
             .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
+      if (game.players[game.roles.indexOf("Medium")].alive) 
+        client.users.get(game.players[game.roles.indexOf("Medium").id])
+          .send()`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`
       return undefined
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive) {

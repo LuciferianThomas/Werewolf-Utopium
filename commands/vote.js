@@ -21,6 +21,9 @@ module.exports = {
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer place votes.")
     
+    if (gamePlayer.jailed)
+      return await message.author.send("You cannot vote while in jail!")
+    
     if (game.currentPhase % 3 == 0) {
       if (gamePlayer.role.includes("Werewolf") || 
           (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0)) {
@@ -50,7 +53,7 @@ module.exports = {
       if (vote == gamePlayer.number) 
         return await message.author.send("You cannot vote yourself.")
       game.players[gamePlayer.number-1].vote = vote
-      fn.broadcast()
+      fn.broadcast(client, game, `${gamePlayer.number} voted ${vote}.`)
     }
     QuickGames[index] = game
     
