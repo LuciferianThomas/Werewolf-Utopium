@@ -39,10 +39,18 @@ const roles = {
     team: "Village"
   },
   "Alpha Werewolf": {
-    desc: "Each night the Doctor can select one player to heal. If this player is attacked by the Werewolves, they don't die in that night." +
-          " The Doctor can heal every night that they are alive. The Doctor cannot heal themselves.",
+    desc: "The Alpha Werewolf has the same abilities as a regular Werewolf and can vote on one player to kill each night with `w!vote [number]`." +
+          " However, when the Alpha Werewolf votes on a player to kill during the night, his vote counts twice.",
+    aura: "Unknown",
+    team: "Werewolves",
+  },
+  "Seer": {
+    desc: "Each night, the Seer can see the role of one player.",
     aura: "Good",
     team: "Village"
+  },
+  "Fool": {
+    
   }
 }
 // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
@@ -57,7 +65,11 @@ module.exports = async (client, game) => {
     game.players[i].number = i+1
     game.players[i].role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     await client.users.get(game.players[i].id)
-      .send(`You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
+      .send(
+        new Discord.RichEmbed()
+          .setTitle(`You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
+          .setDescription(`${roles[game.players[i].role].desc}\nAura: ${roles[game.players[i].role].aura}\nTeam: ${roles[game.players[i].role].team}`)
+      )
     game.players[i].alive = true
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
     if (game.players[i].role == "Medium") game.players[i].revUsed = false
