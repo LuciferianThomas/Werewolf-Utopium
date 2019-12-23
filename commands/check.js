@@ -5,6 +5,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
+const roles = require('/app/util/roles')
+
 const fn = require('/app/util/fn')
 
 module.exports = {
@@ -38,11 +40,10 @@ module.exports = {
       return await message.author.send("You cannot check on yourself.")
     
     if (gamePlayer.role == "Aura Seer")
-      message.author.send(`${client.emojis.find(e => e.name == game.players[target-1].role[0].replace(/ /g, "_") && e.guild.id == "658631194870677553")
+      message.author.send(`${client.emojis.find(e => e.name == roles[game.players[target-1].role].aura && e.guild.id == "658631194870677553")
                         } ${target} ${client.users.get(game.players[target-1].id).username} has a${
-                            ["Medium","Jailer","Alpha Werewolf","Fool","Headhunter","Gunner","Serial Killer"].includes(game.players[target-1].role) ? "n unknown" :
-                            ["Werewolf","Shaman Werewolf","Wolf Seer"].includes(game.players[target-1].role) ? "n evil" : " good"
-                          } aura.`)
+                          roles[game.players[target-1].role].aura == "Good" ? "" : "n"
+                          } ${roles[game.players[target-1].role].aura} aura.`)
     else
       message.author.send(`${client.emojis.find(e => e.name == game.players[target-1].role[0].replace(/ /g, "_") && e.guild.id == "658631194870677553")
                         } ${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}`)
