@@ -13,6 +13,8 @@ const Discord = require('discord.js'),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
+const roles = require("/app/util/roles")
+
 /* --- ALL PACKAGES --- */
 
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
@@ -87,22 +89,20 @@ client.on('ready', async () => {
                 fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
                 continue;
               }
-              if (!game.players.filter(p => p.alive && (p.role.toLowerCase().includes("wolf") || ["Serial Killer"].includes(p.role))).length) {
+            /*  if (game.players.filter(p => p.alive && roles[p.role].team != "Village").length == 0) {
                 game.currentPhase = 999
                 fn.broadcast(client, game, `Game has ended. The village wins!`)
                 continue;
               }
-              if (game.players.filter(p => p.alive && p.role.toLowerCase().includes("wolf")).length >=
-                  game.players.filter(p => p.alive && !p.role.toLowerCase().includes("wolf")).length) {
                 game.currentPhase = 999
                 fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
                 continue;
-              }
-              if (game.players.filter(p => p.alive).map(p => p.role).length == 1 && ["Serial Killer"].includes(game.players.filter(p => p.alive).map(p => p.role)[0].role)) {
-                game.currentPhase = 999
-                fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
-                continue;
-              }
+              }*/
+             // if (game.players.filter(p =>)) {
+              //  game.currentPhase = 999
+            //    fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
+              //  continue;
+            //  }
             }
           } else
             fn.broadcast(client, game, "The village cannot decide on who to lynch.")
@@ -118,23 +118,24 @@ client.on('ready', async () => {
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
         )
         
+        if (game.players.filter(p => p.alive && roles[p.role].team != "Village").length == 0) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. The village wins!`)
+          continue;
+        }
+        if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
+            game.players.filter(p => p.alive && roles[p.role].team != "Werewolves").length) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
+          continue;
+        }
+       /* if (game.players.filter(p => p.alive).map(p => p.role).length == 1 && ["Serial Killer"].includes(game.players.filter(p => p.alive).map(p => p.role)[0].role)) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
+          continue;
+        }*/
+        
         if (game.currentPhase % 3 == 0) {
-          if (!game.players.filter(p => p.alive && (p.role.toLowerCase().includes("wolf") || ["Serial Killer"].includes(p.role))).length) {
-            game.currentPhase = 999
-            fn.broadcast(client, game, `Game has ended. The village wins!`)
-            continue;
-          }
-          if (game.players.filter(p => p.alive && p.role.toLowerCase().includes("wolf")).length >=
-              game.players.filter(p => p.alive && !p.role.toLowerCase().includes("wolf")).length) {
-            game.currentPhase = 999
-            fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
-            continue;
-          }
-          if (game.players.filter(p => p.alive).map(p => p.role).length == 1 && ["Serial Killer"].includes(game.players.filter(p => p.alive).map(p => p.role)[0].role)) {
-            game.currentPhase = 999
-            fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
-            continue;
-          }
           if (game.roles.includes("Gunner")) game.players[game.roles.indexOf("Gunner")].shotToday = false
           if (game.players.find(p => p.jailed && p.alive))
             client.users.get(game.players.find(p => p.jailed && p.alive).id)

@@ -51,7 +51,7 @@ module.exports = {
     desc: "The Headhunter has no special abilities. On the first night of the game they receive a target on a random village roles." +
           " If their target dies in a way other than being lynched, they become a regular villager.",
     aura: "Unknown",
-    team: "Solo/Village"
+    team: "Solo"
   }
 }
 // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
