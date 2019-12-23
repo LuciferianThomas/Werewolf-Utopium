@@ -5,6 +5,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
+const fn = require('/app/util/fn')
+
 module.exports = {
   name: "check",
   run: async (client, message, args, shared) => {
