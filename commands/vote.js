@@ -13,9 +13,24 @@ module.exports = {
       return await message.author.send("**You are not currently in a game!**\nDo `w!quick` to join a Quick Game!")
     
     let QuickGames = games.get("quick"),
-        game = QuickGames.find(g => g.gameID == player.currentGame)
+        game = QuickGames.find(g => g.gameID == player.currentGame),
+        index = QuickGames.indexOf(game),
+        gamePlayer = game.players.find(player => player.id == message.author.id)
+    if (!gamePlayer.alive)
+          return await message.author.send("You cannot vote a dead player.")
     
-    if (game.currentPhase == )
+    if (game.currentPhase == 0) {
+      if (gamePlayer.alive && (gamePlayer.role.includes("Werewolf") || 
+          (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0))) {
+        let vote = parseInt(args[0])
+        if (isNaN(vote))
+          return await message.author.send("Invalid vote.")
+        if (game.players[vote-1].role.toLowerCase().includes("wolf")) 
+          return await message.author.send("You cannot vote a fellow werewolf.")
+        if (!game.players[vote-1].alive) 
+          return await message.author.send("You cannot vote a dead player.")
+      }
+    }
     
     games.set("quick", QuickGames)
   }

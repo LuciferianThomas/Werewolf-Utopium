@@ -14,6 +14,8 @@ module.exports = {
     
     let QuickGames = games.get("quick"),
         game = QuickGames.find(g => g.gameID == player.currentGame)
+    if (game.currentPhase >= 0)
+      return await message.author.send("Your game has started!")
     if (game.players.length < 4) 
       return await message.author.send("**There are insufficient players to start a game!**\nInvite your friends to join the game!")
     

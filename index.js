@@ -99,7 +99,7 @@ client.on('ready', async () => {
         
         if (game.currentPhase % 3 == 1)  {
           // console.log(game.players)
-          let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),
+          let wwVotes = game.players.filter(player => player.alive && player.role..toLowerCase().includes("wolf")).map(player => player.role == "Alpha Werewolf" ? player.vote*2 : player.vote),
               wwVotesCount = []
           for (var j = 0; j < wwVotes.length; j++) {
             if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
