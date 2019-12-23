@@ -21,8 +21,15 @@ module.exports = {
     
     message.author.send(
       new Discord.RichEmbed()
-        .setTitle(`Game #${game.id}`)
-        .addField(`Players [${game.players.length}]`, game.players.map())
+        .setTitle(`Game #${game.gameID}`)
+        .addField(`Players [${game.players.length}]`, 
+                  game.currentPhase == -1 ? game.players.map(p => client.users.get(p.id).username).join('\n') :
+                  game.players
+                    .map(p => 
+                           `${p.alive ? "" : "*"}${p.number} ${client.users.get(p.id).username}${p.roleRevealed ? ` (${p.role})` : ""}${p.alive ? "" : "*"}`)
+                    .join('\n')
+                 )
+        .addField(`Roles`, game.roles.join(', '))
     )
   }
 }

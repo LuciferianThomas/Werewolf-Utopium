@@ -71,13 +71,14 @@ client.on('ready', async () => {
               fn.broadcast(client, game, "The village cannot decide on who to lynch.")
             else {
               game.players[lynched[0]-1].alive = false
+              game.players[lynched[0]-1].roleRevealed = true
               fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
               if (game.players[lynched[0]-1].role == "Fool") {
-                game.currentPhase = -1
+                game.currentPhase = 999
                 fn.broadcast(client, game, `Game has ended. Fool wins!`)
               }
               if (lynched[0] == game.hhTarget) {
-                game.currentPhase = -1
+                game.currentPhase = 999
                 fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
               }
             }
@@ -103,7 +104,11 @@ client.on('ready', async () => {
         }
         
         if (game.currentPhase % 3 == 1)  {
-          for (var j = 0; j < game.players.length; j++) game.players[j].jailed = false
+          for (var j = 0; j < game.players.length; j++) {
+            game.players[j].jailed = false
+            game.players[j].bgProt = null
+            game.players[j].docProt = null
+          }
           if (game.roles.includes("Aura Seer")) game.players[game.roles.indexOf("Aura Seer")].checkedTonight = false
           if (game.roles.includes("Seer")) game.players[game.roles.indexOf("Seer")].checkedTonight = false
           if (game.roles.includes("Wolf Seer")) game.players[game.roles.indexOf("Wolf Seer")].checkedTonight = false
@@ -123,11 +128,13 @@ client.on('ready', async () => {
             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
               game.players[killed[0]-1].alive = false
+              game.players[killed[0]-1].roleRevealed = true
               fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
             } else if (game.players[killed[0]-1].role == "Bodyguard") {
               game.players[killed[0]-1].health -= 1
               if (game.players[killed[0]-1].health <= 0) {
                 fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+                game.players[killed[0]-1].roleRevealed = true
                 game.players[killed[0]-1].alive = false
               }
             } else if (game.players[killed[0]-1].bgProt) {
@@ -135,6 +142,7 @@ client.on('ready', async () => {
               if (game.players[game.players[killed[0]-1].bgProt-1].health <= 0) {
                 fn.broadcast(client, game, `${game.players[killed[0]-1].bgProt} ${client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id).username} (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
                 game.players[game.players[killed[0]-1].bgProt-1].alive = false
+                game.players[killed[0]-1].roleRevealed = true
               }
             }
           }
