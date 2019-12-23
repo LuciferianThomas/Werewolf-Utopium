@@ -109,7 +109,7 @@ client.on('ready', async () => {
         }
         
         game.currentPhase += 1
-        game.nextPhase = moment().add(game.currentPhase == 2 ? 30 : 60, 's')
+        game.nextPhase = moment().add(game.currentPhase % 3 == 2 ? 60 : 120, 's')
         
         fn.broadcast(
           client, game, 
