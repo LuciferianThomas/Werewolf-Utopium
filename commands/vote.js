@@ -21,7 +21,7 @@ module.exports = {
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer place votes.")
     
-    if (gamePlayer.jailed)
+    if (gamePlayer.jailed && game.currentPhase % 3 == 0)
       return await message.author.send("You cannot vote while in jail!")
     
     if (game.currentPhase % 3 == 0) {

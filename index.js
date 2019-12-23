@@ -57,7 +57,7 @@ client.on('ready', async () => {
       let game = QuickGames[i]
       if (game.currentPhase === 999) {
         for (var j = 0; j < game.players.length; j++)
-          players.set(`${game.players[j].id}.currentGame`, null)
+          players.set(`${game.players[j].id}.currentGame`, 0)
       }
       if (game.currentPhase == -1 || game.currentPhase === 999) continue;
       if (moment(game.nextPhase) <= moment()) {
