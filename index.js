@@ -68,27 +68,27 @@ client.on('ready', async () => {
             let max = lynchCount.reduce((m, n) => Math.max(m, n))
             let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
             if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2)
-              await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+              fn.broadcast(client, game, "The village cannot decide on who to lynch.")
             else {
               game.players[lynched[0]-1].alive = false
-              await fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
+              fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
               if (game.players[lynched[0]-1].role == "Fool") {
                 game.currentPhase = -1
-                await fn.broadcast(client, game, `Game has ended. Fool wins!`)
+                fn.broadcast(client, game, `Game has ended. Fool wins!`)
               }
               if (lynched[0] == game.hhTarget) {
                 game.currentPhase = -1
-                await fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
+                fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
               }
             }
           } else
-            await fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+            fn.broadcast(client, game, "The village cannot decide on who to lynch.")
         }
         
         game.currentPhase += 1
         game.nextPhase = moment().add(game.currentPhase == 2 ? 30 : 60, 's')
         
-        await fn.broadcast(
+        fn.broadcast(
           client, game, 
           game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
           game.currentPhase % 3 == 1 ? `Day ${Math.floor(game.currentPhase/3)+1} has started!` :
@@ -110,17 +110,17 @@ client.on('ready', async () => {
             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
               game.players[killed[0]-1].alive = false
-              await fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+              fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
             } else if (game.players[killed[0]-1].role == "Bodyguard") {
               game.players[killed[0]-1].health -= 1
               if (game.players[killed[0]-1].health <= 0) {
-                await fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+                fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
                 game.players[killed[0]-1].alive = false
               }
             } else if (game.players[killed[0]-1].bgProt) {
               game.players[game.players[killed[0]-1].bgProt-1].health -= 1
               if (game.players[game.players[killed[0]-1].bgProt-1].health <= 0) {
-                await fn.broadcast(client, game, `${game.players[killed[0]-1].bgProt} ${client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id).username} (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
+                fn.broadcast(client, game, `${game.players[killed[0]-1].bgProt} ${client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id).username} (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
                 game.players[game.players[killed[0]-1].bgProt-1].alive = false
               }
             }
@@ -131,17 +131,17 @@ client.on('ready', async () => {
             if (!game.players[skTarget[i]-1].bgProt && !game.players[skTarget[i]-1].docProt && !game.players[skTarget[i]-1].jailed && 
                 !["Bodyguard", "Serial Killer"].includes(game.players[skTarget[i]-1].role)) {
               game.players[skTarget[i]-1].alive = false
-              await fn.broadcast(client, game, `${skTarget[i]} ${client.users.get(game.players[skTarget[i]-1].id).username} (${game.players[skTarget[i]-1].role}) was killed by the serial killer.`)
+              fn.broadcast(client, game, `${skTarget[i]} ${client.users.get(game.players[skTarget[i]-1].id).username} (${game.players[skTarget[i]-1].role}) was killed by the serial killer.`)
             } else if (game.players[skTarget[i]-1].role == "Bodyguard") {
               game.players[skTarget[i]-1].health -= 1
               if (game.players[skTarget[i]-1].health <= 0) {
-                await fn.broadcast(client, game, `${skTarget[i]} ${client.users.get(game.players[skTarget[i]-1].id).username} (${game.players[skTarget[i]-1].role}) was killed by the serial killer.`)
+                fn.broadcast(client, game, `${skTarget[i]} ${client.users.get(game.players[skTarget[i]-1].id).username} (${game.players[skTarget[i]-1].role}) was killed by the serial killer.`)
                 game.players[skTarget[i]-1].alive = false
               }
             } else if (game.players[skTarget[i]].bgProt) {
               game.players[game.players[skTarget[i]-1].bgProt-1].health -= 1
               if (game.players[game.players[skTarget[i]-1].bgProt-1].health <= 0) {
-                await fn.broadcast(client, game, `${game.players[skTarget[i]-1].bgProt} ${client.users.get(game.players[game.players[skTarget[i]-1].bgProt-1].id).username} (${game.players[game.players[skTarget[i]-1].bgProt-1].role}) was killed by the serial killer.`)
+                fn.broadcast(client, game, `${game.players[skTarget[i]-1].bgProt} ${client.users.get(game.players[game.players[skTarget[i]-1].bgProt-1].id).username} (${game.players[game.players[skTarget[i]-1].bgProt-1].role}) was killed by the serial killer.`)
                 game.players[game.players[skTarget[i]-1].bgProt-1].alive = false
               }
             }
