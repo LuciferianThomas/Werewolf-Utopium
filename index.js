@@ -297,7 +297,7 @@ client.on('message', async message => {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
         if (dead[i] != message.author.id)
-          client.users.get(dead[i]).send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`, [message.author.id])
+          client.users.get(dead[i]).send(`**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`, [message.author.id])
       return undefined
     }
   if (game.currentPhase % 3 == 0) {
