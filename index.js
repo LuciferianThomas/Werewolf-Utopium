@@ -58,6 +58,7 @@ client.on('ready', async () => {
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
       if (game.currentPhase === 999) {
+        game.currentPhased++
         for (var j = 0; j < game.players.length; j++)
           players.set(`${game.players[j].id}.currentGame`, 0)
       }
@@ -107,6 +108,16 @@ client.on('ready', async () => {
             }
           } else
             fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+        }
+        
+        if (game.lastDeath + 6 == game.currentPhase) {
+          fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days with deaths will result in a tie.")
+        }
+        
+        if (game.lastDeath + 9 == game.currentPhase) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. It was a tie.`)
+          continue;
         }
         
         game.currentPhase += 1
@@ -174,12 +185,13 @@ client.on('ready', async () => {
                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
               game.players[killed[0]-1].alive = false
               game.players[killed[0]-1].roleRevealed = true
+              game.lastDeath = game.currentPhase-1
               fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
             } else if (game.players[killed[0]-1].role == "Bodyguard") {
               game.players[killed[0]-1].health -= 1
               if (game.players[killed[0]-1].health <= 0) {
                 fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
-                game.lastDeath = gam
+                game.lastDeath = game.currentPhase-1
                 game.players[killed[0]-1].roleRevealed = true
                 game.players[killed[0]-1].alive = false
               }

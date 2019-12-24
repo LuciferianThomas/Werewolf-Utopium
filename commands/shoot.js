@@ -52,6 +52,7 @@ module.exports = {
     
     game.players[target-1].roleRevealed = true
     game.players[gamePlayer.number-1].bullets -= 1
+    game.lastDeath = game.currentPhase
     if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true
     
     QuickGames[index] = game
