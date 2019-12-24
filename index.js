@@ -297,7 +297,8 @@ client.on('message', async message => {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
         if (dead[i] != message.author.id)
-          client.users.get(dead[i]).send(`**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`, [message.author.id])
+          client.users.get(dead[i])
+            .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`)
       return undefined
     }
   if (game.currentPhase % 3 == 0) {
@@ -307,10 +308,10 @@ client.on('message', async message => {
         if (dead[i] != message.author.id)
           client.users
             .get(dead[i])
-            .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
+            .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`)
       if (game.players[game.roles.indexOf("Medium")].alive && !game.players[game.roles.indexOf("Medium")].jailed) 
         client.users.get(game.players[game.roles.indexOf("Medium")].id)
-          .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
+          .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`, [message.author.id])
       return undefined
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive && !gamePlayer.jailed) {
