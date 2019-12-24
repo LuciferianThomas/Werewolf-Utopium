@@ -58,7 +58,7 @@ client.on('ready', async () => {
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
       if (game.currentPhase === 999) {
-        game.currentPhased++
+        game.currentPhase ++
         for (var j = 0; j < game.players.length; j++)
           players.set(`${game.players[j].id}.currentGame`, 0)
       }
