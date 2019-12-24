@@ -25,7 +25,7 @@ module.exports = {
         gameID: games.add("count", 1),
         nextPhase: null,
         currentPhase: -1,
-        roles: ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
+        roles: ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", /*Math.random() < 0.5 ? */"Fool" /*: "Headhunter"*/,
                 "Bodyguard", "Gunner", "Wolf Shaman", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"],
         players: [{
           id: message.author.id
