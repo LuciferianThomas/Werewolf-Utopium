@@ -30,6 +30,7 @@ module.exports = async (client, game) => {
     if (game.players[i].role == "Gunner") game.players[i].bullets = 2
   }
   
+  game.lastDeath = 0
   game.roles = game.players.map(player => player.role)
   game.currentPhase += 1
   game.nextPhase = moment().add(1, "m")
