@@ -50,6 +50,7 @@ module.exports = {
       fn.broadcast(client, game, `${client.emojis.find(e => e.name == "Gunner_Shoot" && e.guild.id == "658631194870677553")
                                   } Jailer executed his prisoner **${target} ${client.users.get(game.players[target-1].id).username}** (${client.users.get(game.players[target-1].id).role}).`)
     
+    game.players[target-1].roleRevealed = true
     game.players[gamePlayer.number-1].bullets -= 1
     if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true
     
