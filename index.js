@@ -183,7 +183,7 @@ client.on('ready', async () => {
             let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
 
             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
-                !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
+                !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role) ) {
               game.players[killed[0]-1].alive = false
               game.players[killed[0]-1].roleRevealed = true
               game.lastDeath = game.currentPhase-1
