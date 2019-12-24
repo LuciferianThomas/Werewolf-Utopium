@@ -78,6 +78,7 @@ client.on('ready', async () => {
             else {
               game.players[lynched[0]-1].alive = false
               game.players[lynched[0]-1].roleRevealed = true
+              game.lastLynch = game.currentPhase
               fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
               if (game.players[lynched[0]-1].role == "Fool") {
                 game.currentPhase = 999
@@ -178,12 +179,14 @@ client.on('ready', async () => {
               game.players[killed[0]-1].health -= 1
               if (game.players[killed[0]-1].health <= 0) {
                 fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+                game.lastDeath = gam
                 game.players[killed[0]-1].roleRevealed = true
                 game.players[killed[0]-1].alive = false
               }
             } else if (game.players[killed[0]-1].bgProt) {
               game.players[game.players[killed[0]-1].bgProt-1].health -= 1
               if (game.players[game.players[killed[0]-1].bgProt-1].health <= 0) {
+                game.lastDeath = game.currentPhase-1
                 fn.broadcast(client, game, `${game.players[killed[0]-1].bgProt} ${client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id).username} (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
                 game.players[game.players[killed[0]-1].bgProt-1].alive = false
                 game.players[killed[0]-1].roleRevealed = true
