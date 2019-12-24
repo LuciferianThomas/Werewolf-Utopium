@@ -321,7 +321,7 @@ client.on('message', async message => {
     }
     
     if (gamePlayer.jailed && gamePlayer.alive) 
-      return client.users.get(game.players.find(p => p.role == "Jailer").id).send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+      return client.users.get(game.players[game.roles.indexOf("Jailer")].id).send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
     
     if (gamePlayer.role == "Jailer" && gamePlayer.alive) 
       if (game.players.find(p => p.jailed && p.alive))
