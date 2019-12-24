@@ -171,11 +171,12 @@ client.on('ready', async () => {
           
           
           // console.log(game.players)
-          let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.role == "Alpha Werewolf" ? player.vote*2 : player.vote),
+          let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),
+              wwRoles = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.role),
               wwVotesCount = []
           for (var j = 0; j < wwVotes.length; j++) {
             if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
-            wwVotesCount[wwVotes[j]] += 1
+            wwVotesCount[wwVotes[j]] += wwRoles == "Alpha Werewolf" ? 2 : 1
           }
           if (wwVotesCount.length) {
             let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
@@ -307,7 +308,7 @@ client.on('message', async message => {
           client.users
             .get(dead[i])
             .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
-      if (game.players[game.roles.indexOf("Medium")].alive && !game.players[games.roles.indexOf("Medium")].jailed) 
+      if (game.players[game.roles.indexOf("Medium")].alive && !game.players[game.roles.indexOf("Medium")].jailed) 
         client.users.get(game.players[game.roles.indexOf("Medium")].id)
           .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
       return undefined
