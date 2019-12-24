@@ -23,6 +23,8 @@ module.exports = {
       return await message.author.send("You do not have the abilities to revive a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer revive a player.")
+    if (gamePlayer.jailed)
+      return await message.author.send("You are currently jailed and you cannot use your abilities!")
     
     if (gamePlayer.revUsed)
       return await message.author.send("You have already revived a player.")

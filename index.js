@@ -62,7 +62,7 @@ client.on('ready', async () => {
         for (var j = 0; j < game.players.length; j++)
           players.set(`${game.players[j].id}.currentGame`, 0)
       }
-      if (game.currentPhase == -1 || game.currentPhase === 999) continue;
+      if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
       if (moment(game.nextPhase) <= moment()) {
         if (game.currentPhase % 3 == 2)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
@@ -307,12 +307,12 @@ client.on('message', async message => {
           client.users
             .get(dead[i])
             .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
-      if (game.players[game.roles.indexOf("Medium")].alive) 
+      if (game.players[game.roles.indexOf("Medium")].alive && !game.players[games.roles.indexOf("Medium")].jailed) 
         client.users.get(game.players[game.roles.indexOf("Medium")].id)
           .send(`***${gamePlayer.number} ${message.author.username}**: ${message.content}*`)
       return undefined
     }
-    if (gamePlayer.role == "Medium" && gamePlayer.alive) {
+    if (gamePlayer.role == "Medium" && gamePlayer.alive && !gamePlayer.jailed) {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
         client.users.get(dead[i]).send(`**Medium**: ${message.content}`)

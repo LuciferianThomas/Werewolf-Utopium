@@ -24,6 +24,8 @@ module.exports = {
       return await message.author.send("You do not have the abilities to check on a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer check on a player.")
+    if (gamePlayer.jailed)
+      return await message.author.send("You are currently jailed and cannot use your abilities.")
     
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only check on a player at night.")

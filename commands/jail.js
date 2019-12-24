@@ -23,6 +23,8 @@ module.exports = {
       return await message.author.send("You do not have the abilities to jail a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer jail a player.")
+    if (gamePlayer.jailed)
+      return await message.author.send("You are currently jailed and cannot use your abilities.")
     
     if (gamePlayer.role == "Jailer" && game.currentPhase % 3 == 0)
       return await message.author.send("You can only select a player to be your prisoner at day.")
