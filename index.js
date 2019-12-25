@@ -79,7 +79,7 @@ client.on('ready', async () => {
             else {
               game.players[lynched[0]-1].alive = false
               game.players[lynched[0]-1].roleRevealed = true
-              game.lastLynch = game.currentPhase
+              game.lastDeath = game.currentPhase
               fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
               if (game.players[lynched[0]-1].role == "Fool") {
                 game.currentPhase = 999
