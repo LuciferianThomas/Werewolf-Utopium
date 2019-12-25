@@ -111,7 +111,7 @@ client.on('ready', async () => {
         }
         
         if (game.lastDeath + 6 == game.currentPhase) {
-          fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days with deaths will result in a tie.")
+          fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days without deaths will result in a tie.")
         }
         
         if (game.lastDeath + 9 == game.currentPhase) {
