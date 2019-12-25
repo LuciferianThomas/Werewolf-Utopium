@@ -15,7 +15,7 @@ module.exports = {
  // category: "Bot Staff",
  // botStaffOnly: true,
 	run: async (client, message, args, shared) => {
-    if (!["336389636878368770","658481926213992498"].includes(message.author.id)) return;
+    if (!["336389636878368770","658481926213992498","524188548815912999"].includes(message.author.id)) return;
     
     const msg = message, bot = client
     
