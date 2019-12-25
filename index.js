@@ -160,17 +160,19 @@ client.on('ready', async () => {
             game.players[game.players.find(p => p.reved).number-1].alive = true
             game.players[game.players.find(p => p.reved).number-1].reved = false
           }
+          
+          // clears protections (should be after ww kill xD lol.... )
           for (var j = 0; j < game.players.length; j++) {
             game.players[j].jailed = false
             game.players[j].bgProt = null
             game.players[j].docProt = null
           }
+          
           if (game.roles.includes("Aura Seer")) game.players[game.roles.indexOf("Aura Seer")].checkedTonight = false
           if (game.roles.includes("Seer")) game.players[game.roles.indexOf("Seer")].checkedTonight = false
           if (game.roles.includes("Wolf Seer")) game.players[game.roles.indexOf("Wolf Seer")].checkedTonight = false
           
-          
-          // console.log(game.players)
+          // ww kill
           let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),
               wwRoles = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.role),
               wwVotesCount = []
