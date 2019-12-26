@@ -96,7 +96,12 @@ module.exports = {
     team: "Village"
   },
   "Wolf Seer": {
-    
+    desc: "Each night the Wolf Seer can see the role of one player." +
+          " They can talk with the other Werewolves and provide any information they found." +
+          " However, the Wolf Seer cannot vote on a player to kill unless they resign their ability to see roles." +
+          " If they are the last Werewolf alive they instantly resign their seeing ability.",
+    aura: "Evil",
+    team: "Werewolves"
   }
 }
 // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
