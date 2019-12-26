@@ -161,7 +161,8 @@ client.on('ready', async () => {
             game.players[game.players.find(p => p.reved).number-1].reved = false
           }
           
-          if (game.roles.includes("Aura Seer")) game.players[game.roles.indexOf("Aura Seer")].checkedTonight = false
+          let auras = game.players.filter(p => p.role == "Aura Seer").map(p => p.number)
+          for (var x = 0; x < auras.length; x++) game.players[auras[x]].checkedTonight = false
           if (game.roles.includes("Seer")) game.players[game.roles.indexOf("Seer")].checkedTonight = false
           if (game.roles.includes("Wolf Seer")) game.players[game.roles.indexOf("Wolf Seer")].checkedTonight = false
           
@@ -177,11 +178,11 @@ client.on('ready', async () => {
             let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
             let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
             
+            let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.jailed).map(p => p.id)
             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
               if (game.players[killed[0]-1].role == "Cursed") {
                 game.players[killed[0]-1].role = "Werewolf"
-                let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.jailed).map(p => p.id)
                 for (var j = 0; j < wolves.length; j++)
                   client.users.get(wolves[j])
                     .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
@@ -201,6 +202,17 @@ client.on('ready', async () => {
                 game.lastDeath = game.currentPhase-1
                 game.players[killed[0]-1].roleRevealed = true
                 game.players[killed[0]-1].alive = false
+              } else {
+                client.users.get(game.players[killed[0]-1].id)
+                  .send(
+                    new Discord.RichEmbed()
+                      .setTitle(`${client.emojis.find(e => e.name == "Bodyguard_Shield")} Attacked!`)
+                      .setDescription("You or your protection target was attacked last night.\nYou will die after the next attack!")
+                  )
+                for (var j = 0; j < wolves.length; j++)
+                  client.users.get(wolves[j])
+                    .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
+                          }** cannot be killed!`)
               }
             } else if (game.players[killed[0]-1].bgProt) {
               game.players[game.players[killed[0]-1].bgProt-1].health -= 1
@@ -211,7 +223,23 @@ client.on('ready', async () => {
                              } (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
                 game.players[game.players[killed[0]-1].bgProt-1].alive = false
                 game.players[killed[0]-1].roleRevealed = true
+              } else {
+                client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id)
+                  .send(
+                    new Discord.RichEmbed()
+                      .setTitle(`${client.emojis.find(e => e.name == "Bodyguard_Shield")} Attacked!`)
+                      .setDescription("You or your protection target was attacked last night.\nYou will die after the next attack!")
+                  )
+                for (var j = 0; j < wolves.length; j++)
+                  client.users.get(wolves[j])
+                    .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
+                          }** cannot be killed!`)
               }
+            } else {
+              for (var j = 0; j < wolves.length; j++)
+                client.users.get(wolves[j])
+                  .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
+                        }** cannot be killed!`)
             }
           }
           
