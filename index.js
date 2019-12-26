@@ -176,17 +176,28 @@ client.on('ready', async () => {
           if (wwVotesCount.length) {
             let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
             let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)
-
+            
             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
-              game.players[killed[0]-1].alive = false
-              game.players[killed[0]-1].roleRevealed = true
-              game.lastDeath = game.currentPhase-1
-              fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+              if (game.players[killed[0]-1].role == "Cursed") {
+                game.players[killed[0]-1].role = "Werewolf"
+                let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.jailed).map(p => p.id)
+                for (var j = 0; j < wolves.length; j++)
+                  client.users.get(wolves[j])
+                    .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
+                          }** is the Cursed and is turned into a Werewolf!`)
+              } else {
+                game.players[killed[0]-1].alive = false
+                game.players[killed[0]-1].roleRevealed = true
+                game.lastDeath = game.currentPhase-1
+                fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username
+                             } (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+              }
             } else if (game.players[killed[0]-1].role == "Bodyguard") {
               game.players[killed[0]-1].health -= 1
               if (game.players[killed[0]-1].health <= 0) {
-                fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username} (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
+                fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username
+                             } (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
                 game.lastDeath = game.currentPhase-1
                 game.players[killed[0]-1].roleRevealed = true
                 game.players[killed[0]-1].alive = false
@@ -195,7 +206,9 @@ client.on('ready', async () => {
               game.players[game.players[killed[0]-1].bgProt-1].health -= 1
               if (game.players[game.players[killed[0]-1].bgProt-1].health <= 0) {
                 game.lastDeath = game.currentPhase-1
-                fn.broadcast(client, game, `${game.players[killed[0]-1].bgProt} ${client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id).username} (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
+                fn.broadcast(client, game, `${game.players[killed[0]-1].bgProt} ${
+                             client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id).username
+                             } (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
                 game.players[game.players[killed[0]-1].bgProt-1].alive = false
                 game.players[killed[0]-1].roleRevealed = true
               }
@@ -331,8 +344,8 @@ client.on('message', async message => {
         return client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${message.content}`)
       else
         return message.author.send("You did not jail anyone or your target cannot be jailed.")
-    if (gamePlayer.role.toLowerCase().includes("wolf") && !gamePlayer.jailed) {
-      let wolves = game.players.filter(p => p.role.toLowerCase().includes("wolf") && !p.jailed).map(p => p.id)
+    if (roles[gamePlayer.role].team == "Werewolves" && !gamePlayer.jailed) {
+      let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.jailed).map(p => p.id)
       for (var i = 0; i < wolves.length; i++)
         if (wolves[i] != message.author.id) 
           client.users.get(wolves[i])
