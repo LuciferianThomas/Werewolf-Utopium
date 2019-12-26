@@ -52,6 +52,13 @@ module.exports = {
           " If their target dies in a way other than being lynched, they become a regular villager.",
     aura: "Unknown",
     team: "Solo/Village"
+  },
+  "Bodyguard": {
+    desc: "Each night the Bodyguard can select one player to protect. They also automatically protect themselves." +
+          " If the Bodyguard or the player they are protecting gets attacked, they will survive." +
+          " However, if they are attacked again the bodyguard will die.",
+    aura: "Good",
+    team: "Village"
   }
 }
 // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
