@@ -88,6 +88,15 @@ module.exports = {
           " The cursed can also be protected from the bite. Doctor, Bodyguard, Beast Hunter and Jailer can protect him at night.",
     aura: "Good",
     team: "Village"
+  },
+  "Priest": {
+    desc: "Once per game, the Priest can throw Holy Water at one player. The Priest can only do this during the day." +
+          " If the water is thrown at a werewolf, they will die (excluding Sorcerer). If that player is not a Werewolf, the Priest dies.",
+    aura: "Good",
+    team: "Village"
+  },
+  "Wolf Seer": {
+    
   }
 }
 // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
