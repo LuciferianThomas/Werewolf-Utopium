@@ -212,7 +212,7 @@ client.on('ready', async () => {
           let seers = game.players.filter(p => ["Aura Seer","Seer","Wolf Seer"].includes(p.role)).map(p => p.number)
           for (var x = 0; x < seers.length; x++) game.players[seers[x]].checkedTonight = false
           
-          // ww kill KK
+          
           let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),
               wwRoles = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.role),
               wwVotesCount = []
@@ -389,6 +389,7 @@ client.on('message', async message => {
       content = content.replace(new RegExp(`\\b${abbr}\\b`, 'g'), `${abbr} (${role})`)
     }
   }
+  let otherabbr = { ig: "in-game", }
   
   let game = games.get("quick").find(game => game.gameID == player.currentGame)
   let gamePlayer = game.players.find(player => player.id == message.author.id)

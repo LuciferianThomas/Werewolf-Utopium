@@ -3,7 +3,7 @@ module.exports = {
     desc: "The Villager has no special abilities.",
     aura: "Good",
     team: "Village",
-    abbr: ["vil","vill","forksman"]
+    abbr: ["reg","vil","vill","forksman"]
   },
   "Aura Seer": {
     desc: "Each night the Aura Seer can select one player (`w!check [number]`). They can see whether this player is good, evil or unknown." +
@@ -128,7 +128,7 @@ module.exports = {
   }, 
   /*"Arsonist": {
   	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!burn`)." + // alias: w!ignite
-          " You cannot be killed by the Werewolves. \nYou win if you are the last player alive.",
+          " You cannot be killed by the Werewolves. You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["ars", arso", "arson", "pyro"]
@@ -136,8 +136,8 @@ module.exports = {
   "Bomber": {
   	desc: "At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb`)." +
           " The following night, tbe bomb explodes, killing the selected players." +
-          "", 
-  
+          " You cannot be killed by the Werewolves." +
+  				" You win if you are the last player alive.",
   
   
   */
