@@ -57,31 +57,29 @@ module.exports = {
     abbr: []
   },
   "Fool": {
-    desc: "You have no special abilities besides talking 
-          " You win the game if you are lynched by the village.",
+    desc: "Your only goal is to get lynched by the village.",
     aura: "Unknown",
     team: "Solo",
     abbr: []
   },
   "Headhunter": {
-    desc: "You have no special abilities. On the first night of the game, you receive a target on a random village role." +
+    desc: "Your only goal is to get your target lynched by the village." +
           " If your target dies in a way other than being lynched, you become a regular villager.",
     aura: "Unknown",
     team: "Solo/Village",
     abbr: ["hh", "hunter"]
   },
   "Bodyguard": {
-    desc: "Each night, you can select one player to protect (`w!protect [player]`). You also automatically protect yourself." +
-          " If you or the player they are protecting gets attacked, you will survive." +
+    desc: "Each night, you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
+          " If you or the player you are protecting gets attacked, you will survive." +
           " However, if you are attacked again you will die.",
     aura: "Good",
     team: "Village",
     abbr: ["bg"]
   },
   "Gunner": {
-    desc: "You have no special abilities during the night. During the day, you have two bullets that it can use (`w!shoot [player]`)." +
-          " After you use the first bullet, the shot is so loud that everyone knows who you are." +
-          " The bullets will kill a player no matter what protection they have. You can only use one bullet per day.",
+    desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
+          " However, the shots are loud, so your role will be revealed after the first shot. ",
     aura: "Unknown",
     team: "Village",
     abbr: ["gun"]
@@ -89,14 +87,13 @@ module.exports = {
   "Wolf Shaman": {
     desc: "Each night, you can vote on a player to kill (`w!vote [player]`) and talk with the other werewolves." +
           " During the day, you can put an enchantment on another player (`w!enchant [player]`)." +
-          " This will make that player appear as a Wolf Shaman to the <:Seer:658633721448235019> Seer, <:Aura_Seer:658632880490020874> Aura Seer or <:Detective:660070860832505863> Detective.",
+          " This will make that player appear as a Wolf Shaman to the <:Seer:658633721448235019> Seer, Evil to the <:Aura_Seer:658632880490020874> Aura Seer and on the werewolves team for <:Detective:660070860832505863> Detective.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["sha","sham","shaman"]
+    abbr: ["ww sham","sham","shaman"]
   },
   "Serial Killer": {
-    desc: "Each night the Serial Killer can kill one player (`w!stab [player]`). They cannot be killed by the werewolves." +
-          " You win if you are the last player alive.",
+    desc: "Each night, stab one player with (`w!stab [player]`). You cannot be killed by the werewolves", 
     aura: "Unknown",
     team: "Solo",
     abbr: ["sk"]
@@ -109,7 +106,7 @@ module.exports = {
           " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards, <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailers can protect him at night.", 
     aura: "Good",
     team: "Village",
-    abbr: []
+    abbr: ["lycan"]
   },
   "Priest": {
     desc: "Once per game, you can throw Holy Water at one player. You can only do this during the day." +
