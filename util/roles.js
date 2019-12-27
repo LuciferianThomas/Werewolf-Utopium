@@ -35,9 +35,8 @@ module.exports = {
     abbr: ["ww"]
   },
   "Doctor": {
-    desc: "Each night the Doctor can select one player to heal. If this player is attacked by the Werewolves, they don't die in that night." +
-          " The Doctor can heal every night that they are alive. The Doctor cannot heal themselves." +
-    			"To heal someone, do `w!protect`.", 
+    desc: "Each night the Doctor can select one player to heal (`w!heal [number]`). If this player is attacked by the Werewolves, they don't die in that night." + // alias: w!protect
+          " The Doctor can heal every night that they are alive. The Doctor cannot heal themselves.",
     aura: "Good",
     team: "Village",
     abbr: ["doc"]
@@ -125,18 +124,21 @@ module.exports = {
           " If they are the last werewolf alive they instantly resign their seeing ability.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["wws","wwz", "ww seer", "wwseer"] // should I keep wws?
-  },
+    abbr: ["wws", "wwz", "ww seer", "wwseer"]
+  }, 
   /*"Arsonist": {
   	desc: "You are the Arsonist." +
-    			" Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!burn`)." + // alias w!ignite (our own note)
-          " You win if you are the last player alive.",
+    			" Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!burn`)." + // alias: w!ignite
+          " You cannot be killed by the Werewolves. \nYou win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
-    
-  	
-  
-  
+    abbr: ["ars", arso", "arson", "pyro"]
+  }, 
+  "Bomber": {
+  	desc: "You are the Bomber." +
+    			" At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb`)." +
+          " The following night, tbe bomb explodes, killing the selected players." +
+          "", 
   
   
   

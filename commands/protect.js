@@ -9,6 +9,7 @@ const fn = require('/app/util/fn')
 
 module.exports = {
   name: "protect",
+  aliases: ["heal"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -19,6 +20,8 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
+    if (gamePlayer.role !== "Doctor" && shared.commandName == "heal") 
+      return await message.author.send("You do not have the abilities to heal a player.")
     if (!["Doctor","Bodyguard","Tough Guy"].includes(gamePlayer.role))
       return await message.author.send("You do not have the abilities to protect a player.")
     if (!gamePlayer.alive)
