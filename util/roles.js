@@ -1,23 +1,34 @@
 module.exports = {
   "Aura Seer": {
-    desc: "Each night the Aura Seer can select one player (`w!check [number]`). They can see whether this player is good, evil or unknown." +
+    desc: "Each night the Aura Seer can select one player. They can see whether this player is good, evil or unknown." +
           " If the player is good, they are on the village and if they are evil they are on the Werewolves." + 
           " The Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
-    team: "Village"
+    team: "Village",
+    commands: [
+      { name: "check [number]", 
+        desc: "See whether this player has good, evil or unknown aura.\nCan only be used at night."
+      }
+    ]
   },
   "Medium": {
     desc: "During the night, the Medium can talk (anonymously) with dead players." +
-          " Once per game, they can revive a dead player (`w!revive [number]`).",
+          " Once per game, they can revive a dead player.",
     aura: "Unknown",
-    team: "Village"
+    team: "Village",
+    commands: [
+      { name: "revive [number]", desc: "Revive a dead player." }
+    ]
   },
   "Jailer": {
     desc: "The jailer can select one player to jail each day (`w!jail [number]`). That night, the jailer can talk to their prisoner privately." +
           " During this time, that jailed player cannot use their abilities." +
           " Once every game, they can execute their prisoner (`w!shoot`).",
     aura: "Unknown",
-    team: "Village"
+    team: "Village",
+    commands: [
+      { name: "jail [number]", desc: "Jail a player." }
+    ]
   },
   "Werewolf": {
     desc: "Each night the Werewolf can vote on a player to kill with `w!vote [number]` and talk with the other Werewolves.",
@@ -26,7 +37,8 @@ module.exports = {
   },
   "Doctor": {
     desc: "Each night the Doctor can select one player to heal. If this player is attacked by the Werewolves, they don't die in that night." +
-          " The Doctor can heal every night that they are alive. The Doctor cannot heal themselves.",
+          " The Doctor can heal every night that they are alive. The Doctor cannot heal themselves." +
+    			"To heal someone, do `w!protect`.", 
     aura: "Good",
     team: "Village"
   },
@@ -68,14 +80,14 @@ module.exports = {
     team: "Village"
   },
   "Wolf Shaman": {
-    desc: "Each night the Wolf Shaman can vote on a player to kill and talk with the other Werewolves." +
+    desc: "Each night the Wolf Shaman can vote on a player to kilL by doing `w!vote [player]` and talk with the other Werewolves." +
           " During the day, the Shaman can put an Enchantment on another player." +
           " This will make that player appear as a Shaman Werewolf to the Seer, Aura Seer or Detective.",
     aura: "Evil",
     team: "Werewolves"
   },
   "Serial Killer": {
-    desc: "Each night the Serial Killer can kill one player. They cannot be killed by the Werewolves." +
+    desc: "Each night the Serial Killer can kill one player. They can kill a player by doing `w!stab [player]`. They cannot be killed by the Werewolves." +
           " However, they are in competition with the werewolves, as both win if they kill enough people.",
     aura: "Unknown",
     team: "Solo"
@@ -85,7 +97,8 @@ module.exports = {
           " If the cursed is attacked by the werewolves, it does not die. Instead, it becomes a regular Werewolf." +
           " If he is not bitten, the seer sees him as Cursed and the Aura Seer sees him as good." +
           " If he gets bitten by the werewolves, the seer sees him as a werewolf." +
-          " The cursed can also be protected from the bite. Doctor, Bodyguard, Beast Hunter and Jailer can protect him at night.",
+          " The cursed can also be protected from the bite. Doctor, Bodyguard, Beast Hunter and Jailer can protect him at night." +
+    			" If you are biiten, you can votevote with the werewolves by dpinhdoing w", 
     aura: "Good",
     team: "Village"
   },
