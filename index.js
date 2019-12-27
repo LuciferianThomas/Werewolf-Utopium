@@ -148,7 +148,17 @@ client.on('ready', async () => {
         }*/
         
         if (game.currentPhase % 3 == 0) {
-          if (game.roles.includes("Gunner")) game.players[game.roles.indexOf("Gunner")].shotToday = false
+          fn.broadcast(
+            client, game, 
+            new Discord.RichEmbed()
+              .setTitle(`${client.emojis.find(e => e.name == "Night")} Night`)
+              .
+          )
+          if (game.roles.includes("Gunner")) {
+            let gunners = game.players.filter(p => p.role == "Gunner").map(p => p.number)
+            for (var x = 0; x < gunners.length; x++) 
+              game.players[gunners[i]-1].shotToday = false
+          }
           if (game.players.find(p => p.jailed && p.alive)) {
             let jailed = game.players.find(p => p.jailed && p.alive)
             client.users.get(game.roles.indexOf("Jailer"))
@@ -156,13 +166,30 @@ client.on('ready', async () => {
                 new Discord.RichEmbed()
                   .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jail`)
                   .setDescription(`**${jailed.number} ${client.users.get(jailed.id).username}** is your prisoner.\n` +
-                                  `You can talk anonymously to your prisoner`)
+                                  `You can talk anonymously to your prisoner, and you can execute your prisoner with \`w!shoot\`.`)
               )
             client.users.get(jailed.id)
               .send(
                 new Discord.RichEmbed()
                   .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jailed!`)
                   .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
+              )
+            if (roles[jailed.role].team == "Werewolves") {
+              let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && p.number != jailed.number)
+              for (var x = 0; x < wolves.length; x++) 
+                client.users.get(jailed.id)
+                  .send(
+                    new Discord.RichEmbed()
+                      .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jailed!`)
+                      .setDescription(`Fellow werewolf **${jailed.number} ${client.users.get(jailed.id).username}** has been jailed!`)
+                  )
+            }
+          } else if (game.roles.includes("Jailer")) {
+            client.users.get(game.roles.indexOf("Jailer"))
+              .send(
+                new Discord.RichEmbed()
+                  .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jail`)
+                  .setDescription("You did not jail someone or your target cannot be jailed.")
               )
           }
         }
