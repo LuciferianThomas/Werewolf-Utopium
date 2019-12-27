@@ -229,10 +229,19 @@ client.on('ready', async () => {
                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
               if (game.players[killed[0]-1].role == "Cursed") {
                 game.players[killed[0]-1].role = "Werewolf"
+                client.users.get(game.players[killed[0]-1].id).send(
+                  new Discord.RichEmbed()
+                    .setTitle(`${client.emojis.get(e => e.name == "Werewolf")} Converted!`)
+                    .setDescription("You have been attacked by the werewolves and converted into a Werewolf!")
+                )
                 for (var j = 0; j < wolves.length; j++)
-                  client.users.get(wolves[j])
-                    .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
-                          }** is the Cursed and is turned into a Werewolf!`)
+                  client.users.get(wolves[j]).send(
+                    new Discord.RichEmbed()
+                      .setTitle(`${client.emojis.get(e => e.name == "Cursed")} Converted!`)
+                      .setDescription(
+                        `**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
+                        }** is the Cursed and is turned into a Werewolf!`)
+                  )
               } else {
                 game.players[killed[0]-1].alive = false
                 game.players[killed[0]-1].roleRevealed = true
