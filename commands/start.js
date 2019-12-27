@@ -32,7 +32,6 @@ module.exports = {
     }
     
     games.set("quick", QuickGames)
-    //games.add(`${player.currentGame}.startVotes`, 1)
     
     if (QuickGames[QuickGames.indexOf(game)].startVotes.length == game.players.length)
       require('/app/process/start')(client, game)
