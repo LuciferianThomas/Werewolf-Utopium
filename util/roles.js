@@ -1,4 +1,7 @@
 module.exports = {
+  "Villager": {
+    desc: "Villagers have no special abilities. They have to help find "
+  },
   "Aura Seer": {
     desc: "Each night the Aura Seer can select one player. They can see whether this player is good, evil or unknown." +
           " If the player is good, they are on the village and if they are evil they are on the Werewolves." + 
@@ -46,13 +49,15 @@ module.exports = {
   "Seer": {
     desc: "Each night, the Seer can see the role of one player (`w!check [number]`).",
     aura: "Good",
-    team: "Village"
+    team: "Village",
+    abbr: []
   },
   "Fool": {
     desc: "The Fool has no special abilities besides talking and voting during the day." +
           "The Fool wins the game if they are lynched by the village.",
     aura: "Unknown",
-    team: "Solo"
+    team: "Solo",
+    abbr: []
   },
   "Headhunter": {
     desc: "The Headhunter has no special abilities. On the first night of the game they receive a target on a random village roles." +
@@ -100,7 +105,8 @@ module.exports = {
           " The cursed can also be protected from the bite. Doctor, Bodyguard, Beast Hunter and Jailer can protect him at night." +
     			" If you are biiten, you can votevote with the werewolves by doing `w!vote [player]`", 
     aura: "Good",
-    team: "Village"
+    team: "Village",
+    abbr: []
   },
   "Priest": {
     desc: "Once per game, the Priest can throw Holy Water at one player. The Priest can only do this during the day." +
