@@ -126,7 +126,7 @@ module.exports = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["wws","wwz"]
-  }
+  }//,
 }
 // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
                 // "Bodyguard", "Gunner", "Shaman Werewolf", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"]
