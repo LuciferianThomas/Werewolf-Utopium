@@ -100,7 +100,8 @@ module.exports = {
   },
   "Cursed": {
     desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
-          " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards, <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night.", 
+          " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards, <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
+    			" You cannot be converted to an another team (e.g. sect).", 
     aura: "Good",
     team: "Village",
     abbr: ["lycan"]
@@ -155,6 +156,20 @@ module.exports = {
   },
   "Illusionist": {
   	desc: "Every night, select a player to disguise." +
-    			" These players will appear to be the Illusionist to the <:Seer:658633721448235019>Seer, a different team to the <:Detective:660070860832505863> <:Aura_Seer:658632880490020874> 
+    			" These players will appear to be the Illusionist to the <:Seer:658633721448235019>Seer, a different team to the <:Detective:660070860832505863> Detective and unknown to the <:Aura_Seer:658632880490020874> Aura Seer." +
+          ' During the day, you can choose to kill all disguised players. You cannot be killed by the Werewolves.",
+    aura: "Unknown, 
+    team: "Solo", 
+    abbr: ["illu", "illusion"]
+  },
+  "Sect Leader": {
+  	desc: "Every night, select a player to convert into the sect team with (`w!sect [player]`). You can only convert Villagers to the Sect Team." +
+    			" However, if you're killed, every sect member dies along. You Win if everyone alive is converted.", 
+    aura: "Unknown",
+    team: "Sect",
+    abbr: ["sl", "sect"] 
+	},
+  "Zombie": {
+  	desc: "Each night, select a player to convert to a zombie by (`w!zombify [player]`). 
   */
 }
