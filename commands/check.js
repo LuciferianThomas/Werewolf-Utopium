@@ -45,13 +45,25 @@ module.exports = {
       return await message.author.send("You cannot check on yourself.")
     
     if (gamePlayer.role == "Aura Seer")
-      message.author.send(`${client.emojis.find(e => e.name == roles[game.players[target-1].role].aura)
-                        } ${target} ${client.users.get(game.players[target-1].id).username} has a${
-                          roles[game.players[target-1].role].aura == "Good" ? "" : "n"
-                          } ${roles[game.players[target-1].role].aura} aura.`)
+      message.author.send(
+        new Discord.RichEmbed()
+          .setTitle(`${client.emojis.find(e => e.name == "Aura_Seer")} Seeing Results`)
+          .setThumbnail(client.emojis.find(e => e.name == roles[game.players[target-1].role].aura).url)
+          .setDescription(
+            `${target} ${client.users.get(game.players[target-1].id).username} has a${
+            roles[game.players[target-1].role].aura == "Good" ? "" : "n"
+            } ${roles[game.players[target-1].role].aura} aura.`
+          )
+      )
     else
-      message.author.send(`${client.emojis.find(e => e.name == game.players[target-1].role[0].replace(/ /g, "_"))
-                        } ${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}.`)
+      message.author.send(
+        new Discord.RichEmbed()
+          .setTitle(`${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))} Seeing Results`)
+          .setThumbnail(client.emojis.find(e => e.name == game.players[target-1].role[0].replace(/ /g, "_")).url)
+          .setDescription(
+            `${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}.`
+          )
+      )
     
     game.players[gamePlayer.number-1].checkedTonight = true
     
