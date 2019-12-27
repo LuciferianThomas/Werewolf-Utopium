@@ -152,7 +152,14 @@ client.on('ready', async () => {
             client, game, 
             new Discord.RichEmbed()
               .setTitle(`${client.emojis.find(e => e.name == "Night")} Night`)
-              .
+              .setDescription("Nothing to do right now.\n" +
+                              "Go back to sleep!"),
+            game.players.filter(
+              p => p.alive &&
+                  ["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
+                   "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
+                   "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
+                   "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id)
           )
           if (game.roles.includes("Gunner")) {
             let gunners = game.players.filter(p => p.role == "Gunner").map(p => p.number)
@@ -189,7 +196,8 @@ client.on('ready', async () => {
               .send(
                 new Discord.RichEmbed()
                   .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jail`)
-                  .setDescription("You did not jail someone or your target cannot be jailed.")
+                  .setDescription("You didn't target somebody yesterday or killed your convict.\n" +
+                                  "Go back to sleep!")
               )
           }
         }

@@ -56,7 +56,7 @@ module.exports = {
       if (vote == gamePlayer.number) 
         return await message.author.send("You cannot vote yourself.")
       game.players[gamePlayer.number-1].vote = vote
-      fn.broadcast(client, game, `${gamePlayer.number} voted ${vote}.`)
+      fn.broadcast(client, game, `${gamePlayer.number} ${message.author.} voted ${vote}.`)
     }
     QuickGames[index] = game
     
