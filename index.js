@@ -149,9 +149,22 @@ client.on('ready', async () => {
         
         if (game.currentPhase % 3 == 0) {
           if (game.roles.includes("Gunner")) game.players[game.roles.indexOf("Gunner")].shotToday = false
-          if (game.players.find(p => p.jailed && p.alive))
-            client.users.get(game.players.find(p => p.jailed && p.alive).id)
-              .send("**You are now jailed.**\nYou can talk to the jailer to prove your innocence or the jailer can execute you.")
+          if (game.players.find(p => p.jailed && p.alive)) {
+            let jailed = game.players.find(p => p.jailed && p.alive)
+            client.users.get(game.roles.indexOf("Jailer"))
+              .send(
+                new Discord.RichEmbed()
+                  .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jail`)
+                  .setDescription(`**${jailed.number} ${client.users.get(jailed.id).username}** is your prisoner.\n` +
+                                  `You can talk anonymously to your prisoner`)
+              )
+            client.users.get(jailed.id)
+              .send(
+                new Discord.RichEmbed()
+                  .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jailed!`)
+                  .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
+              )
+          }
         }
         
         if (game.currentPhase % 3 == 1)  {
@@ -161,10 +174,8 @@ client.on('ready', async () => {
             game.players[game.players.find(p => p.reved).number-1].reved = false
           }
           
-          let auras = game.players.filter(p => p.role == "Aura Seer").map(p => p.number)
-          for (var x = 0; x < auras.length; x++) game.players[auras[x]].checkedTonight = false
-          if (game.roles.includes("Seer")) game.players[game.roles.indexOf("Seer")].checkedTonight = false
-          if (game.roles.includes("Wolf Seer")) game.players[game.roles.indexOf("Wolf Seer")].checkedTonight = false
+          let seers = game.players.filter(p => ["Aura Seer","Seer","Wolf Seer"].includes(p.role)).map(p => p.number)
+          for (var x = 0; x < seers.length; x++) game.players[seers[x]].checkedTonight = false
           
           // ww kill KK
           let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),

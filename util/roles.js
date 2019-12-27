@@ -5,33 +5,22 @@ module.exports = {
           " The Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
     team: "Village",
-    commands: [
-      { name: "check [number]", 
-        desc: "See whether this player has good, evil or unknown aura.\nCan only be used at night."
-      }
-    ]
   },
   "Medium": {
     desc: "During the night, the Medium can talk (anonymously) with dead players." +
           " Once per game, they can revive a dead player.",
     aura: "Unknown",
-    team: "Village",
-    commands: [
-      { name: "revive [number]", desc: "Revive a dead player." }
-    ]
+    team: "Village"
   },
   "Jailer": {
-    desc: "The jailer can select one player to jail each day (`w!jail [number]`). That night, the jailer can talk to their prisoner privately." +
+    desc: "The jailer can select one player to jail each day. That night, the jailer can talk to their prisoner privately." +
           " During this time, that jailed player cannot use their abilities." +
-          " Once every game, they can execute their prisoner (`w!shoot`).",
+          " Once every game, they can execute their prisoner.",
     aura: "Unknown",
-    team: "Village",
-    commands: [
-      { name: "jail [number]", desc: "Jail a player." }
-    ]
+    team: "Village"
   },
   "Werewolf": {
-    desc: "Each night the Werewolf can vote on a player to kill with `w!vote [number]` and talk with the other Werewolves.",
+    desc: "Each night the Werewolf can vote on a player and talk with the other Werewolves.",
     aura: "Evil",
     team: "Werewolves"
   },
@@ -98,7 +87,7 @@ module.exports = {
           " If he is not bitten, the seer sees him as Cursed and the Aura Seer sees him as good." +
           " If he gets bitten by the werewolves, the seer sees him as a werewolf." +
           " The cursed can also be protected from the bite. Doctor, Bodyguard, Beast Hunter and Jailer can protect him at night." +
-    			" If you are biiten, you can votevote with the werewolves by dpinhdoing w", 
+    			" If you are biiten, you can votevote with the werewolves by doing `w!vote [player]`", 
     aura: "Good",
     team: "Village"
   },
