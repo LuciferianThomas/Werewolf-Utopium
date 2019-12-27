@@ -4,6 +4,8 @@ const Discord = require("discord.js"),
       games = new db.table("Games"),
       players = new db.table("Players")
 
+const fn = require('/app/util/fn')
+
 module.exports = {
   name: "quick",
   aliases: ["joingame", "q"],
@@ -44,13 +46,12 @@ module.exports = {
     })
     if (!m) return undefined
     
-    for (var i = 0; i < currentGame.players.length; i++) {
-      client.users.get(currentGame.players[i].id).send(
-        new Discord.RichEmbed()
-          .setAuthor(`${message.author.username} joined the game.`, message.author.displayAvatarURL)         
-          .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
-      )
-    }
+    fn.broadcast( client, currentGame,
+      new Discord.RichEmbed()
+        .setAuthor(`${message.author.username} joined the game.`, message.author.displayAvatarURL)         
+        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
+    )
+    if (currentGame.players.length == 16) 
     
     games.set("quick", QuickGames)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)

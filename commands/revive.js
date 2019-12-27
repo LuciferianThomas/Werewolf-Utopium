@@ -9,6 +9,7 @@ const fn = require('/app/util/fn')
 
 module.exports = {
   name: "revive",
+  aliases: ["rev"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 

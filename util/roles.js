@@ -128,8 +128,9 @@ module.exports = {
   }, 
   /*"Arsonist": {
   	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!burn`)." + // alias: w!ignite
-          " You cannot be killed by the Werewolves. You win if you are the last player alive.",
-    aura: "Unknown",
+          " You cannot be killed by the Werewolves." 
+          " You Win if you are the last player alive.", 
+    aura: "Unknown", 
     team: "Solo",
     abbr: ["ars", arso", "arson", "pyro"]
   }, 
@@ -138,7 +139,10 @@ module.exports = {
           " The following night, tbe bomb explodes, killing the selected players." +
           " You cannot be killed by the Werewolves." +
   				" You win if you are the last player alive.",
-  
+ 		aura: "Unknown",
+    team: "Solo",
+    abbr: ["bb", "bomb"]
+  }, 
   
   */
 }

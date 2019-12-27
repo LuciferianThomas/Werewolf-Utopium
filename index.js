@@ -389,7 +389,10 @@ client.on('message', async message => {
       content = content.replace(new RegExp(`\\b${abbr}\\b`, 'g'), `${abbr} (${role})`)
     }
   }
-  let otherabbr = { ig: "in-game", }
+  let otherabbr = require('/app/util/otherabbr')
+  for (var [full, abbr] of Object.entries(otherabbr)) {
+    content = content.replace(new RegExp(`\\b${abbr}\\b`, 'g'), `${abbr} (${full})`)
+  }
   
   let game = games.get("quick").find(game => game.gameID == player.currentGame)
   let gamePlayer = game.players.find(player => player.id == message.author.id)
