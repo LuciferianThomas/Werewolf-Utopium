@@ -6,7 +6,7 @@ module.exports = {
     abbr: ["vil","vill","forksman"]
   },
   "Aura Seer": {
-    desc: "Each night the Aura Seer can select one player. They can see whether this player is good, evil or unknown." +
+    desc: "Each night the Aura Seer can select one player (`w!check [number]`). They can see whether this player is good, evil or unknown." +
           " If the player is good, they are on the village and if they are evil they are on the Werewolves." + 
           " The Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
@@ -15,21 +15,21 @@ module.exports = {
   },
   "Medium": {
     desc: "During the night, the Medium can talk (anonymously) with dead players." +
-          " Once per game, they can revive a dead player.",
+          " Once per game, they can revive a dead player (`w!revive [number]`).",
     aura: "Unknown",
     team: "Village",
     abbr: ["med"]
   },
   "Jailer": {
-    desc: "The jailer can select one player to jail each day. That night, the jailer can talk to their prisoner privately." +
+    desc: "The jailer can select one player to jail each day (`w!jail [number]`). That night, the jailer can talk to their prisoner privately." +
           " During this time, that jailed player cannot use their abilities." +
-          " Once every game, they can execute their prisoner.",
+          " Once every game, they can execute their prisoner (`w!shoot`).",
     aura: "Unknown",
     team: "Village",
     abbr: ["jail"]
   },
   "Werewolf": {
-    desc: "Each night the Werewolf can vote on a player and talk with the other Werewolves.",
+    desc: "Each night the Werewolf can vote on a player to kill (`w!vote [number]`) and talk with the other Werewolves.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww"]
@@ -43,7 +43,7 @@ module.exports = {
     abbr: ["doc"]
   },
   "Alpha Werewolf": {
-    desc: "The Alpha Werewolf has the same abilities as a regular Werewolf and can vote on one player to kill each night with `w!vote [number]`." +
+    desc: "The Alpha Werewolf has the same abilities as a regular Werewolf and can vote on one player to kill each night (`w!vote [number]`)." +
           " However, when the Alpha Werewolf votes on a player to kill during the night, his vote counts twice.",
     aura: "Unknown",
     team: "Werewolves",
@@ -86,9 +86,9 @@ module.exports = {
     abbr: ["gun"]
   },
   "Wolf Shaman": {
-    desc: "Each night the Wolf Shaman can vote on a player to kilL by doing `w!vote [player]` and talk with the other Werewolves." +
+    desc: "Each night the Wolf Shaman can vote on a player to kill (`w!vote [player]`) and talk with the other Werewolves." +
           " During the day, the Shaman can put an Enchantment on another player." +
-          " This will make that player appear as a Shaman Werewolf to the Seer, Aura Seer or Detective.",
+          " This will make that player appear as a Wolf Shaman to the Seer, Aura Seer or Detective.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["sha","sham","shaman"]
@@ -106,7 +106,7 @@ module.exports = {
           " If he is not bitten, the seer sees him as Cursed and the Aura Seer sees him as good." +
           " If he gets bitten by the werewolves, the seer sees him as a werewolf." +
           " The cursed can also be protected from the bite. Doctor, Bodyguard, Beast Hunter and Jailer can protect him at night." +
-    			" If you are biiten, you can votevote with the werewolves by doing `w!vote [player]`", 
+    			" If you are biiten, you can vote with the werewolves (`w!vote [player]`).", 
     aura: "Good",
     team: "Village",
     abbr: []
@@ -119,14 +119,26 @@ module.exports = {
     abbr: ["pri"]
   },
   "Wolf Seer": {
-    desc: "Each night the Wolf Seer can see the role of one player." +
+    desc: "Each night the Wolf Seer can see the role of one player (`w!check [number]`)." +
           " They can talk with the other Werewolves and provide any information they found." +
           " However, the Wolf Seer cannot vote on a player to kill unless they resign their ability to see roles." +
-          " If they are the last Werewolf alive they instantly resign their seeing ability.",
+          " If they are the last werewolf alive they instantly resign their seeing ability.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["wws","wwz"]
-  }//,
+    abbr: ["wws","wwz", "ww seer", "wwseer"] // should I keep wws?
+  },
+  /*"Arsonist": {
+  	desc: "You are the Arsonist." +
+    			" Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!burn`)." + // alias w!ignite (our own note)
+          " You win if you are the last player alive.",
+    aura: "Unknown",
+    team: "Solo",
+    
+  	
+  
+  
+  
+  
+  
+  */
 }
-// ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
-                // "Bodyguard", "Gunner", "Shaman Werewolf", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"]
