@@ -170,6 +170,11 @@ module.exports = {
     abbr: ["sl", "sect"] 
 	},
   "Zombie": {
-  	desc: "Each night, select a player to convert to a zombie by (`w!zombify [player]`). 
+  	desc: "Each night, select a player to convert to a zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
+    			" However, players take 1 day to convert before turning to a zombie. You Win if all alive players are zombies.",
+    aura: "Unknown"
+    team: "Zombies"
+    abbr: ["zomb", "zom"]
+  }, 
   */
 }
