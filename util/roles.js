@@ -1,7 +1,6 @@
 module.exports = {
   "Villager": {
-    desc: "You are a regular Villager with no special abilities." +
-    			"\n\nYou belong to the Village Team.", 
+    desc: "You are a regular Villager with no special abilities.",
     aura: "Good",
     team: "Village",
     abbr: ["reg","vil","vill","forkman"]
@@ -10,8 +9,7 @@ module.exports = {
     desc: "You are the Aura Seer." +
     			" Each night you can select one player to see whether this player is good, evil or unknown (`w!check [player]`)." +
           " If the player is good, they are on the village and if they are evil they are on the Werewolves." + 
-          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura." +
-    			"\n\nYou belong to the Village Team.",
+          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
     team: "Village",
     abbr: ["az","aura"]
@@ -19,8 +17,7 @@ module.exports = {
   "Medium": {
     desc: "You are the Medium." +
     			" During the night, you can talk (anonymously) with the dead players." +
-          " Once per game, you can revive a dead player (`w!revive [player]`)." +
-    			"\n\nYou belong to the Village Team.",
+          " Once per game, you can revive a dead player (`w!revive [player]`).",
     aura: "Unknown",
     team: "Village",
     abbr: ["med"]
@@ -28,23 +25,20 @@ module.exports = {
   "Jailer": {
     desc: "You are the Jailer." +
     			"Every day, select one player to jail by doing (`w!jail [number]`). Your target will be jailed the following night and cannot use its abilitids." +
-    			"If you find your target suspicious, you can kill it by doing (`w!jailkill [player]`)." +
-    			"\n\nYou belong to the Village Team.", 
+    			"If you find your target suspicious, you can kill it by doing (`w!jailkill [player]`).",
     aura: "Unknown",
     team: "Village",
     abbr: ["jail"]
   },
   "Werewolf": {
-    desc: "You are a regular Werewolf with no special abilities. Do (`w!vote [player]`) to vote with your werewolf teammates." +
-    			"\n\nYou belong to the Werewolf Team.",
+    desc: "You are a regular Werewolf with no special abilities. Do (`w!vote [player]`) to vote with your werewolf teammates.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww"]
   },
   "Doctor": {
     desc: "You are the Doctor." + // alias: w!protect
-          "Every night, select a player to save with (`w!heal [player]`). You will be notified if your target was attacked. You cannot protect yourself." +
-    			"\n\nYou belong to the Village Team.",
+          "Every night, select a player to save with (`w!heal [player]`). You will be notified if your target was attacked. You cannot protect yourself.",
     aura: "Good",
     team: "Village",
     abbr: ["doc"]
