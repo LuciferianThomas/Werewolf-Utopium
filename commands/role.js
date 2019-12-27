@@ -13,7 +13,8 @@ module.exports = {
     
     await message.author.send(
       new Discord.RichEmbed()
-        .setTitle(`${client.emojis.find(e => e.name == role.replace(/ /g, "_") && e.guild.id == "658631194870677553")} You are a${["A","E","I","O","U"].includes(role[0]) ? "n" : ""} ${role}.`)
+        .setTitle(`${role}`)
+        .setThumbnail(client.emojis.find(e => e.name == role.replace(/ /g, "_") && e.guild.id == "658631194870677553").url)
         .setDescription(`${roles[role].desc}\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
     )
   }

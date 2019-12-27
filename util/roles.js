@@ -1,6 +1,9 @@
 module.exports = {
   "Villager": {
-    desc: "Villagers have no special abilities. They have to help find "
+    desc: "The Villager has no special abilities.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["vil","vill","forksman"]
   },
   "Aura Seer": {
     desc: "Each night the Aura Seer can select one player. They can see whether this player is good, evil or unknown." +
