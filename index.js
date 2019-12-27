@@ -227,6 +227,15 @@ client.on('ready', async () => {
             let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.jailed).map(p => p.id)
             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
+              if (game.players[killed[0]-1].docProt)
+                client.users.get(game.players[game.players[killed[0]-1].docProt-1].id)
+                  .send(
+                    new Discord.RichEmbed()
+                      .setTitle(`${client.emojis.get(e => e.name == "Doctor_Protect")} Protection`)
+                      .setDescription(`Your protection saved **${game.players[killed[0]-1].number} ${
+                                      client.users.get(game.players[killed[0]-1].id).username}** last night!`)
+                  )
+              
               if (game.players[killed[0]-1].role == "Cursed") {
                 game.players[killed[0]-1].role = "Werewolf"
                 client.users.get(game.players[killed[0]-1].id).send(
@@ -262,7 +271,7 @@ client.on('ready', async () => {
                   .send(
                     new Discord.RichEmbed()
                       .setTitle(`${client.emojis.find(e => e.name == "Bodyguard_Shield")} Attacked!`)
-                      .setDescription("You or your protection target was attacked last night.\nYou will die after the next attack!")
+                      .setDescription("You fought off an attack last night and survived.\nNext time y")
                   )
                 for (var j = 0; j < wolves.length; j++)
                   client.users.get(wolves[j])
