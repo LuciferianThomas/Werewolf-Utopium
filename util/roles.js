@@ -120,7 +120,7 @@ module.exports = {
     desc: "Each night, you can see the role of one player (`w!check [player]`)." +
           " You can talk with the other werewolves and provide any information you found." +
           " However, you cannot vote on a player to kill unless you resign your ability to see roles." +
-          " If you are the last werewolf alive they instantly resign your seeing ability.",
+          " If you are the last werewolf alive you instantly resign your seeing ability.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["wws", "wwz", "wwseer"]
