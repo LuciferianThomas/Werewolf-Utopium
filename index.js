@@ -384,9 +384,9 @@ client.on('message', async message => {
   if (!player.currentGame) return;
 
   let content = message.content
-  for (var [role, data] of Object.entries(roles)) {
-    for (var i = 0; i < data.abbr.length; i++) {
-      content.replace(new RegExp(data.abbr[i], 'g'), `${data.abbr[i]} (${role})`)
+  for (var role in roles) {
+    for (var abbr of roles[role].abbr) {
+      content = content.replace(new RegExp(`\\b${abbr}\\b`, 'g'), `${abbr} (${role})`)
     }
   }
   
