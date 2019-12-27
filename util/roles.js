@@ -147,7 +147,14 @@ module.exports = {
     abbr: ["corr"] 
   },
   "Cannibal": {
-  	desc: "Every night, you can kill a player or save up your hunger to kill more the next night." +
-    			" You can only stack up to 5 kills. 
+  	desc: "Every night, you can kill a player or save up your hunger to kill more the next night by doing (`w!eat [player]`)." +
+    			" You can only stack up to 5 kills. You cannot be killed by the Werewolves.",
+    aura: "Unknown",
+    team: "Solo",
+    abrr: ["canni"]
+  },
+  "Illusionist": {
+  	desc: "Every night, select a player to disguise." +
+    			" These players will appear to be the Illusionist to the <:Seer:658633721448235019>Seer, a different team to the <:Detective:660070860832505863> <:Aura_Seer:658632880490020874> 
   */
 }
