@@ -99,11 +99,8 @@ module.exports = {
     abbr: ["sk"]
   },
   "Cursed": {
-    desc: "You begin the game on the village team. You are loyal to the village." +
-          " If you are attacked by the werewolves, you do not die." +
-          " Instead, you become a regular <:Werewolf:658633322439639050> Werewolf, and can vote to kill a player (`w!vote [player]`) and talk with the werewolves starting the following night." +
-          " You can also be protected from the bite." +
-          " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards, <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailers can protect him at night.", 
+    desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
+          " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards, <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night.", 
     aura: "Good",
     team: "Village",
     abbr: ["lycan"]
@@ -116,13 +113,13 @@ module.exports = {
     abbr: ["pri"]
   },
   "Wolf Seer": {
-    desc: "Each night, you can see the role of one player (`w!check [player]`)." +
+    desc: "Each night, you can uncover the role of one player (`w!check [player]`)." +
           " You can talk with the other werewolves and provide any information you found." +
           " However, you cannot vote on a player to kill unless you resign your ability to see roles." +
           " If you are the last werewolf alive you instantly resign your seeing ability.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["wws", "wwz", "wwseer"]
+    abbr: ["wws", "wwz", "wwseer", "ww seer"]
   }, 
   /*"Arsonist": {
   	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!ignite`)." + // alias: w!burn
@@ -141,8 +138,16 @@ module.exports = {
     team: "Solo",
     abbr: ["bb", "bomb"]
   },
-  "Corrupter": {
-  	desc:
-  
+  "Corruptor": {
+  	desc: "Every night, select a player 'glitch' by doing (`w!glitch [player]`)." +
+    			" That player won't be able to speak or vote the next day and will die at the end of the day." +
+  				" The role of the player won't be revealed. You cannot be killed by the Werewolves.",
+    aura: "Unknown",
+    team: "Solo",
+    abbr: ["corr"] 
+  },
+  "Cannibal": {
+  	desc: "Every night, you can kill a player or save up your hunger to kill more the next night." +
+    			" You can only stack up to 5 kills. 
   */
 }
