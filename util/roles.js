@@ -45,20 +45,19 @@ module.exports = {
     abbr: ["doc"]
   },
   "Alpha Werewolf": {
-    desc: "You can vote on one player to kill each night (`w!vote [player]`) like a regular Werewolf." +
-          " However, when you vote on a player to kill during the night, your vote counts double.",
+    desc: "You are a regular Werewolf except when you vote with the werewolves by doing (`w!vote [player]`), your vote counts as double!",
     aura: "Unknown",
     team: "Werewolves",
     abbr: ["aww","alpha"]
   },
   "Seer": {
-    desc: "Each night, you can see the role of one player (`w!check [player]`).",
+    desc: "Each night, you uncover the role of one player with (`w!check [player]`).",
     aura: "Good",
     team: "Village",
     abbr: []
   },
   "Fool": {
-    desc: "You have no special abilities besides talking and voting during the day." +
+    desc: "You have no special abilities besides talking 
           " You win the game if you are lynched by the village.",
     aura: "Unknown",
     team: "Solo",
@@ -69,7 +68,7 @@ module.exports = {
           " If your target dies in a way other than being lynched, you become a regular villager.",
     aura: "Unknown",
     team: "Solo/Village",
-    abbr: ["hh"]
+    abbr: ["hh", "hunter"]
   },
   "Bodyguard": {
     desc: "Each night, you can select one player to protect (`w!protect [player]`). You also automatically protect yourself." +
@@ -144,7 +143,9 @@ module.exports = {
  		aura: "Unknown",
     team: "Solo",
     abbr: ["bb", "bomb"]
-  }, 
+  },
+  "Corrupter": {
+  	desc:
   
   */
 }
