@@ -271,7 +271,7 @@ client.on('ready', async () => {
                   .send(
                     new Discord.RichEmbed()
                       .setTitle(`${client.emojis.find(e => e.name == "Bodyguard_Shield")} Attacked!`)
-                      .setDescription("You fought off an attack last night and survived.\nNext time y")
+                      .setDescription("You fought off an attack last night and survived.\nNext time you are attacked you will die.")
                   )
                 for (var j = 0; j < wolves.length; j++)
                   client.users.get(wolves[j])
@@ -292,7 +292,7 @@ client.on('ready', async () => {
                   .send(
                     new Discord.RichEmbed()
                       .setTitle(`${client.emojis.find(e => e.name == "Bodyguard_Shield")} Attacked!`)
-                      .setDescription("You or your protection target was attacked last night.\nYou will die after the next attack!")
+                      .setDescription("You fought off an attack last night and survived.\nNext time you are attacked you will die.")
                   )
                 for (var j = 0; j < wolves.length; j++)
                   client.users.get(wolves[j])
