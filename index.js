@@ -382,21 +382,28 @@ client.on('message', async message => {
   
   let player = players.get(message.author.id)
   if (!player.currentGame) return;
+
+  let content = message.content
+  for (var role in roles) {
+    for (var abbr of roles[role].abbr) {
+      content.replace(new RegExp(abbr, 'g'), `${abbr} (${role})`)
+    }
+  }
   
   let game = games.get("quick").find(game => game.gameID == player.currentGame)
   let gamePlayer = game.players.find(player => player.id == message.author.id)
   if (game.currentPhase == -1)
-    return await fn.broadcast(client, game,`**${message.author.username}**: ${message.content}`, [message.author.id])
+    return await fn.broadcast(client, game, `**${message.author.username}**: ${content}`, [message.author.id])
   
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
-      return fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${message.content}`, [message.author.id])
+      return fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${content}`, [message.author.id])
     else {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
         if (dead[i] != message.author.id)
           client.users.get(dead[i])
-            .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`)
+            .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${content}`)
       return undefined
     }
   if (game.currentPhase % 3 == 0) {
@@ -406,25 +413,25 @@ client.on('message', async message => {
         if (dead[i] != message.author.id)
           client.users
             .get(dead[i])
-            .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`)
+            .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${content}`)
       if (game.players[game.roles.indexOf("Medium")].alive && !game.players[game.roles.indexOf("Medium")].jailed) 
         client.users.get(game.players[game.roles.indexOf("Medium")].id)
-          .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${message.content}`, [message.author.id])
+          .send(`:skull: **${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${content}`, [message.author.id])
       return undefined
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive && !gamePlayer.jailed) {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
-        client.users.get(dead[i]).send(`**Medium**: ${message.content}`)
+        client.users.get(dead[i]).send(`**Medium**: ${content}`)
       return undefined
     }
     
     if (gamePlayer.jailed && gamePlayer.alive) 
-      return client.users.get(game.players[game.roles.indexOf("Jailer")].id).send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+      return client.users.get(game.players[game.roles.indexOf("Jailer")].id).send(`**${gamePlayer.number} ${message.author.username}**: ${content}`)
     
     if (gamePlayer.role == "Jailer" && gamePlayer.alive) 
       if (game.players.find(p => p.jailed && p.alive))
-        return client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${message.content}`)
+        return client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${content}`)
       else
         return message.author.send("You did not jail anyone or your target cannot be jailed.")
     if (roles[gamePlayer.role].team == "Werewolves" && !gamePlayer.jailed) {
@@ -432,7 +439,7 @@ client.on('message', async message => {
       for (var i = 0; i < wolves.length; i++)
         if (wolves[i] != message.author.id) 
           client.users.get(wolves[i])
-            .send(`**${gamePlayer.number} ${message.author.username}**: ${message.content}`)
+            .send(`**${gamePlayer.number} ${message.author.username}**: ${content}`)
     }
   }
 })
