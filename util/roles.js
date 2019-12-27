@@ -37,8 +37,9 @@ module.exports = {
     abbr: ["ww"]
   },
   "Doctor": {
-    desc: "You are the Doctor." + // alias: w!protect
-          "Every night, select a player to save with (`w!heal [player]`). You will be notified if your target was attacked. You cannot protect yourself.",
+    desc: "You are the Doctor." + 
+          "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
+          " You cannot protect yourself.",
     aura: "Good",
     team: "Village",
     abbr: ["doc"]
