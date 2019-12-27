@@ -19,9 +19,9 @@ module.exports = async (client, game) => {
     await client.users.get(game.players[i].id)
       .send(
         new Discord.RichEmbed()
-          // .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_") && e.guild.id == "658631194870677553"))
-          .setTitle(`${client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_") && e.guild.id == "658631194870677553")} You are a${["A","E","I","O","U"].includes(game.players[i].role[0]) ? "n" : ""} ${game.players[i].role}.`)
-          .setDescription(`${roles[game.players[i].role].desc}\nAura: ${roles[game.players[i].role].aura}\nTeam: ${roles[game.players[i].role].team}`)
+          .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")))
+          .setTitle(game.players[i].role)
+          .setDescription(`${roles[game.players[i].role].desc}\n\nAura: ${roles[game.players[i].role].aura}\nTeam: ${roles[game.players[i].role].team}`)
       )
     game.players[i].alive = true
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
