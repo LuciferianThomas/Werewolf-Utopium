@@ -11,7 +11,7 @@ module.exports = {
           " The Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
     team: "Village",
-    abbr: ["az","as","aura"]
+    abbr: ["az","aura"]
   },
   "Medium": {
     desc: "During the night, the Medium can talk (anonymously) with dead players." +
