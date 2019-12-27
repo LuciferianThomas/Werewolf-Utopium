@@ -127,16 +127,14 @@ module.exports = {
     abbr: ["wws", "wwz", "ww seer", "wwseer"]
   }, 
   /*"Arsonist": {
-  	desc: "You are the Arsonist." +
-    			" Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!burn`)." + // alias: w!ignite
+  	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!burn`)." + // alias: w!ignite
           " You cannot be killed by the Werewolves. \nYou win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["ars", arso", "arson", "pyro"]
   }, 
   "Bomber": {
-  	desc: "You are the Bomber." +
-    			" At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb`)." +
+  	desc: "At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb`)." +
           " The following night, tbe bomb explodes, killing the selected players." +
           "", 
   
