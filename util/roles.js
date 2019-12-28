@@ -137,7 +137,7 @@ module.exports = {
   "Arsonist": {
   	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!ignite`)." + // alias: w!burn
           " You cannot be killed by the werewolves." + 
-          " You Win if you are the last player alive.", 
+          " You win if you are the last player alive.", 
     aura: "Unknown", 
     team: "Solo",
     abbr: ["ars", "arso", "arson", "pyro"]
@@ -145,8 +145,7 @@ module.exports = {
   "Bomber": {
   	desc: "At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb [player]`)." +
           " The following night, tbe bomb explodes, killing the selected players." +
-          " You cannot be killed by the werewolves." +
-  				" You win if you are the last player alive.",
+          " You cannot be killed by the werewolves. You win if you are the last player alive.",
  		aura: "Unknown",
     team: "Solo",
     abbr: ["bb", "bomb"]
@@ -154,7 +153,7 @@ module.exports = {
   "Corruptor": {
   	desc: "Every night, select a player 'glitch' by doing (`w!glitch [player]`)." +
     			" That player won't be able to speak or vote the next day and will die at the end of the day." +
-  				" The role of the player won't be revealed. You cannot be killed by the werewolves.",
+  				" The role of the player won't be revealed. You cannot be killed by the werewolves. You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["corr"] 
