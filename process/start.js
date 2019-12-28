@@ -15,13 +15,13 @@ module.exports = async (client, game) => {
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
-    game.players[i].role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
+    let role = game.players[i].role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     await client.users.get(game.players[i].id)
       .send(
         new Discord.RichEmbed()
           .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")))
-          .setTitle(game.players[i].role)
-          .setDescription(`${roles[game.players[i].role].desc}\n\nAura: ${roles[game.players[i].role].aura}\nTeam: ${roles[game.players[i].role].team}`)
+          .setTitle(`You are ${rolel} ${role}`)
+          .setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
       )
     game.players[i].alive = true
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
