@@ -35,7 +35,7 @@ module.exports = {
     team: "Village",
     abbr: ["bg"]
   },
-  /* Cupid */
+  /*Cupid */
   "Cursed": {
     desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
           " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards," +
