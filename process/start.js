@@ -20,7 +20,8 @@ module.exports = async (client, game) => {
       .send(
         new Discord.RichEmbed()
           .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")))
-          .setTitle(`You are ${rolel} ${role}`)
+          .setTitle(`You are ${["Jailer","Cupid","President","Sect Leader"].includes(role) ? "the" :
+                               (/^([aeiou])/i).test(role) ? "an" : "a"} ${role}`)
           .setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
       )
     game.players[i].alive = true
