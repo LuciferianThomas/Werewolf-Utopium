@@ -152,18 +152,18 @@ module.exports = {
     			" You can only stack up to 5 kills. You cannot be killed by the Werewolves.",
     aura: "Unknown",
     team: "Solo",
-    abrr: ["canni"]
+    abrr: ["canni", "cani", "cb"]
   },
   "Illusionist": {
   	desc: "Every night, select a player to disguise." +
     			" These players will appear to be the Illusionist to the <:Seer:658633721448235019>Seer, a different team to the <:Detective:660070860832505863> Detective and unknown to the <:Aura_Seer:658632880490020874> Aura Seer." +
           ' During the day, you can choose to kill all disguised players. You cannot be killed by the Werewolves.",
-    aura: "Unknown, 
+    aura: "Unknown", 
     team: "Solo", 
     abbr: ["illu", "illusion"]
   },
   "Sect Leader": {
-  	desc: "Every night, select a player to convert into the sect team with (`w!sect [player]`). You can only convert Villagers to the Sect Team." +
+  	desc: "Every night, select a player to convert into a sect member with (`w!sect [player]`). You can only convert Villagers to the Sect Team." +
     			" However, if you're killed, every sect member dies along. You Win if everyone alive is converted.", 
     aura: "Unknown",
     team: "Sect",
@@ -171,10 +171,10 @@ module.exports = {
 	},
   "Zombie": {
   	desc: "Each night, select a player to convert to a zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
-    			" However, players take 1 day to convert before turning to a zombie. You Win if all alive players are zombies.",
+    			" However, players take 1 day to convert before turning to a zombie. You win if all alive players are zombies.",
     aura: "Unknown"
     team: "Zombies"
-    abbr: ["zomb", "zom"]
+    abbr: ["zomb", "zom", "zb"]
   }, 
   */
 }
