@@ -42,7 +42,7 @@ module.exports = {
     game.players[gamePlayer.number-1].revUsed = true
     game.players[target-1].reved = true
     
-    message.author.send(`${client.emojis.find(e => e.name == "Medium_Revive" && e.guild.id == "658631194870677553")
+    message.author.send(`${client.emojis.find(e => e.name == "Medium_Revive")
                         } You selected ${target} ${client.users.get(game.players[target-1].id).username} to be revived.`)
     
     QuickGames[index] = game

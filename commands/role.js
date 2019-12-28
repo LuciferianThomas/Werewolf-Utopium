@@ -15,7 +15,7 @@ module.exports = {
     await message.author.send(
       new Discord.RichEmbed()
         .setTitle(`${role}`)
-        .setThumbnail(client.emojis.find(e => e.name == role.replace(/ /g, "_") && e.guild.id == "658631194870677553").url)
+        .setThumbnail(client.emojis.find(e => e.name == role.replace(/ /g, "_")).url)
         .setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
     )
   }

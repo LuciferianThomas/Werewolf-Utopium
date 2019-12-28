@@ -122,18 +122,18 @@ module.exports = {
     team: "Werewolves",
     abbr: ["wws", "wwz", "wwseer", "ww seer"]
   }, 
-  /*"Arsonist": {
+  "Arsonist": {
   	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!ignite`)." + // alias: w!burn
-          " You cannot be killed by the Werewolves." 
+          " You cannot be killed by the werewolves." + 
           " You Win if you are the last player alive.", 
     aura: "Unknown", 
     team: "Solo",
-    abbr: ["ars", arso", "arson", "pyro"]
+    abbr: ["ars", "arso", "arson", "pyro"]
   }, 
   "Bomber": {
   	desc: "At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb [player]`)." +
           " The following night, tbe bomb explodes, killing the selected players." +
-          " You cannot be killed by the Werewolves." +
+          " You cannot be killed by the werewolves." +
   				" You win if you are the last player alive.",
  		aura: "Unknown",
     team: "Solo",
@@ -142,28 +142,29 @@ module.exports = {
   "Corruptor": {
   	desc: "Every night, select a player 'glitch' by doing (`w!glitch [player]`)." +
     			" That player won't be able to speak or vote the next day and will die at the end of the day." +
-  				" The role of the player won't be revealed. You cannot be killed by the Werewolves.",
+  				" The role of the player won't be revealed. You cannot be killed by the werewolves.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["corr"] 
   },
   "Cannibal": {
   	desc: "Every night, you can kill a player or save up your hunger to kill more the next night by doing (`w!eat [player]`)." +
-    			" You can only stack up to 5 kills. You cannot be killed by the Werewolves.",
+    			" You can only stack up to 5 kills. You cannot be killed by the werewolves.",
     aura: "Unknown",
     team: "Solo",
     abrr: ["canni", "cani", "cb"]
   },
   "Illusionist": {
   	desc: "Every night, select a player to disguise." +
-    			" These players will appear to be the Illusionist to the <:Seer:658633721448235019>Seer, a different team to the <:Detective:660070860832505863> Detective and unknown to the <:Aura_Seer:658632880490020874> Aura Seer." +
-          ' During the day, you can choose to kill all disguised players. You cannot be killed by the Werewolves.",
+    			" These players will appear to be the Illusionist to the <:Seer:658633721448235019> Seer," +
+          " a different team to the <:Detective:660070860832505863> Detective and unknown to the <:Aura_Seer:658632880490020874> Aura Seer." +
+          " During the day, you can choose to kill all disguised players. You cannot be killed by the werewolves.",
     aura: "Unknown", 
     team: "Solo", 
     abbr: ["illu", "illusion"]
   },
   "Sect Leader": {
-  	desc: "Every night, select a player to convert into a sect member with (`w!sect [player]`). You can only convert Villagers to the Sect Team." +
+  	desc: "Every night, select a player to convert into a sect member with (`w!sect [player]`). You can only convert villagers to the Sect Team." +
     			" However, if you're killed, every sect member dies along. You Win if everyone alive is converted.", 
     aura: "Unknown",
     team: "Sect",
@@ -172,9 +173,8 @@ module.exports = {
   "Zombie": {
   	desc: "Each night, select a player to convert to a zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
     			" However, players take 1 day to convert before turning to a zombie. You win if all alive players are zombies.",
-    aura: "Unknown"
-    team: "Zombies"
+    aura: "Unknown",
+    team: "Zombies",
     abbr: ["zomb", "zom", "zb"]
   }, 
-  */
 }
