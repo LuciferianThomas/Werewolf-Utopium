@@ -21,12 +21,13 @@ module.exports = {
     aura: "Good",
     team: "Village",
     abbr: []
-  }, "Beast Hunter": {
+  }, 
+  "Beast Hunter": {
     desc: "",
     aura: "Unknown",
     team: "Village",
     abbr: []
-  } */
+  }, */
   "Bodyguard": {
     desc: "Each night, you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
           " If you or the player you are protecting gets attacked, you will survive." +
@@ -36,9 +37,9 @@ module.exports = {
     abbr: ["bg"]
   },
   /*"Cupid": {
-  	desc: "During the first night, select 2 players to be a couple with (`w!couple [player]`). They will know each other's roles at the beginning of the next day." +
+  	desc: "During the first night, select 2 players to be a couple with (`w!couple [player1] [player 2]`). They will know each other's roles at the beginning of the next day." +
     			" Your couple must survive until the end of tne game and must be the last players alive in order to win as couple." +
-          " If one your couple dies, the other couple dies along and you become a regular villager. ",
+          " If one your couple dies, the other couple dies along and you become a regular villager.",
     aura: "Good",
     team: "Village/Couple",
     abbr: []
@@ -53,9 +54,9 @@ module.exports = {
     abbr: ["lycan"]
   },
   /*"Detective": {
-  	desc: "Every night, select 2 players to check if they belong to the same team with (`w!detect [player]`)." +
-    			" Players from the same team will result an `=` sign meanwhile players from a different team will show a `≠` sign." +
-          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you players as a werewolf team.",
+  	desc: "Every night, select two players to check if they belong to the same team with (`w!detect [player]`)." +
+    			" Players from the same team will result an `=` sign meanwhile players from a different team will show a `≠` sign." + // replace with emoji later
+          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
     abbr: ["det"]
@@ -65,17 +66,28 @@ module.exports = {
           " You will be notified when your protected player was attaked. You cannot protect yourself.",
     aura: "Good",
     team: "Village",
-    abbr: ["doc", "medic"]
+    abbr: ["doc", "medic"] // bruh wot lmao medic
   },
   /*"Flower Child": {
  		desc: "Once a game, you can protect anyone from being lynched by using (`w!petal [player]`).",
     aura: "Good", 
-    team: "Village, 
+    team: "Village", 
  		abbr: ["fc"] 
   }, 
   "Fortune Teller": {
-  	desc: "During the first night, give 2 cards to 2 players with (`w!give [player1] [player 2]`) .
-  }, Grumpy Grandma */
+  	desc: "During the first night, give two cards to two players with (`w!givecards [player1] [player 2]`)." +
+    			" These players can use the cards and reveal their role.",
+    aura: "Unknown",
+    team: "Village",
+    abbr: []
+  }, 
+  "Grumpy Grandma": {
+    desc: "After the first night, select a player to mute with (`w!mute [player]`). This player won't be able to talk or vote the next day." +
+    			" However, if someone is muted, the village will be notified. You cannot mute the same person twice in a row.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["gg", "grandma"]
+  }, */
   "Gunner": {
     desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
           " However, the shots are loud, so your role will be revealed after the first shot. ",
