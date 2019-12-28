@@ -16,7 +16,17 @@ module.exports = {
     team: "Village",
     abbr: ["az","aura"]
   }, 
-  /* Avenger, Beast Hunter */
+  /* "Avenger": {
+    desc: "You can select a player to be killed when you die (`w!tag [player]`).",
+    aura: "Good",
+    team: "Village",
+    abbr: []
+  }, "Beast Hunter": {
+    desc: "",
+    aura: "Unknown",
+    team: "Village",
+    abbr: []
+  } */
   "Bodyguard": {
     desc: "Each night, you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
           " If you or the player you are protecting gets attacked, you will survive." +
