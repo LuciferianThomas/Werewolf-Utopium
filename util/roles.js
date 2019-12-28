@@ -1,4 +1,7 @@
 module.exports = {
+  
+  // Villager roles
+  
   "Villager": {
     desc: "You are a regular Villager with no special abilities.",
     aura: "Good",
@@ -12,13 +15,41 @@ module.exports = {
     aura: "Good",
     team: "Village",
     abbr: ["az","aura"]
+  }, 
+  /* Avenger, Beast Hunter */
+  "Bodyguard": {
+    desc: "Each night, you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
+          " If you or the player you are protecting gets attacked, you will survive." +
+          " However, if you are attacked again you will die.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["bg"]
   },
-  "Medium": {
-    desc: "During the night, you can talk (anonymously) with the dead players." +
-          " Once per game, you can revive a dead player (`w!revive [player]`).", // alias: w!rev
+  /* Cupid */
+  "Cursed": {
+    desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
+          " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards," +
+          " <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
+    			" You cannot be converted to an another team (e.g. sect).", 
+    aura: "Good",
+    team: "Village",
+    abbr: ["lycan"]
+  },
+  /* Detective */
+  "Doctor": {
+    desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
+          " You will be notified when your protected player was attaked. You cannot protect yourself.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["doc"]
+  },
+  /* Flower Child, Fortune Teller, Grumpy Grandma */
+  "Gunner": {
+    desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
+          " However, the shots are loud, so your role will be revealed after the first shot. ",
     aura: "Unknown",
     team: "Village",
-    abbr: ["med"]
+    abbr: ["gun"]
   },
   "Jailer": {
     desc: "Every day, select one player to jail by doing (`w!jail [number]`). Your target will be jailed the following night and cannot use its abilitids." +
@@ -27,18 +58,37 @@ module.exports = {
     team: "Village",
     abbr: ["jail"]
   },
+  /* Marksman, Mayor */
+  "Medium": {
+    desc: "During the night, you can talk anonymously with the dead players." +
+          " Once per game, you can revive a dead player (`w!revive [player]`).", // alias: w!rev
+    aura: "Unknown",
+    team: "Village",
+    abbr: ["med"]
+  },
+  /* Pacifist, President */
+  "Priest": {
+    desc: "Once per game, you can throw holy water at one player. You can only do this during the day." +
+          " If the water is thrown at a werewolf, they will die (excluding Sorcerer). If that player is not a werewolf, the Priest dies.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["pri"]
+  },
+  /* Red Lady */
+  "Seer": {
+    desc: "Each night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
+    aura: "Good",
+    team: "Village",
+    abbr: []
+  },
+  /* Sheriff, Spirit Seer, Tough Guy, Witch */
+  
+  // Werewolf roles
   "Werewolf": {
     desc: "You are a regular Werewolf with no special abilities. Do (`w!vote [player]`) to vote with your werewolf teammates.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww"]
-  },
-  "Doctor": {
-    desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
-          " You will be notified when your protected player was attaked. You cannot protect yourself.",
-    aura: "Good",
-    team: "Village",
-    abbr: ["doc"]
   },
   "Alpha Werewolf": {
     desc: "You are a regular Werewolf except when you vote with the werewolves by doing (`w!vote [player]`), your vote counts as double!",
@@ -46,12 +96,28 @@ module.exports = {
     team: "Werewolves",
     abbr: ["aww","alpha"]
   },
-  "Seer": {
-    desc: "Each night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
-    aura: "Good",
-    team: "Village",
-    abbr: []
+  /* Guardian Wolf, Junior Werewolf, Kitten Wolf, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
+  "Wolf Seer": {
+    desc: "Each night, you can uncover the role of one player (`w!check [player]`)." +
+          " You can talk with the other werewolves and provide any information you found." +
+          " However, you cannot vote on a player to kill unless you resign your ability to see roles." +
+          " If you are the last werewolf alive you instantly resign your seeing ability.",
+    aura: "Evil",
+    team: "Werewolves",
+    abbr: ["wws", "wwz", "wwseer", "ww seer"]
   },
+  "Wolf Shaman": {
+    desc: "Each night, you can vote on a player to kill (`w!vote [player]`) and talk with the other werewolves." +
+          " During the day, you can put an enchantment on another player (`w!enchant [player]`)." +
+          " This will make that player appear as a Wolf Shaman to the <:Seer:658633721448235019> Seer," +
+          " Evil to the <:Aura_Seer:658632880490020874> Aura Seer and on the werewolves team for <:Detective:660070860832505863> Detective.",
+    aura: "Evil",
+    team: "Werewolves",
+    abbr: ["ww sham","sham","shaman"]
+  },
+  
+  // Solo non-killing roles
+  
   "Fool": {
     desc: "Your only goal is to get lynched by the village.",
     aura: "Unknown",
@@ -65,57 +131,8 @@ module.exports = {
     team: "Solo/Village",
     abbr: ["hh", "hunter"]
   },
-  "Bodyguard": {
-    desc: "Each night, you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
-          " If you or the player you are protecting gets attacked, you will survive." +
-          " However, if you are attacked again you will die.",
-    aura: "Good",
-    team: "Village",
-    abbr: ["bg"]
-  },
-  "Gunner": {
-    desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
-          " However, the shots are loud, so your role will be revealed after the first shot. ",
-    aura: "Unknown",
-    team: "Village",
-    abbr: ["gun"]
-  },
-  "Wolf Shaman": {
-    desc: "Each night, you can vote on a player to kill (`w!vote [player]`) and talk with the other werewolves." +
-          " During the day, you can put an enchantment on another player (`w!enchant [player]`)." +
-          " This will make that player appear as a Wolf Shaman to the <:Seer:658633721448235019> Seer," +
-          " Evil to the <:Aura_Seer:658632880490020874> Aura Seer and on the werewolves team for <:Detective:660070860832505863> Detective.",
-    aura: "Evil",
-    team: "Werewolves",
-    abbr: ["ww sham","sham","shaman"]
-  },
-  "Cursed": {
-    desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
-          " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards," +
-          " <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
-    			" You cannot be converted to an another team (e.g. sect).", 
-    aura: "Good",
-    team: "Village",
-    abbr: ["lycan"]
-  },
-  "Priest": {
-    desc: "Once per game, you can throw holy water at one player. You can only do this during the day." +
-          " If the water is thrown at a werewolf, they will die (excluding Sorcerer). If that player is not a werewolf, the Priest dies.",
-    aura: "Good",
-    team: "Village",
-    abbr: ["pri"]
-  },
-  "Wolf Seer": {
-    desc: "Each night, you can uncover the role of one player (`w!check [player]`)." +
-          " You can talk with the other werewolves and provide any information you found." +
-          " However, you cannot vote on a player to kill unless you resign your ability to see roles." +
-          " If you are the last werewolf alive you instantly resign your seeing ability.",
-    aura: "Evil",
-    team: "Werewolves",
-    abbr: ["wws", "wwz", "wwseer", "ww seer"]
-  }, 
   
-  // Solo Killers
+  // Solo killing roles
   
   "Arsonist": {
   	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!ignite`)." + // alias: w!burn
@@ -144,7 +161,7 @@ module.exports = {
   },
   "Cannibal": {
   	desc: "Every night, you can kill a player or save up your hunger to kill more the next night by doing (`w!eat [player]`)." +
-    			" You can only stack up to 5 kills. You cannot be killed by the werewolves.",
+    			" You can only stack up to 5 kills. You cannot be killed by the werewolves. You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["canni", "cani", "cb"]
@@ -153,30 +170,31 @@ module.exports = {
   	desc: "Every night, select a player to disguise." +
     			" These players will appear to be the Illusionist to the <:Seer:658633721448235019> Seer," +
           " a different team to the <:Detective:660070860832505863> Detective and unknown to the <:Aura_Seer:658632880490020874> Aura Seer." +
-          " During the day, you can choose to kill all disguised players. You cannot be killed by the werewolves.",
+          " During the day, you can choose to kill all disguised players." +
+          " You cannot be killed by the werewolves. You win if you are the last player alive.",
     aura: "Unknown", 
     team: "Solo", 
     abbr: ["illu", "illusion"]
   },
   "Sect Leader": {
-  	desc: "Every night, select a player to convert into a sect member with (`w!sect [player]`). You can only convert villagers to the Sect Team." +
-    			" However, if you're killed, every sect member dies along. You Win if everyone alive is converted.", 
+  	desc: "Every night, select a player to convert into a Sect Member with (`w!sect [player]`). You can only convert villagers to the Sect Team." +
+    			" However, if you're killed, every Sect Member dies along. You win if everyone alive is converted into a Sect Member.", 
     aura: "Unknown",
     team: "Sect",
     abbr: ["sl", "sect"] 
 	},
   "Serial Killer": {
     desc: "Each night, stab one player with (`w!stab [player]`)." + // alias: w!kill
-          " You cannot be killed by the werewolves.", 
+          " You cannot be killed by the werewolves. You win if you are the last player alive.", 
     aura: "Unknown",
     team: "Solo",
     abbr: ["sk"]
   },
   "Zombie": {
-  	desc: "Each night, select a player to convert to a zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
-    			" However, players take 1 day to convert before turning to a zombie. You win if all alive players are zombies.",
+  	desc: "Each night, select a player to convert to a Zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
+    			" However, players take one day to convert before turning to a zombie. You win if all alive players are converted into Zombies.",
     aura: "Unknown",
     team: "Zombies",
     abbr: ["zomb", "zom", "zb"]
-  }, 
+  }
 }
