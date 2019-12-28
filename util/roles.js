@@ -35,7 +35,14 @@ module.exports = {
     team: "Village",
     abbr: ["bg"]
   },
-  /*Cupid */
+  /*"Cupid": {
+  	desc: "During the first night, select 2 players to be a couple. They will know each other roles at the beginning of the next day." +
+    			" Your couple must survive until the end of tne game and must be the last players alive in order to win as couple." +
+          " If one your couple dies, the other couple dies along and you become a regular villager. ",
+    aura: "Unknown",
+    team: "Couple/Village",
+    abbr: []
+  },*/
   "Cursed": {
     desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
           " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards," +
@@ -45,7 +52,8 @@ module.exports = {
     team: "Village",
     abbr: ["lycan"]
   },
-  /* Detective */
+  /*"Detective": {
+  	desc: "*/
   "Doctor": {
     desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
           " You will be notified when your protected player was attaked. You cannot protect yourself.",
