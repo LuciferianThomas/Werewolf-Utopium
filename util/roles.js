@@ -36,11 +36,11 @@ module.exports = {
     abbr: ["bg"]
   },
   /*"Cupid": {
-  	desc: "During the first night, select 2 players to be a couple. They will know each other roles at the beginning of the next day." +
+  	desc: "During the first night, select 2 players to be a couple with (`w!couple [player]`). They will know each other's roles at the beginning of the next day." +
     			" Your couple must survive until the end of tne game and must be the last players alive in order to win as couple." +
           " If one your couple dies, the other couple dies along and you become a regular villager. ",
-    aura: "Unknown",
-    team: "Couple/Village",
+    aura: "Good",
+    team: "Village/Couple",
     abbr: []
   },*/
   "Cursed": {
@@ -53,15 +53,29 @@ module.exports = {
     abbr: ["lycan"]
   },
   /*"Detective": {
-  	desc: "*/
+  	desc: "Every night, select 2 players to check if they belong to the same team with (`w!detect [player]`)." +
+    			" Players from the same team will result an `=` sign meanwhile players from a different team will show a `≠` sign." +
+          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you players as a werewolf team.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["det"]
+  }, */
   "Doctor": {
     desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
           " You will be notified when your protected player was attaked. You cannot protect yourself.",
     aura: "Good",
     team: "Village",
-    abbr: ["doc"]
+    abbr: ["doc", "medic"]
   },
-  /* Flower Child, Fortune Teller, Grumpy Grandma */
+  /*"Flower Child": {
+ 		desc: "Once a game, you can protect anyone from being lynched by using (`w!petal [player]`).",
+    aura: "Good", 
+    team: "Village, 
+ 		abbr: ["fc"] 
+  }, 
+  "Fortune Teller": {
+  	desc: "During the first night, give 2 cards to 2 players with (`w!give [player1] [player 2]`) .
+  }, Grumpy Grandma */
   "Gunner": {
     desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
           " However, the shots are loud, so your role will be revealed after the first shot. ",

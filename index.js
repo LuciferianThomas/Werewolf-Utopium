@@ -130,7 +130,7 @@ client.on('ready', async () => {
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
         )
         
-        if (game.players.filter(p => p.alive && roles[p.role].team != "Village").length == 0) {
+        if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. The village wins!`)
           continue;
