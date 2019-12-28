@@ -11,7 +11,7 @@ module.exports = {
   "Aura Seer": {
     desc: "Each night you can select one player to see whether this player is good, evil or unknown (`w!check [player]`)." + // alias: w!see
           " If the player is good, they are on the village and if they are evil they are on the Werewolves." + 
-          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
+          " The <:WolfShaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
     team: "Village",
     abbr: ["az","aura"]
@@ -47,7 +47,7 @@ module.exports = {
   "Cursed": {
     desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
           " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards," +
-          " <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
+          " <:BeastHunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
     			" You cannot be converted to an another team (e.g. sect).", 
     aura: "Good",
     team: "Village",
