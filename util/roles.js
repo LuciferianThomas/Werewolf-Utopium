@@ -66,7 +66,7 @@ module.exports = {
           " You will be notified when your protected player was attaked. You cannot protect yourself.",
     aura: "Good",
     team: "Village",
-    abbr: ["doc", "medic"] // bruh wot lmao medic
+    abbr: ["doc", "medic"]
   },
   /*"Flower Child": {
  		desc: "Once a game, you can protect anyone from being lynched by using (`w!petal [player]`).",
@@ -86,7 +86,7 @@ module.exports = {
     			" However, if someone is muted, the village will be notified. You cannot mute the same person twice in a row.",
     aura: "Good",
     team: "Village",
-    abbr: ["gg", "grandma"]
+    abbr: ["gg"]
   }, */
   "Gunner": {
     desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
