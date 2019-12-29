@@ -14,7 +14,7 @@ module.exports = {
       return await message.channel.send("You are not in a game!")
     
     let QuickGames = games.get("quick"),
-        game = QuickGames.find(g => g.id == player.currentGame),
+        game = QuickGames.find(g => g.gameID == player.currentGame),
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(p => p.id == message.author.id)
     
@@ -27,15 +27,16 @@ module.exports = {
         { max: 1, time: 5000, errors: ["time"] }
       ).catch(() => {})
       if (!reactions) return await message.author.send("Prompt cancelled.")
-      game = games.get("quick").find(g => g.id == player.currentGame)
+      game = games.get("quick").find(g => g.gameID == player.currentGame)
       game.players.splice(game.players.indexOf(game.players.find(p => p.id == message.author.id)), 1)
     }
     QuickGames = games.get("quick")
-    QuickGames[QuickGames.indexOf(QuickGames.find(g => g.id == game.id))] = game
+    QuickGames[QuickGames.indexOf(QuickGames.find(g => g.gameID == game.id))] = game
     
     games.set("quick", QuickGames)
+    players.set(`${message.author.id}.currentGame`, 0)
     
-    message.author.send(`You left Game #${game.id}.`)
+    message.author.send(`You left Game #${game.gameID}.`)
     fn.broadcast(
       client, game, 
       game.currentPhase == -1 ?
