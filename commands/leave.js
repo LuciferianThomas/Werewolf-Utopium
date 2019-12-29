@@ -30,23 +30,26 @@ module.exports = {
       game = games.get("quick").find(g => g.gameID == player.currentGame)
       game.players.splice(game.players.indexOf(game.players.find(p => p.id == message.author.id)), 1)
     }
+    console.log(game)
     QuickGames = games.get("quick")
     QuickGames[QuickGames.indexOf(QuickGames.find(g => g.gameID == game.id))] = game
-    
+    console.log(QuickGames)
     games.set("quick", QuickGames)
-    players.set(`${message.author.id}.currentGame`, 0)
+    player.currentGame = 0
+    players.set(message.author.id, player)
     
     message.author.send(`You left Game #${game.gameID}.`)
-    fn.broadcast(
-      client, game, 
-      game.currentPhase == -1 ?
-        new Discord.RichEmbed()
-          .setAuthor(`${message.author.username} left the game.`, message.author.displayAvatarURL)
-          .addField(
-            `Players [${game.players.length}]`,
-            game.players.map(p => client.users.get(p.id).username).join("\n")
-          ) :
-        `**${gamePlayer.number} ${message.author.username}** left the game.`
-    )
+    if (game.players.length)
+      fn.broadcast(
+        client, game, 
+        game.currentPhase == -1 ?
+          new Discord.RichEmbed()
+            .setAuthor(`${message.author.username} left the game.`, message.author.displayAvatarURL)
+            .addField(
+              `Players [${game.players.length}]`,
+              game.players.map(p => client.users.get(p.id).username).join("\n")
+            ) :
+          `**${gamePlayer.number} ${message.author.username}** left the game.`
+      )
   }
 }
