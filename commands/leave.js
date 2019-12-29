@@ -4,6 +4,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
+const fn = require("/app/util/fn")
+
 module.exports = {
   name: "leave",
   run: async (client, message, args, shared) => {
@@ -26,7 +28,7 @@ module.exports = {
       ).catch(() => {})
       if (!reactions) return await message.author.send("Prompt cancelled.")
       game = games.get("quick").find(g => g.id == player.currentGame)
-      game.players.splice(game.players.indexOf(gamePlayer), 1)
+      game.players.splice(game.players.indexOf(game.players.find(p => p.id == message.author.id)), 1)
     }
     QuickGames = games.get("quick")
     QuickGames[QuickGames.indexOf(QuickGames.find(g => g.id == game.id))] = game
@@ -34,5 +36,16 @@ module.exports = {
     games.set("quick", QuickGames)
     
     message.author.send(`You left Game #${game.id}.`)
+    fn.broadcast(
+      client, game, 
+      game.currentPhase == -1 ?
+        new Discord.RichEmbed()
+          .setAuthor(`${message.author.username} left the game.`, message.author.displayAvatarURL)
+          .addField(
+            `Players [${game.players.length}]`,
+            game.players.map(p => client.users.get(p.id).username).join("\n")
+          ) :
+        `**${gamePlayer.number} ${message.author.username}** left the game.`
+    )
   }
 }
