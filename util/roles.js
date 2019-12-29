@@ -123,10 +123,16 @@ module.exports = {
     abbr: ["med"]
   },
   /*"Pacifist": {
-  
+  	desc: "Once a game, you can reveal one player with (`w!reveal [player]`) and stop the voting session.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["paci"] 
   }st
   "President": {
-  
+  	desc: "Your role is revealed to everyone. If you die the village losses. You cannot be killed by Werewolves unless there are 4 villagers or below.",
+    aura: "Good",
+    team: "Village",
+    abbr: [] 
   },* desc: "Once per game, you can throw holy water at one player. You can only do this during the day." +
           " If the water is thrown at a werewolf, they will die (excluding Sorcerer). If that player is not a werewolf, the Priest dies.",
     aura: "Good",
@@ -134,8 +140,15 @@ module.exports = {
     abbr: ["pri"]
   },
   /* Red Lady */
-  "Seer": {
-    desc: "Each night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
+  "See"": {
+   ": {
+  	desc: "Every night, you can choose to visit a player with (`w!visit [player]`)." +
+    			" If you are selected to be killed that night, you will be protected." +
+          " However, if the player you visited is evil or attacked, you will die.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["rl", "prostitute"] 
+  },desc: "Each night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
     aura: "Good",
     team: "Village",
     abbr: []
