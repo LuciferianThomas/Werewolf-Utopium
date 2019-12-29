@@ -23,7 +23,7 @@ module.exports = {
     abbr: []
   }, 
   "Beast Hunter": {
-    desc: "At night you can set a trap on a person. The trap activates on the following night." +
+    desc: "At night you can set a trap on a person (`w!trap [player]`). The trap activates on the following night." +
           " If the person you placed a trap on was attacked, the weakest werewolf dies." +
           " You can place a trap on yourself.",
     aura: "Unknown",
@@ -199,7 +199,7 @@ module.exports = {
     team: "Werewolves",
     abbr: ["aww","alpha"]
   },
-  /* Guardian Wolf, Junior Werewolf, Kitten Wolf, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
+  /*Guardian Wolf, Junior Werewolf, Kitten Wolf, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
   "Wolf Seer": {
     desc: "Each night, you can uncover the role of one player (`w!check [player]`)." +
           " You can talk with the other werewolves and provide any information you found." +
