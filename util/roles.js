@@ -25,7 +25,8 @@ module.exports = {
   "Beast Hunter": {
     desc: "At night you can set a trap on a person (`w!trap [player]`). The trap activates on the following night." +
           " If the person you placed a trap on was attacked, the weakest werewolf dies." +
-          " You can place a trap on yourself.",
+          " You can place a trap on yourself." +
+          " Your trap will deactivate when solo killers try to kill you but it won't kill them",
     aura: "Unknown",
     team: "Village",
     abbr: ["bh"]
@@ -57,7 +58,7 @@ module.exports = {
   },
   "Detective": {
   	desc: "Every night, select two players to check if they belong to the same team with (`w!detect [player]`)." +
-    			" Players from the same team will result an `=` sign meanwhile players from a different team will show a `≠` sign." + // replace with emoji later
+    			" Players from the same team will result an <:Detective_Equal:660496165535612958> sign meanwhile players from a different team will show a <:Detective_NotEqual:660496385388445725> sign." + // replace with emoji later
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
@@ -199,7 +200,12 @@ module.exports = {
     team: "Werewolves",
     abbr: ["aww","alpha"]
   },
-  /*Guardian Wolf, Junior Werewolf, Kitten Wolf, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
+  /*"Guardian Wolf": {
+  	desc: "You are a regular werewolf except, once a game, you can protect anyone from being lynched by doing (`w!guard [player]`).",
+    aura: "Evil",
+    team: "Werewolves"
+    abbr: ["gww"] 
+  }, Junior Werewolf, Kitten Wolf, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
   "Wolf Seer": {
     desc: "Each night, you can uncover the role of one player (`w!check [player]`)." +
           " You can talk with the other werewolves and provide any information you found." +
