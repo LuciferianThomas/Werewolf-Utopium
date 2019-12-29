@@ -394,9 +394,8 @@ client.on('message', async message => {
 
   let content = message.content
   for (var role in roles) {
-    for (var abbr of roles[role].abbr) {
+    for (var abbr of roles[role].abbr)
       content = content.replace(new RegExp(`\\b(${abbr})\\b`, 'gi'), `$1 (${role})`)
-    }
   }
   let otherabbr = require('/app/util/otherabbr')
   for (var [full, abbrList] of Object.entries(otherabbr)) {

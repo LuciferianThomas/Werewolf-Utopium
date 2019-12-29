@@ -126,7 +126,7 @@ module.exports = {
     abbr: ["med"]
   },
   "Pacifist": {
-  	desc: "Once a game, you can reveal one player with (`w!reveal [player]`) and stop the voting session.",
+  	desc: "Once a game, you can reveal one player with (`w!reveal [player]`) and skip the voting session.",
     aura: "Good",
     team: "Village",
     abbr: ["paci"] 
