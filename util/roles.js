@@ -82,7 +82,7 @@ module.exports = {
     			" These players can use the cards and reveal their role.",
     aura: "Unknown",
     team: "Village",
-    abbr: []
+    abbr: ["ft"]
   }, 
   "Grumpy Grandma": {
     desc: "After the first night, select a player to mute with (`w!mute [player]`). This player won't be able to talk or vote the next day." +
@@ -158,6 +158,14 @@ module.exports = {
     team: "Village",
     abbr: []
   },
+  "Seer Apprentice": {
+    desc: "You start out as an ordinary villager with no special powers." +
+          " However, if the Seer dies you will become the new Seer." +
+          " If the original seer is revived, you will remain a seer.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["sapp", "sa", "app"]
+  },
   "Sheriff": {
   	desc: "Every night, select a player to look at with (`w!lookout [player]`)." +
     			" If that player is killed, you will get 2 suspects. One is the real killer of that player while the other is random.",
@@ -207,7 +215,7 @@ module.exports = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["gww"] 
-  }, /* 
+  }, 
   "Junior Werewolf": {
     desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
     aura: "Evil",
@@ -231,7 +239,7 @@ module.exports = {
   "Sorcerer": {
     desc: "Each night you can see the roles of a player (`w!check [player]`)." +
           " However, you cannot see the roles of the other werewolves nor can you talk to them." +
-          " The role of the checked player will not be known by the other werewolves."
+          " The role of the checked player will not be known by the other werewolves." +
           " You can however find out the other wolves by seeing their roles." +
           " You cannot be killed by the Priest's Holy Water.",
     aura: "Evil",
@@ -243,8 +251,8 @@ module.exports = {
           " If during the night of the frenzy their target is protected, all protectors of the victim will die, along with the victim.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["wwb","bww",""]
-  } */
+    abbr: ["wwb","bww","bers","berz"]
+  },
   "Wolf Seer": {
     desc: "Each night you can uncover the role of one player (`w!check [player]`)." +
           " You can talk with the other werewolves and provide any information you found." +
