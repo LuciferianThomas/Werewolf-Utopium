@@ -11,23 +11,25 @@ module.exports = {
   "Aura Seer": {
     desc: "Each night you can select one player to see whether this player is good, evil or unknown (`w!check [player]`)." + // alias: w!see
           " If the player is good, they are on the village and if they are evil they are on the Werewolves." + 
-          " The <:WolfShaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
+          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
     team: "Village",
     abbr: ["az","aura"]
   }, 
-  /* "Avenger": {
+  "Avenger": {
     desc: "You can select a player to be killed when you die (`w!tag [player]`).",
     aura: "Good",
     team: "Village",
     abbr: []
   }, 
   "Beast Hunter": {
-    desc: "",
+    desc: "At night you can set a trap on a person. The trap activates on the following night." +
+          " If the person you placed a trap on was attacked, the weakest werewolf dies." +
+          " You can place a trap on yourself.",
     aura: "Unknown",
     team: "Village",
-    abbr: []
-  }, */
+    abbr: ["bh"]
+  },
   "Bodyguard": {
     desc: "Each night, you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
           " If you or the player you are protecting gets attacked, you will survive." +
@@ -36,31 +38,31 @@ module.exports = {
     team: "Village",
     abbr: ["bg"]
   },
-  /*"Cupid": {
+  "Cupid": {
   	desc: "During the first night, select 2 players to be a couple with (`w!couple [player1] [player 2]`). They will know each other's roles at the beginning of the next day." +
     			" Your couple must survive until the end of tne game and must be the last players alive in order to win as couple." +
           " If one your couple dies, the other couple dies along and you become a regular villager.",
     aura: "Good",
     team: "Village/Couple",
     abbr: []
-  },*/
+  },
   "Cursed": {
     desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
           " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards," +
-          " <:BeastHunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
+          " <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
     			" You cannot be converted to an another team (e.g. sect).", 
     aura: "Good",
     team: "Village",
     abbr: ["lycan"]
   },
-  /*"Detective": {
+  "Detective": {
   	desc: "Every night, select two players to check if they belong to the same team with (`w!detect [player]`)." +
     			" Players from the same team will result an `=` sign meanwhile players from a different team will show a `≠` sign." + // replace with emoji later
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
     abbr: ["det"]
-  }, */
+  },
   "Doctor": {
     desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
           " You will be notified when your protected player was attaked. You cannot protect yourself.",
@@ -68,7 +70,7 @@ module.exports = {
     team: "Village",
     abbr: ["doc", "medic"]
   },
-  /*"Flower Child": {
+  "Flower Child": {
  		desc: "Once a game, you can protect anyone from being lynched by using (`w!petal [player]`).",
     aura: "Good", 
     team: "Village", 
@@ -87,7 +89,7 @@ module.exports = {
     aura: "Good",
     team: "Village",
     abbr: ["gg"]
-  }, */
+  },
   "Gunner": {
     desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
           " However, the shots are loud, so your role will be revealed after the first shot. ",
@@ -110,7 +112,7 @@ module.exports = {
     abbr: ["mm"] 
   }, 
   "Mayor": {
-  	desc: "Once a game, you can reveal your role with (`w!reveal`) and your vote will count as double."
+  	desc: "Once a game, you can reveal your role with (`w!reveal`) and your vote will count as double.",
     aura: "Good",
     team: "Village",
     abbr: [], 
