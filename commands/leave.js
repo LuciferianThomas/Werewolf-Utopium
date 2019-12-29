@@ -30,10 +30,11 @@ module.exports = {
       game = games.get("quick").find(g => g.gameID == player.currentGame)
       game.players.splice(game.players.indexOf(game.players.find(p => p.id == message.author.id)), 1)
     }
-    console.log(game)
+    else return undefined
+
     QuickGames = games.get("quick")
-    QuickGames[QuickGames.indexOf(QuickGames.find(g => g.gameID == game.id))] = game
-    console.log(QuickGames)
+    QuickGames[QuickGames.indexOf(QuickGames.find(g => g.gameID == game.gameID))] = game
+
     games.set("quick", QuickGames)
     player.currentGame = 0
     players.set(message.author.id, player)
