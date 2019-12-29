@@ -17,7 +17,7 @@ module.exports = {
     abbr: ["az","aura"]
   }, 
   "Avenger": {
-    desc: "You can select a player to be killed when you die (`w!tag [player]`).",
+    desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
     aura: "Good",
     team: "Village",
     abbr: []
@@ -26,7 +26,7 @@ module.exports = {
     desc: "At night you can set a trap on a person (`w!trap [player]`). The trap activates on the following night." +
           " If the person you placed a trap on was attacked, the weakest werewolf dies." +
           " You can place a trap on yourself." +
-          " Your trap will deactivate when solo killers try to kill you but it won't kill them",
+          " Your trap will deactivate when solo killers try to kill you but it won't kill them.",
     aura: "Unknown",
     team: "Village",
     abbr: ["bh"]
@@ -169,7 +169,7 @@ module.exports = {
   	desc: "Every night, watch 2 players with (`w!watch [player]`). If one or more of them have killed, you will get Red spirits. If none of them killed, you will recieve blue spirits", 
     aura: "Good",
     team: "Village",
-    abbr: ["ss", "spirit"] 
+    abbr: ["ss", "spirit", "spz", "sps"] 
   }, 
   "Tough Guy": {
   	desc: "During the night, you can select one player to protect with (`w!defend [player]`). If you or your target is attacked, you take hit." +
@@ -189,23 +189,37 @@ module.exports = {
   
   // Werewolf roles
   "Werewolf": {
-    desc: "You are a regular Werewolf with no special abilities. Do (`w!vote [player]`) to vote with your werewolf teammates.",
+    desc: "You are a regular werewolf with no special abilities. Do `w!vote [player]` to vote with your werewolf teammates.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww"]
   },
   "Alpha Werewolf": {
-    desc: "You are a regular Werewolf except when you vote with the werewolves by doing (`w!vote [player]`), your vote counts as double!",
+    desc: "You are a regular werewolf except when you vote with the werewolves (`w!vote [player]`), your vote counts as double!",
     aura: "Unknown",
     team: "Werewolves",
     abbr: ["aww","alpha"]
   },
-  /*"Guardian Wolf": {
-  	desc: "You are a regular werewolf except, once a game, you can protect anyone from being lynched by doing (`w!guard [player]`).",
+  "Guardian Wolf": {
+  	desc: "Once a game, you can protect anyone from being lynched by doing (`w!guard [player]`).",
     aura: "Evil",
-    team: "Werewolves"
+    team: "Werewolves",
     abbr: ["gww"] 
-  }, Junior Werewolf, Kitten Wolf, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
+  }, /* 
+  "Junior Werewolf": {
+    desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
+    aura: "Evil",
+    team: "Werewolves",
+    abbr: ["jww", "jr", "jnr", "jrww", "jnrww"]
+  },
+  "Kitten Wolf": {
+    desc: "You can select can choose a player to convert a player to the Werewolves team." +
+          " If this player is part of the Village, they will be converted. If not, they will remain on their team." +
+          " Protector roles can ",
+    aura: "Evil",
+    team: "Werewolves",
+    abbr: ["kww"]
+  }, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
   "Wolf Seer": {
     desc: "Each night, you can uncover the role of one player (`w!check [player]`)." +
           " You can talk with the other werewolves and provide any information you found." +
