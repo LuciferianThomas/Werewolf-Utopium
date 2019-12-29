@@ -32,7 +32,7 @@ module.exports = {
     abbr: ["bh"]
   },
   "Bodyguard": {
-    desc: "Each night, you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
+    desc: "Each night you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
           " If you or the player you are protecting gets attacked, you will survive." +
           " However, if you are attacked again you will die.",
     aura: "Good",
@@ -132,7 +132,7 @@ module.exports = {
     abbr: ["paci"] 
   },
   "President": {
-  	desc: "Your role is revealed to everyone. If you die the village losses. You cannot be killed by Werewolves unless there are 4 villagers or below.",
+  	desc: "Your role is revealed to everyone. If you die the village loses. You cannot be killed by werewolves unless there are 4 villagers or below.",
     aura: "Good",
     team: "Village",
     abbr: [] 
@@ -153,7 +153,7 @@ module.exports = {
     abbr: ["rl", "prostitute"] 
   },
   "Seer": {
-    desc: "Each night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
+    desc: "Every night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
     aura: "Good",
     team: "Village",
     abbr: []
@@ -180,8 +180,10 @@ module.exports = {
     abbr: ["tg"] 
   }, 
   "Witch": {
-  	desc: "You have 2 potions that you can use at night. One is a protective potion that will only be consumed if the player was attacked by doing (`w!heal [player]`)." +
-    			" The other portion is a poison that can be used after the first night. This potion can kill a player instantly by doing (`w!poison [player]`). You can use both this potion once.",
+  	desc: "You have 2 potions that you can use at night." +
+          " One is a protective potion that will only be consumed if the player was attacked by doing (`w!heal [player]`)." + // alias: w!protect
+    			" The other is a poison potion that can be used after the first night." +
+          " This potion can kill a player instantly by doing (`w!poison [player]`). You can use both potions once.",
     aura: "Unknown",
     team: "Village",
     abbr: [] 
@@ -213,15 +215,38 @@ module.exports = {
     abbr: ["jww", "jr", "jnr", "jrww", "jnrww"]
   },
   "Kitten Wolf": {
-    desc: "You can select can choose a player to convert a player to the Werewolves team." +
+    desc: "You can select can choose a player to convert a player to the Werewolves team (`w!scratch [player]`)." +
           " If this player is part of the Village, they will be converted. If not, they will remain on their team." +
-          " Protector roles can ",
+          " Protector roles can negate this ability.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["kww"]
-  }, Nightmare Werewolf, Sorcerer, Werewolf Berserk */
+  }, 
+  "Nightmare Werewolf": {
+    desc: "Each day you can select a player to be numbed at night (`w!numb [player]`). That player cannot use their abilities that night.",
+    aura: "Evil",
+    team: "Werewolves",
+    abbr: ["nww"]
+  },
+  "Sorcerer": {
+    desc: "Each night you can see the roles of a player (`w!check [player]`)." +
+          " However, you cannot see the roles of the other werewolves nor can you talk to them." +
+          " The role of the checked player will not be known by the other werewolves."
+          " You can however find out the other wolves by seeing their roles." +
+          " You cannot be killed by the Priest's Holy Water.",
+    aura: "Evil",
+    team: "Werewolves",
+    abbr: ["sorc"]
+  },
+  "Werewolf Berserk": {
+    desc: "Once per game you can announce a Werewolves 'frenzy' during the day." +
+          " If during the night of the frenzy their target is protected, all protectors of the victim will die, along with the victim.",
+    aura: "Evil",
+    team: "Werewolves",
+    abbr: ["wwb","bww",""]
+  } */
   "Wolf Seer": {
-    desc: "Each night, you can uncover the role of one player (`w!check [player]`)." +
+    desc: "Each night you can uncover the role of one player (`w!check [player]`)." +
           " You can talk with the other werewolves and provide any information you found." +
           " However, you cannot vote on a player to kill unless you resign your ability to see roles." +
           " If you are the last werewolf alive you instantly resign your seeing ability.",
