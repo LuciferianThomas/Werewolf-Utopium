@@ -102,7 +102,19 @@ module.exports = {
     team: "Village",
     abbr: ["jail"]
   },
-  /* Marksman, Mayor */
+  /*"Marksman": {
+ 		desc: "During the night, select one player to mark with (`w!Mark [player]`). The following night, you can either shoot with (`w!release [player]`) or change your target." +
+    			" If you try to shoot a villager, your shot will backfire and kill you instead.",
+    aura: "Unknown",
+    team: "Village",
+    abbr: ["mm"] 
+  }, 
+  "Mayor": {
+  	desc: "Once a game, you can reveal your role with (`w!reveal`) and your vote will count as double."
+    aura: "Good",
+    team: "Village",
+    abbr: [], 
+  }, */
   "Medium": {
     desc: "During the night, you can talk anonymously with the dead players." +
           " Once per game, you can revive a dead player (`w!revive [player]`).", // alias: w!rev
@@ -110,9 +122,12 @@ module.exports = {
     team: "Village",
     abbr: ["med"]
   },
-  /* Pacifist, President */
-  "Priest": {
-    desc: "Once per game, you can throw holy water at one player. You can only do this during the day." +
+  /*"Pacifist": {
+  
+  }st
+  "President": {
+  
+  },* desc: "Once per game, you can throw holy water at one player. You can only do this during the day." +
           " If the water is thrown at a werewolf, they will die (excluding Sorcerer). If that player is not a werewolf, the Priest dies.",
     aura: "Good",
     team: "Village",
