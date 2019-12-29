@@ -157,7 +157,31 @@ module.exports = {
     team: "Village",
     abbr: []
   },
-  /* Sheriff, Spirit Seer, Tough Guy, Witch */
+  /*"Sheriff": {
+  	desc: "Every night, select a player to look at with (`w!lookout [player]`)." +
+    			" If that player is killed, you will get 2 suspects. One is the real killer of that player while the other is random.",
+    aura: "Good",
+    team: "Village",
+    abbr: ["sher", "cowboy"] 
+  }, 
+  "Spirit Seer": {
+  	desc: "Every night, watch 2 players with (`w!watch [player]`). If one or more of them have killed, you will get Red spirits. If none of them killed, you will recieve blue spirits", 
+    aura: "Good",
+    team: "Village",
+    abbr: ["ss", "spirit"] 
+  }, 
+  "Tough Guy": {
+  	desc: "During the night, you can select one player to protect with (`w!defend [player]`). If you or your target is attacked, you take hit." +
+    			" However, you will know the role of the attacker or the weakest werewolf. If more than 1 attacker or team attacks you, you will know all their roles." +
+          " Unfortunately, because of your wounds, you will die at the end of the day",
+    aura: "Good",
+    team: "Village",
+    abbr: ["tg"] 
+  }, 
+  "Witch": {
+  	desc: "You have 2 potions that you can use at night. One is a protective potion that will only be consumed if the player was attacked by doing (`w!heal [player]`)." +
+    
+  },*/
   
   // Werewolf roles
   "Werewolf": {
