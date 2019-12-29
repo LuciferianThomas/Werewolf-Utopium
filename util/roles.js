@@ -157,7 +157,7 @@ module.exports = {
     team: "Village",
     abbr: []
   },
-  /*"Sheriff": {
+  "Sheriff": {
   	desc: "Every night, select a player to look at with (`w!lookout [player]`)." +
     			" If that player is killed, you will get 2 suspects. One is the real killer of that player while the other is random.",
     aura: "Good",
@@ -180,8 +180,11 @@ module.exports = {
   }, 
   "Witch": {
   	desc: "You have 2 potions that you can use at night. One is a protective potion that will only be consumed if the player was attacked by doing (`w!heal [player]`)." +
-    
-  },*/
+    			" The other portion is a poison that can be used after the first night. This potion can kill a player instantly by doing (`w!poison [player]`). You can use both this potion once.",
+    aura: "Unknown",
+    team: "Village",
+    abbr: [] 
+  },
   
   // Werewolf roles
   "Werewolf": {
