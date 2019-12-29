@@ -39,7 +39,7 @@ module.exports = {
     
     for (var i = 0; i < game.players.length; i++) game.players[i].jailed = false
     game.players[target-1].jailed = true
-    message.author.send(`${client.emojis.find(e => e.name == "Jail")
+    message.author.send(`${client.emojis.find(e => e.name == "Jailer_Handcuffs")
                         } You selected ${target} ${client.users.get(game.players[target-1].id).username} to be jailed.`)
     
     QuickGames[index] = game
