@@ -40,7 +40,7 @@ module.exports = {
         for (var i = 0; i < wolves.length; i++) 
           client.users.get(wolves[i]).send(
             `${gamePlayer.number} ${message.author.username}${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""
-             } voted to kill ${vote} ${client.users.get(game.players[vote-1]).username}${game.players[vote-1].roleRevealed ? ` ${client.emojis.find(e => e.name == game.players[vote-1].role.replace(/ /g, "_"))}` : ""}.`
+             } voted to kill ${vote} ${client.users.get(game.players[vote-1].id).username}${game.players[vote-1].roleRevealed ? ` ${client.emojis.find(e => e.name == game.players[vote-1].role.replace(/ /g, "_"))}` : ""}.`
           )
       } else 
         return await message.author.send("You cannot vote at night!")
@@ -62,7 +62,7 @@ module.exports = {
       fn.broadcast(
         client, game, 
         `${gamePlayer.number} ${message.author.username}${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""
-         } voted to lynch ${vote} ${client.users.get(game.players[vote-1]).username}${game.players[vote-1].roleRevealed ? ` ${client.emojis.find(e => e.name == game.players[vote-1].role.replace(/ /g, "_"))}` : ""}.`
+         } voted to lynch ${vote} ${client.users.get(game.players[vote-1].id).username}${game.players[vote-1].roleRevealed ? ` ${client.emojis.find(e => e.name == game.players[vote-1].role.replace(/ /g, "_"))}` : ""}.`
       )
     }
     QuickGames[index] = game

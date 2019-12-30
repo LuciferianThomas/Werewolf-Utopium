@@ -11,8 +11,6 @@ const roles = require('/app/util/roles')
 module.exports = async (client, game) => {
   let Games = games.get("quick")
   
-  
-  
   await fn.broadcast(client, game, "Game is starting...")
   
   for (var i = 0; i < game.players.length; i++) {
@@ -21,9 +19,9 @@ module.exports = async (client, game) => {
     await client.users.get(game.players[i].id)
       .send(
         new Discord.RichEmbed()
-          .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")))
+          .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")).url)
           .setTitle(`You are ${["Jailer","Cupid","President","Sect Leader"].includes(role) ? "the" :
-                               (/^([aeiou])/i).test(role) ? "an" : "a"} ${role}`)
+                               (/^([aeiou])/i).test(role) ? "an" : "a"} ${role}.`)
           .setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
       )
     game.players[i].alive = true
@@ -41,11 +39,12 @@ module.exports = async (client, game) => {
     let possibleTargets = game.players
       .filter(player => 
         !player.role.toLowerCase().includes("wolf") && 
-        !["Serial Killer", "Gunner", "Priest", "Mayor", "Cursed"].includes(player.role)
+        !["Serial Killer", "Gunner", "Priest", "Mayor", "Cursed"].includes(player.role) && 
+        player.id !== game.players.find(player => player.role == "Headhunter").id
       ).map(player => player.number)
     game.hhTarget = possibleTargets[Math.floor(Math.random()*possibleTargets.length)]
     await client.users.get(game.players.find(player => player.role == "Headhunter").id)
-      .send(`Your target is ${game.hhTarget} ${game.players[game.hhTarget-1]}.`)
+      .send(`Your target is ${game.hhTarget} ${client.users.get(game.players[game.hhTarget-1].id).username}.`)
   }
   
   Games[Games.indexOf(Games.find(g => g.gameID == game.gameID))] = game
