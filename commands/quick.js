@@ -15,7 +15,7 @@ const quickGameRoles = [
   ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
    "Bodyguard", "Gunner", "Wolf Shaman", "Cursed", "Serial Killer", "Mayor", "Wolf Seer", "Avenger"],
   ["Aura Seer", "Medium", "Witch", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
-   "Beast Hunter", "Gunner", "Wolf Shaman", "Aura Seer", "Bomber", "Priest", "Wolf Seer", "Mayor"],
+   "Beast Hunter", "Gunner", "Wolf Shaman", "Aura Seer", "Bomber", "Priest", "Wolf Seer", "Mayor"]
 */
 ]
 
@@ -40,8 +40,9 @@ module.exports = {
         gameID: games.add("count", 1),
         nextPhase: null,
         currentPhase: -1,
-        roles: ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", /*Math.random() < 0.5 ? */"Fool" /*: "Headhunter"*/,
-                "Bodyguard", "Gunner", "Wolf Shaman", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"],
+        roles: quickGameRoles[Math.floor(Math.random()*quickGameRoles.length)],
+               // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", /*Math.random() < 0.5 ? */"Fool" /*: "Headhunter"*/,
+               //  "Bodyguard", "Gunner", "Wolf Shaman", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"],
         players: [{
           id: message.author.id
         }]
