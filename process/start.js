@@ -11,6 +11,8 @@ const roles = require('/app/util/roles')
 module.exports = async (client, game) => {
   let Games = games.get("quick")
   
+  
+  
   await fn.broadcast(client, game, "Game is starting...")
   
   for (var i = 0; i < game.players.length; i++) {
@@ -46,7 +48,7 @@ module.exports = async (client, game) => {
       .send(`Your target is ${game.hhTarget} ${game.players[game.hhTarget-1]}.`)
   }
   
-  Games[Games.indexOf(Games.find(g => g.id == game.id))] = game
+  Games[Games.indexOf(Games.find(g => g.gameID == game.gameID))] = game
   
   await fn.broadcast(client, game, "Night 1 has started.")
   
