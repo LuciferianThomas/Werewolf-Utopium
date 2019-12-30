@@ -78,7 +78,7 @@ module.exports = {
  		abbr: ["fc"] 
   }, 
   "Fortune Teller": {
-  	desc: "During the first night, give two cards to two players with (`w!givecards [player1] [player 2]`)." +
+  	desc: "During the first night, give two cards to two players with (`w!givecards [player1] [player2]`)." +
     			" These players can use the cards and reveal their role.",
     aura: "Unknown",
     team: "Village",
@@ -92,21 +92,23 @@ module.exports = {
     abbr: ["gg"]
   },
   "Gunner": {
-    desc: "During the day, you have 2 bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
+    desc: "During the day, you have two bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
           " However, the shots are loud, so your role will be revealed after the first shot. ",
     aura: "Unknown",
     team: "Village",
     abbr: ["gun"]
   },
   "Jailer": {
-    desc: "Every day, select one player to jail by doing (`w!jail [number]`). Your target will be jailed the following night and cannot use its abilitids." +
-    			" If you find your target suspicious, you can kill it by doing (`w!shoot [player]`).",
+    desc: "Every day, select one player to jail by doing (`w!jail [number]`)." +
+          " Your target will be jailed the following night and cannot use their abilities." +
+    			" If you find your target suspicious, you can execute them (`w!shoot [player]`).",
     aura: "Unknown",
     team: "Village",
     abbr: ["jail"]
   },
   "Marksman": {
- 		desc: "During the night, select one player to mark with (`w!Mark [player]`). The following night, you can either shoot with (`w!release [player]`) or change your target." +
+ 		desc: "During the night, select one player to mark with (`w!mark [player]`)." +
+          " The following night, you can either shoot with (`w!release [player]`) or change your target." + // alias: w!shoot
     			" If you try to shoot a villager, your shot will backfire and kill you instead.",
     aura: "Unknown",
     team: "Village",
@@ -132,14 +134,16 @@ module.exports = {
     abbr: ["paci"] 
   },
   "President": {
-  	desc: "Your role is revealed to everyone. If you die the village loses. You cannot be killed by werewolves unless there are 4 villagers or below.",
+  	desc: "Your role is revealed to everyone. If you die the village loses." +
+          " You cannot be killed by werewolves unless there are 4 villagers or below.",
     aura: "Good",
     team: "Village",
     abbr: [] 
   },
   "Priest": {
-    desc: "Once per game, you can throw holy water at one player. You can only do this during the day." +
-          " If the water is thrown at a werewolf, they will die (excluding Sorcerer). If that player is not a werewolf, the Priest dies.",
+    desc: "Once per game, you can throw holy water at one player (`w!water [player]`). You can only do this during the day." +
+          " If the water is thrown at a werewolf, they will die (excluding <:Sorcerer:660883179250647045> Sorcerer)." +
+          " If that player is not a werewolf, you dies.",
     aura: "Good",
     team: "Village",
     abbr: ["pri"]
@@ -160,8 +164,8 @@ module.exports = {
   },
   "Seer Apprentice": {
     desc: "You start out as an ordinary villager with no special powers." +
-          " However, if the Seer dies you will become the new Seer." +
-          " If the original seer is revived, you will remain a seer.",
+          " However, if the <:Seer:658633721448235019> Seer dies you will become the new Seer." +
+          " If the original seer is revived, you will remain a Seer.",
     aura: "Good",
     team: "Village",
     abbr: ["sapp", "sa", "app"]
@@ -174,14 +178,18 @@ module.exports = {
     abbr: ["sher", "cowboy"] 
   }, 
   "Spirit Seer": {
-  	desc: "Every night, watch 2 players with (`w!watch [player]`). If one or more of them have killed, you will get Red spirits. If none of them killed, you will recieve blue spirits", 
+  	desc: "Every night, watch 2 players with (`w!watch [player]`)." +
+          " If one or more of them have killed, you will receive red spirits." +
+          " If none of them killed, you will receive blue spirits.", 
     aura: "Good",
     team: "Village",
     abbr: ["ss", "spirit", "spz", "sps"] 
   }, 
   "Tough Guy": {
-  	desc: "During the night, you can select one player to protect with (`w!defend [player]`). If you or your target is attacked, you take hit." +
-    			" However, you will know the role of the attacker or the weakest werewolf. If more than 1 attacker or team attacks you, you will know all their roles." +
+  	desc: "During the night, you can select one player to protect (`w!defend [player]`)." + // alias: w!protect
+          " If you or your target is attacked, you get hit." + 
+    			" However, you will know the role of the attacker or the weakest werewolf." +
+          " If more than 1 attacker or team attacks you, you will know all their roles." +
           " Unfortunately, because of your wounds, you will die at the end of the day",
     aura: "Good",
     team: "Village",
