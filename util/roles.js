@@ -20,7 +20,7 @@ module.exports = {
     desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
     aura: "Good",
     team: "Village",
-    abbr: []
+    abbr: ["hunter"]
   }, 
   "Beast Hunter": {
     desc: "At night you can set a trap on a person (`w!trap [player]`). The trap activates on the following night." +
@@ -62,7 +62,7 @@ module.exports = {
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
-    abbr: ["det"]
+    abbr: ["det","sherlock","holmes"]
   },
   "Doctor": {
     desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
