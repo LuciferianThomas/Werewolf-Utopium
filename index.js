@@ -168,7 +168,7 @@ client.on('ready', async () => {
           }
           if (game.players.find(p => p.jailed && p.alive)) {
             let jailed = game.players.find(p => p.jailed && p.alive)
-            client.users.get(game.roles.indexOf("Jailer"))
+            client.users.get(game.players[game.roles.indexOf("Jailer")].id)
               .send(
                 new Discord.RichEmbed()
                   .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jail`)
