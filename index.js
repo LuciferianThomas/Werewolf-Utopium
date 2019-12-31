@@ -192,7 +192,7 @@ client.on('ready', async () => {
                   )
             }
           } else if (game.roles.includes("Jailer")) {
-            client.users.get(game.roles.indexOf("Jailer"))
+            client.users.get(game.players[game.roles.indexOf("Jailer")].id)
               .send(
                 new Discord.RichEmbed()
                   .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jail`)
