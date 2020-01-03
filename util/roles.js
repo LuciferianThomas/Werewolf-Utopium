@@ -344,7 +344,7 @@ module.exports = {
     			" However, if you're killed, every Sect Member dies along. You win if everyone alive is converted into a Sect Member.", 
     aura: "Unknown",
     team: "Sect",
-    abbr: ["sl", "sect"] 
+    abbr: ["sl"] 
 	},
   "Serial Killer": {
     desc: "Each night, stab one player with (`w!stab [player]`)." + // alias: w!kill
