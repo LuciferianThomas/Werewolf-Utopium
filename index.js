@@ -406,7 +406,7 @@ client.on('message', async message => {
   let game = games.get("quick").find(game => game.gameID == player.currentGame)
   let gamePlayer = game.players.find(player => player.id == message.author.id)
   if (game.currentPhase == -1)
-    return await fn.broadcast(client, game, `**${message.author.username}**: ${content}`, [message.author.id])
+    return fn.broadcast(client, game, `**${message.author.username}**: ${content}`, [message.author.id])
   
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
