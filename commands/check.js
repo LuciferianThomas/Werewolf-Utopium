@@ -56,7 +56,8 @@ module.exports = {
             } ${roles[game.players[target-1].role].aura} aura.`
           )
       )
-    else
+    else{
+      console.log(game.players[target-1].role)
       message.author.send(
         new Discord.RichEmbed()
           .setTitle(`${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))} Seeing Results`)
@@ -65,7 +66,7 @@ module.exports = {
             `${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}.`
           )
       )
-    
+    }
     game.players[gamePlayer.number-1].checkedTonight = true
     
     QuickGames[index] = game
