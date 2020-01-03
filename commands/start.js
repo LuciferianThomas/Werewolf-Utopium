@@ -25,10 +25,10 @@ module.exports = {
     if (!QuickGames[QuickGames.indexOf(game)].startVotes.includes(message.author.id)) 
       QuickGames[QuickGames.indexOf(game)].startVotes.push(message.author.id)
     else
-      await message.author.send(`You have already voted to start.`)
+      message.author.send(`You have already voted to start.`)
     
     for (var i = 0; i < game.players.length; i++) {
-      await client.users.get(game.players[i].id).send(`**${message.author.username}** voted to start! (${votes.length}/${game.players.length})\nDo \`w!start\` if you want the game to start.`)
+      client.users.get(game.players[i].id).send(`**${message.author.username}** voted to start! (${votes.length}/${game.players.length})\nDo \`w!start\` if you want the game to start.`)
     }
     
     games.set("quick", QuickGames)
