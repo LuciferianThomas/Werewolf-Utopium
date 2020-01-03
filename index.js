@@ -218,7 +218,7 @@ client.on('ready', async () => {
               wwVotesCount = []
           for (var j = 0; j < wwVotes.length; j++) {
             if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
-            wwVotesCount[wwVotes[j]] += wwRoles == "Alpha Werewolf" ? 2 : 1
+            wwVotesCount[wwVotes[j]] += wwRoles[j] == "Alpha Werewolf" ? 2 : 1
           }
           if (wwVotesCount.length) {
             let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
