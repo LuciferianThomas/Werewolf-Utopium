@@ -393,7 +393,8 @@ client.on('message', async message => {
   if (!player.currentGame) return;
 
   let content = message.content
-  content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+|localhost)([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+(:\d+)?(\/[^\s])+/gi, "")
+  content = content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+|localhost)(:\d+)?(\/[^\s])+/gi, "")
+  content = content.replace(,
   for (var role in roles) {
     for (var abbr of roles[role].abbr)
       content = content.replace(new RegExp(`\\b(${abbr})\\b`, 'gi'), `$1 (${role})`)
