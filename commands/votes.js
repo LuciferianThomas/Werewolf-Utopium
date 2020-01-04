@@ -26,8 +26,8 @@ module.exports = {
         .setTitle("Current Lynch Votes")
         .setDescription(game.players.filter(p => p.alive)
                           .map(p => `${p.number} ${client.users.get(p.id).username}${
-                                    p.roleRevealed ? ` ${client.emojis.find(e => e.name == p.role.replace())}`
-                                    }${p.vote ? ` voted to lynch ${p.vote} ${client.users.get(game.players[p.vote-1].id).username}` :
+                                    p.roleRevealed ? ` ${client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}` : ""}${
+                                     p.vote ? ` voted to lynch ${p.vote} ${client.users.get(game.players[p.vote-1].id).username}` :
                                      "did not vote."}.`))
     )
   }
