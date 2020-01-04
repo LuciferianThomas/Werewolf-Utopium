@@ -25,7 +25,7 @@ module.exports = {
       return await message.author.send("You cannot vote while in jail!")
     
     if (game.currentPhase % 3 == 0) {
-      if (gamePlayer.role.includes("Werewolf") || 
+      if (gamePlayer.role.includes("werewolf") || 
           (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0)) {
         let vote = parseInt(args[0])
         if (isNaN(vote) || vote > game.players.length || vote < 1)
