@@ -110,11 +110,11 @@ client.on('ready', async () => {
             fn.broadcast(client, game, "The village cannot decide on who to lynch.")
         }
         
-        if (game.lastDeath + 2 == game.currentPhase) {
+        if (game.lastDeath + 6 == game.currentPhase) {
           fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days without deaths will result in a tie.")
         }
         
-        if (game.lastDeath + 3 == game.currentPhase) {
+        if (game.lastDeath + 9 == game.currentPhase) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. It was a tie.`)
           continue;
