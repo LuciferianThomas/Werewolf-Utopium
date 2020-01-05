@@ -352,7 +352,7 @@ client.on('message', async message => {
   
   const msg = message.content.trim().toLowerCase()
   
-  const prefix = "yeet"
+  const prefix = "w!"
   
   let shared = {}
   
