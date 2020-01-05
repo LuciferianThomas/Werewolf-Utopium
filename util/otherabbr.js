@@ -8,5 +8,6 @@ module.exports = {
   "offline": ["off"],
   "suspect": ["sus"],
   "revive": ["rev"],
-  "counter-claim": ["cc"]
+  "counter-claim": ["cc"],
+  "good game": ["gg"]
 }
