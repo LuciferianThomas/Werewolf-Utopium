@@ -8,7 +8,7 @@ const games = new db.table("Games"),
 const fn = require('/app/util/fn')
 
 module.exports = {
-  name: "vote",
+  name: "votes",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -28,7 +28,7 @@ module.exports = {
                           .map(p => `${p.number} ${client.users.get(p.id).username}${
                                     p.roleRevealed ? ` ${client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}` : ""}${
                                      p.vote ? ` voted to lynch ${p.vote} ${client.users.get(game.players[p.vote-1].id).username}` :
-                                     "did not vote."}.`))
+                                     " did not vote"}.`))
     )
   }
 }

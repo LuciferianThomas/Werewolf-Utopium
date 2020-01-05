@@ -39,8 +39,8 @@ module.exports = {
       return await message.author.send("Invalid target.")
     if (game.players[target-1].alive)
       return await message.author.send("You cannot revive an alive player.")
-    if (roles[game.players[target-1].role].team == "Werewolves")
-      return 
+    if (!roles[game.players[target-1].role].team.includes("Village"))
+      return await message.author.send("You cannot revive a werewolf!")
     
     game.players[gamePlayer.number-1].revUsed = true
     game.players[target-1].reved = true
