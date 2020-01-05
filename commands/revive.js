@@ -5,7 +5,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "revive",
@@ -38,6 +39,8 @@ module.exports = {
       return await message.author.send("Invalid target.")
     if (game.players[target-1].alive)
       return await message.author.send("You cannot revive an alive player.")
+    if (roles[game.players[target-1].role].team == "Werewolves")
+      return 
     
     game.players[gamePlayer.number-1].revUsed = true
     game.players[target-1].reved = true
