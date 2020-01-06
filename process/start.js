@@ -14,6 +14,7 @@ module.exports = async (client, game) => {
   await fn.broadcast(client, game, "Game is starting...")
   
   for (var i = 0; i < game.players.length; i++) {
+    if (game.players[i].spectator) continue;
     game.players[i].number = i+1
     let role = game.players[i].role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     await client.users.get(game.players[i].id)
@@ -24,7 +25,7 @@ module.exports = async (client, game) => {
                                (/^([aeiou])/i).test(role) ? "an" : "a"} ${role}.`)
           .setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
       )
-    game.players[i].alive = true
+    Object.assign(game.players[i], {alive: true, protectors: []})
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
     if (game.players[i].role == "Medium") game.players[i].revUsed = false
     if (game.players[i].role == "Jailer") game.players[i].bullets = 1

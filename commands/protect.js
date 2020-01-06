@@ -41,13 +41,14 @@ module.exports = {
       return await message.author.send("You cannot protect yourself.")
     
     
-    if (game.players[i].protectors.includes(gamePlayer.number)) 
-      game.players[target-1].protectors.splice(
-        game.players[target-1].protectors.indexOf(gamePlayer.number), 1
+    if (game.players.find(p => p.protectors.includes(gamePlayer.number))) {
+      let prevProted = game.players.find(p => p.protectors.includes(gamePlayer.number)) - 1
+      game.players[prevProted].protectors.splice(
+        game.players[prevProted].protectors.indexOf(gamePlayer.number), 1
       )
+    }
     
-    if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = gamePlayer.number
-    else if (gamePlayer.role == "Doctor") game.players[target-1].docProt = gamePlayer.number
+    game.players[target-1].protectors.push(gamePlayer.number)
     
     message.author.send(`${gamePlayer.role == "Doctor" 
                           ? client.emojis.find(e => e.name == "Doctor_Protect")
