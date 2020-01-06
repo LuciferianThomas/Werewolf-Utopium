@@ -221,12 +221,17 @@ client.on('ready', async () => {
           }
           if (wwVotesCount.length) {
             let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
-            let killed = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)[0]
+            let attacked = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)[0]
+            let attackedPlayer = game.players[attacked-1]
             
-            let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.jailed).map(p => p.id)
+            let notWolves = game.players.filter(p => roles[p.role].team != "Werewolves" && !p.jailed).map(p => p.id)
             
-            if (game.players[killed-1].protectors.length || ["Bodyguard", "Tough Guy", "Serial Killer"].includes(game.players[killed[0]-1].role))
-              fn.broadcast()
+            if (attackedPlayer.protectors.length || 
+                ["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role))
+              fn.broadcast(
+                client, game,
+                `**${attackedPlayer.number} ${client.users.get(attackedPlayer.id).username}** cannot be killed!`
+              )
             
 //             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
 //                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
@@ -399,9 +404,9 @@ client.on('message', async message => {
     for (var abbr of roles[role].abbr)
       content = content.replace(new RegExp(`\\b(${abbr})\\b`, 'gi'), `$1 (${role})`)
   }
-  let otherabbr = require('/app/util/otherabbr')
-  for (var [full, abbrList] of Object.entries(otherabbr)) {
-    for (var abbr of abbrList)
+  let abbrList = require('/app/util/abbr')
+  for (var [full, abbrs] of Object.entries(abbrList)) {
+    for (var abbr of abbrs)
       content = content.replace(new RegExp(`\\b(${abbr})\\b`, 'gi'), `$1 (${full})`)
   }
   

@@ -134,6 +134,8 @@ const broadcast = async (client, game, content, ignore = []) => {
     if (!ignore.includes(game.players[i].id)) await client.users.get(game.players[i].id).send(content)
 }
 
+const broadcastTo = async (client, users, list)
+
 module.exports = {
   time: time,
   utcTime: utcTime,
