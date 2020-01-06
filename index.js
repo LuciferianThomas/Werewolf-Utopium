@@ -507,13 +507,11 @@ client.on('message', async message => {
   let content = message.content
   content = content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+|localhost)(:\d+)?(\/[^\s]*)*/gi, "")
   for (var role in roles) {
-    for (var abbr of roles[role].abbr)
-      content = content.replace(new RegExp(`\\b(${abbr})\\b`, 'gi'), `$1 (${role})`)
+    content = content.replace(new RegExp(`\\b(${roles[role].abbr.join("|")})\\b`, 'gi'), `$1 (${role})`)
   }
   let abbrList = require('/app/util/abbr')
   for (var [full, abbrs] of Object.entries(abbrList)) {
-    for (var abbr of abbrs)
-      content = content.replace(new RegExp(`\\b(${abbr})\\b`, 'gi'), `$1 (${full})`)
+    content = content.replace(new RegExp(`\\b(${abbrs.join("|")})\\b`, 'gi'), `$1 (${full})`)
   }
   
   let game = games.get("quick").find(game => game.gameID == player.currentGame)
