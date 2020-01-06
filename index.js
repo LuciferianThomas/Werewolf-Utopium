@@ -52,9 +52,7 @@ client.login(token)
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
-  setInterval (async () => {
-    c
-    
+  setInterval (async () => {   
     let QuickGames = games.get("quick")
     
     for (let i = 0; i < QuickGames.length; i++) {
@@ -100,13 +98,6 @@ client.on('ready', async () => {
         
         game.currentPhase += 1
         game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 30, 's')
-        
-        fn.broadcast(
-          client, game, 
-          game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
-          game.currentPhase % 3 == 1 ? `Day ${Math.floor(game.currentPhase/3)+1} has started!` :
-          `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
-        )
         
         if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
           game.currentPhase = 999
@@ -464,7 +455,7 @@ client.on('ready', async () => {
       QuickGames[i] = game
     }
     games.set('quick', QuickGames)
-  }, 1500)
+  }, 1000)
 })
 
 client.on('message', async message => {

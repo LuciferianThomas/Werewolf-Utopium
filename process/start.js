@@ -35,7 +35,7 @@ module.exports = async (client, game) => {
   game.lastDeath = 0
   game.roles = game.players.map(player => player.role)
   game.currentPhase += 1
-  game.nextPhase = moment().add(1, "m")
+  game.nextPhase = moment().add(30, "s")
   if (game.roles.includes("Headhunter")) {
     let possibleTargets = game.players
       .filter(player => 
