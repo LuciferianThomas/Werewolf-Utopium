@@ -242,14 +242,35 @@ client.on('ready', async () => {
                     client.users.get(protector.id).send(
                       new Discord.RichEmbed()
                         .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
-                        .setDescription("You fought off an attack last night and survived.\nNext time you are attacked you will die.")
-                    )
-                  } else {
-                    fn.broadcastTo(
-                      client, game.players.filter(p => !p.left),
-                      `**${protector.}`
+                        .setDescription(
+                          "You fought off an attack last night and survived.\n" +
+                          "Next time you are attacked you will die."
+                        )
                     )
                   }
+                  else {
+                    fn.broadcastTo(
+                      client, game.players.filter(p => !p.left),
+                      `The werewolves killed **${protector.number} ${fn.getUser(
+                        client, protector.id
+                      )}${
+                        game.config.roleReveal
+                          ? ` ${fn.getEmoji(client, protector.role)}`
+                          : ""
+                      }**.`
+                    )
+                  }
+                }
+                else if (protector.role == "Tough Guy") {
+                  game.players[x-1].health -= 1
+                    client.users.get(protector.id).send(
+                      new Discord.RichEmbed()
+                        .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                        .setDescription(
+                          "You fought off an attack last night and survived.\n" +
+                          "Next time you are attacked you will die."
+                        )
+                    )
                 }
               }
             }

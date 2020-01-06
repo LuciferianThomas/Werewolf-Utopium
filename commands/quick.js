@@ -45,7 +45,10 @@ module.exports = {
                //  "Bodyguard", "Gunner", "Wolf Shaman", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"],
         players: [{
           id: message.author.id
-        }]
+        }],
+        config: {
+          deathReveal: true
+        }
       }
       QuickGames.push(currentGame)
     }

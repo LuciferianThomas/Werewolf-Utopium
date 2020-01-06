@@ -67,6 +67,10 @@ let getRole = (guild, data) => {
   throw Error('Cannot find role.')
 }
 
+let getEmoji = (client, name) => {
+  return client.emojis.find(emoji => emoji.name == name.replace(/ /g, "_"))
+}
+
 function ModCase (client, id, type, member, message, reason, period) {
   this.id = parseInt(id)
   this.type = type.toUpperCase()
@@ -148,6 +152,7 @@ module.exports = {
   error: error,
   getUser: getUser,
   getMember: getMember,
+  getEmoji: getEmoji,
   getRole: getRole,
   ModCase: ModCase,
   modCaseEmbed: modCaseEmbed,
