@@ -293,7 +293,7 @@ module.exports = {
           " If your target dies in a way other than being lynched, you become a regular villager.",
     aura: "Unknown",
     team: "Solo/Village",
-    abbr: ["hh", "hunter"]
+    abbr: ["hh"]
   },
   
   // Solo killing roles
