@@ -113,20 +113,20 @@ client.on('ready', async () => {
         game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 45, 's')
         
         if (game.currentPhase % 3 == 0) {
-          fn.broadcastTo(
-            client,
-            game.players.filter(
-              p => p.alive &&
-                  !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
-                   "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
-                   "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
-                   "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
-            new Discord.RichEmbed()
-              .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
-              .setDescription("Nothing to do right now.\n" +
-                              "Go back to sleep!"),
+//           fn.broadcastTo(
+//             client,
+//             game.players.filter(
+//               p => p.alive &&
+//                   !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
+//                    "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
+//                    "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
+//                    "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
+//             new Discord.RichEmbed()
+//               .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
+//               .setDescription("Nothing to do right now.\n" +
+//                               "Go back to sleep!"),
 
-          )
+//           )
           if (game.roles.includes("Gunner")) {
             let gunners = game.players.filter(p => p.role == "Gunner").map(p => p.number)
             for (var x = 0; x < gunners.length; x++) 
