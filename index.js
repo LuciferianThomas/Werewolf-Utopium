@@ -262,15 +262,7 @@ client.on('ready', async () => {
                 }
               }
               else if (protector.role == "Tough Guy") {
-                // game.players[x-1].health -= 1
-                // fn.getUser(client, protector.id).send(
-                //   new Discord.RichEmbed()
-                //     .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
-                //     .setDescription(
-                //       "You fought off an attack last night and survived.\n" +
-                //       "Next time you are attacked you will die."
-                //     )
-                // )
+                // TODO
               }
               else if (protector.role == "Doctor") {
                 fn.getUser(client, protector.id).send(
@@ -289,14 +281,7 @@ client.on('ready', async () => {
                 )
               }
               else if (protector.role == "Beast Hunter") {
-                // fn.getUser(client, protector.id).send(
-                //   new Discord.RichEmbed()
-                //     .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
-                //     .setDescription(
-                //       "You fought off an attack last night and survived.\n" +
-                //       "Next time you are attacked you will die."
-                //     )
-                // )
+                // TODO
               }
             }
             else if (attackedPlayer.role == "Cursed") {
@@ -338,7 +323,18 @@ client.on('ready', async () => {
                 )
               }
             }
-            
+            else if (attackedPlayer.role == "Tough Guy") {
+              // TODO
+            }
+            else {
+              game.players[attacked-1].alive = false
+              if (game.config.deathReveal) game.players[attacked-1].alive = false
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                
+              )
+            }
+          }
 //             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
 //                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
 //               if (game.players[killed[0]-1].docProt)
@@ -419,7 +415,7 @@ client.on('ready', async () => {
 //                   .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
 //                         }** cannot be killed!`)
 //             }
-          }
+          // }
           
           // let skTarget = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote)
           // for (var j = 0; j < skTarget.length; j++) {
