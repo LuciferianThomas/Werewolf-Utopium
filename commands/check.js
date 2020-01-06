@@ -60,7 +60,7 @@ module.exports = {
       console.log(game.players[target-1].role)
       message.author.send(
         new Discord.RichEmbed()
-          .setTitle(`${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))} Seeing Results`)
+          .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_")).url)
           .setThumbnail(client.emojis.find(e => e.name == game.players[target-1].role.replace(/ /g, "_")).url)
           .setDescription(
             `${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}.`

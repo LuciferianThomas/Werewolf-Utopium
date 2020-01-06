@@ -148,13 +148,12 @@ client.on('ready', async () => {
               )
             if (roles[jailed.role].team == "Werewolves") {
               let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && p.number != jailed.number)
-              for (var x = 0; x < wolves.length; x++) 
-                client.users.get(jailed.id)
-                  .send(
-                    new Discord.RichEmbed()
-                      .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jailed!`)
-                      .setDescription(`Fellow werewolf **${jailed.number} ${client.users.get(jailed.id).username}** has been jailed!`)
-                  )
+              fn.broadcastTo(
+                client, game.players.filter(p => roles[p.role].team == "Werewolves" && p.number != jailed.number && !p.left),
+                new Discord.RichEmbed()
+                  .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
+                  .setDescription(`Fellow werewolf **${jailed.number} ${client.users.get(jailed.id).username}** has been jailed!`)
+              )
             }
           } else if (game.roles.includes("Jailer")) {
             client.users.get(game.players[game.roles.indexOf("Jailer")].id)
