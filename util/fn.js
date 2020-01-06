@@ -134,7 +134,10 @@ const broadcast = async (client, game, content, ignore = []) => {
     if (!ignore.includes(game.players[i].id)) await client.users.get(game.players[i].id).send(content)
 }
 
-const broadcastTo = async (client, users, list)
+const broadcastTo = async (client, users, content) => {
+  for (var i = 0; i < users.length; i++) 
+    await client.users.get(users[i]).send(content)
+}
 
 module.exports = {
   time: time,
@@ -149,5 +152,6 @@ module.exports = {
   ModCase: ModCase,
   modCaseEmbed: modCaseEmbed,
   paginator: paginator,
-  broadcast: broadcast
+  broadcast: broadcast,
+  broadcastTo: broadcastTo,
 }

@@ -224,14 +224,36 @@ client.on('ready', async () => {
             let attacked = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)[0]
             let attackedPlayer = game.players[attacked-1]
             
-            let notWolves = game.players.filter(p => roles[p.role].team != "Werewolves" && !p.jailed).map(p => p.id)
+            let wolves = game.players.filter(p => roles[p.role].team != "Werewolves" && !p.jailed).map(p => p.id)
             
             if (attackedPlayer.protectors.length || 
-                ["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role))
-              fn.broadcast(
-                client, game,
+                ["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role)) {
+              fn.broadcastTo(
+                client, wolves,
                 `**${attackedPlayer.number} ${client.users.get(attackedPlayer.id).username}** cannot be killed!`
               )
+            } else if (attackedPlayer.protectors.length) {
+              for (var x of attackedPlayer.protectors) {
+                let protector = game.players[x-1]
+                
+                if (protector.role == "Bodyguard") {
+                  game.players[x-1].health -= 1
+                  if (game.players[x-1].health) {
+                    client.users.get(protector.id).send(
+                      new Discord.RichEmbed()
+                        .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                        .setDescription("You fought off an attack last night and survived.\nNext time you are attacked you will die.")
+                    )
+                  } else {
+                    fn.broadcastTo(
+                      client, game.players.filter(p => !p.left),
+                      `**${protector.}`
+                    )
+                  }
+                }
+              }
+            }
+            
             
 //             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
 //                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
