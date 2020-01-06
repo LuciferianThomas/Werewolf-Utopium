@@ -89,7 +89,7 @@ module.exports = {
     			" However, if someone is muted, the village will be notified. You cannot mute the same person twice in a row.",
     aura: "Good",
     team: "Village",
-    abbr: ["granny"]
+    abbr: ["granny","gg"]
   },
   "Gunner": {
     desc: "During the day, you have two bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +

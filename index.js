@@ -507,6 +507,7 @@ client.on('message', async message => {
   let content = message.content
   content = content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+|localhost)(:\d+)?(\/[^\s]*)*/gi, "")
   for (var role in roles) {
+    if (!roles[role].abbr.length) continue;
     content = content.replace(new RegExp(`\\b(${roles[role].abbr.join("|")})\\b`, 'gi'), `$1 (${role})`)
   }
   let abbrList = require('/app/util/abbr')
