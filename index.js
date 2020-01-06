@@ -91,20 +91,6 @@ client.on('ready', async () => {
                 fn.broadcast(client, game, `Game has ended. Headhunter wins!`)
                 continue;
               }
-            /*  if (game.players.filter(p => p.alive && roles[p.role].team != "Village").length == 0) {
-                game.currentPhase = 999
-                fn.broadcast(client, game, `Game has ended. The village wins!`)
-                continue;
-              }
-                game.currentPhase = 999
-                fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
-                continue;
-              }*/
-             // if (game.players.filter(p =>)) {
-              //  game.currentPhase = 999
-            //    fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
-              //  continue;
-            //  }
             }
           } else
             fn.broadcast(client, game, "The village cannot decide on who to lynch.")
@@ -459,6 +445,13 @@ client.on('ready', async () => {
         for (var j = 0; j < game.players.length; j++) {
           game.players[j].vote = null
         }
+        
+        fn.broadcast(
+          client, game, 
+          game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
+          game.currentPhase % 3 == 1 ? `Day ${Math.floor(game.currentPhase/3)+1} has started!` :
+          `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+        )
       }
       QuickGames[i] = game
     }

@@ -10,7 +10,7 @@ const fn = require('/app/util/fn')
 module.exports = {
   name: "kill",
   aliases: ["stab"],
-  run: async (client, message, args, shared) => {return;
+  run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
       return await message.author.send("**You are not currently in a game!**\nDo `w!quick` to join a Quick Game!")
@@ -39,11 +39,11 @@ module.exports = {
       return await message.author.send("You cannot kill yourself.")
     
     game.players[gamePlayer.number-1].vote = target
-      fn.broadcast(
-        client, game, 
-        `${gamePlayer.number} ${message.author.username}${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""
-         } voted to lynch ${vote} ${client.users.get(game.players[vote-1].id).username}${game.players[vote-1].roleRevealed ? ` ${client.emojis.find(e => e.name == game.players[vote-1].role.replace(/ /g, "_"))}` : ""}.`
-      )
+    message.author.send(
+      `<:Serial_Killer_Knife:660823278902050826> You selected to stab **${target} ${
+        fn.getUser(client, game.players[target - 1].id).username
+      }.`
+    )
     
     QuickGames[index] = game
     
