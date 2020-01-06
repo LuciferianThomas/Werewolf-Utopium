@@ -79,6 +79,7 @@ client.on('ready', async () => {
             else {
               game.players[lynched[0]-1].alive = false
               game.players[lynched[0]-1].roleRevealed = true
+            
               game.lastDeath = game.currentPhase
               fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
               if (game.players[lynched[0]-1].role == "Fool") {
@@ -97,24 +98,7 @@ client.on('ready', async () => {
         }
         
         game.currentPhase += 1
-        game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 30, 's')
-        
-        if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
-          game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. The village wins!`)
-          continue;
-        }
-        if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
-            game.players.filter(p => p.alive && roles[p.role].team != "Werewolves").length) {
-          game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
-          continue;
-        }
-       /* if (game.players.filter(p => p.alive).map(p => p.role).length == 1 && ["Serial Killer"].includes(game.players.filter(p => p.alive).map(p => p.role)[0].role)) {
-          game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. The ${game.players.filter(p => p.alive).map(p => p.role)[0].role} wins!`)
-          continue;
-        }*/
+        game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 45, 's')
         
         if (game.currentPhase % 3 == 0) {
           fn.broadcast(
@@ -435,6 +419,28 @@ client.on('ready', async () => {
           game.players[j].vote = null
         }
         
+        if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. The village wins!`)
+          continue;
+        }
+        
+        if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
+            game.players.filter(p => p.alive && roles[p.role].team != "Werewolves").length) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
+          continue;
+        }
+        
+        let alive = game.players.filter(p => p.alive)
+        
+        if ((alive.length == 1 && alive[0].role == "Serial Killer") ||
+            (alive.length == 2 && alive.map(p => p.role).includes("Serial Killer") && alive.map(p => p.role).includes("Jailer"))) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. The Serial Killer wins!`)
+          continue;
+        }
+        
         if (game.lastDeath + 6 == game.currentPhase) {
           fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days without deaths will result in a tie.")
         }
@@ -506,10 +512,10 @@ client.on('message', async message => {
 
   let content = message.content
   content = content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+|localhost)(:\d+)?(\/[^\s]*)*/gi, "")
-  for (var role in roles) {
-    if (!roles[role].abbr.length) continue;
-    content = content.replace(new RegExp(`\\b(${roles[role].abbr.join("|")})\\b`, 'gi'), `$1 (${role})`)
-  }
+  //for (var role in roles) {
+  //  if (!roles[role].abbr.length) continue;
+  //  content = content.replace(new RegExp(`\\b(${roles[role].abbr.join("|")})\\b`, 'gi'), `$1 (${role})`)
+  //}
   let abbrList = require('/app/util/abbr')
   for (var [full, abbrs] of Object.entries(abbrList)) {
     content = content.replace(new RegExp(`\\b(${abbrs.join("|")})\\b`, 'gi'), `$1 (${full})`)
