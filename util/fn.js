@@ -139,6 +139,7 @@ const broadcast = async (client, game, content, ignore = []) => {
 }
 
 const broadcastTo = async (client, users, content) => {
+  if (users[0] instanceof Discord.User) users = users.map(u => u.id)
   for (var i = 0; i < users.length; i++) 
     await client.users.get(users[i]).send(content)
 }
