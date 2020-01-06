@@ -58,6 +58,18 @@ client.on('ready', async () => {
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
       if (game.currentPhase === 999) {
+        fn.broadcastTo(
+          client, game.players.filter(p => !p.left).map(p => p.id),
+          new Discord.RichEmbed()
+            .setTitle(`Game #${game.gameID}`)
+            .addField(
+              `Players`, 
+              game.players.map(p => 
+                `${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"} ${
+                client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}`
+              ).join('\n')
+            )
+        )
         game.currentPhase++
         for (var j = 0; j < game.players.length; j++)
           players.set(`${game.players[j].id}.currentGame`, 0)
@@ -428,7 +440,7 @@ client.on('ready', async () => {
         if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
             game.players.filter(p => p.alive && roles[p.role].team != "Werewolves").length) {
           game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. The werewolves wins!`)
+          fn.broadcast(client, game, `Game has ended. The werewolves win!`)
           continue;
         }
         
@@ -437,7 +449,7 @@ client.on('ready', async () => {
         if ((alive.length == 1 && alive[0].role == "Serial Killer") ||
             (alive.length == 2 && alive.map(p => p.role).includes("Serial Killer") && alive.map(p => p.role).includes("Jailer"))) {
           game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. The Serial Killer wins!`)
+          fn.broadcast(client, game, `Game has ended. Serial Killer wins!`)
           continue;
         }
         
