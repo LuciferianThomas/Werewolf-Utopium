@@ -233,13 +233,13 @@ client.on('ready', async () => {
                 `**${attackedPlayer.number} ${fn.getUser(attackedPlayer.id).username}** cannot be killed!`
               )
             }
-            else if (attackedPlayer.protectors.length) { for (var x of attackedPlayer.protectors) {
+            else if (attackedPlayer.protectors.length) for (var x of attackedPlayer.protectors) {
               let protector = game.players[x-1]
 
               if (protector.role == "Bodyguard") {
                 game.players[x-1].health -= 1
                 if (game.players[x-1].health) {
-                  client.users.get(protector.id).send(
+                  fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
                       .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
                       .setDescription(
@@ -263,7 +263,7 @@ client.on('ready', async () => {
               }
               else if (protector.role == "Tough Guy") {
                 // game.players[x-1].health -= 1
-                // client.users.get(protector.id).send(
+                // fn.getUser(client, protector.id).send(
                 //   new Discord.RichEmbed()
                 //     .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
                 //     .setDescription(
@@ -273,7 +273,7 @@ client.on('ready', async () => {
                 // )
               }
               else if (protector.role == "Doctor") {
-                client.users.get(protector.id).send(
+                fn.getUser(client, protector.id).send(
                   new Discord.RichEmbed()
                     .setTitle("<:Doctor_Protect:660491111155892224> Protection")
                     .setDescription(
@@ -282,13 +282,31 @@ client.on('ready', async () => {
                 )
               }
               else if (protector.role == "Witch") {
-                client.users.get(protector.id).send(
+                fn.getUser(client, protector.id).send(
                   new Discord.RichEmbed()
                     .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
                     .setDescription("Last night your potion saved a life!")
                 )
               }
-            }}
+              else if (protector.role == "Beast Hunter") {
+                // fn.getUser(client, protector.id).send(
+                //   new Discord.RichEmbed()
+                //     .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                //     .setDescription(
+                //       "You fought off an attack last night and survived.\n" +
+                //       "Next time you are attacked you will die."
+                //     )
+                // )
+              }
+            }
+            else if (attackedPlayer.role == "Cursed") {
+              game.players[attacked-1].role = "Werewolf"
+              fn.getUser(client, attackedPlayer.id).send(
+                new Discord.RichEmbed()
+                  .setTitle("<:Fellow_Werewolf:660825937109057587> Converted!")
+                  .setDescription()
+              )
+            }
             
             
 //             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
