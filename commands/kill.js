@@ -38,17 +38,12 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot kill yourself.")
     
-    for (var i = 0; i < game.players.length; i++) {
-      if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = null
-      else if (gamePlayer.role == "Doctor") game.players[target-1].docProt = null
-    }
-    if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = gamePlayer.number
-    else if (gamePlayer.role == "Doctor") game.players[target-1].docProt = gamePlayer.number
-    
-    message.author.send(`${gamePlayer.role == "Doctor" 
-                          ? client.emojis.find(e => e.name == "Doctor_Protect")
-                          : client.emojis.find(e => e.name == "Bodyguard_Shield")
-                         } You selected ${target} ${client.users.get(game.players[target-1].id).username} to be protected.`)
+    game.players[gamePlayer.number-1].vote = target
+      fn.broadcast(
+        client, game, 
+        `${gamePlayer.number} ${message.author.username}${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""
+         } voted to lynch ${vote} ${client.users.get(game.players[vote-1].id).username}${game.players[vote-1].roleRevealed ? ` ${client.emojis.find(e => e.name == game.players[vote-1].role.replace(/ /g, "_"))}` : ""}.`
+      )
     
     QuickGames[index] = game
     

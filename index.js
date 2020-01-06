@@ -121,7 +121,7 @@ client.on('ready', async () => {
         }
         
         game.currentPhase += 1
-        game.nextPhase = moment().add(game.currentPhase % 3 == 2 ? 60 : 120, 's')
+        game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 30, 's')
         
         fn.broadcast(
           client, game, 
@@ -204,7 +204,7 @@ client.on('ready', async () => {
         
         if (game.currentPhase % 3 == 1)  {
           if (game.players.find(p => p.revive)) {
-            fn.broadcast(client, game, `Medium revived ${game.players.find(p => p.revive).number} ${client.users.get(game.players.find(p => p.revive).id).username} (${game.players.find(p => p.reved).role}).`)
+            fn.broadcast(client, game, `Medium revived ${game.players.find(p => p.revive).number} ${client.users.get(game.players.find(p => p.revive).id).username} (${game.players.find(p => p.revive).role}).`)
             game.players[game.players.find(p => p.revive).number-1].alive = true
             game.players[game.players.find(p => p.revive).number-1].revive = false
           }
@@ -220,58 +220,59 @@ client.on('ready', async () => {
                 attackedPlayer = game.players[attacked-1]
             
             if (attackedPlayer.protectors.length) {
-              fn.getUser(client, sks[x])
-                .send(`**${attackedPlayer.number} ${fn.getUser(attackedPlayer.id).username}** cannot be killed!`)
-            }
-            else if (attackedPlayer.protectors.length) for (var x of attackedPlayer.protectors) {
-              let protector = game.players[x-1]
+              fn.getUser(client, sks[x]).send(
+                `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
+              )
+              for (var x of attackedPlayer.protectors) {
+                let protector = game.players[x-1]
 
-              if (protector.role == "Bodyguard") {
-                game.players[x-1].health -= 1
-                if (game.players[x-1].health) {
+                if (protector.role == "Bodyguard") {
+                  game.players[x-1].health -= 1
+                  if (game.players[x-1].health) {
+                    fn.getUser(client, protector.id).send(
+                      new Discord.RichEmbed()
+                        .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                        .setDescription(
+                          "You fought off an attack last night and survived.\n" +
+                          "Next time you are attacked you will die."
+                        )
+                    )
+                  }
+                  else {
+                    game.players[x-1].alive = false
+                    if (game.config.deathReveal) game.players[x-1].roleRevealed = true
+                    fn.broadcastTo(
+                      client, game.players.filter(p => !p.left),
+                      `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
+                        game.config.roleReveal
+                          ? ` ${fn.getEmoji(client, protector.role)}`
+                          : ""
+                      }**.`
+                    )
+                  }
+                }
+                else if (protector.role == "Tough Guy") {
+                  // TODO
+                }
+                else if (protector.role == "Doctor") {
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
-                      .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                      .setTitle("<:Doctor_Protect:660491111155892224> Protection")
                       .setDescription(
-                        "You fought off an attack last night and survived.\n" +
-                        "Next time you are attacked you will die."
+                        `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
                       )
                   )
                 }
-                else {
-                  game.players[x-1].alive = false
-                  if (game.config.deathReveal) game.players[x-1].roleRevealed = true
-                  fn.broadcastTo(
-                    client, game.players.filter(p => !p.left),
-                    `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
-                      game.config.roleReveal
-                        ? ` ${fn.getEmoji(client, protector.role)}`
-                        : ""
-                    }**.`
+                else if (protector.role == "Witch") {
+                  fn.getUser(client, protector.id).send(
+                    new Discord.RichEmbed()
+                      .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
+                      .setDescription("Last night your potion saved a life!")
                   )
                 }
-              }
-              else if (protector.role == "Tough Guy") {
-                // TODO
-              }
-              else if (protector.role == "Doctor") {
-                fn.getUser(client, protector.id).send(
-                  new Discord.RichEmbed()
-                    .setTitle("<:Doctor_Protect:660491111155892224> Protection")
-                    .setDescription(
-                      `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
-                    )
-                )
-              }
-              else if (protector.role == "Witch") {
-                fn.getUser(client, protector.id).send(
-                  new Discord.RichEmbed()
-                    .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
-                    .setDescription("Last night your potion saved a life!")
-                )
-              }
-              else if (protector.role == "Beast Hunter") {
-                // TODO
+                else if (protector.role == "Beast Hunter") {
+                  // TODO
+                }
               }
             }
             else if (attackedPlayer.role == "Bodyguard") {
@@ -330,62 +331,67 @@ client.on('ready', async () => {
             
             let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.left).map(p => p.id)
             
-            if (attackedPlayer.protectors.length || 
-                ["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role)) {
+            if (["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role)) {
               fn.broadcastTo(
                 client, wolves,
-                `**${attackedPlayer.number} ${fn.getUser(attackedPlayer.id).username}** cannot be killed!`
+                `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
               )
             }
-            else if (attackedPlayer.protectors.length) for (var x of attackedPlayer.protectors) {
-              let protector = game.players[x-1]
+            else if (attackedPlayer.protectors.length) {
+              fn.broadcastTo(
+                client, wolves,
+                `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
+              )
+              for (var x of attackedPlayer.protectors) {
+                let protector = game.players[x-1]
 
-              if (protector.role == "Bodyguard") {
-                game.players[x-1].health -= 1
-                if (game.players[x-1].health) {
+                if (protector.role == "Bodyguard") {
+                  game.players[x-1].health -= 1
+                  if (game.players[x-1].health) {
+                    fn.getUser(client, protector.id).send(
+                      new Discord.RichEmbed()
+                        .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                        .setDescription(
+                          "You fought off an attack last night and survived.\n" +
+                          "Next time you are attacked you will die."
+                        )
+                    )
+                  }
+                  else {
+                    game.players[x-1].alive = false
+                    if (game.config.deathReveal) game.players[x-1].roleRevealed = true
+                    fn.broadcastTo(
+                      client, game.players.filter(p => !p.left),
+                      `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
+                        game.config.roleReveal
+                          ? ` ${fn.getEmoji(client, protector.role)}`
+                          : ""
+                      }**.`
+                    )
+                  }
+                }
+                else if (protector.role == "Tough Guy") {
+                  // TODO
+                }
+                else if (protector.role == "Doctor") {
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
-                      .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                      .setTitle("<:Doctor_Protect:660491111155892224> Protection")
                       .setDescription(
-                        "You fought off an attack last night and survived.\n" +
-                        "Next time you are attacked you will die."
+                        `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
                       )
                   )
                 }
-                else {
-                  game.players[x-1].alive = false
-                  if (game.config.deathReveal) game.players[x-1].roleRevealed = true
-                  fn.broadcastTo(
-                    client, game.players.filter(p => !p.left),
-                    `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
-                      game.config.roleReveal
-                        ? ` ${fn.getEmoji(client, protector.role)}`
-                        : ""
-                    }**.`
+                else if (protector.role == "Witch") {
+                  fn.getUser(client, protector.id).send(
+                    new Discord.RichEmbed()
+                      .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
+                      .setDescription("Last night your potion saved a life!")
                   )
                 }
-              }
-              else if (protector.role == "Tough Guy") {
-                // TODO
-              }
-              else if (protector.role == "Doctor") {
-                fn.getUser(client, protector.id).send(
-                  new Discord.RichEmbed()
-                    .setTitle("<:Doctor_Protect:660491111155892224> Protection")
-                    .setDescription(
-                      `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
-                    )
-                )
-              }
-              else if (protector.role == "Witch") {
-                fn.getUser(client, protector.id).send(
-                  new Discord.RichEmbed()
-                    .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
-                    .setDescription("Last night your potion saved a life!")
-                )
-              }
-              else if (protector.role == "Beast Hunter") {
-                // TODO
+                else if (protector.role == "Beast Hunter") {
+                  // TODO
+                }
               }
             }
             else if (attackedPlayer.role == "Cursed") {
