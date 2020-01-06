@@ -212,8 +212,112 @@ client.on('ready', async () => {
           for (var x = 0; x < game.players.length; x++)
             game.players[x].usedAbilityTonight = false
           
-          let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),
-              wwRoles = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.role),
+          let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
+              sks = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.id)
+          for (var x = 0; x < skKills.length; x++) {
+            if (!skKills[x]) continue;
+            let attacked = skKills[x],
+                attackedPlayer = game.players[attacked-1]
+            
+            if (attackedPlayer.protectors.length) {
+              fn.getUser(client, sks[x])
+                .send(`**${attackedPlayer.number} ${fn.getUser(attackedPlayer.id).username}** cannot be killed!`)
+            }
+            else if (attackedPlayer.protectors.length) for (var x of attackedPlayer.protectors) {
+              let protector = game.players[x-1]
+
+              if (protector.role == "Bodyguard") {
+                game.players[x-1].health -= 1
+                if (game.players[x-1].health) {
+                  fn.getUser(client, protector.id).send(
+                    new Discord.RichEmbed()
+                      .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                      .setDescription(
+                        "You fought off an attack last night and survived.\n" +
+                        "Next time you are attacked you will die."
+                      )
+                  )
+                }
+                else {
+                  game.players[x-1].alive = false
+                  if (game.config.deathReveal) game.players[x-1].roleRevealed = true
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left),
+                    `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
+                      game.config.roleReveal
+                        ? ` ${fn.getEmoji(client, protector.role)}`
+                        : ""
+                    }**.`
+                  )
+                }
+              }
+              else if (protector.role == "Tough Guy") {
+                // TODO
+              }
+              else if (protector.role == "Doctor") {
+                fn.getUser(client, protector.id).send(
+                  new Discord.RichEmbed()
+                    .setTitle("<:Doctor_Protect:660491111155892224> Protection")
+                    .setDescription(
+                      `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
+                    )
+                )
+              }
+              else if (protector.role == "Witch") {
+                fn.getUser(client, protector.id).send(
+                  new Discord.RichEmbed()
+                    .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
+                    .setDescription("Last night your potion saved a life!")
+                )
+              }
+              else if (protector.role == "Beast Hunter") {
+                // TODO
+              }
+            }
+            else if (attackedPlayer.role == "Bodyguard") {
+              game.players[attacked-1].health -= 1
+              if (game.players[attacked-1].health) {
+                fn.getUser(client, attackedPlayer.id).send(
+                  new Discord.RichEmbed()
+                    .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                    .setDescription(
+                      "You fought off an attack last night and survived.\n" +
+                      "Next time you are attacked you will die."
+                    )
+                )
+              }
+              else {
+                game.players[attacked-1].alive = false
+                if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
+                fn.broadcastTo(
+                  client, game.players.filter(p => !p.left),
+                  `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
+                    game.config.roleReveal
+                      ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
+                      : ""
+                  }**.`
+                )
+              }
+            }
+            else if (attackedPlayer.role == "Tough Guy") {
+              // TODO
+            }
+            else {
+              game.players[attacked-1].alive = false
+              if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
+                  game.config.roleReveal
+                    ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
+                    : ""
+                }**.`
+              )
+            }
+          }
+          
+          let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),
+              wwRoles = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.role),
               wwVotesCount = []
           for (var j = 0; j < wwVotes.length; j++) {
             if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
@@ -328,115 +432,17 @@ client.on('ready', async () => {
             }
             else {
               game.players[attacked-1].alive = false
-              if (game.config.deathReveal) game.players[attacked-1].alive = false
+              if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left),
-                
+                `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
+                  game.config.roleReveal
+                    ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
+                    : ""
+                }**.`
               )
             }
           }
-//             if (!game.players[killed[0]-1].bgProt && !game.players[killed[0]-1].docProt && !game.players[killed[0]-1].jailed && 
-//                 !["Bodyguard", "Serial Killer"].includes(game.players[killed[0]-1].role)) {
-//               if (game.players[killed[0]-1].docProt)
-//                 client.users.get(game.players[game.players[killed[0]-1].docProt-1].id)
-//                   .send(
-//                     new Discord.RichEmbed()
-//                       .setTitle(`${client.emojis.get(e => e.name == "Doctor_Protect")} Protection`)
-//                       .setDescription(`Your protection saved **${game.players[killed[0]-1].number} ${
-//                                       client.users.get(game.players[killed[0]-1].id).username}** last night!`)
-//                   )
-              
-//               if (game.players[killed[0]-1].role == "Cursed") {
-//                 game.players[killed[0]-1].role = "Werewolf"
-//                 client.users.get(game.players[killed[0]-1].id).send(
-//                   new Discord.RichEmbed()
-//                     .setTitle(`${client.emojis.get(e => e.name == "Werewolf")} Converted!`)
-//                     .setDescription("You have been attacked by the werewolves and converted into a Werewolf!")
-//                 )
-//                 for (var j = 0; j < wolves.length; j++)
-//                   client.users.get(wolves[j]).send(
-//                     new Discord.RichEmbed()
-//                       .setTitle(`${client.emojis.get(e => e.name == "Cursed")} Converted!`)
-//                       .setDescription(
-//                         `**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
-//                         }** is the Cursed and is turned into a Werewolf!`)
-//                   )
-//               } else {
-//                 game.players[killed[0]-1].alive = false
-//                 game.players[killed[0]-1].roleRevealed = true
-//                 game.lastDeath = game.currentPhase-1
-//                 fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username
-//                              } (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
-//               }
-//             } else if (game.players[killed[0]-1].role == "Bodyguard") {
-//               game.players[killed[0]-1].health -= 1
-//               if (game.players[killed[0]-1].health <= 0) {
-//                 fn.broadcast(client, game, `${killed[0]} ${client.users.get(game.players[killed[0]-1].id).username
-//                              } (${game.players[killed[0]-1].role}) was killed by the werewolves.`)
-//                 game.lastDeath = game.currentPhase-1
-//                 game.players[killed[0]-1].roleRevealed = true
-//                 game.players[killed[0]-1].alive = false
-//               } else {
-//                 client.users.get(game.players[killed[0]-1].id)
-//                   .send(
-//                     new Discord.RichEmbed()
-//                       .setTitle(`${client.emojis.find(e => e.name == "Bodyguard_Shield")} Attacked!`)
-//                       .setDescription("You fought off an attack last night and survived.\nNext time you are attacked you will die.")
-//                   )
-//                 for (var j = 0; j < wolves.length; j++)
-//                   client.users.get(wolves[j])
-//                     .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
-//                           }** cannot be killed!`)
-//               }
-//             } else if (game.players[killed[0]-1].bgProt) {
-//               game.players[game.players[killed[0]-1].bgProt-1].health -= 1
-//               if (game.players[game.players[killed[0]-1].bgProt-1].health <= 0) {
-//                 game.lastDeath = game.currentPhase-1
-//                 fn.broadcast(client, game, `${game.players[killed[0]-1].bgProt} ${
-//                              client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id).username
-//                              } (${game.players[game.players[killed[0]-1].bgProt-1].role}) was killed by the werewolves.`)
-//                 game.players[game.players[killed[0]-1].bgProt-1].alive = false
-//                 game.players[killed[0]-1].roleRevealed = true
-//               } else {
-//                 client.users.get(game.players[game.players[killed[0]-1].bgProt-1].id)
-//                   .send(
-//                     new Discord.RichEmbed()
-//                       .setTitle(`${client.emojis.find(e => e.name == "Bodyguard_Shield")} Attacked!`)
-//                       .setDescription("You fought off an attack last night and survived.\nNext time you are attacked you will die.")
-//                   )
-//                 for (var j = 0; j < wolves.length; j++)
-//                   client.users.get(wolves[j])
-//                     .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
-//                           }** cannot be killed!`)
-//               }
-//             } else {
-//               for (var j = 0; j < wolves.length; j++)
-//                 client.users.get(wolves[j])
-//                   .send(`**${game.players[killed[0]-1].number} ${client.users.get(game.players[killed[0]-1].id).username
-//                         }** cannot be killed!`)
-//             }
-          // }
-          
-          // let skTarget = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote)
-          // for (var j = 0; j < skTarget.length; j++) {
-          //   if (!game.players[skTarget[i]-1].bgProt && !game.players[skTarget[i]-1].docProt && !game.players[skTarget[i]-1].jailed && 
-          //       !["Bodyguard", "Serial Killer"].includes(game.players[skTarget[i]-1].role)) {
-          //     game.players[skTarget[i]-1].alive = false
-          //     fn.broadcast(client, game, `${skTarget[i]} ${client.users.get(game.players[skTarget[i]-1].id).username} (${game.players[skTarget[i]-1].role}) was killed by the serial killer.`)
-          //   } else if (game.players[skTarget[i]-1].role == "Bodyguard") {
-          //     game.players[skTarget[i]-1].health -= 1
-          //     if (game.players[skTarget[i]-1].health <= 0) {
-          //       fn.broadcast(client, game, `${skTarget[i]} ${client.users.get(game.players[skTarget[i]-1].id).username} (${game.players[skTarget[i]-1].role}) was killed by the serial killer.`)
-          //       game.players[skTarget[i]-1].alive = false
-          //     }
-          //   } else if (game.players[skTarget[i]].bgProt) {
-          //     game.players[game.players[skTarget[i]-1].bgProt-1].health -= 1
-          //     if (game.players[game.players[skTarget[i]-1].bgProt-1].health <= 0) {
-          //       fn.broadcast(client, game, `${game.players[skTarget[i]-1].bgProt} ${client.users.get(game.players[game.players[skTarget[i]-1].bgProt-1].id).username} (${game.players[game.players[skTarget[i]-1].bgProt-1].role}) was killed by the serial killer.`)
-          //       game.players[game.players[skTarget[i]-1].bgProt-1].alive = false
-          //     }
-          //   }
-          // }
           
           for (var j = 0; j < game.players.length; j++) {
             game.players[j].jailed = false
