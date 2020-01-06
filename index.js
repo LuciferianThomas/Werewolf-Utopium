@@ -210,7 +210,7 @@ client.on('ready', async () => {
           }
           
           let seers = game.players.filter(p => ["Aura Seer","Seer","Wolf Seer"].includes(p.role)).map(p => p.number)
-          for (var x = 0; x < seers.length; x++) game.players[seers[x]-1].checkedTonight = false
+          for (var x = 0; x < seers.length; x++) game.players[seers[x]-1].usedAbilityTonight = false
           
           
           let wwVotes = game.players.filter(player => player.alive && player.role.toLowerCase().includes("wolf")).map(player => player.vote),

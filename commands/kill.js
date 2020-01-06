@@ -34,9 +34,9 @@ module.exports = {
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
     if (!game.players[target-1].alive)
-      return await message.author.send("You cannot protect an dead player.")
+      return await message.author.send("You cannot kill an dead player.")
     if (target == gamePlayer.number)
-      return await message.author.send("You cannot protect yourself.")
+      return await message.author.send("You cannot kill yourself.")
     
     for (var i = 0; i < game.players.length; i++) {
       if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = null

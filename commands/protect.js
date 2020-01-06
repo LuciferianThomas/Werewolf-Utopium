@@ -40,10 +40,12 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot protect yourself.")
     
-    for (var i = 0; i < game.players.length; i++) {
-      if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = null
-      else if (gamePlayer.role == "Doctor") game.players[target-1].docProt = null
-    }
+    
+    if (game.players[i].protectors.includes(gamePlayer.number)) 
+      game.players[target-1].protectors.splice(
+        game.players[target-1].protectors.indexOf(gamePlayer.number), 1
+      )
+    
     if (gamePlayer.role == "Bodyguard") game.players[target-1].bgProt = gamePlayer.number
     else if (gamePlayer.role == "Doctor") game.players[target-1].docProt = gamePlayer.number
     
