@@ -52,13 +52,15 @@ client.login(token)
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
-  setInterval(async () => {
+  setInterval (async () => {
+    c
+    
     let QuickGames = games.get("quick")
     
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
       if (game.currentPhase === 999) {
-        game.currentPhase ++
+        game.currentPhase++
         for (var j = 0; j < game.players.length; j++)
           players.set(`${game.players[j].id}.currentGame`, 0)
       }
@@ -94,16 +96,6 @@ client.on('ready', async () => {
             }
           } else
             fn.broadcast(client, game, "The village cannot decide on who to lynch.")
-        }
-        
-        if (game.lastDeath + 6 == game.currentPhase) {
-          fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days without deaths will result in a tie.")
-        }
-        
-        if (game.lastDeath + 9 == game.currentPhase) {
-          game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. It was a tie.`)
-          continue;
         }
         
         game.currentPhase += 1
@@ -292,6 +284,7 @@ client.on('ready', async () => {
               // TODO
             }
             else {
+              game.lastDeath = game.currentPhase - 1
               game.players[attacked-1].alive = false
               if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
               fn.broadcastTo(
@@ -451,6 +444,16 @@ client.on('ready', async () => {
           game.players[j].vote = null
         }
         
+        if (game.lastDeath + 6 == game.currentPhase) {
+          fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days without deaths will result in a tie.")
+        }
+        
+        if (game.lastDeath + 9 == game.currentPhase) {
+          game.currentPhase = 999
+          fn.broadcast(client, game, `Game has ended. It was a tie.`)
+          continue;
+        }
+        
         fn.broadcast(
           client, game, 
           game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
@@ -461,7 +464,7 @@ client.on('ready', async () => {
       QuickGames[i] = game
     }
     games.set('quick', QuickGames)
-  }, 1000)
+  }, 1500)
 })
 
 client.on('message', async message => {
