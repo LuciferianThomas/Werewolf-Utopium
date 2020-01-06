@@ -138,10 +138,10 @@ const broadcast = async (client, game, content, ignore = []) => {
     if (!ignore.includes(game.players[i].id)) await client.users.get(game.players[i].id).send(content)
 }
 
-const broadcastTo = async (client, users, content) => {
+const broadcastTo = (client, users, content) => {
   if (users[0] instanceof Discord.User) users = users.map(u => u.id)
   for (var i = 0; i < users.length; i++) 
-    await client.users.get(users[i]).send(content)
+    client.users.get(users[i]).send(content)
 }
 
 module.exports = {

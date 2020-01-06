@@ -225,6 +225,7 @@ client.on('ready', async () => {
                     )
                   }
                   else {
+                    game.lastDeath = game.currentPhase - 1
                     game.players[x-1].alive = false
                     if (game.config.deathReveal) game.players[x-1].roleRevealed = true
                     fn.broadcastTo(
@@ -274,6 +275,7 @@ client.on('ready', async () => {
                 )
               }
               else {
+                game.lastDeath = game.currentPhase - 1
                 game.players[attacked-1].alive = false
                 if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
                 fn.broadcastTo(
@@ -293,8 +295,8 @@ client.on('ready', async () => {
               game.players[attacked-1].alive = false
               if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
               fn.broadcastTo(
-                client, game.players.filter(p => !p.left),
-                `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
+                client, game.players.filter(p => !p.left).map(p => p.id),
+                `The serial killer stabbed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
                   game.config.roleReveal
                     ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                     : ""
@@ -344,6 +346,7 @@ client.on('ready', async () => {
                     )
                   }
                   else {
+                    game.lastDeath = game.currentPhase - 1
                     game.players[x-1].alive = false
                     if (game.config.deathReveal) game.players[x-1].roleRevealed = true
                     fn.broadcastTo(
@@ -407,6 +410,7 @@ client.on('ready', async () => {
                 )
               }
               else {
+                game.lastDeath = game.currentPhase - 1
                 game.players[attacked-1].alive = false
                 if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
                 fn.broadcastTo(
@@ -423,11 +427,12 @@ client.on('ready', async () => {
               // TODO
             }
             else {
+              game.lastDeath = game.currentPhase - 1
               game.players[attacked-1].alive = false
               if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
               fn.broadcastTo(
-                client, game.players.filter(p => !p.left),
-                `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
+                client, game.players.filter(p => !p.left).map(p => p.id),
+                `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
                   game.config.roleReveal
                     ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                     : ""

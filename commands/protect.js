@@ -50,10 +50,15 @@ module.exports = {
     
     game.players[target-1].protectors.push(gamePlayer.number)
     
-    message.author.send(`${gamePlayer.role == "Doctor" 
-                          ? client.emojis.find(e => e.name == "Doctor_Protect")
-                          : client.emojis.find(e => e.name == "Bodyguard_Shield")
-                         } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be protected.`)
+    message.author.send(
+      `${
+        gamePlayer.role == "Doctor"
+          ? client.emojis.find(e => e.name == "Doctor_Protect")
+          : client.emojis.find(e => e.name == "Bodyguard_Shield")
+      } You selected **${target} ${
+        client.users.get(game.players[target - 1].id).username
+      }** to be protected.`
+    )
     
     QuickGames[index] = game
     

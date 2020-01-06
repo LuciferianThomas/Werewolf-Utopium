@@ -20,7 +20,7 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (gamePlayer.role == "Serial Killer")
+    if (gamePlayer.role != "Serial Killer")
       return await message.author.send("You do not have the abilities to kill a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer kill a player.")
@@ -42,7 +42,7 @@ module.exports = {
     message.author.send(
       `<:Serial_Killer_Knife:660823278902050826> You selected to stab **${target} ${
         fn.getUser(client, game.players[target - 1].id).username
-      }.`
+      }**.`
     )
     
     QuickGames[index] = game
