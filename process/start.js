@@ -38,7 +38,7 @@ module.exports = async (client, game) => {
   game.currentPhase += 1
   game.nextPhase = moment().add(30, "s")
   
-  let headhunters = game.players.filter(p => p.role)
+  let headhunters = game.players.filter(p => p.role == "Headhunter")
   for (var i = 0; i < headhunters.length; i++) {
     let possibleTargets = game.players
       .filter(p => 
@@ -50,7 +50,7 @@ module.exports = async (client, game) => {
     if (!possibleTargets.length) 
       possibleTargets = game.players.filter(p => !p.headhunter).map(p => p.number)
     let target = possibleTargets[Math.floor(Math.random()*possibleTargets.length)]
-    game.players[target].headhunter = headhunters[i].number
+    game.players[target-1].headhunter = headhunters[i].number
     await client.users.get(game.players.find(player => player.role == "Headhunter").id)
       .send(
         new Discord.RichEmbed()
