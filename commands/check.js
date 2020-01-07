@@ -65,8 +65,9 @@ module.exports = {
           .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_")).url)
           .setThumbnail(client.emojis.find(e => e.name == (targetPlayer.enchanted ? "Wolf Shaman" : targetPlayer.role).replace(/ /g, "_")).url)
           .setDescription(
-            `${target} ${client.users.get(targetPlayer.id).username
-            } is a${["A","E","I","O","U"].includes(targetPlayer.enchanted ? "Wolf Shaman" : targetPlayer.role[0]) ? "n" : ""} ${targetPlayer.role}.`
+            `${target} ${client.users.get(targetPlayer.id).username} is a${
+              ["A", "E", "I", "O", "U"].includes(targetPlayer.enchanted ? "W" : targetPlayer.role[0]) ? "n" : ""
+            } ${targetPlayer.enchanted ? "Wolf Shaman" : targetPlayer.role}.`
           )
       )
     }
