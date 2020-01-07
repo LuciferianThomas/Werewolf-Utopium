@@ -32,7 +32,10 @@ module.exports = {
     if (target == gamePlayer.number) 
       return await message.author.send("You cannot target yourself.")
     
-    game.players[target-1].enchanted = []
+    
+    
+    if (!game.players[target-1].enchanted) game.players[target-1].enchanted = []
+    game.players[target-1].enchanted.push(gamePlayer.number)
     
     message.author.send(`${fn.getEmoji("Wolf_Shaman_Select")
                         } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be enchanted at night.`)

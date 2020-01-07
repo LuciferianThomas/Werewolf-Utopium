@@ -168,10 +168,16 @@ client.on('ready', async () => {
         }
         
         if (game.currentPhase % 3 == 1)  {
-          if (game.players.find(p => p.revive)) {
-            fn.broadcast(client, game, `Medium revived ${game.players.find(p => p.revive).number} ${client.users.get(game.players.find(p => p.revive).id).username} (${game.players.find(p => p.revive).role}).`)
-            game.players[game.players.find(p => p.revive).number-1].alive = true
-            game.players[game.players.find(p => p.revive).number-1].revive = false
+          let revivedPlayers = game.players.filter(p => p.revive && p.revive.length)
+          for (var x = 0; x < revivedPlayers.length; x++){
+            fn.broadcastTo(
+              client, game.players.filter(p => !p.left).map(p => p.id),
+              `<:Medium_Revive:660667751253278730> Medium has revived **${x.number} ${fn.getUser(x.id).username}**.`
+            )
+            game.players[x.number-1].alive = true
+            game.players[x.number-1].revive = undefined
+            for (var y of game.players[x.number-1].revive)
+              game.players[y-1].revUsed = true
           }
           
           for (var x = 0; x < game.players.length; x++)

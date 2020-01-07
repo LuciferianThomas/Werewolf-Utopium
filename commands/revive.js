@@ -40,10 +40,15 @@ module.exports = {
     if (game.players[target-1].alive)
       return await message.author.send("You cannot revive an alive player.")
     if (!roles[game.players[target-1].role].team.includes("Village"))
-      return await message.author.send("You cannot revive a werewolf!")
+      return await message.author.send("You can only revive villagers!")
     
-    game.players[gamePlayer.number-1].revUsed = true
-    game.players[target-1].revive = true
+    // game.players[gamePlayer.number-1].revUsed = true
+    if (game.players.find(p => p.revive && p.revive.includes(gamePlayer.number))) {
+      let prevRev = game.players.find(p => p.revive && p.revive.includes(gamePlayer.number))
+      game.players[prevRev.number-1].revive.splice(gamePlayer.number)
+    }
+    if (!game.players[target-1].revive) game.players[target-1].revive = []
+    game.players[target-1].revive.push(gamePlayer.number)
     
     message.author.send(`${client.emojis.find(e => e.name == "Medium_Revive")
                         } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be revived.`)
