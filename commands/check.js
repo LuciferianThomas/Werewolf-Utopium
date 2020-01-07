@@ -45,25 +45,30 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot check on yourself.")
     
-    if (gamePlayer.role == "Aura Seer")
+    let targetPlayer = game.players[target-1]
+    
+    if (targetPlayer.enchanted) targetPlayer.role = "Wolf Shaman"
+    
+    if (gamePlayer.role == "Aura Seer") {
       message.author.send(
         new Discord.RichEmbed()
-          .setTitle(`${client.emojis.find(e => e.name == "Aura_Seer")} Seeing Results`)
-          .setThumbnail(client.emojis.find(e => e.name == roles[game.players[target-1].role].aura).url)
+          .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == "Aura_Seer").url)
+          .setThumbnail(client.emojis.find(e => e.name == roles[targetPlayer.role].aura).url)
           .setDescription(
-            `${target} ${client.users.get(game.players[target-1].id).username} has a${
-            roles[game.players[target-1].role].aura == "Good" ? "" : "n"
-            } ${roles[game.players[target-1].role].aura} aura.`
+            `${target} ${client.users.get(targetPlayer.id).username} has a${
+            roles[targetPlayer.role].aura == "Good" ? "" : "n"
+            } ${roles[targetPlayer.role].aura} aura.`
           )
       )
-    else{
-      console.log(game.players[target-1].role)
+    }
+    else {
+      console.log(targetPlayer.role)
       message.author.send(
         new Discord.RichEmbed()
           .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_")).url)
-          .setThumbnail(client.emojis.find(e => e.name == game.players[target-1].role.replace(/ /g, "_")).url)
+          .setThumbnail(client.emojis.find(e => e.name == targetPlayer.role.replace(/ /g, "_")).url)
           .setDescription(
-            `${target} ${client.users.get(game.players[target-1].id).username} is a${["A","E","I","O","U"].includes(game.players[target-1].role[0]) ? "n" : ""} ${game.players[target-1].role}.`
+            `${target} ${client.users.get(targetPlayer.id).username} is a${["A","E","I","O","U"].includes(targetPlayer.role[0]) ? "n" : ""} ${targetPlayer.role}.`
           )
       )
     }
