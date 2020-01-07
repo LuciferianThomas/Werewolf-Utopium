@@ -5,7 +5,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "vote",
@@ -25,7 +26,7 @@ module.exports = {
       return await message.author.send("You cannot vote while in jail!")
     
     if (game.currentPhase % 3 == 0) {
-      if (gamePlayer.role.includes("Werewolf") || 
+      if (roles[gamePlayer.role].team == "Werewolves" || 
           (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0)) {
         let vote = parseInt(args[0])
         if (isNaN(vote) || vote > game.players.length || vote < 1)

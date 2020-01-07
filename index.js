@@ -114,6 +114,8 @@ client.on('ready', async () => {
               }
               if (game.players[lynched-1].headhunter) {
                 let headhunter = game.players[game.players[lynched-1].headhunter-1]
+                
+                if (headhunter.alive) {
                 game.currentPhase = 999
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left), 
@@ -122,6 +124,7 @@ client.on('ready', async () => {
                 fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
                 continue;
+                }
               }
             }
           } else
@@ -413,7 +416,8 @@ client.on('ready', async () => {
         }
         
         if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
-            game.players.filter(p => p.alive && roles[p.role].team != "Werewolves").length) {
+            game.players.filter(p => p.alive && roles[p.role].team.includes("Village")).length &&
+            !game.players.filter(p => p.alive && roles[p.role].team == "Solo" &&).length) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. The werewolves win!`)
           fn.addXP(game.players.filter(p => roles[p.role].team == "Werewolves"), 50)
@@ -657,7 +661,7 @@ client.on('message', async message => {
       fn.broadcastTo(
         client,
         game.players
-          .filter(p => roles[p.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed)
+          .filter(p => roles[p.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed && gamePlayer.id != message.author.id)
           .map(p => p.id),
         `**<:Fellow_Werewolf:660825937109057587> ${gamePlayer.number} ${message.author.username}**: ${content}`)
     }
