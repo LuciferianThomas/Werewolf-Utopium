@@ -1,7 +1,7 @@
 const Discord = require('discord.js'),
       db = require('quick.db')
 
-const userData = new db.table("USERDATA")
+//const userData = new db.table("USERDATA")
 
 const config = require('/app/util/config'),
       fn = require('/app/util/fn')
@@ -14,7 +14,7 @@ module.exports = {
   category: "Utility",
   run: async (client, message, args, shared) => {
 
-    let botStaff = userData.all().filter(i => typeof i.data == "string" ? JSON.parse(i.data).botStaff : i.data.botStaff).map(i => client.users.get(i.ID).tag)
+   // let botStaff = userData.all().filter(i => typeof i.data == "string" ? JSON.parse(i.data).botStaff : i.data.botStaff).map(i => client.users.get(i.ID).tag)
     
     let m = await message.channel.send("Pinging...")
     
@@ -27,8 +27,8 @@ module.exports = {
       .setTitle(`${client.user.username} | Information`)
       .setThumbnail(client.user.avatarURL)
       .addField("Name", client.user.username, true)
-      .addField("Prefix", `Default: \`${shared.defaultPrefix}\`\nMention: ${client.user}\nServer: \`${shared.guild.prefix}\``, true)
-      .addField(`Developer${botStaff.length > 1 ? "s" : ""}`, botStaff.join('\n'), true)
+      .addField("Prefix", `Mention: ${client.user}`, true)
+    //  .addField(`Developer${botStaff.length > 1 ? "s" : ""}`, botStaff.join('\n'), true)
       .addField("Created", `${fn.utcTime(client.user.createdAt)}\n${fn.ago(client.user.createdAt)}`, true)
       .addField("Servers", client.guilds.size, true)
       .addField("Users", client.users.size, true)
@@ -37,7 +37,7 @@ module.exports = {
       .addField("Memory Used", `${memory}MB`, true)
       .addField("Library", "discord.js", true)
       .addField("ID", client.user.id)
-      .addField("Links", "[Invite](https://discordapp.com/api/oauth2/authorize?client_id=562910620664463365&permissions=2146958847&scope=bot)", true)
+  //    .addField("Links", "[Invite](https://discordapp.com/api/oauth2/authorize?client_id=562910620664463365&permissions=2146958847&scope=bot)", true)
       .setFooter(client.user.username, client.user.avatarURL)
     
     m.delete()
