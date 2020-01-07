@@ -431,50 +431,70 @@ client.on('ready', async () => {
           fn.broadcastTo(
             client,
             game.players.filter(
-              p => p.alive &&
-                  !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
-                   "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
-                   "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
-                   "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
+              p => p.alive && (
+                    (
+                      !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
+                        "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
+                        "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
+                        "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role) &&
+                      game.currentPhase > 0
+                    ) || (
+                      true
+                    )
+                  )).map(p => p.id), 
             new Discord.RichEmbed()
               .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
               .setDescription("Nothing to do right now.\n" +
                               "Go back to sleep!"),
           )
           
-          if (game.players.find(p => p.role == "Jailer" && p.alive)) {
-            let jailer = game.players.find(p => p.role == "Jailer" && p.alive)
+          fn.broadcastTo(
+            client,
+            game.players.filter(
+              p => p.alive &&
+                   ["Seer", "Wolf Seer", "Sorcerer"].includes(p.role)).map(p => p.id), 
+            new Discord.RichEmbed()
+              .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
+              .setDescription("Select a player to view their role (`w!check [player]`)."),
+          )
+          
+          if (game.players.find(p => p.role == "Jailer")) {
+            let jailer = game.players.find(p => p.role == "Jailer")
+              
             if (game.players.find(p => p.jailed && p.alive)) {
               let jailed = game.players.find(p => p.jailed && p.alive)
               
-              if (roles[jailed.role].team == "Werewolves" && jailed.role !== "Sorcerer")
-                fn.broadcastTo(
-                  client,
-                  game.players
-                    .filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role !== "Sorcerer" && p.id !== jailed.id)
-                    .map(p => p.id),
+              if (jailer.alive) {
+                if (roles[jailed.role].team == "Werewolves" && jailed.role !== "Sorcerer")
+                  fn.broadcastTo(
+                    client,
+                    game.players
+                      .filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role !== "Sorcerer" && p.id !== jailed.id)
+                      .map(p => p.id),
+                    new Discord.RichEmbed()
+                      .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
+                      .setDescription(`**${jailed.number} ${client.users.get(jailed.id).username}** is now in jail.` +
+                                      ` You can now talk privately with each other.\n` +
+                                      `If you find them suspicious, you can execute them (\`w!shoot\`)`)
+                  )
+
+                fn.getUser(client, jailer.id).send(
                   new Discord.RichEmbed()
                     .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
-                    .setDescription(`**${jailed.number} ${client.users.get(jailed.id).username}** is now in jail.` +
-                                    ` You can now talk privately with each other.\n` +
-                                    `If you find them suspicious, you can execute them (\`w!shoot\`)`)
+                    .setDescription("You did not select a player last day or your target could not be jailed.\n" +
+                                    "Go back to sleep!")
                 )
-              
-              fn.getUser(client, jailer.id).send(
-                new Discord.RichEmbed()
-                  .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
-                  .setDescription("You did not select a player last day or your target could not be jailed.\n" +
-                                  "Go back to sleep!")
-              )
-              
-              fn.getUser(client, jailed.id)
-                .send(
-                  new Discord.RichEmbed()
-                    .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
-                    .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
-                )
+
+                fn.getUser(client, jailed.id)
+                  .send(
+                    new Discord.RichEmbed()
+                      .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
+                      .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
+                  )
+              } else 
+                game.players[jailed.number-1].jailed = false
             }
-            else {
+            else if (jailer.alive) {
               fn.getUser(client, jailer.id).send(
                 new Discord.RichEmbed()
                   .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
@@ -585,7 +605,8 @@ client.on('message', async message => {
     
     if (gamePlayer.role == "Jailer" && gamePlayer.alive) 
       if (game.players.find(p => p.jailed && p.alive))
-        return client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${content}`)
+        return fn.getUser(client, game.players.find(p => p.jailed && p.alive).id)
+          .send(`**<:Jailer:658633215824756748> Jailer**: ${content}`)
       else
         return message.author.send("You did not jail anyone or your target cannot be jailed.")
     
@@ -595,7 +616,7 @@ client.on('message', async message => {
         game.players
           .filter(p => roles[p.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed)
           .map(p => p.id),
-        `**${gamePlayer.number} ${message.author.username}**: ${content}`)
+        `**<:Fellow_Werewolf:660825937109057587> ${gamePlayer.number} ${message.author.username}**: ${content}`)
     }
   }
 })
