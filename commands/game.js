@@ -28,8 +28,11 @@ module.exports = {
                   game.players
                     .map(p => 
                            `${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"}${
-                             p.id == message.author.id || p.roleRevealed ? ` ${client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}` : 
-                             roles[gamePlayer.role].team == "Werewolves" && roles[p.role].team == "Werewolves" ? ` ${client.emojis.find(e => e.name == "Fellow_Werewolf")}` : ""}`)
+                             p.id == message.author.id || p.roleRevealed
+                               ? ` ${client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}` 
+                               : roles[gamePlayer.role].team == "Werewolves" && roles[p.role].team == "Werewolves"
+                               ? ` ${client.emojis.find(e => e.name == "Fellow_Werewolf")}`
+                               : ""}${p.left ? " *off*" : ""}`)
                     .join('\n')
                  )
         .addField(`Roles`, game.roles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1})
