@@ -49,7 +49,7 @@ module.exports = {
       game.players[gamePlayer.number-1].alive = false
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id),
-        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}**. They are not a werewolf!`
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** tried holy water on **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}** and killed themselves. They are not a werewolf!`
       )
     }
     game.players[gamePlayer.number-1].roleRevealed = true
