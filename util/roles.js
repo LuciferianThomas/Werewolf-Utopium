@@ -6,7 +6,7 @@ module.exports = {
     desc: "You are a regular Villager with no special abilities.",
     aura: "Good",
     team: "Village",
-    abbr: ["reg","vil","vill","forkman"]
+    abbr: ["reg","vil","vill","forkman","forkmen"]
   },
   "Aura Seer": {
     desc: "Each night you can select one player to see whether this player is good, evil or unknown (`w!check [player]`)." + // alias: w!see
@@ -75,7 +75,7 @@ module.exports = {
  		desc: "Once a game, you can protect anyone from being lynched by using (`w!petal [player]`).",
     aura: "Good", 
     team: "Village", 
- 		abbr: ["fc"] 
+ 		abbr: ["fc", "flower"] 
   }, 
   "Fortune Teller": {
   	desc: "During the first night, give two cards to two players with (`w!givecards [player1] [player2]`)." +
