@@ -416,7 +416,7 @@ client.on('ready', async () => {
         }
         
         if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
-            game.players.filter(p => p.alive && (roles[p.role].team.includes("Village")) || p.role == "Fool").length &&
+            game.players.filter(p => p.alive && (roles[p.role].team.includes("Village") || p.role == "Fool")).length &&
             !game.players.filter(p => p.alive && roles[p.role].team == "Solo" && p.role != "Fool").length) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. The werewolves win!`)
