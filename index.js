@@ -151,7 +151,7 @@ client.on('ready', async () => {
           }
           
           for (var x = 0; x < game.players.length; x++)
-            Object.assign(game.players[x], {usedAbilityTonight: false, enchanted: undefined})
+            Object.assign(game.players[x], {usedAbilityTonight: false, enchanted: []})
           
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
               sks = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.id)
@@ -416,8 +416,8 @@ client.on('ready', async () => {
         }
         
         if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
-            game.players.filter(p => p.alive && roles[p.role].team.includes("Village")).length &&
-            !game.players.filter(p => p.alive && roles[p.role].team == "Solo" &&).length) {
+            game.players.filter(p => p.alive && (roles[p.role].team.includes("Village")) || p.role == "Fool").length &&
+            !game.players.filter(p => p.alive && roles[p.role].team == "Solo" && p.role != "Fool").length) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. The werewolves win!`)
           fn.addXP(game.players.filter(p => roles[p.role].team == "Werewolves"), 50)
@@ -444,7 +444,7 @@ client.on('ready', async () => {
           fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days without deaths will result in a tie.")
         }
         
-        if (game.lastDeath + 9 == game.currentPhase) {
+        if (game.lastDeath + 9 == game.currentPhase || !game.players.filter(p => p.alive).length) {
           game.currentPhase = 999
           fn.broadcastTo(
             client, game.players.filter(p => !p.left).map(p => p.id),

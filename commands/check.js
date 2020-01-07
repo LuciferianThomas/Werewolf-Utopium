@@ -51,11 +51,11 @@ module.exports = {
       message.author.send(
         new Discord.RichEmbed()
           .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == "Aura_Seer").url)
-          .setThumbnail(client.emojis.find(e => e.name == `${targetPlayer.enchanted ? "Evil" : roles[targetPlayer.role].aura}_Aura`).url)
+          .setThumbnail(client.emojis.find(e => e.name == `${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura}_Aura`).url)
           .setDescription(
             `${target} ${client.users.get(targetPlayer.id).username} has a${
-            (targetPlayer.enchanted ? "Evil" : roles[targetPlayer.role].aura) == "Good" ? "" : "n"
-            } ${targetPlayer.enchanted ? "Evil" : roles[targetPlayer.role].aura} aura.`
+            (targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura) == "Good" ? "" : "n"
+            } ${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} aura.`
           )
       )
     }

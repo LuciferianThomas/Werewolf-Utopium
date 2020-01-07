@@ -25,7 +25,7 @@ module.exports = async (client, game) => {
                                (/^([aeiou])/i).test(role) ? "an" : "a"} ${role}.`)
           .setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
       )
-    Object.assign(game.players[i], {alive: true, protectors: []})
+    Object.assign(game.players[i], {alive: true, protectors: [], enchanted: []})
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
     if (game.players[i].role == "Medium") game.players[i].revUsed = false
     if (game.players[i].role == "Jailer") game.players[i].bullets = 1

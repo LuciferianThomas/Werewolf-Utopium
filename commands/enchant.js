@@ -37,7 +37,6 @@ module.exports = {
       game.players[prevRev].enchanted.splice(game.players[prevRev].enchanted.indexOf(gamePlayer.number),1)
     }
     
-    if (!game.players[target-1].enchanted) game.players[target-1].enchanted = []
     game.players[target-1].enchanted.push(gamePlayer.number)
     
     message.author.send(`${fn.getEmoji("Wolf_Shaman_Select")
