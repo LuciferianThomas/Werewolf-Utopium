@@ -36,8 +36,15 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot shoot yourself.")
     
-    game.players[target-1].alive = false
-                                  } Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${client.users.get(game.players[target-1].id).username}** (${game.players[target-1].role}).`)
+    let targetPlayer = game.players[target-1]
+    if (roles[targetPlayer.role].team == "Werewolves") {
+      game.players[target-1].alive = false
+      if (game.config.deathReveal) game.players[target-1].roleRevealed = true
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left).map(p => p.id),
+        ``
+      )
+    }
     if (gamePlayer.role == "Jailer")
       fn.broadcast(client, game, `${client.emojis.find(e => e.name == "Gunner_Shoot")
                                   } Jailer executed his prisoner **${target} ${client.users.get(game.players[target-1].id).username}** (${game.players[target-1].role}).`)
