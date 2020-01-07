@@ -42,7 +42,7 @@ module.exports = {
       if (game.config.deathReveal) game.players[target-1].roleRevealed = true
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id),
-        ``
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** threw Holy Water at **${targetPlayer.number} ${fn.getUser(targetPlayer.id).username}**.`
       )
     }
     if (gamePlayer.role == "Jailer")
