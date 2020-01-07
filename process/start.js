@@ -37,16 +37,26 @@ module.exports = async (client, game) => {
   game.roles = game.players.map(player => player.role)
   game.currentPhase += 1
   game.nextPhase = moment().add(30, "s")
-  if (game.roles.includes("Headhunter")) {
+  
+  let headhunters = game.players.filter(p => p.role)
+  for (var i = 0; i < headhunters.length; i++) {
     let possibleTargets = game.players
-      .filter(player => 
-        !player.role.toLowerCase().includes("wolf") && 
-        !["Serial Killer", "Gunner", "Priest", "Mayor", "Cursed"].includes(player.role) && 
-        player.id !== game.players.find(player => player.role == "Headhunter").id
-      ).map(player => player.number)
-    game.hhTarget = possibleTargets[Math.floor(Math.random()*possibleTargets.length)]
+      .filter(p => 
+        roles[p.role].team.includes("Village") && 
+        !["Gunner", "Priest", "Mayor", "Cursed"].includes(p.role) && 
+        p.number !== headhunters[i].number &&
+        !p.headhunter
+      ).map(p => p.number)
+    if (!possibleTargets.length) 
+      possibleTargets = game.players.filter(p => !p.headhunter).map(p => p.number)
+    let target = possibleTargets[Math.floor(Math.random()*possibleTargets.length)]
+    game.players[target].headhunter = headhunters[i].number
     await client.users.get(game.players.find(player => player.role == "Headhunter").id)
-      .send(`Your target is ${game.hhTarget} ${client.users.get(game.players[game.hhTarget-1].id).username}.`)
+      .send(
+        new Discord.RichEmbed()
+          .setAuthor(`Target`, client.emojis.find(e => e.name == "Headhunter_Target").url)
+          .setDescription(`Your target is ${target} ${client.users.get(game.players[target-1].id).username}.`)
+      )
   }
   
   Games[Games.indexOf(Games.find(g => g.gameID == game.gameID))] = game
