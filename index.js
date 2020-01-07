@@ -89,14 +89,21 @@ client.on('ready', async () => {
             if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2)
               fn.broadcast(client, game, "The village cannot decide on who to lynch.")
             else {
-              game.players[lynched[0]-1].alive = false
-              game.players[lynched[0]-1].roleRevealed = true
+              lynched = lynched[0]-1
+              game.players[lynched].alive = false
+              if (game.config.deathReveal)
+                game.players[lynched].roleRevealed = true
             
               game.lastDeath = game.currentPhase
-              fn.broadcast(client, game, `${lynched[0]} ${client.users.get(game.players[lynched[0]-1].id).username} (${game.players[lynched[0]-1].role}) was lynched by the village.`)
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left), 
+                `**${lynched} ${client.users.get(game.players[lynched].id).username}${
+                  game.config.deathReveal ? ` ${game.players[lynched].role}` : ""}** was lynched by the village.`)
               if (game.players[lynched[0]-1].role == "Fool") {
                 game.currentPhase = 999
-                fn.broadcast(client, game, `Game has ended. Fool wins!`)
+                fn.broadcast(client, game, `Game has ended. Fool ${lynched[0]} ${client.users.get(game.players[lynched].id).username} wins!`)
+                fn.addXP(game.players.filter(p => p.role == "Serial Killer"), 250)
+                fn.addXP(game.players.filter(p => !p.left), 15)
                 continue;
               }
               if (lynched[0] == game.hhTarget) {
@@ -385,6 +392,8 @@ client.on('ready', async () => {
         if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. The village wins!`)
+          fn.addXP(game.players.filter(p => roles[p.role].team == "Village" || p.role == "Cupid"), 50)
+          fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
         }
         
@@ -392,6 +401,8 @@ client.on('ready', async () => {
             game.players.filter(p => p.alive && roles[p.role].team != "Werewolves").length) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. The werewolves win!`)
+          fn.addXP(game.players.filter(p => roles[p.role].team == "Werewolves"), 50)
+          fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
         }
         
@@ -400,9 +411,13 @@ client.on('ready', async () => {
         if ((alive.length == 1 && alive[0].role == "Serial Killer") ||
             (alive.length == 2 && alive.map(p => p.role).includes("Serial Killer") && alive.map(p => p.role).includes("Jailer"))) {
           game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. Serial Killer wins!`)
-          for (var x = 0; x < game.players.length; x++)
-            players.add(`${game.players[x].id}.xp`, 15)
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left).map(p => p.id), 
+            `Game has ended. Serial Killer **${
+            fn.getUser(client, alive.find(p => p.role == "Serial Killer").id)}** wins!`
+          )
+          fn.addXP(game.players.filter(p => p.role == "Serial Killer"), 250)
+          fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
         }
         
@@ -416,7 +431,8 @@ client.on('ready', async () => {
             client, game.players.filter(p => !p.left).map(p => p.id),
             `Game has ended. It was a tie.`
           )
-          fn.addXP(game.players[x].id, 15)
+          fn.addXP(game.players, 15)
+          fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
         }
         

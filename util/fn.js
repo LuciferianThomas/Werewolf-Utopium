@@ -149,7 +149,7 @@ const broadcastTo = (client, users, content) => {
 }
 
 const addXP = (users, xp) => {
-  if (users[0].)
+  if (typeof users[0] !== "string") users = users.map(x => x.id)
   for (var i = 0; i < users.length; i++)
     players.add(`${users[i]}.xp`, xp)
 }
