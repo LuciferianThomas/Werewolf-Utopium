@@ -43,14 +43,18 @@ module.exports = {
       return await message.author.send("You cannot shoot yourself.")
     
     game.players[target-1].alive = false
-    if (gamePlayer.role == "Gunner")
-      fn.broadcast(client, game, `${client.emojis.find(e => e.name == "Gunner_Shoot")
-                                  } Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${client.users.get(game.players[target-1].id).username}** (${game.players[target-1].role}).`)
+    if (gamePlayer.role == "Gunner") {
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left).map(p => p.id), 
+        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, game.players[target-1].id).username}${game.config.roleReveal ? ` ${fn.getEmoji(client, game.players[target-1].role)}` : ""}**.`)
+      game.players[gamePlayer.number-1].roleRevealed = true
+    }
     if (gamePlayer.role == "Jailer")
-      fn.broadcast(client, game, `${client.emojis.find(e => e.name == "Gunner_Shoot")
-                                  } Jailer executed his prisoner **${target} ${client.users.get(game.players[target-1].id).username}** (${game.players[target-1].role}).`)
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left).map(p => p.id), 
+        `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${fn.getUser(client, game.players[target-1].id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, game.players[target-1].role)}` : ""})**.`)
     
-    game.players[target-1].roleRevealed = true
+    if (game.config.deathReveal) game.players[target-1].roleRevealed = true
     game.players[gamePlayer.number-1].bullets -= 1
     game.lastDeath = game.currentPhase
     if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true

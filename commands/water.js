@@ -39,22 +39,21 @@ module.exports = {
     let targetPlayer = game.players[target-1]
     if (roles[targetPlayer.role].team == "Werewolves") {
       game.players[target-1].alive = false
-      game.players[gamePlayer.number-1].waterUsed = true
-      
       if (game.config.deathReveal) game.players[target-1].roleRevealed = true
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id),
-        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at and killed **${targetPlayer.number} ${fn.getUser(targetPlayer.id).username} ${fn.getEmoji(game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf")}**.`
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at and killed **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username} ${fn.getEmoji(client, game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf")}**.`
       )
     }
     else {
       game.players[gamePlayer.number-1].alive = false
-      game.players[gamePlayer.number-1].roleRevealed = true
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id),
-        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at **${targetPlayer.number} ${fn.getUser(targetPlayer.id).username}**. They are not a werewolf!`
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}**. They are not a werewolf!`
       )
     }
+    game.players[gamePlayer.number-1].roleRevealed = true
+    game.players[gamePlayer.number-1].waterUsed = true
     
     game.lastDeath = game.currentPhase
     
