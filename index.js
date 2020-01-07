@@ -86,13 +86,16 @@ client.on('ready', async () => {
           if (lynchCount.length) {
             let max = lynchCount.reduce((m, n) => Math.max(m, n))
             let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
-            if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2)
-              fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+            if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2) {
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left), 
+                "The village cannot decide on who to lynch."
+              )
+            }
             else {
               lynched = lynched[0]
               game.players[lynched-1].alive = false
-              if (game.config.deathReveal)
-                game.players[lynched-1].roleRevealed = true
+              if (game.config.deathReveal) game.players[lynched-1].roleRevealed = true
             
               game.lastDeath = game.currentPhase
               fn.broadcastTo(
@@ -101,7 +104,10 @@ client.on('ready', async () => {
                   game.config.deathReveal ? ` ${fn.getEmoji(client, game.players[lynched-1].role)}` : ""}** was lynched by the village.`)
               if (game.players[lynched-1].role == "Fool") {
                 game.currentPhase = 999
-                fn.broadcast(client, game, `Game has ended. Fool ${lynched} ${fn.getUser(client, game.players[lynched-1].id).username} wins!`)
+                fn.broadcastTo(
+                  client, game.players.filter(p => !p.left),
+                  `Game has ended. Fool ${lynched} ${fn.getUser(client, game.players[lynched-1].id).username} wins!`
+                )
                 fn.addXP(game.players.filter(p => p.number == lynched), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
                 continue;
@@ -109,12 +115,20 @@ client.on('ready', async () => {
               if (game.players[lynched-1].headhunter) {
                 let headhunter = game.players[game.players[lynched-1].headhunter-1]
                 game.currentPhase = 999
-                fn.broadcast(client, game, `Game has ended. Headhunter **${headhunter.number} ${fn.getUser()}** wins!`)
+                fn.broadcastTo(
+                  client, game.players.filter(p => !p.left), 
+                  `Game has ended. Headhunter **${headhunter.number} ${fn.getUser(client, headhunter.id).username}** wins!`
+                )
+                fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
+                fn.addXP(game.players.filter(p => !p.left), 15)
                 continue;
               }
             }
           } else
-            fn.broadcast(client, game, "The village cannot decide on who to lynch.")
+            fn.broadcastTo(
+              client, game.players.filter(p => !p.left), 
+              "The village cannot decide on who to lynch."
+            )
         }
         
         game.currentPhase += 1
