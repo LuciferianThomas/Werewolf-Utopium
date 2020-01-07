@@ -44,8 +44,8 @@ module.exports = {
     
     // game.players[gamePlayer.number-1].revUsed = true
     if (game.players.find(p => p.revive && p.revive.includes(gamePlayer.number))) {
-      let prevRev = game.players.find(p => p.revive && p.revive.includes(gamePlayer.number))
-      game.players[prevRev.number-1].revive.splice(gamePlayer.number)
+      let prevRev = game.players.find(p => p.revive && p.revive.includes(gamePlayer.number)).number - 1
+      game.players[prevRev].revive.splice(game.players[prevRev].revive.indexOf(gamePlayer.number),1)
     }
     if (!game.players[target-1].revive) game.players[target-1].revive = []
     game.players[target-1].revive.push(gamePlayer.number)

@@ -31,8 +31,11 @@ module.exports = {
       return await message.author.send("You cannot target a dead player.")
     if (target == gamePlayer.number) 
       return await message.author.send("You cannot target yourself.")
-    
-    
+
+    if (game.players.find(p => p.enchanted && p.enchanted.includes(gamePlayer.number))) {
+      let prevRev = game.players.find(p => p.enchanted && p.enchanted.includes(gamePlayer.number)).number - 1
+      game.players[prevRev].enchanted.splice(game.players[prevRev].enchanted.indexOf(gamePlayer.number),1)
+    }
     
     if (!game.players[target-1].enchanted) game.players[target-1].enchanted = []
     game.players[target-1].enchanted.push(gamePlayer.number)

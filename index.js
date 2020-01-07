@@ -181,7 +181,7 @@ client.on('ready', async () => {
           }
           
           for (var x = 0; x < game.players.length; x++)
-            game.players[x].usedAbilityTonight = false
+            Object.assign(game.players[x], {usedAbilityTonight: false, enchanted: undefined})
           
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
               sks = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.id)

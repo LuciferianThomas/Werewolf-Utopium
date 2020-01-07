@@ -20,14 +20,17 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (gamePlayer.role !== "Doctor" && shared.commandName == "heal") 
+    if (gamePlayer.role !== "Doctor" && gamePlayer.role !== "Witch" && shared.commandName == "heal") 
       return await message.author.send("You do not have the abilities to heal a player.")
-    if (!["Doctor","Bodyguard","Tough Guy"].includes(gamePlayer.role))
+    if (!["Doctor","Witch","Bodyguard","Tough Guy"].includes(gamePlayer.role))
       return await message.author.send("You do not have the abilities to protect a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer protect a player.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
+    
+    if (gamePlayer.role == "Witch" && gamePlayer.elixirUsed)
+      return await message.author.send("You have already used your elixir!")
     
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only protect a player at night.")
@@ -42,7 +45,7 @@ module.exports = {
     
     
     if (game.players.find(p => p.protectors.includes(gamePlayer.number))) {
-      let prevProted = game.players.find(p => p.protectors.includes(gamePlayer.number)) - 1
+      let prevProted = game.players.find(p => p.protectors.includes(gamePlayer.number)).number - 1
       game.players[prevProted].protectors.splice(
         game.players[prevProted].protectors.indexOf(gamePlayer.number), 1
       )
