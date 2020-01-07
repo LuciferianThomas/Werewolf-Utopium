@@ -223,7 +223,7 @@ client.on('ready', async () => {
                 else if (protector.role == "Doctor") {
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
-                      .setTitle("<:Doctor_Protect:660491111155892224> Protection")
+                      .setAuthor("Protection", fn.getEmoji("Doctor_Protection").url)
                       .setDescription(
                         `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
                       )
@@ -232,7 +232,7 @@ client.on('ready', async () => {
                 else if (protector.role == "Witch") {
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
-                      .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
+                      .setAuthor("Elixir", fn.getEmoji("Witch Elixir").url)
                       .setDescription("Last night your potion saved a life!")
                   )
                 }
