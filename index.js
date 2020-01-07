@@ -428,20 +428,19 @@ client.on('ready', async () => {
               game.players[gunners[i]-1].shotToday = false
           }
           
-          
-//           fn.broadcastTo(
-//             client,
-//             game.players.filter(
-//               p => p.alive &&
-//                   !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
-//                    "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
-//                    "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
-//                    "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
-//             new Discord.RichEmbed()
-//               .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
-//               .setDescription("Nothing to do right now.\n" +
-//                               "Go back to sleep!"),
-//           )
+          fn.broadcastTo(
+            client,
+            game.players.filter(
+              p => p.alive &&
+                  !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
+                   "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
+                   "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
+                   "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
+            new Discord.RichEmbed()
+              .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
+              .setDescription("Nothing to do right now.\n" +
+                              "Go back to sleep!"),
+          )
           
           if (game.players.find(p => p.role == "Jailer" && p.alive)) {
             let jailer = game.players.find(p => p.role == "Jailer" && p.alive)
@@ -455,51 +454,34 @@ client.on('ready', async () => {
                     .filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role !== "Sorcerer" && p.id !== jailed.id)
                     .map(p => p.id),
                   new Discord.RichEmbed()
-                    .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
-                    .setDescription(`Fellow werewolf **${jailed.number} ${client.users.get(jailed.id).username}** has been jailed!`)
+                    .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
+                    .setDescription(`**${jailed.number} ${client.users.get(jailed.id).username}** is now in jail.` +
+                                    ` You can now talk privately with each other.\n` +
+                                    `If you find them suspicious, you can execute them (\`w!shoot\`)`)
                 )
-            }
-            else
-              return fn.getUser(client, jailer.id).send(
+              
+              fn.getUser(client, jailer.id).send(
                 new Discord.RichEmbed()
                   .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
                   .setDescription("You did not select a player last day or your target could not be jailed.\n" +
                                   "Go back to sleep!")
               )
-          }
-          
-          if (game.players.find(p => p.jailed && p.alive)) {
-            let jailed = game.players.find(p => p.jailed && p.alive)
-            client.users.get(game.players[game.roles.indexOf("Jailer")].id)
-              .send(
-                new Discord.RichEmbed()
-                  .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
-                  .setDescription(`**${jailed.number} ${client.users.get(jailed.id).username}** is your prisoner.\n` +
-                                  `You can talk anonymously to your prisoner, and you can execute your prisoner with \`w!shoot\`.`)
-              )
-            client.users.get(jailed.id)
-              .send(
-                new Discord.RichEmbed()
-                  .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
-                  .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
-              )
-            if (roles[jailed.role].team == "Werewolves") {
-              let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && p.number != jailed.number)
-              fn.broadcastTo(
-                client, game.players.filter(p => roles[p.role].team == "Werewolves" && p.number != jailed.number && !p.left),
-                new Discord.RichEmbed()
-                  .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
-                  .setDescription(`Fellow werewolf **${jailed.number} ${client.users.get(jailed.id).username}** has been jailed!`)
-              )
+              
+              fn.getUser(client, jailed.id)
+                .send(
+                  new Discord.RichEmbed()
+                    .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
+                    .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
+                )
             }
-          } else if (game.roles.includes("Jailer")) {
-            client.users.get(game.players[game.roles.indexOf("Jailer")].id)
-              .send(
+            else {
+              fn.getUser(client, jailer.id).send(
                 new Discord.RichEmbed()
-                  .setTitle(`${client.emojis.find(e => e.name == "Jail")} Jail`)
-                  .setDescription("You didn't target somebody yesterday or killed your convict.\n" +
+                  .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
+                  .setDescription("You did not select a player last day or your target could not be jailed.\n" +
                                   "Go back to sleep!")
               )
+            }
           }
         }
       }
@@ -606,12 +588,14 @@ client.on('message', async message => {
         return client.users.get(game.players.find(p => p.jailed && p.alive).id).send(`**Jailer**: ${content}`)
       else
         return message.author.send("You did not jail anyone or your target cannot be jailed.")
-    if (roles[gamePlayer.role].team == "Werewolves" && !gamePlayer.jailed) {
-      let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.jailed).map(p => p.id)
-      for (var i = 0; i < wolves.length; i++)
-        if (wolves[i] != message.author.id) 
-          client.users.get(wolves[i])
-            .send(`**${gamePlayer.number} ${message.author.username}**: ${content}`)
+    
+    if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed) {
+      fn.broadcastTo(
+        client,
+        game.players
+          .filter(p => roles[p.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed)
+          .map(p => p.id),
+        `**${gamePlayer.number} ${message.author.username}**: ${content}`)
     }
   }
 })
