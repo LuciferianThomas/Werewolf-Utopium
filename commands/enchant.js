@@ -8,7 +8,7 @@ const games = new db.table("Games"),
 const fn = require('/app/util/fn')
 
 module.exports = {
-  name: "vote",
+  name: "enchant",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -39,7 +39,7 @@ module.exports = {
     
     game.players[target-1].enchanted.push(gamePlayer.number)
     
-    message.author.send(`${fn.getEmoji("Wolf_Shaman_Select")
+    message.author.send(`${fn.getEmoji(client, "Wolf_Shaman_Select")
                         } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be enchanted at night.`)
     
     QuickGames[index] = game
