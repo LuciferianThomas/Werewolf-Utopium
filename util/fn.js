@@ -1,6 +1,10 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
+const db = require("quick.db"),
+      games = new db.table("Games"),
+      players = new db.table("Players")
+
 const { defaultPrefix, embedColor } = require('./config.js')
 
 let time = (date = moment()) => {
@@ -144,6 +148,12 @@ const broadcastTo = (client, users, content) => {
     client.users.get(users[i]).send(content)
 }
 
+const addXP = (users, xp) => {
+  if (users[0].)
+  for (var i = 0; i < users.length; i++)
+    players.add(`${users[i]}.xp`, xp)
+}
+
 module.exports = {
   time: time,
   utcTime: utcTime,
@@ -160,4 +170,5 @@ module.exports = {
   paginator: paginator,
   broadcast: broadcast,
   broadcastTo: broadcastTo,
+  addXP: addXP,
 }

@@ -401,6 +401,8 @@ client.on('ready', async () => {
             (alive.length == 2 && alive.map(p => p.role).includes("Serial Killer") && alive.map(p => p.role).includes("Jailer"))) {
           game.currentPhase = 999
           fn.broadcast(client, game, `Game has ended. Serial Killer wins!`)
+          for (var x = 0; x < game.players.length; x++)
+            players.add(`${game.players[x].id}.xp`, 15)
           continue;
         }
         
@@ -410,7 +412,11 @@ client.on('ready', async () => {
         
         if (game.lastDeath + 9 == game.currentPhase) {
           game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. It was a tie.`)
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left).map(p => p.id),
+            `Game has ended. It was a tie.`
+          )
+          fn.addXP(game.players[x].id, 15)
           continue;
         }
         
@@ -431,17 +437,13 @@ client.on('ready', async () => {
           fn.broadcastTo(
             client,
             game.players.filter(
-              p => p.alive && (
-                    (
-                      !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
-                        "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma","Cupid","Werewolf","Alpha Werewolf",
-                        "Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf","Werewolf Berserk","Sorcerer","Serial Killer",
-                        "Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role) &&
-                      game.currentPhase > 0
-                    ) || (
-                      true
-                    )
-                  )).map(p => p.id), 
+              p => p.alive &&
+                  !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
+                    "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma",
+                    game.currentPhase == 0 ? "Cupid" : "",
+                    "Werewolf","Alpha Werewolf","Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf",
+                    "Werewolf Berserk","Sorcerer",
+                    "Serial Killer","Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
             new Discord.RichEmbed()
               .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
               .setDescription("Nothing to do right now.\n" +
@@ -456,6 +458,16 @@ client.on('ready', async () => {
             new Discord.RichEmbed()
               .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
               .setDescription("Select a player to view their role (`w!check [player]`)."),
+          )
+          
+          fn.broadcastTo(
+            client,
+            game.players.filter(
+              p => p.alive &&
+                   p.role == "Aura Seer").map(p => p.id), 
+            new Discord.RichEmbed()
+              .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
+              .setDescription("Select a player to view their aura (`w!check [player]`)."),
           )
           
           if (game.players.find(p => p.role == "Jailer")) {
