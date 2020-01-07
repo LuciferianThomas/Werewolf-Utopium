@@ -9,6 +9,6 @@ module.exports = {
   run: async (client, message, args) => {
     let player = players.get(message.author.id)
     
-    return await message.channel.send(`You have ${player.xp} XP!`)
+    return await message.reply(`you have ${player.xp} XP!`)
   }
 }
