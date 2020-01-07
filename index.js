@@ -216,7 +216,7 @@ client.on('ready', async () => {
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
                       `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
-                        game.config.roleReveal
+                        game.config.deathReveal
                           ? ` ${fn.getEmoji(client, protector.role)}`
                           : ""
                       }**.`
@@ -265,8 +265,8 @@ client.on('ready', async () => {
                 if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
-                  `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
-                    game.config.roleReveal
+                  `The serial killer stabbed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
+                    game.config.deathReveal
                       ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                       : ""
                   }**.`
@@ -283,7 +283,7 @@ client.on('ready', async () => {
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
                 `The serial killer stabbed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
-                  game.config.roleReveal
+                  game.config.deathReveal
                     ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                     : ""
                 }**.`
@@ -338,7 +338,7 @@ client.on('ready', async () => {
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
                       `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
-                        game.config.roleReveal
+                        game.config.deathReveal
                           ? ` ${fn.getEmoji(client, protector.role)}`
                           : ""
                       }**.`
@@ -402,7 +402,7 @@ client.on('ready', async () => {
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
                   `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
-                    game.config.roleReveal
+                    game.config.deathReveal
                       ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                       : ""
                   }**.`
@@ -419,7 +419,7 @@ client.on('ready', async () => {
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
                 `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
-                  game.config.roleReveal
+                  game.config.deathReveal
                     ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                     : ""
                 }**.`

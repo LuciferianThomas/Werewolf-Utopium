@@ -46,7 +46,7 @@ module.exports = {
     if (gamePlayer.role == "Gunner") {
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, game.players[target-1].id).username}${game.config.roleReveal ? ` ${fn.getEmoji(client, game.players[target-1].role)}` : ""}**.`)
+        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, game.players[target-1].id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, game.players[target-1].role)}` : ""}**.`)
       game.players[gamePlayer.number-1].roleRevealed = true
     }
     if (gamePlayer.role == "Jailer")
