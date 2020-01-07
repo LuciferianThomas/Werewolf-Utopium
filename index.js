@@ -546,7 +546,10 @@ client.on('message', async message => {
   
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
-      return fn.broadcast(client,game,`**${gamePlayer.number} ${message.author.username}**: ${content}`, [message.author.id])
+      return fn.broadcastTo(
+        client, game.players.filter(p => !p.left).map(p => p.id),
+        `**${gamePlayer.number} ${message.author.username}**: ${content}`, [message.author.id]
+      )
     else {
       let dead = game.players.filter(p => !p.alive).map(p => p.id)
       for (var i = 0; i < dead.length; i++)
