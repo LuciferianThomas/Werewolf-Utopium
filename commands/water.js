@@ -39,20 +39,24 @@ module.exports = {
     let targetPlayer = game.players[target-1]
     if (roles[targetPlayer.role].team == "Werewolves") {
       game.players[target-1].alive = false
+      game.players[gamePlayer.number-1].waterUsed = true
+      
       if (game.config.deathReveal) game.players[target-1].roleRevealed = true
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id),
-        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** threw Holy Water at **${targetPlayer.number} ${fn.getUser(targetPlayer.id).username}**.`
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at and killed **${targetPlayer.number} ${fn.getUser(targetPlayer.id).username} ${fn.getEmoji(game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf")}**.`
       )
     }
-    if (gamePlayer.role == "Jailer")
-      fn.broadcast(client, game, `${client.emojis.find(e => e.name == "Gunner_Shoot")
-                                  } Jailer executed his prisoner **${target} ${client.users.get(game.players[target-1].id).username}** (${game.players[target-1].role}).`)
+    else {
+      game.players[gamePlayer.number-1].alive = false
+      game.players[gamePlayer.number-1].roleRevealed = true
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left).map(p => p.id),
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at **${targetPlayer.number} ${fn.getUser(targetPlayer.id).username}**. They are not a werewolf!`
+      )
+    }
     
-    game.players[target-1].roleRevealed = true
-    game.players[gamePlayer.number-1].bullets -= 1
     game.lastDeath = game.currentPhase
-    if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true
     
     QuickGames[index] = game
     
