@@ -443,7 +443,30 @@ client.on('ready', async () => {
 //                               "Go back to sleep!"),
 //           )
           
-          if (game.players)
+          if (game.players.find(p => p.role == "Jailer" && p.alive)) {
+            let jailer = game.players.find(p => p.role == "Jailer" && p.alive)
+            if (game.players.find(p => p.jailed && p.alive)) {
+              let jailed = game.players.find(p => p.jailed && p.alive)
+              
+              if (roles[jailed.role].team == "Werewolves" && jailed.role !== "Sorcerer")
+                fn.broadcastTo(
+                  client,
+                  game.players
+                    .filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role !== "Sorcerer" && p.id !== jailed.id)
+                    .map(p => p.id),
+                  new Discord.RichEmbed()
+                    .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
+                    .setDescription(`Fellow werewolf **${jailed.number} ${client.users.get(jailed.id).username}** has been jailed!`)
+                )
+            }
+            else
+              return fn.getUser(client, jailer.id).send(
+                new Discord.RichEmbed()
+                  .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
+                  .setDescription("You did not select a player last day or your target could not be jailed.\n" +
+                                  "Go back to sleep!")
+              )
+          }
           
           if (game.players.find(p => p.jailed && p.alive)) {
             let jailed = game.players.find(p => p.jailed && p.alive)
