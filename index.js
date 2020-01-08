@@ -52,7 +52,7 @@ client.login(token)
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
-  setInterval (async () => {   
+  setInterval (async () => { try {
     let QuickGames = games.get("quick")
     
     for (let i = 0; i < QuickGames.length; i++) {
@@ -595,7 +595,9 @@ client.on('ready', async () => {
       QuickGames[i] = game
     }
     games.set('quick', QuickGames)
-  }, 1000)
+  } catch (error) {
+    console.log(error)
+  }}, 1000)
 })
 
 client.on('message', async message => {
