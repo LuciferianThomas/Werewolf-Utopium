@@ -601,8 +601,7 @@ client.on('ready', async () => {
             new Discord.RichEmbed()
               .setColor("RED")
               .setTitle("<:red_tick:597374220267290624> Game Terminated")
-              .setDescription(`Game #${game.gameID} has been terminated due to the following reason:`)
-              .addField(error.toString(), error.stack)
+              .setDescription(`Game #${game.gameID} has been terminated due to the following reason: \`\`\`${error.stack}\`\`\``)
           )
         
         game.currentPhase = 999
