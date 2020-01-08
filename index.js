@@ -148,7 +148,7 @@ client.on('ready', async () => {
           for (var x = 0; x < revivedPlayers.length; x++){
             fn.broadcastTo(
               client, game.players.filter(p => !p.left).map(p => p.id),
-              `<:Medium_Revive:660667751253278730> Medium has revived **${x.number} ${fn.getUser(x.id).username}**.`
+              `<:Medium_Revive:660667751253278730> Medium has revived **${x.number} ${fn.getUser(client, x.id).username}**.`
             )
             game.players[x.number-1].alive = true
             game.players[x.number-1].revive = undefined
@@ -666,7 +666,7 @@ client.on('message', async message => {
   let player = players.get(message.author.id)
   if (!player.currentGame) return;
 
-  let content = message.content
+  let content = message.cleanContent
   content = content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+|localhost)(:\d+)?(\/[^\s]*)*/gi, "")
   //for (var role in roles) {
   //  if (!roles[role].abbr.length) continue;
