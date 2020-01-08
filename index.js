@@ -70,6 +70,7 @@ client.on('ready', async () => {
               ).join('\n')
             )
         )
+        
         game.currentPhase++
         for (var j = 0; j < game.players.length; j++)
           players.set(`${game.players[j].id}.currentGame`, 0)
@@ -595,7 +596,8 @@ client.on('ready', async () => {
             }
           }
         }
-      } catch (error) {
+      }
+      catch (error) {
         client.channels.get("664285087839420416")
           .send(
             new Discord.RichEmbed()
