@@ -82,7 +82,7 @@ client.on('ready', async () => {
               lynchCount = []
           for (var j = 0; j < lynchVotes.length; j++) {
             if (!lynchCount[lynchVotes[j]]) lynchCount[lynchVotes[j]] = 0
-            lynchCount[lynchVotes[j]] += 1
+            lynchCount[lynchVotes[j]] += game.players.filter(player => player.alive)[j].role == "Mayor" ? 2 : 1
           }
           if (lynchCount.length) {
             let max = lynchCount.reduce((m, n) => Math.max(m, n))

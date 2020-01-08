@@ -27,12 +27,12 @@ module.exports = {
                   game.currentPhase == -1 ? game.players.map(p => client.users.get(p.id).username).join('\n') :
                   game.players
                     .map(p => 
-                           `${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"}${
+                           `${p.id == message.author.id ? "**" : ""}${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"}${
                              p.id == message.author.id || p.roleRevealed
                                ? ` ${client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}` 
                                : roles[gamePlayer.role].team == "Werewolves" && roles[p.role].team == "Werewolves"
                                ? ` ${client.emojis.find(e => e.name == "Fellow_Werewolf")}`
-                               : ""}${p.left ? " *off*" : ""}`)
+                               : ""}${p.left ? " *off*" : ""}${p.id == message.author.id ? "**" : ""}`)
                     .join('\n')
                  )
         .addField(`Roles`, game.roles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1})

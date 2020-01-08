@@ -29,16 +29,16 @@ module.exports = {
     if (gamePlayer.poisonUsed)
       return await message.author.send("You have used your poison potion.")
     
-    if (gamePlayer.role == "Witch" && game.currentPhase % 3 != 0)
-      return await message.author.send("You can only shoot on a player in jail at night.")
+    if (game.currentPhase % 3 != 0)
+      return await message.author.send("You can only poison on a player at night.")
     
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
     if (!game.players[target-1].alive)
-      return await message.author.send("You cannot shoot an dead player.")
+      return await message.author.send("You cannot poison an dead player.")
     if (target == gamePlayer.number)
-      return await message.author.send("You cannot shoot yourself.")
+      return await message.author.send("You cannot poison yourself.")
     
     game.players[target-1].alive = false
     
