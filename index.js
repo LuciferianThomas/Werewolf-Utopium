@@ -106,7 +106,10 @@ client.on('ready', async () => {
                 game.currentPhase = 999
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
-                  `Game has ended. Fool ${lynched} ${fn.getUser(client, game.players[lynched-1].id).username} wins!`
+                  new Discord.RichEmbed()
+                    .setTitle("Game has ended.")
+                    .setThumbnail(client.emojis.find(e => e.name == "Fool").url)
+                    .setDescription(`Fool ${lynched} ${fn.getUser(client, game.players[lynched-1].id).username} wins!`)
                 )
                 fn.addXP(game.players.filter(p => p.number == lynched), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
@@ -118,8 +121,11 @@ client.on('ready', async () => {
                 if (headhunter.alive) {
                 game.currentPhase = 999
                 fn.broadcastTo(
-                  client, game.players.filter(p => !p.left), 
-                  `Game has ended. Headhunter **${headhunter.number} ${fn.getUser(client, headhunter.id).username}** wins!`
+                  client, game.players.filter(p => !p.left),
+                  new Discord.RichEmbed()
+                    .setTitle("Game has ended.")
+                    .setThumbnail(client.emojis.find(e => e.name == "Headhunter").url)
+                    .setDescription(`Headhunter **${headhunter.number} ${fn.getUser(client, headhunter.id).username}** wins!`)
                 )
                 fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
@@ -341,6 +347,7 @@ client.on('ready', async () => {
             }
             else if (attackedPlayer.role == "Cursed") {
               game.players[attacked-1].role = "Werewolf"
+              game.lastDeath = game.currentPhase - 1
               fn.getUser(client, attackedPlayer.id).send(
                 new Discord.RichEmbed()
                   .setTitle("<:Fellow_Werewolf:660825937109057587> Converted!")
@@ -409,8 +416,24 @@ client.on('ready', async () => {
         
         if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
           game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. The village wins!`)
-          fn.addXP(game.players.filter(p => roles[p.role].team == "Village" || p.role == "Cupid"), 50)
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left).map(p => p.id),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(client.emojis.find(e => e.name == "Werewolf").url)
+              .setDescription(
+                `The werewolves win!`
+              )
+          )
+          fn.addXP(
+            game.players.filter(
+              p =>
+                roles[p.role].team == "Village" ||
+                p.role == "Cupid" ||
+                (p.role == "Headhunter" && game.players.find(pl => pl.headhunter == p.number).alive)
+            ),
+            50
+          )
           fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
         }
@@ -419,7 +442,15 @@ client.on('ready', async () => {
             game.players.filter(p => p.alive && (roles[p.role].team.includes("Village") || p.role == "Fool")).length &&
             !game.players.filter(p => p.alive && roles[p.role].team == "Solo" && p.role != "Fool").length) {
           game.currentPhase = 999
-          fn.broadcast(client, game, `Game has ended. The werewolves win!`)
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left).map(p => p.id),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(client.emojis.find(e => e.name == "Werewolf").url)
+              .setDescription(
+                `The werewolves win!`
+              )
+          )
           fn.addXP(game.players.filter(p => roles[p.role].team == "Werewolves"), 50)
           fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
@@ -431,9 +462,14 @@ client.on('ready', async () => {
             (alive.length == 2 && alive.map(p => p.role).includes("Serial Killer") && alive.map(p => p.role).includes("Jailer"))) {
           game.currentPhase = 999
           fn.broadcastTo(
-            client, game.players.filter(p => !p.left).map(p => p.id), 
-            `Game has ended. Serial Killer **${
-            fn.getUser(client, alive.find(p => p.role == "Serial Killer").id)}** wins!`
+            client, game.players.filter(p => !p.left).map(p => p.id),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(client.emojis.find(e => e.name == "Serial Killer").url)
+              .setDescription(
+                `Serial Killer **${alive.find(p => p.role == "Serial Killer").number} ` +
+                `${fn.getUser(client, alive.find(p => p.role == "Serial Killer").id)}** wins!`
+              )
           )
           fn.addXP(game.players.filter(p => p.role == "Serial Killer"), 250)
           fn.addXP(game.players.filter(p => !p.left), 15)
@@ -448,7 +484,10 @@ client.on('ready', async () => {
           game.currentPhase = 999
           fn.broadcastTo(
             client, game.players.filter(p => !p.left).map(p => p.id),
-            `Game has ended. It was a tie.`
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              // .setThumbnail(client.emojis.find(e => e.name == "Headhunter").url)
+              .setDescription(`It was a tie.`)
           )
           fn.addXP(game.players, 15)
           fn.addXP(game.players.filter(p => !p.left), 15)
