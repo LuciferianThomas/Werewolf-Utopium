@@ -5,7 +5,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "enchant",
@@ -23,6 +24,10 @@ module.exports = {
     
     if (game.currentPhase % 3 == 0) 
       return await message.author.send("You can only enchant a player at day!")
+    
+    if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length == 1)
+      return await message.author.send("You cannot enchant a player when you are the last werewolf!")
+
     
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)

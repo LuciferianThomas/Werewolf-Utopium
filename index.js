@@ -52,7 +52,7 @@ client.login(token)
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
-  setInterval (async () => { try {
+  setInterval( async () => { 
     let QuickGames = games.get("quick")
     
     for (let i = 0; i < QuickGames.length; i++) {
@@ -75,7 +75,7 @@ client.on('ready', async () => {
           players.set(`${game.players[j].id}.currentGame`, 0)
       }
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
-      if (moment(game.nextPhase) <= moment()) {
+      if (moment(game.nextPhase) <= moment()) try { 
         if (game.currentPhase % 3 == 2)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
               lynchCount = []
@@ -591,13 +591,25 @@ client.on('ready', async () => {
             }
           }
         }
+      } catch (error) {
+        client.channels.get("664285087839420416")
+          .send(
+            new Discord.RichEmbed()
+              .setColor("RED")
+              .setTitle("Game Terminated")
+              .setDescription(`Game #${game.gameID} has been terminated due to the following reason:`)
+              .addField(error.toString(), )
+          )
+        
+        game.currentPhase = 999
+        fn.addXP(game.players, 15)
+        fn.addXP(game.players.filter(p => !p.left), 15)
+        
       }
       QuickGames[i] = game
     }
     games.set('quick', QuickGames)
-  } catch (error) {
-    console.log(error)
-  }}, 1000)
+  }, 1000)
 })
 
 client.on('message', async message => {
