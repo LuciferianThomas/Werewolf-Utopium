@@ -630,7 +630,7 @@ client.on('message', async message => {
   const prefix = "w!"
   
   let shared = {}
-  
+    
   if (message.content.startsWith(prefix)) {
     
     var args = message.content.trim().slice(prefix.length).split(/\s+/u)
@@ -643,11 +643,8 @@ client.on('message', async message => {
 		if (!command) return;
     
     if (!players.get(message.author.id)) 
-      players.set(message.author.id, {
-        xp: 0,
-        currentGame: null
-      })
-    
+       players.set(message.author.id, {xp: 0, currentGame: null})   
+        
 		try {
 			await command.run(client, message, args, shared)
 		} catch (error) {
