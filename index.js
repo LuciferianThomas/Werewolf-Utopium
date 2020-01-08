@@ -496,7 +496,11 @@ client.on('ready', async () => {
         fn.broadcastTo(
           client, game.players.filter(p => !p.left), 
           game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
-          game.currentPhase % 3 == 1 ? `Day ${Math.floor(game.currentPhase/3)+1} has started!` :
+          game.currentPhase % 3 == 1 ? 
+            new Discord.RichEmbed()
+              .setTitle(`Day ${Math.floor(game.currentPhase/3)+1} has started!`)
+              .setThumbnail(client.emojis.find(e => e.name == "Day").url)
+              .setDescription("Start discussing!") :
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
         )
         
@@ -596,15 +600,19 @@ client.on('ready', async () => {
           .send(
             new Discord.RichEmbed()
               .setColor("RED")
-              .setTitle("Game Terminated")
+              .setTitle("<:red_tick:597374220267290624> Game Terminated")
               .setDescription(`Game #${game.gameID} has been terminated due to the following reason:`)
-              .addField(error.toString(), )
+              .addField(error.toString(), error.stack)
           )
         
         game.currentPhase = 999
-        fn.addXP(game.players, 15)
-        fn.addXP(game.players.filter(p => !p.left), 15)
-        
+       // fn.addXP(game.players, 15)
+       // fn.addXP(game.players.filter(p => !p.left), 15)
+        fn.broadcastTo(
+          client, game.players.filter(p => !p.left),
+          "<:red_tick:597374220267290624> There is an error causing this game to be terminated." +
+          " Please contact staff members."
+        )
       }
       QuickGames[i] = game
     }
