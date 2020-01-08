@@ -58,7 +58,8 @@ module.exports = {
   },
   "Detective": {
   	desc: "Every night, select two players to check if they belong to the same team with (`w!detect [player]`)." +
-    			" Players from the same team will result an <:Detective_Equal:660496165535612958> sign meanwhile players from a different team will show a <:Detective_NotEqual:660496385388445725> sign." + // replace with emoji later
+    			" Players from the same team will result an <:Detective_Equal:660496165535612958> sign" +
+          " while players from a different team will show a <:Detective_NotEqual:660496385388445725> sign." +
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
@@ -138,7 +139,7 @@ module.exports = {
           " You cannot be killed by werewolves unless there are 4 villagers or below.",
     aura: "Good",
     team: "Village",
-    abbr: [] 
+    abbr: ["trump","obama"] 
   },
   "Priest": {
     desc: "Once per game, you can throw holy water at one player (`w!water [player]`). You can only do this during the day." +
@@ -168,7 +169,7 @@ module.exports = {
           " If the original seer is revived, you will remain a Seer.",
     aura: "Good",
     team: "Village",
-    abbr: ["sapp", "sa", "app"]
+    abbr: ["sapp", "sa", "app", "seer app"]
   },
   "Sheriff": {
   	desc: "Every night, select a player to look at with (`w!lookout [player]`)." +
@@ -216,7 +217,7 @@ module.exports = {
     desc: "You are a regular werewolf except when you vote with the werewolves (`w!vote [player]`), your vote counts as double!",
     aura: "Unknown",
     team: "Werewolves",
-    abbr: ["aww","alpha"]
+    abbr: ["aww","alpha", "alpha ww"]
   },
   "Guardian Wolf": {
   	desc: "Once a game, you can protect anyone from being lynched by doing (`w!guard [player]`).",
