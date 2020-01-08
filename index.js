@@ -420,9 +420,9 @@ client.on('ready', async () => {
             client, game.players.filter(p => !p.left).map(p => p.id),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(client.emojis.find(e => e.name == "Werewolf").url)
+              .setThumbnail(client.emojis.find(e => e.name == "Villager").url)
               .setDescription(
-                `The werewolves win!`
+                `The village win!`
               )
           )
           fn.addXP(
@@ -430,9 +430,8 @@ client.on('ready', async () => {
               p =>
                 roles[p.role].team == "Village" ||
                 p.role == "Cupid" ||
-                (p.role == "Headhunter" && game.players.find(pl => pl.headhunter == p.number).alive)
-            ),
-            50
+                (p.role == "Headhunter" && !game.players.find(pl => pl.headhunter == p.number).alive)
+            ), 50
           )
           fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
@@ -494,8 +493,8 @@ client.on('ready', async () => {
           continue;
         }
         
-        fn.broadcast(
-          client, game, 
+        fn.broadcastTo(
+          client, game.players.filter(p => !p.left), 
           game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
           game.currentPhase % 3 == 1 ? `Day ${Math.floor(game.currentPhase/3)+1} has started!` :
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
@@ -558,15 +557,15 @@ client.on('ready', async () => {
                       .filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role !== "Sorcerer" && p.id !== jailed.id)
                       .map(p => p.id),
                     new Discord.RichEmbed()
-                      .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
-                      .setDescription(`**${jailed.number} ${client.users.get(jailed.id).username}** is now in jail.` +
-                                      ` You can now talk privately with each other.\n` +
-                                      `If you find them suspicious, you can execute them (\`w!shoot\`)`)
+                      .setTitle(`Jailed!`)
+                      .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
+                      .setDescription(`Fellow Werewolf **${jailed.number} ${client.users.get(jailed.id).username}** is jailed!`)
                   )
 
                 fn.getUser(client, jailer.id).send(
                   new Discord.RichEmbed()
-                    .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
+                    .setTitle(`Jail`)
+                    .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
                     .setDescription("You did not select a player last day or your target could not be jailed.\n" +
                                     "Go back to sleep!")
                 )
@@ -574,7 +573,8 @@ client.on('ready', async () => {
                 fn.getUser(client, jailed.id)
                   .send(
                     new Discord.RichEmbed()
-                      .setAuthor(`Jailed!`, client.emojis.find(e => e.name == "Jail").url)
+                      .setTitle(`Jailed`)
+                      .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
                       .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
                   )
               } else 
@@ -583,7 +583,8 @@ client.on('ready', async () => {
             else if (jailer.alive) {
               fn.getUser(client, jailer.id).send(
                 new Discord.RichEmbed()
-                  .setAuthor(`Jail`, client.emojis.find(e => e.name == "Jail").url)
+                    .setTitle(`Jail`)
+                    .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
                   .setDescription("You did not select a player last day or your target could not be jailed.\n" +
                                   "Go back to sleep!")
               )
