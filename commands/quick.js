@@ -46,6 +46,7 @@ module.exports = {
         players: [{
           id: message.author.id
         }],
+        spectators: [],
         config: {
           deathReveal: true
         }
