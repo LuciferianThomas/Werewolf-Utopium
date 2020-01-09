@@ -38,7 +38,6 @@ module.exports = {
       return await message.author.send("You have already checked on a player tonight.")
     
     let target = parseInt(args[0])
-    console.log(target, args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
     if (!game.players[target-1].alive)
