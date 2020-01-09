@@ -33,9 +33,16 @@ module.exports = {
     
     let targetA = parseInt(args[0]),
         targetB = parseInt(args[1])
-    if(isNaN(targetA) || targetA > game.players.length || targetA < 1 ||
+    if (isNaN(targetA) || targetA > game.players.length || targetA < 1 ||
        isNaN(targetB) || targetB > game.players.length || targetB < 1)
-      return await message.author.send("Invalid target")
+      return await message.author.send("Invalid target.")
+    if (!game.players[targetA-1].alive || !game.players[targetB-1].alive)
+      return await message.author.send("You cannot douse dead players!")
+    if (targetA == targetB) 
+      return await message.author.send("You cannot douse the same player!")
+    if (targetA == gamePlayer.number || targetB == gamePlayer.number)
+      return await message.author.send("You cannot douse yourself") 
 
-    }   
+      // I'm gonna eat first, you can continue if you want 
+    }
 } 
