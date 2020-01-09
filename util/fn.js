@@ -146,7 +146,7 @@ const broadcastTo = (client, users, content) => {
   if (typeof users[0] !== "string") users = users.map(x => x.id)
   
   let game = games.get("quick").find(g => g.gameID == players.get(`${users[0].id}.currentGame`))
-  if (game.currentPhase % 3 !== 0) users.push(...game.spectators)
+  // if (game.currentPhase % 3 !== 0) users.push(...game.spectators)
   
   for (var i = 0; i < users.length; i++) 
     client.users.get(users[i]).send(content)
@@ -163,7 +163,7 @@ const addWin = (game, winners, team) => {
     if (winners.include(game.players[i].number))
       players.push(`${game.players[i].id}.wins`, {role: game.players[i].role, team: team})
     else 
-      players.push(`${game.players[i].id}.loses`, game.players[i].role)
+      players.push(`${game.players[i].id}.loses`, {role: game.players[i].role, team:})
   }
 }
 
