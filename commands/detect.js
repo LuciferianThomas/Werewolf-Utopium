@@ -43,17 +43,22 @@ module.exports = {
       return await message.author.send("You cannot detect on a dead player.")
     if (targetA == gamePlayer.number || targetB == gamePlayer.number)
       return await message.author.send("You cannot detect on yourself.")
+    if (targetA == targetB)
+      return await message.author.send("You cannot detect the same player.")
     
-    let targetPlayerA = game.players[targetA-1]
+    let targetPlayerA = game.players[targetA-1],
+        targetPlayerB = game.players[targetB-1]
+    
+    let roleA = roles[targetPlayerA.enchanted ? "Wolf Shaman" : targetPlayerA.role], 
+        roleB = roles[targetPlayerB.enchanted ? "Wolf Shaman" : targetPlayerB.role]
     
     message.author.send(
       new Discord.RichEmbed()
         .setAuthor(`Detection Results`, fn.getEmoji(client, "Detective").url)
-        .setThumbnail(client.emojis.find(e => e.name == (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role).replace(/ /g, "_")).url)
+        .setThumbnail(fn.getEmoji(client, roleA.team == roleB.team ? "Detective_Equal" : "Detective_NotEqual").url)
         .setDescription(
-          `${target} ${client.users.get(targetPlayer.id).username} is a${
-            ["A", "E", "I", "O", "U"].includes(targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
-          } ${targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
+          `**${targetA} ${fn.getUser(client, targetPlayerA.id).username}** and **${targetB} ${fn.getUser(client, targetPlayerB.id).username}**` +
+          ` are on ${roleA.team == roleB.team ? "the same team" : "different teams"}.`
         )
     )
     

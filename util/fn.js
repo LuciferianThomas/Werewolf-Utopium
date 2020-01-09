@@ -158,6 +158,8 @@ const addXP = (users, xp) => {
     players.add(`${users[i]}.xp`, xp)
 }
 
+const addWin = ()
+
 module.exports = {
   time: time,
   utcTime: utcTime,

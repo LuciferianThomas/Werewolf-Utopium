@@ -41,10 +41,10 @@ module.exports = {
   },
   "Cupid": {
   	desc: "During the first night, select 2 players to be a couple with (`w!couple [player1] [player2]`). They will know each other's roles at the beginning of the next day." +
-    			" Your couple must survive until the end of tne game and must be the last players alive in order to win as couple." +
+    			" Your couple must survive until the end of the game and must be the last players alive in order to win as couple." +
           " If one your couple dies, the other couple dies along and you become a regular villager.",
     aura: "Good",
-    team: "Village/Couple",
+    team: "Village",
     abbr: []
   },
   "Cursed": {
