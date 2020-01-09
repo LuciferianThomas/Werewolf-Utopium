@@ -71,7 +71,7 @@ module.exports = {
           )
       )
     }
-    game.players[gamePlayer.number-1].usedAbilityTonight = true
+    gamePlayer.usedAbilityTonight = true
     
     QuickGames[index] = game
     
