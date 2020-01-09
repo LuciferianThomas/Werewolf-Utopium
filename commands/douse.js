@@ -41,7 +41,11 @@ module.exports = {
     if (targetA == targetB) 
       return await message.author.send("You cannot douse the same player!")
     if (targetA == gamePlayer.number || targetB == gamePlayer.number)
-      return await message.author.send("You cannot douse yourself") 
+      return await message.author.send("You cannot douse yourself.") 
+    if (gamePlayer.doused.includes(targetA))
+      return await message.author.send(`You doused **${game.players[targetA-1]} ${fn.getUser(client, game.players[targetA-1]).username}** already!`) 
+    if (gamePlayer.doused.includes(targetB))
+      return await message.author.send(`You doused **${game.players[targetB-1]} ${fn.getUser(client, game.players[targetB-1]).username}** already!`) 
 
       // I'm gonna eat first, you can continue if you want 
     }
