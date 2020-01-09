@@ -158,7 +158,14 @@ const addXP = (users, xp) => {
     players.add(`${users[i]}.xp`, xp)
 }
 
-const addWin = ()
+const addWin = (game, winners) => {
+  for (var i = 0; i < game.players.length; i++) {
+    if (winners.include(game.players[i].number))
+      players.push(`${game.players[i].id}.wins`, game.players[i].role)
+    else 
+      
+  }
+}
 
 module.exports = {
   time: time,

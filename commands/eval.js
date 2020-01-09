@@ -6,7 +6,8 @@ const games = new db.table("Games"),
       players = new db.table("Players")
 
 const config = require('/app/util/config'),
-      fn = require('/app/util/fn')
+      fn = require('/app/util/fn'),
+      roles = require('/app/util/roles')
 
 module.exports = {
 	name: "eval",

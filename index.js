@@ -643,7 +643,12 @@ client.on('message', async message => {
 		if (!command) return;
     
     if (!players.get(message.author.id)) 
-       players.set(message.author.id, {xp: 0, currentGame: null})   
+       players.set(message.author.id, {
+         xp: 0,
+         currentGame: null,
+         wins: [],
+         loses: []
+       })   
         
 		try {
 			await command.run(client, message, args, shared)
