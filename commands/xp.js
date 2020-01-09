@@ -9,7 +9,7 @@ module.exports = {
   name: "profile",
   aliases: ["prof"],
   run: async (client, message, args) => {
-    let target = message.user
+    let target = message.author
     if (args[0]) target = fn.getUser(client, args[0])
     if (message.mentions.users.size) target = message.mentions.users.first()
     
@@ -19,10 +19,15 @@ module.exports = {
       new Discord.RichEmbed()
         .setAuthor(`User Profile | ${target.tag}`)
         .setThumbnail(target.displayAvatarURL)
+        .addField("Games played", player.wins.length + player.loses.length, true)
+        .addField("Coins", 0, true)
         .addField("XP", player.xp, true)
         .addField("Wins", player.wins.length, true)
         .addField("Loses", player.loses.length, true)
-        .addField("Wins as Village", player.wins.length, true)
+        // .addField(
+        //   "Teams",
+        //   {}
+        // )
     )
   }
 }
