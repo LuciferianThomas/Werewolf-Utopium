@@ -34,7 +34,7 @@ module.exports = {
     if (gamePlayer.role == "Wolf Seer" && game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length == 1)
       return await message.author.send("You cannot check on a player if you are the last werewolf.")
       
-    if (gamePlayer.checkedTonight)
+    if (gamePlayer.usedAbilityTonight)
       return await message.author.send("You have already checked on a player tonight.")
     
     let target = parseInt(args[0])
