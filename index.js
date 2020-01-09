@@ -432,12 +432,15 @@ client.on('ready', async () => {
             game.players.filter(
               p =>
                 roles[p.role].team == "Village" ||
-                p.role == "Cupid" ||
                 (p.role == "Headhunter" && !game.players.find(pl => pl.headhunter == p.number).alive)
             ), 50
           )
           fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addXP()
+          fn.addXP(game, game.players.filter(
+            p =>
+              roles[p.role].team == "Village" ||
+              (p.role == "Headhunter" && !game.players.find(pl => pl.headhunter == p.number).alive)
+          ).map(p => p.number), "Village")
           continue;
         }
         
@@ -456,6 +459,7 @@ client.on('ready', async () => {
           )
           fn.addXP(game.players.filter(p => roles[p.role].team == "Werewolves"), 50)
           fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addXP(game, game.players.filter(p => roles[p.role].team == "Werewolves").map(p => p.number), "Werewolves")
           continue;
         }
         
@@ -474,8 +478,9 @@ client.on('ready', async () => {
                 `${fn.getUser(client, alive.find(p => p.role == "Serial Killer").id)}** wins!`
               )
           )
-          fn.addXP(game.players.filter(p => p.role == "Serial Killer"), 250)
+          fn.addXP(alive.find(p => p.role == "Serial Killer"), 250)
           fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addXP(game, alive.find(p => p.role == "Serial Killer").number, "Solo")
           continue;
         }
         
