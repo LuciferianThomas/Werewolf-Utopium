@@ -222,7 +222,17 @@ client.on('ready', async () => {
                   )
                 }
                 else if (protector.role == "Beast Hunter") {
-                  // TODO
+                  let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
+                  
+                  let wwByStrength = game.players
+                    .filter(p => p.alive && roles[p.role].team == "Werewolves")
+                    .sort((a,b) => {
+                      if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
+                        return 1
+                      if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
+                        return -1
+                      return 0
+                    })
                 }
               }
             }
