@@ -158,12 +158,12 @@ const addXP = (users, xp) => {
     players.add(`${users[i]}.xp`, xp)
 }
 
-const addWin = (game, winners) => {
+const addWin = (game, winners, team) => {
   for (var i = 0; i < game.players.length; i++) {
     if (winners.include(game.players[i].number))
-      players.push(`${game.players[i].id}.wins`, game.players[i].role)
+      players.push(`${game.players[i].id}.wins`, {role: game.players[i].role, team: team})
     else 
-      
+      players.push(`${game.players[i].id}.loses`, game.players[i].role)
   }
 }
 
