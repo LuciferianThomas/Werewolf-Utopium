@@ -23,9 +23,13 @@ module.exports = {
     
     if (gamePlayer.role == "Arsonist")
       return await message.author.send("You do not have the abilities to douse a player.")
-    if (!gamePlayer.alive)
+    if (!gamePlayer.alive)      
       return await message.author.send("You are dead. You can no longer douse a player.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
+    
+    if (game.currentPhase % 3 != 0)
+      return await message.author.send
+
     }   
 } 
