@@ -146,7 +146,7 @@ const broadcast = async (client, game, content, ignore = []) => {
 const broadcastTo = (client, users, content) => {
   if (typeof users[0] !== "string") users = users.map(x => x.id)
   
-  let game = games.get("quick").find(g => g.gameID == players.get(`${users[0].id}.currentGame`))
+  let game = games.get("quick").find(g => g.gameID == players.get(`${users[0]}.currentGame`))
   // if (game.currentPhase % 3 !== 0) users.push(...game.spectators)
   
   for (var i = 0; i < users.length; i++) 
