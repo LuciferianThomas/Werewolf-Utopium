@@ -10,8 +10,7 @@ const roles = require('/app/util/roles')
 const fn = require('/app/util/fn')
 
 module.exports = {
-  name: "check",
-  aliases: ["see"],
+  name: "detect",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
