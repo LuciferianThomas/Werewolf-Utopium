@@ -5,7 +5,8 @@ const db = require("quick.db"),
       games = new db.table("Games"),
       players = new db.table("Players")
 
-const { defaultPrefix, embedColor } = require('./config.js')
+const { defaultPrefix, embedColor } = require('./config.js'),
+      roles = require("./roles")
 
 let time = (date = moment()) => {
   return moment(date).utcOffset(8).format("YYYY/MM/DD HH:mm:ss")
@@ -163,7 +164,7 @@ const addWin = (game, winners, team) => {
     if (winners.include(game.players[i].number))
       players.push(`${game.players[i].id}.wins`, {role: game.players[i].role, team: team})
     else 
-      players.push(`${game.players[i].id}.loses`, {role: game.players[i].role, team:})
+      players.push(`${game.players[i].id}.loses`, {role: game.players[i].role, team: team == "Village" && game.players[i].role == "Headhunter" ? "Solo" : roles[game.players[i].role].team})
   }
 }
 
@@ -184,4 +185,5 @@ module.exports = {
   broadcast: broadcast,
   broadcastTo: broadcastTo,
   addXP: addXP,
+  addWin: addWin,
 }

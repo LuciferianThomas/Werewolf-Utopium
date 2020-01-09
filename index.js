@@ -114,6 +114,7 @@ client.on('ready', async () => {
                 )
                 fn.addXP(game.players.filter(p => p.number == lynched), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
+                fn.addWin(game, lynched, "Solo")
                 continue;
               }
               if (game.players[lynched-1].headhunter) {
@@ -130,6 +131,7 @@ client.on('ready', async () => {
                 )
                 fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
+                fn.addWin(game, headhunter.number, "Solo")
                 continue;
                 }
               }
@@ -423,7 +425,7 @@ client.on('ready', async () => {
               .setTitle("Game has ended.")
               .setThumbnail(client.emojis.find(e => e.name == "Villager").url)
               .setDescription(
-                `The village win!`
+                `The village wins!`
               )
           )
           fn.addXP(
@@ -435,6 +437,7 @@ client.on('ready', async () => {
             ), 50
           )
           fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addXP()
           continue;
         }
         
