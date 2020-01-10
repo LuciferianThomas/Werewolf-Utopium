@@ -47,10 +47,16 @@ module.exports = {
     if (gamePlayer.doused.includes(targetB))
       return await message.author.send(`You doused **${game.players[targetB-1]} ${fn.getUser(client, game.players[targetB-1]).username}** already!`)
     
+    let targetPlayerA = game.players[targetA-1],
+        targetPlayerB = game.players[targetB-1]
+    
     message.author.send(
     	new Discord.RichEmbed()
-      .setAuthor(`Doused Players`, fn.getEmoji)
-      .setThumnail
+      .setAuthor(`Doused Players`, fn.getEmoji(client, "Arsonist").url)
+      .setThumnail(fn.getEmoji(client, "Arsonist_Doused").url)
+      .setDescription(
+      `You have doused **${targetA} ${fn.getUser(client, targetPlayerA.id).username}** and **${targetA} ${fn.getUser(client, targetPlayerB.id).username}**`
+      )
     ) 
 
       // I'm gonna eat first, you can continue if you want 
