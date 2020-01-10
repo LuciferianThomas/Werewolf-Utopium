@@ -222,7 +222,8 @@ client.on('ready', async () => {
                   )
                 }
                 else if (protector.role == "Beast Hunter") {
-                  }
+                }
+              }
             }
             else if (attackedPlayer.role == "Bodyguard") {
               game.players[attacked-1].health -= 1
@@ -346,11 +347,6 @@ client.on('ready', async () => {
 
                   let wwByStrength = game.players
                     .filter(p => p.alive && roles[p.role].team == "Werewolves")
-                }
-              }
-            }
-   
-                  
                   wwByStrength.sort((a,b) => {
                     if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
                       return 1
@@ -359,7 +355,12 @@ client.on('ready', async () => {
                     return 0
                   })
                   
-                           else if (attackedPlayer.role == "Cursed") {
+                  game.players[wwByStrength[0].number-1].alive = false
+                  if (game.config.roleReveal) game.players[wwByStrength[0].number-1].alive
+                }
+              }
+            }
+            else if (attackedPlayer.role == "Cursed") {
               game.players[attacked-1].role = "Werewolf"
               game.lastDeath = game.currentPhase - 1
               fn.getUser(client, attackedPlayer.id).send(
