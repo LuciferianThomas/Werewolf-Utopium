@@ -222,19 +222,7 @@ client.on('ready', async () => {
                   )
                 }
                 else if (protector.role == "Beast Hunter") {
-                  let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
-                  
-                  let wwByStrength = game.players
-                    .filter(p => p.alive && roles[p.role].team == "Werewolves")
-                    .sort((a,b) => {
-                      if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
-                        return 1
-                      if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
-                        return -1
-                      return 0
-                    })
-                }
-              }
+                  }
             }
             else if (attackedPlayer.role == "Bodyguard") {
               game.players[attacked-1].health -= 1
@@ -354,11 +342,24 @@ client.on('ready', async () => {
                   )
                 }
                 else if (protector.role == "Beast Hunter") {
-                  // TODO
+                  let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
+
+                  let wwByStrength = game.players
+                    .filter(p => p.alive && roles[p.role].team == "Werewolves")
                 }
               }
             }
-            else if (attackedPlayer.role == "Cursed") {
+   
+                  
+                  wwByStrength.sort((a,b) => {
+                    if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
+                      return 1
+                    if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
+                      return -1
+                    return 0
+                  })
+                  
+                           else if (attackedPlayer.role == "Cursed") {
               game.players[attacked-1].role = "Werewolf"
               game.lastDeath = game.currentPhase - 1
               fn.getUser(client, attackedPlayer.id).send(
