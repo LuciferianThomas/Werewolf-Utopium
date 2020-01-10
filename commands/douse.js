@@ -55,10 +55,12 @@ module.exports = {
       .setAuthor(`Doused Players`, fn.getEmoji(client, "Arsonist").url)
       .setThumnail(fn.getEmoji(client, "Arsonist_Doused").url)
       .setDescription(
-      `You have doused **${targetA} ${fn.getUser(client, targetPlayerA.id).username}** and **${targetA} ${fn.getUser(client, targetPlayerB.id).username}**`
+      `You have doused **${targetA} ${fn.getUser(client, targetPlayerA.id).username}** and **${targetA} ${fn.getUser(client, targetPlayerB.id).username}**!`
       )
-    ) 
+    )
 
+    gamePlayer.doused.push(targetPlayerA, targetPlayerB)
+    gamePlayer.dousedTonight(
       // I'm gonna eat first, you can continue if you want 
     }
 } 
