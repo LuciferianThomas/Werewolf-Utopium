@@ -28,42 +28,43 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
+    /*
     if (gamePlayer.usedAbilityTonight) {
       let prevA = game.players[gamePlayer.dousedTonight[0]-1]
       let prevB = game.players[gamePlayer.dousedTonight[1]-1]
       prevA.doused.splice(prevA.doused.indexOf(gamePlayer.number), 1)
       prevB.doused.splice(prevB.doused.indexOf(gamePlayer.number), 1)
-    }
+    }*/
+    
+    // is that needed? 
+    // this? the above is for doused right? 
     
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only ignite players during the night!")
     
     let doused = game.players.filter(p => p.alive && p.doused.includes(gamePlayer.number))
-    if (doused == 0)
+    //           ^^^^^^^^^^^^^^^^^^^  k
+    // this is not the doused var in the player profile,
+    // this is the player profiles with the doused var.... ok
+    
+    if (!doused.length)
       return await message.author.send("You haven't doused anyone or every doused player is dead! Do `w!douse [player1] [player 2]` first!") 
     
-		let targetA = parseInt(args[0]),
-        targetB = parseInt(args[1])
-    if (isNaN(targetA) || targetA > game.players.length || targetA < 1 ||
-       isNaN(targetB) || targetB > game.players.length || targetB < 1)
-      return await message.author.send("Invalid target.")
-    if (!game.players[targetA-1].alive || !game.players[targetB-1].alive)
-      return await message.author.send("You cannot douse dead players!")
-    if (targetA == targetB) 
-      return await message.author.send("You cannot douse the same player!")
-    if (targetA == gamePlayer.number || targetB == gamePlayer.number)
-      return await message.author.send("You cannot douse yourself.") 
-    if (game.players[targetA-1].doused.includes(gamePlayer.number))
-      return await message.author.send(`You doused **${game.players[targetA-1]} ${fn.getUser(client, game.players[targetA-1]).username}** already!`) 
-    if (game.players[targetB-1].doused.includes(gamePlayer.number))
-      return await message.author.send(`You doused **${game.players[targetB-1]} ${fn.getUser(client, game.players[targetB-1]).username}** already!`)
-    
-    let targetPlayerA = game.players[targetA-1],
-        targetPlayerB = game.players[targetB-1]
-    
-    message.author.send(
-    	new Discord.RichEmbed()
+    for (var i = 0; i < doused.length; i++) {
+      game.players[doused[i].number-1].alive = false
+      if (game.config.deathReveal) game.players[doused[i].number-1].roleRevealed = true
+      
+          // how do we get the names?
+      //the doused var is for numbers
+      //and if we do doused then player Names, it wI'll be 1,5 (marksman), (doc) 
+// no, this doused var in this page is for the game players
+      // read above
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left),
+      	`Arsonist <:Arsonist:> has ignited **${doused[i].number} ${fn.getUser(client, doused[i].id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, doused/}` : ""}**.`
+        //death messaves do not use embeds
       ) 
+    }
     gamePlayer.usedAbilityTonight = true
     
     QuickGames[index] = game

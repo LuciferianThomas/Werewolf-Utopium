@@ -28,7 +28,7 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
-    if (gamePlayer.usedAbilityTonight) {
+    if (typeof gamePlayer.usedAbilityTonight == "array") {
       let prevA = game.players[gamePlayer.dousedTonight[0]-1]
       let prevB = game.players[gamePlayer.dousedTonight[1]-1]
       prevA.doused.splice(prevA.doused.indexOf(gamePlayer.number), 1)
