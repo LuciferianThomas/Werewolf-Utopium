@@ -54,15 +54,11 @@ module.exports = {
       game.players[doused[i].number-1].alive = false
       if (game.config.deathReveal) game.players[doused[i].number-1].roleRevealed = true
       
-          // how do we get the names?
-      //the doused var is for numbers
-      //and if we do doused then player Names, it wI'll be 1,5 (marksman), (doc) 
-// no, this doused var in this page is for the game players
-      // read above
       fn.broadcastTo(
         client, game.players.filter(p => !p.left),
-      	`Arsonist <:Arsonist:> has ignited **${doused[i].number} ${fn.getUser(client, doused[i].id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, doused/}` : ""}**.`
+      	`Arsonist <:Arsonist:> has ignited **${doused[i].number} ${fn.getUser(client, doused[i].id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, doused[0].role)}` : ""}**.`
         //death messaves do not use embeds
+        
       ) 
     }
     gamePlayer.usedAbilityTonight = true
