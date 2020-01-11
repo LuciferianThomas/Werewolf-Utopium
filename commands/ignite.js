@@ -56,10 +56,9 @@ module.exports = {
       
       fn.broadcastTo(
         client, game.players.filter(p => !p.left),
-      	`Arsonist <:Arsonist:> has ignited **${doused[i].number} ${fn.getUser(client, doused[i].id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, doused[0].role)}` : ""}**.`
-        //death messaves do not use embeds
-        
+      	`The Arsonist <:Arsonist:660365416480243752> has ignited<:Arsonist_Ignite:664263079273431054> **${doused[i].number} ${fn.getUser(client, doused[i].id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, doused[0].role)}` : ""}**.`
       ) 
+      // ^ add ignite emoji plz... done
     }
     gamePlayer.usedAbilityTonight = true
     
