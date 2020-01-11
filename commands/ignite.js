@@ -22,9 +22,9 @@ module.exports = {
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
     if (gamePlayer.role != "Arsonist")
-      return await message.author.send("You do not have the abilities to douse a player.")
+      return await message.author.send("You do not have the abilities to ignite players.")
     if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer douse a player.")
+      return await message.author.send("You are dead. You can no longer ignite players.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
@@ -36,13 +36,13 @@ module.exports = {
     }
     
     if (game.currentPhase % 3 != 0)
-      return await message.author.send("You can only douse players during the night!")
-    
-    // hint
+      return await message.author.send("You can only ignite players during the night!")
     
     let doused = game.players.filter(p => p.alive && p.doused.includes(gamePlayer.number))
+    if (doused == 0)
+      return await message.author.send("You haven't doused anyone or every doused player is dead! Do `w!douse [player1] [player 2]` first!") 
     
- /*   let targetA = parseInt(args[0]),
+		let targetA = parseInt(args[0]),
         targetB = parseInt(args[1])
     if (isNaN(targetA) || targetA > game.players.length || targetA < 1 ||
        isNaN(targetB) || targetB > game.players.length || targetB < 1)
@@ -63,10 +63,11 @@ module.exports = {
     
     message.author.send(
     	new Discord.RichEmbed()
+      ) 
     gamePlayer.usedAbilityTonight = true
     
     QuickGames[index] = game
     games.set("quick", QuickGames)
-    */
+    
   }
 } 
