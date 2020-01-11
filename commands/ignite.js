@@ -10,7 +10,7 @@ const roles = require('/app/util/roles')
 const fn = require('/app/util/fn') 
 
 module.exports = {
-  name: 'douse', 
+  name: 'ignite', 
   run: async (client, message, args, shared) => {
   let player = player.get(message.author.id)
   if (!player.currentGame)
@@ -38,7 +38,11 @@ module.exports = {
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only douse players during the night!")
     
-    let targetA = parseInt(args[0]),
+    // hint
+    
+    let doused = game.players.filter(p => p.alive && p.doused.includes(gamePlayer.number))
+    
+ /*   let targetA = parseInt(args[0]),
         targetB = parseInt(args[1])
     if (isNaN(targetA) || targetA > game.players.length || targetA < 1 ||
        isNaN(targetB) || targetB > game.players.length || targetB < 1)
@@ -59,19 +63,10 @@ module.exports = {
     
     message.author.send(
     	new Discord.RichEmbed()
-      .setAuthor(`Doused Players`, fn.getEmoji(client, "Arsonist").url)
-      .setThumnail(fn.getEmoji(client, "Arsonist_Doused").url)
-      .setDescription(
-        `You have doused **${targetA} ${fn.getUser(client, targetPlayerA.id).username}** and **${targetA} ${fn.getUser(client, targetPlayerB.id).username}**!`
-      )
-    )
-
-    targetPlayerA.doused.push(gamePlayer.number)
-    targetPlayerB.doused.push(gamePlayer.number)
-    gamePlayer.usedAbilityTonight = [targetA, targetB]
-    //gamePlayer.usedAbilityTonight = true
+    gamePlayer.usedAbilityTonight = true
     
     QuickGames[index] = game
     games.set("quick", QuickGames)
+    */
   }
 } 
