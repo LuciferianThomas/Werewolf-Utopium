@@ -28,10 +28,11 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
-    if (gamePlayer.dousedTonight) {
+    if (gamePlayer.usedAbilityTonight) {
       let prevA = game.players[gamePlayer.dousedTonight[0]-1]
       let prevB = game.players[gamePlayer.dousedTonight[1]-1]
-      
+      prevA.doused.splice(prevA.doused.indexOf(gamePlayer.number), 1)
+      prevB.doused.splice(prevB.doused.indexOf(gamePlayer.number), 1)
     }
     
     if (game.currentPhase % 3 != 0)
@@ -67,7 +68,7 @@ module.exports = {
 
     targetPlayerA.doused.push(gamePlayer.number)
     targetPlayerB.doused.push(gamePlayer.number)
-    gamePlayer.dousedTonight = [targetA, targetB]
+    gamePlayer.usedAbilityTonight = [targetA, targetB]
     //gamePlayer.usedAbilityTonight = true
     
     QuickGames[index] = game
