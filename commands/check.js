@@ -4,6 +4,9 @@ const Discord = require("discord.js"),
 
 const roles = require('/app/util/roles')
 
+const games = new db.table("Games"),
+      players = new db.table("Players")
+
 const fn = require('/app/util/fn')
 
 module.exports = {

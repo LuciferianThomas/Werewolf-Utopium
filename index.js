@@ -151,8 +151,9 @@ client.on('ready', async () => {
           for (var x = 0; x < revivedPlayers.length; x++){
             fn.broadcastTo(
               client, game.players.filter(p => !p.left).map(p => p.id),
-              `<:Medium_Revive:660667751253278730> Medium has revived **${x.number} ${fn.getUser(client, x.id).username}**.`
+              `<:Medium_Revive:660667751253278730> Medium has revived **${revivedPlayers[x].number} ${fn.getUser(client, revivedPlayers[x].id).username}**.`
             )
+            
             game.players[x.number-1].alive = true
             game.players[x.number-1].revive = undefined
             for (var y of game.players[x.number-1].revive)
