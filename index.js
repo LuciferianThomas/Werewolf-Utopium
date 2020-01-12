@@ -87,7 +87,7 @@ client.on('ready', async () => {
           if (lynchCount.length) {
             let max = lynchCount.reduce((m, n) => Math.max(m, n))
             let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
-            if (lynched.length > 1 || lynchCount[lynched[0]] < game.players.filter(player => player.alive).length/2) {
+            if (lynched.length > 1 || lynchCount[lynched[0]] < Math.floor(game.players.filter(player => player.alive).length/2)) {
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left), 
                 "The village cannot decide on who to lynch."
