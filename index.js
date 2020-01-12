@@ -154,10 +154,10 @@ client.on('ready', async () => {
               `<:Medium_Revive:660667751253278730> Medium has revived **${revivedPlayers[x].number} ${fn.getUser(client, revivedPlayers[x].id).username}**.`
             )
             
-            game.players[x.number-1].alive = true
-            game.players[x.number-1].revive = undefined
-            for (var y of game.players[x.number-1].revive)
+            game.players[revivedPlayers[x].number-1].alive = true
+            for (var y of game.players[revivedPlayers[x].number-1].revive)
               game.players[y-1].revUsed = true
+            game.players[revivedPlayers[x].number-1].revive = undefined
           }
           
           for (var x = 0; x < game.players.length; x++)
