@@ -478,14 +478,14 @@ client.on('ready', async () => {
         
         let alive = game.players.filter(p => p.alive)
         
-        if ((alive.length == 1 && alive[0].role == "Serial Killer") ||
-            (alive.length == 2 && alive.map(p => p.role).includes("Serial Killer") && alive.map(p => p.role).includes("Jailer"))) {
+        if ((alive.length == 1 && roles[alive[0].role].team == "Solo" && alive[0].role != "Headhunter") ||
+            (alive.length == 2 && alive.map(p => roles[p.role].team).includes("Solo") && !alive.map(p => p.role).includes("Headhunter") && alive.map(p => p.role).includes("Jailer"))) {
           game.currentPhase = 999
           fn.broadcastTo(
             client, game.players.filter(p => !p.left).map(p => p.id),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(client.emojis.find(e => e.name == "Serial Killer").url)
+              .setThumbnail(client.emojis.find(e => e.name == alive.find(p => roles[).url)
               .setDescription(
                 `Serial Killer **${alive.find(p => p.role == "Serial Killer").number} ` +
                 `${fn.getUser(client, alive.find(p => p.role == "Serial Killer").id)}** wins!`
