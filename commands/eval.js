@@ -29,6 +29,7 @@ module.exports = {
 		try {
 			var out = eval(args.join(' '))
 			out = JSON.stringify(out)
+      if (out === undefined) out = "undefined"
       
       if (modifier == "-e" && out.length <= 1024-8) message.channel.send(
         new Discord.RichEmbed()
