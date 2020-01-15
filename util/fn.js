@@ -161,7 +161,7 @@ const addXP = (users, xp) => {
 
 const addWin = (game, winners, team) => {
   for (var i = 0; i < game.players.length; i++) {
-    if (winners.include(game.players[i].number))
+    if (winners.includes(game.players[i].number))
       players.push(`${game.players[i].id}.wins`, {role: game.players[i].role, team: team})
     else 
       players.push(`${game.players[i].id}.loses`, {role: game.players[i].role, team: team == "Village" && game.players[i].role == "Headhunter" ? "Solo" : roles[game.players[i].role].team})

@@ -485,15 +485,15 @@ client.on('ready', async () => {
             client, game.players.filter(p => !p.left).map(p => p.id),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(client.emojis.find(e => e.name == alive.find(p => roles[).url)
+              .setThumbnail(client.emojis.find(e => e.name == alive.find(p => roles[p.role].team == "Solo")).url)
               .setDescription(
-                `Serial Killer **${alive.find(p => p.role == "Serial Killer").number} ` +
-                `${fn.getUser(client, alive.find(p => p.role == "Serial Killer").id)}** wins!`
+                `${alive.find(p => roles[p.role].team == "Solo")} **${alive.find(p => roles[p.role].team == "Solo").number} ` +
+                `${fn.getUser(client, alive.find(p => roles[p.role].team == "Solo").id)}** wins!`
               )
           )
-          fn.addXP(alive.find(p => p.role == "Serial Killer"), 250)
+          fn.addXP(alive.find(p => roles[p.role].team == "Solo"), 250)
           fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addWin(game, alive.find(p => p.role == "Serial Killer").number, "Solo")
+          fn.addWin(game, [alive.find(p => roles[p.role].team == "Solo").number], "Solo")
           continue;
         }
         
