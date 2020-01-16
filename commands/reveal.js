@@ -8,7 +8,7 @@ const games = new db.table("Games"),
 const fn = require('/app/util/fn')
 
 module.exports = {
-  name: "shoot",
+  name: "reveal",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 

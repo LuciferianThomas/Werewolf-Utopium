@@ -35,20 +35,44 @@ module.exports = {
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
-    if (!game.players[target-1].alive)
+    
+    let targetPlayer = game.players[target-1]
+    if (!targetPlayer.alive)
       return await message.author.send("You cannot poison an dead player.")
     if (target == gamePlayer.number)
       return await message.author.send("You cannot poison yourself.")
     
-    game.players[target-1].alive = false
+    targetPlayer.alive = false
     
     fn.broadcastTo(
       client, game.players.filter(p => !p.left).map(p => p.id), 
-      `<:Witch_Poison:660667541185626112> Witch poisoned **${target} ${fn.getUser(client, game.players[target-1].id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, game.players[target-1].role)}` : ""})**.`)
+      `<:Witch_Poison:660667541185626112> Witch poisoned **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
     
-    if (game.config.deathReveal) game.players[target-1].roleRevealed = true
+    if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
     gamePlayer.poisonUsed = true
     game.lastDeath = game.currentPhase
+
+    if (["Junior Werewolf","Avenger"].includes(targetPlayer.role) && targetPlayer.avenge) {
+      let avengedPlayer = game.players[targetPlayer.avenge-1]
+
+      avengedPlayer.alive = false
+      if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+      fn.broadcastTo(
+        client,
+        game.players.filter(p => !p.left),
+        `${fn.getEmoji(
+          client,
+          `${targetPlayer.role} Select`
+        )} The ${targetPlayer.role.toLowerCase()}'s death has been avenged, **${
+          avengedPlayer.number
+        } ${fn.getUser(client, avengedPlayer.id).username}${
+          game.config.deathReveal
+            ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+            : ""
+        }** is dead!`
+      )
+    }
     
     QuickGames[index] = game
     

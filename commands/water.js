@@ -66,12 +66,12 @@ module.exports = {
           client,
           game.players.filter(p => !p.left),
           `<:Junior_Werewolf_Select:660668473847840798> The junior werewolf's death has been avenged, **${
-            targetPlayer.number
-          } ${fn.getUser(client, targetPlayer.id).username}${
+            avengedPlayer.number
+          } ${fn.getUser(client, avengedPlayer.id).username}${
             game.config.deathReveal
-              ? ` ${fn.getEmoji(client, targetPlayer.role)}`
+              ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
               : ""
-          }**.`
+          }** is dead!`
         )
       }
     }

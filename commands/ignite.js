@@ -37,16 +37,44 @@ module.exports = {
       return await message.author.send("You haven't doused anyone or every doused player is dead! Do `w!douse [player1] [player2]` first!") 
     
     for (var i = 0; i < doused.length; i++) {
-      let dousedPlayer = 
+      let dousedPlayer = game.players[doused[i].number-1]
       
-      game.players[doused[i].number-1].alive = false
-      if (game.config.deathReveal) game.players[doused[i].number-1].roleRevealed = true
+      dousedPlayer.alive = false
+      if (game.config.deathReveal) dousedPlayer.roleRevealed = dousedPlayer.role
       
       fn.broadcastTo(
-        client, game.players.filter(p => !p.left),
-      	`The Arsonist <:Arsonist:660365416480243752> has ignited<:Arsonist_Ignite:664263079273431054> **${doused[i].number} ${fn.getUser(client, doused[i].id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, doused[0].role)}` : ""}**.`
+        client,
+        game.players.filter(p => !p.left),
+        `<:Arsonist_Ignite:664263079273431054> The Arsonist <:Arsonist:660365416480243752> has ignited **${
+          doused[i].number
+        } ${fn.getUser(client, dousedPlayer.id)}${
+          game.config.deathReveal
+            ? ` ${fn.getEmoji(client, dousedPlayer.role)}`
+            : ""
+        }**.`
       ) 
-      // ^ add ignite emoji plz... done
+
+      if (["Junior Werewolf","Avenger"].includes(dousedPlayer.role) && dousedPlayer.avenge) {
+        let avengedPlayer = game.players[dousedPlayer.avenge-1]
+
+        avengedPlayer.alive = false
+        if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+        fn.broadcastTo(
+          client,
+          game.players.filter(p => !p.left),
+          `${fn.getEmoji(
+            client,
+            `${dousedPlayer.role} Select`
+          )} The ${dousedPlayer.role.toLowerCase()}'s death has been avenged, **${
+            avengedPlayer.number
+          } ${fn.getUser(client, avengedPlayer.id).username}${
+            game.config.deathReveal
+              ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+              : ""
+          }** is dead!`
+        )
+      }
     }
     gamePlayer.usedAbilityTonight = true
     

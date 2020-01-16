@@ -381,6 +381,28 @@ client.on('ready', async () => {
                         : client.getEmoji(client, "Fellow Werewolf")
                     }**.`
                   )
+
+                  if (weakestWW.role == "Junior Werewolf" && weakestWW.avenge) {
+                    let avengedPlayer = game.players[weakestWW.avenge-1]
+
+                    avengedPlayer.alive = false
+                    if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+                    fn.broadcastTo(
+                      client,
+                      game.players.filter(p => !p.left),
+                      `${fn.getEmoji(
+                        client,
+                        `Junior Werewolf Select`
+                      )} The junior werewolf's death has been avenged, **${
+                        avengedPlayer.number
+                      } ${fn.getUser(client, avengedPlayer.id).username}${
+                        game.config.deathReveal
+                          ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+                          : ""
+                      }** is dead!`
+                    )
+                  }
                 }
               }
             }
