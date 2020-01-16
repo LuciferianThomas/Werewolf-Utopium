@@ -30,7 +30,7 @@ module.exports = {
     if (!games.get("quick")) games.set("quick", [])
     let QuickGames = games.get("quick")
     
-    let currentGame = QuickGames.find(game => game.players.length <= 16 && game.currentPhase < 0)
+    let currentGame = QuickGames.find(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "quick")
     if (currentGame) {
       QuickGames[QuickGames.indexOf(currentGame)].players.push({ id: message.author.id })
       currentGame = QuickGames.find(game => game.gameID == currentGame.gameID)
