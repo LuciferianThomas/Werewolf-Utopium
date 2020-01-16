@@ -177,6 +177,16 @@ client.on('ready', async () => {
                 `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
                   game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
               
+              if (lynchedPlayer.role == "President" ) {
+                game.currentPhase = 999
+                fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                new Discord.RichEmbed()
+                	.setTitle("Game has ended!")
+                	.setDescription) 
+              }
+  
+              
               if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge && game.players[lynchedPlayer.avenge].alive) {
                 let avengedPlayer = game.players[lynchedPlayer.avenge-1]
 
