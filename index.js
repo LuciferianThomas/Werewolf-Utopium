@@ -95,30 +95,32 @@ client.on('ready', async () => {
             }
             else {
               lynched = lynched[0]
-              game.players[lynched-1].alive = false
-              if (game.config.deathReveal) game.players[lynched-1].roleRevealed = true
+              let lynchedPlayer = game.players[lynched-1]
+              
+              lynchedPlayer.alive = false
+              if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
             
               game.lastDeath = game.currentPhase
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left), 
-                `**${lynched} ${client.users.get(game.players[lynched-1].id).username}${
-                  game.config.deathReveal ? ` ${fn.getEmoji(client, game.players[lynched-1].role)}` : ""}** was lynched by the village.`)
-              if (game.players[lynched-1].role == "Fool") {
+                `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
+                  game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
+              if (lynchedPlayer.role == "Fool") {
                 game.currentPhase = 999
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
                   new Discord.RichEmbed()
                     .setTitle("Game has ended.")
                     .setThumbnail(client.emojis.find(e => e.name == "Fool").url)
-                    .setDescription(`Fool ${lynched} ${fn.getUser(client, game.players[lynched-1].id).username} wins!`)
+                    .setDescription(`Fool ${lynched} ${fn.getUser(client, lynchedPlayer.id).username} wins!`)
                 )
                 fn.addXP(game.players.filter(p => p.number == lynched), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
                 fn.addWin(game, lynched, "Solo")
                 continue;
               }
-              if (game.players[lynched-1].headhunter) {
-                let headhunter = game.players[game.players[lynched-1].headhunter-1]
+              if (lynchedPlayer.headhunter) {
+                let headhunter = game.players[lynchedPlayer.headhunter-1]
                 
                 if (headhunter.alive) {
                 game.currentPhase = 999
@@ -192,7 +194,7 @@ client.on('ready', async () => {
                   else {
                     game.lastDeath = game.currentPhase - 1
                     game.players[x-1].alive = false
-                    if (game.config.deathReveal) game.players[x-1].roleRevealed = true
+                    if (game.config.deathReveal) protector.roleRevealed = protector.role
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
                       `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
@@ -227,8 +229,8 @@ client.on('ready', async () => {
               }
             }
             else if (attackedPlayer.role == "Bodyguard") {
-              game.players[attacked-1].health -= 1
-              if (game.players[attacked-1].health) {
+              attackedPlayer.health -= 1
+              if (attackedPlayer.health) {
                 fn.getUser(client, attackedPlayer.id).send(
                   new Discord.RichEmbed()
                     .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
@@ -240,8 +242,8 @@ client.on('ready', async () => {
               }
               else {
                 game.lastDeath = game.currentPhase - 1
-                game.players[attacked-1].alive = false
-                if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
+                attackedPlayer.alive = false
+                if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
                   `The serial killer stabbed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
@@ -257,8 +259,8 @@ client.on('ready', async () => {
             }
             else {
               game.lastDeath = game.currentPhase - 1
-              game.players[attacked-1].alive = false
-              if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
+              attackedPlayer.alive = false
+              if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
                 `The serial killer stabbed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
@@ -314,8 +316,8 @@ client.on('ready', async () => {
                 let protector = game.players[x-1]
 
                 if (protector.role == "Bodyguard") {
-                  game.players[x-1].health -= 1
-                  if (game.players[x-1].health) {
+                  protector.health -= 1
+                  if (protector.health) {
                     fn.getUser(client, protector.id).send(
                       new Discord.RichEmbed()
                         .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
@@ -327,8 +329,8 @@ client.on('ready', async () => {
                   }
                   else {
                     game.lastDeath = game.currentPhase - 1
-                    game.players[x-1].alive = false
-                    if (game.config.deathReveal) game.players[x-1].roleRevealed = true
+                    protector.alive = false
+                    if (game.config.deathReveal) protector.roleRevealed = protector.role
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
                       `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
@@ -359,25 +361,18 @@ client.on('ready', async () => {
                   )
                 }
                 else if (protector.role == "Beast Hunter") {
-                  let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
-
-                  let wwByStrength = game.players
-                    .filter(p => p.alive && roles[p.role].team == "Werewolves")
-                  wwByStrength.sort((a,b) => {
-                    if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
-                      return 1
-                    if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
-                      return -1
-                    return 0
-                  })
-                  
                   weakestWW.alive = false
-                  if (game.config.roleReveal) weakestWW.
+                  if (game.config.deathReveal) weakestWW.roleRevealed = weakestWW.role
+                  
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left),
+                    `The beast hunter's trap killed **${weakestWW.number} ${client.getUser(client, weakestWW.id).username}${game.config.deathReveal ? client.getEmoji(client, weakestWW.role) : }**.`
+                  )
                 }
               }
             }
             else if (attackedPlayer.role == "Cursed") {
-              game.players[attacked-1].role = "Werewolf"
+              attackedPlayer.role = "Werewolf"
               game.lastDeath = game.currentPhase - 1
               fn.getUser(client, attackedPlayer.id).send(
                 new Discord.RichEmbed()
@@ -392,8 +387,8 @@ client.on('ready', async () => {
               )
             }
             else if (attackedPlayer.role == "Bodyguard") {
-              game.players[attacked-1].health -= 1
-              if (game.players[attacked-1].health) {
+              attackedPlayer.health -= 1
+              if (attackedPlayer.health) {
                 fn.getUser(client, attackedPlayer.id).send(
                   new Discord.RichEmbed()
                     .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
@@ -405,8 +400,8 @@ client.on('ready', async () => {
               }
               else {
                 game.lastDeath = game.currentPhase - 1
-                game.players[attacked-1].alive = false
-                if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
+                attackedPlayer.alive = false
+                if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
                   `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id)}${
@@ -422,8 +417,8 @@ client.on('ready', async () => {
             }
             else {
               game.lastDeath = game.currentPhase - 1
-              game.players[attacked-1].alive = false
-              if (game.config.deathReveal) game.players[attacked-1].roleRevealed = true
+              attackedPlayer.alive = false
+              if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
                 `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
@@ -730,14 +725,14 @@ client.on('message', async message => {
     else {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && !p.alive && p.id != message.author.id).map(p => p.id),
-        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${content}_`
+        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(e => e.name == gamePlayer.roleRevealed.replace(/ /g, "_"))}` : ""}: ${content}_`
       )
     }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && (!p.alive || (p.alive && p.role == "Medium")) && p.id != message.author.id).map(p => p.id),
-        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""}: ${content}_`
+        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.roleRevealed.replace(/ /g, "_"))}` : ""}: ${content}_`
       )
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive && !gamePlayer.jailed) {
