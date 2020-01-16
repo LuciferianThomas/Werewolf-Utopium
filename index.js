@@ -255,6 +255,20 @@ client.on('ready', async () => {
             game.players[revivedPlayers[x].number-1].revive = undefined
           }
           
+          if (game.roles.includes("Grumpy Grandma")) {
+            let ggs = game.players.filter(p => p.role == "Grumpy Grandma").map(p => p.number)
+            for (var x = 0; x < ggs.length; x++) {
+              let muted = game.players[ggs[x].mute-1]
+              if (!muted) continue;
+              
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                `<:Grumpy_Grandma_Mute:660495619483238410> Grumpy Grandma muted **${muted.number} ${fn.getUser(client, muted.id)}**!` +
+                `They cannot speak or vote today.`
+              )
+            }
+          }
+          
           for (var x = 0; x < game.players.length; x++)
             Object.assign(game.players[x], {
               usedAbilityTonight: false,
@@ -628,7 +642,6 @@ client.on('ready', async () => {
         
         for (var j = 0; j < game.players.length; j++) {
           game.players[j].vote = null
-          
           if (game.currentPhase % 3 == 0 && game.players[j].role == "Tough Guy" && !game.players[j].health) {
             Object.assign(game.players[j], {
               health: 1,
@@ -751,6 +764,12 @@ client.on('ready', async () => {
             let gunners = game.players.filter(p => p.role == "Gunner").map(p => p.number)
             for (var x = 0; x < gunners.length; x++) 
               game.players[gunners[i]-1].shotToday = false
+          }
+          
+          if (game.roles.includes("Grumpy Grandma")) {
+            let ggs = game.players.filter(p => p.role == "Grumpy Grandma").map(p => p.number)
+            for (var x = 0; x < ggs.length; x++) 
+              game.players[ggs[i]-1].mute = undefined
           }
           
           fn.broadcastTo(
@@ -934,6 +953,8 @@ client.on('message', async message => {
   
   if (game.currentPhase == -1)
     return fn.broadcast(client, game, `**${message.author.username}**: ${content}`, [message.author.id])
+  
+  if (game.players.find(p => p.mute == gamePlayer.number)) content = "..."
   
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
