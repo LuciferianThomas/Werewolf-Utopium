@@ -173,69 +173,73 @@ client.on('ready', async () => {
                 (lynchedPlayer.role == "President" &&
                   game.players.filter(
                     p => p.alive && roles[p.role].team == "Werewolves"
-                  ).length == 2 &&)
-              )
-              lynchedPlayer.alive = false
-              if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
-            
-              game.lastDeath = game.currentPhase
-              fn.broadcastTo(
-                client, game.players.filter(p => !p.left), 
-                `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
-                  game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
-              
-              if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge && game.players[lynchedPlayer.avenge].alive) {
-                let avengedPlayer = game.players[lynchedPlayer.avenge-1]
+                  ).length == 2 &&
+                  game.players.filter(
+                    p => p.alive && roles[p.role].team == "Solo"
+                  ).length == 1)
+              ) {
+                lynchedPlayer.alive = false
+                if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
 
-                avengedPlayer.alive = false
-                if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
+                game.lastDeath = game.currentPhase
                 fn.broadcastTo(
-                  client,
-                  game.players.filter(p => !p.left),
-                  `${fn.getEmoji(
+                  client, game.players.filter(p => !p.left), 
+                  `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
+                    game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
+
+                if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge && game.players[lynchedPlayer.avenge].alive) {
+                  let avengedPlayer = game.players[lynchedPlayer.avenge-1]
+
+                  avengedPlayer.alive = false
+                  if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+                  fn.broadcastTo(
                     client,
-                    `${lynchedPlayer.role} Select`
-                  )} The ${lynchedPlayer.role.toLowerCase()}'s death has been avenged, **${
-                    avengedPlayer.number
-                  } ${fn.getUser(client, avengedPlayer.id).username}${
-                    game.config.deathReveal
-                      ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-                      : ""
-                  }** is dead!`
-                )
-              }
-              
-              if (lynchedPlayer.role == "Fool") {
-                game.currentPhase = 999
-                fn.broadcastTo(
-                  client, game.players.filter(p => !p.left),
-                  new Discord.RichEmbed()
-                    .setTitle("Game has ended.")
-                    .setThumbnail(client.emojis.find(e => e.name == "Fool").url)
-                    .setDescription(`Fool ${lynched} ${fn.getUser(client, lynchedPlayer.id).username} wins!`)
-                )
-                fn.addXP(game.players.filter(p => p.number == lynched), 100)
-                fn.addXP(game.players.filter(p => !p.left), 15)
-                fn.addWin(game, lynched, "Solo")
-                continue;
-              }
-              if (lynchedPlayer.headhunter) {
-                let headhunter = game.players[lynchedPlayer.headhunter-1]
-                
-                if (headhunter.alive) {
-                game.currentPhase = 999
-                fn.broadcastTo(
-                  client, game.players.filter(p => !p.left),
-                  new Discord.RichEmbed()
-                    .setTitle("Game has ended.")
-                    .setThumbnail(client.emojis.find(e => e.name == "Headhunter").url)
-                    .setDescription(`Headhunter **${headhunter.number} ${fn.getUser(client, headhunter.id).username}** wins!`)
-                )
-                fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
-                fn.addXP(game.players.filter(p => !p.left), 15)
-                fn.addWin(game, headhunter.number, "Solo")
-                continue;
+                    game.players.filter(p => !p.left),
+                    `${fn.getEmoji(
+                      client,
+                      `${lynchedPlayer.role} Select`
+                    )} The ${lynchedPlayer.role.toLowerCase()}'s death has been avenged, **${
+                      avengedPlayer.number
+                    } ${fn.getUser(client, avengedPlayer.id).username}${
+                      game.config.deathReveal
+                        ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+                        : ""
+                    }** is dead!`
+                  )
+                }
+
+                if (lynchedPlayer.role == "Fool") {
+                  game.currentPhase = 999
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left),
+                    new Discord.RichEmbed()
+                      .setTitle("Game has ended.")
+                      .setThumbnail(client.emojis.find(e => e.name == "Fool").url)
+                      .setDescription(`Fool ${lynched} ${fn.getUser(client, lynchedPlayer.id).username} wins!`)
+                  )
+                  fn.addXP(game.players.filter(p => p.number == lynched), 100)
+                  fn.addXP(game.players.filter(p => !p.left), 15)
+                  fn.addWin(game, lynched, "Solo")
+                  continue;
+                }
+                if (lynchedPlayer.headhunter) {
+                  let headhunter = game.players[lynchedPlayer.headhunter-1]
+
+                  if (headhunter.alive) {
+                  game.currentPhase = 999
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left),
+                    new Discord.RichEmbed()
+                      .setTitle("Game has ended.")
+                      .setThumbnail(client.emojis.find(e => e.name == "Headhunter").url)
+                      .setDescription(`Headhunter **${headhunter.number} ${fn.getUser(client, headhunter.id).username}** wins!`)
+                  )
+                  fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
+                  fn.addXP(game.players.filter(p => !p.left), 15)
+                  fn.addWin(game, headhunter.number, "Solo")
+                  continue;
+                  }
                 }
               }
             }
