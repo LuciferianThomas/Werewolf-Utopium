@@ -37,7 +37,7 @@ const addWin = (game, winners, team) => {
       players.push(`${game.players[i].id}.wins`, {
         role: game.players[i].role,
         team: team ? team : 
-              game.players[]roles[game.players[i].role].team
+              game.players[i].sect ? "Sect" : roles[game.players[i].role].team
       })
     else 
       players.push(`${game.players[i].id}.loses`, {
@@ -48,6 +48,8 @@ const addWin = (game, winners, team) => {
             p => p.alive && p.headhunter == game.players[i].number
           )
             ? "Solo"
+            : game.players[i].sect
+            ? "Sect"
             : roles[game.players[i].role].team
       })
   }

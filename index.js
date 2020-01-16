@@ -168,16 +168,6 @@ client.on('ready', async () => {
               lynched = lynched[0]
               let lynchedPlayer = game.players[lynched-1]
               
-              if (
-                lynchedPlayer.role !== "President" ||
-                (lynchedPlayer.role == "President" &&
-                  game.players.filter(
-                    p => p.alive && roles[p.role].team == "Werewolves"
-                  ).length == 2 &&
-                  game.players.filter(
-                    p => p.alive && roles[p.role].team == "Solo"
-                  ).length == 1)
-              ) {
                 lynchedPlayer.alive = false
                 if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
 
@@ -241,7 +231,7 @@ client.on('ready', async () => {
                   continue;
                   }
                 }
-              }
+              
             }
           } else
             fn.broadcastTo(
@@ -739,15 +729,10 @@ client.on('ready', async () => {
           fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
           fn.addXP(game.players.filter(p => (roles[p.role].team == "Werewolves" || p.role == "Zombie") && !p.suicide), 75)
           fn.addXP(game.players.filter(p => ["Headhunter","Fool","Bomber","Arsonist","Corruptor"].includes(p.role) && !p.suicide), 100)
-          fn.addXP(game.players.filter(p => p.role == "Sect Leader" && !p.suicide), 100)
+          fn.addXP(game.players.filter(p => p.role == "Sect Leader" && !p.suicide), 120)
+          fn.addXP(game.players.filter(p => p.role == "Serial Killer" && !p.suicide), 250)
           fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addWin(game, game.players.filter(
-            p =>
-              !p.suicide &&
-              (roles[p.role].team == "Village" ||
-                (p.role == "Headhunter" &&
-                  !game.players.find(pl => pl.headhunter == p.number).alive))
-          ).map(p => p.number))
+          fn.addWin(game, game.players.filter(p => !p.suicide && roles[p.role].team != "Village").map(p => p.number))
         }
         
         if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
