@@ -21,7 +21,7 @@ module.exports = {
         game = QuickGames.find(g => g.gameID == player.currentGame),
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
-    if (!gamePlayer.role.includes("Seer") || gamePlayer.role.includes("Sorcerer"))
+    if (!["Seer", "Aura Seer", "Sorcerer", "Wolf Seer"].includes(gamePlayer.role))
       return await message.author.send("You do not have the abilities to check on a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer check on a player.")
@@ -66,8 +66,8 @@ module.exports = {
           .setThumbnail(client.emojis.find(e => e.name == (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role).replace(/ /g, "_")).url)
           .setDescription(
             `${target} ${client.users.get(targetPlayer.id).username} is a${
-              ["A", "E", "I", "O", "U"].includes(targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
-            } ${targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
+              ["A", "E", "I", "O", "U"].includes(!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
+            } ${!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
           )
       )
     }
