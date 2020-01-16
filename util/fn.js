@@ -55,7 +55,7 @@ let getUser = (client, data) => {
   if (data instanceof Discord.GuildMember) return data.user
   if (data instanceof Discord.Message) return data.author
   if (typeof data == "string") return client.users.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
-  throw Error('Cannot find user.')
+  // throw Error('Cannot find user.')
 }
 
 let getMember = (guild, data) => {
@@ -63,13 +63,13 @@ let getMember = (guild, data) => {
   if (data instanceof Discord.GuildMember) return data
   if (data instanceof Discord.Message) return data.member
   if (typeof data == "string") return guild.members.find(member => member.user.id == data || member.user.tag.toLowerCase() == data.toLowerCase())
-  throw Error('Cannot find member.')
+  // throw Error('Cannot find member.')
 }
 
 let getRole = (guild, data) => {
   if (data instanceof Discord.Role) return data
   if (typeof data == "string") return guild.roles.find(role => role.name.toLowerCase() == data.toLowerCase() || role.id == data || role.name.toLowerCase().startsWith(data.toLowerCase()))
-  throw Error('Cannot find role.')
+  // throw Error('Cannot find role.')
 }
 
 let getEmoji = (client, name) => {

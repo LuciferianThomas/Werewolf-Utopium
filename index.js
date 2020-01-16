@@ -61,17 +61,44 @@ client.on('ready', async () => {
       if (game.currentPhase < 999)
         for (let pl = 0; pl < game.players.length; pl++) {
           if (game.currentPhase == -1) {
-            if (!game.players[pl].alive || game.players[pl].left) continue;
-            if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
-              fn.getUser(client, game.players[pl].id).send(`You were removed from Game #${game.gameID} for inactivity.`)
+            if (!fn.getUser(client, game.players[pl].id)) {
               players.set(`${game.players[pl].id}.currentGame`, 0)
-              game.players.splice(pl--, 1)
               fn.broadcastTo(
                 client,
                 game.players,
-                `**${fn.getUser(client, game.players[pl].id
-                )} left the game.`
+                new Discord.RichEmbed()
+                  .setAuthor(
+                    `**${fn.getUser(client, game.players[pl].id).username}** left the game.`,
+                    fn.getUser(client, game.players[pl].id).displayAvatarURL
+                  )
+                  .addField(
+                    `Players [${game.players.length}]`,
+                    game.players
+                      .map(p => fn.getUser(client, p.id).username)
+                      .join("\n")
+                  )
               )
+              game.players.splice(pl--, 1)
+            }
+            else if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
+              fn.getUser(client, game.players[pl].id).send(`You are removed from Game #${game.gameID} for inactivity.`)
+              players.set(`${game.players[pl].id}.currentGame`, 0)
+              fn.broadcastTo(
+                client,
+                game.players,
+                new Discord.RichEmbed()
+                  .setAuthor(
+                    `**${fn.getUser(client, game.players[pl].id).username}** left the game.`,
+                    fn.getUser(client, game.players[pl].id).displayAvatarURL
+                  )
+                  .addField(
+                    `Players [${game.players.length}]`,
+                    game.players
+                      .map(p => fn.getUser(client, p.id).username)
+                      .join("\n")
+                  )
+              )
+              game.players.splice(pl--, 1)
             } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
               game.players[pl].prompted = true
               fn.getUser(client, game.players[pl].id).send(
@@ -92,8 +119,7 @@ client.on('ready', async () => {
 
               fn.getUser(client, game.players[pl].id).send(`You were removed from Game #${game.gameID} for inactivity.`)
               fn.broadcastTo(
-                client,
-                game.players.filter(p => !p.left),
+                client, game.players.filter(p => !p.left),
                 `**${game.players[pl].number} ${fn.getUser(
                   client,
                   game.players[pl].id
