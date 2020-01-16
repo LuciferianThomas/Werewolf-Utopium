@@ -21,7 +21,7 @@ const quickGameRoles = [
 
 module.exports = {
   name: "quick",
-  aliases: ["joingame", "q"],
+  aliases: ["q"],
   run: async (client, message, args, shared) => {
     if (players.get(`${message.author.id}.currentGame`)) 
       return await message.author.send("You are already in a game!")
@@ -64,7 +64,8 @@ module.exports = {
     })
     if (!m) return undefined
     
-    fn.broadcast( client, currentGame,
+    fn.broadcastTo(
+      client, currentGame.players,
       new Discord.RichEmbed()
         .setAuthor(`${message.author.username} joined the game.`, message.author.displayAvatarURL)         
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))

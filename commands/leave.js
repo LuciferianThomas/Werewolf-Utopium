@@ -55,14 +55,14 @@ module.exports = {
       gamePlayer.alive = false
       gamePlayer.left = true
       gamePlayer.suicide = true
+      players.add(`${gamePlayer.id}.suicides`, 1)
     }
 
     QuickGames = games.get("quick")
     QuickGames[QuickGames.indexOf(QuickGames.find(g => g.gameID == game.gameID))] = game
 
     games.set("quick", QuickGames)
-    player.currentGame = 0
-    players.set(message.author.id, player)
+    players.set(`${message.author.id}.currentGame`, 0)
     
     message.author.send(`You left Game #${game.gameID}.`)
     if (game.players.length)

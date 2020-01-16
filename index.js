@@ -63,12 +63,12 @@ client.on('ready', async () => {
           if (game.currentPhase == -1) {
             if (!game.players[pl].alive || game.players[pl].left) continue;
             if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
-              fn.getUser(client, game.players[pl].id).send(
-              "")
+              fn.getUser(client, game.players[pl].id).send(`You were removed from Game #${game.gameID} for inactivity.`)
+              players.set(`${game.players[pl].id}.currentGame`, 0)
               game.players.splice(pl--, 1)
               fn.broadcastTo(
                 client,
-                game.players.filter(p => !p.left),
+                game.players,
                 `**${fn.getUser(client, game.players[pl].id
                 )} left the game.`
               )
@@ -87,7 +87,10 @@ client.on('ready', async () => {
               game.players[pl].left = true
               game.players[pl].suicide = true
               if (game.config.deathReveal) game.players[pl].roleRevealed = game.players[pl].role
+              players.add(`${game.players[pl].id}.suicides`, 1)
+              players.set(`${game.players[pl].id}.currentGame`, 0)
 
+              fn.getUser(client, game.players[pl].id).send(`You were removed from Game #${game.gameID} for inactivity.`)
               fn.broadcastTo(
                 client,
                 game.players.filter(p => !p.left),
@@ -699,19 +702,22 @@ client.on('ready', async () => {
         }
         
         if (game.lastDeath + 6 == game.currentPhase) {
-          fn.broadcast(client, game, "There has been no deaths for two days. Three consecutive days without deaths will result in a tie.")
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left), 
+            "There has been no deaths for two days. Three consecutive days without deaths will result in a tie."
+          )
         }
         
         if (game.lastDeath + 9 == game.currentPhase || !game.players.filter(p => p.alive).length) {
           game.currentPhase = 999
           fn.broadcastTo(
-            client, game.players.filter(p => !p.left).map(p => p.id),
+            client, game.players.filter(p => !p.left),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
               // .setThumbnail(client.emojis.find(e => e.name == "Headhunter").url)
               .setDescription(`It was a tie.`)
           )
-          fn.addXP(game.players, 15)
+          fn.addXP(game.players.filter(p => !p.suicide), 15)
           fn.addXP(game.players.filter(p => !p.left), 15)
           continue;
         }
@@ -866,9 +872,12 @@ client.on('message', async message => {
     if (!players.get(message.author.id)) 
        players.set(message.author.id, {
          xp: 0,
+         coins: 0,
+         roses: 0,
          currentGame: null,
          wins: [],
-         loses: []
+         loses: [],
+         suicides: 0
        })   
         
 		try {
@@ -896,7 +905,7 @@ client.on('message', async message => {
   games.set("quick", QG)
   
   if (message.channel.type !== "dm" || message.author.bot) return;
-  if (message.content.startsWith('w!')) return;
+  if (message.content.startsWith('w!') || message.content.toLowerCase() == "w!") return;
 
   let content = message.cleanContent
   content = content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+|localhost)(:\d+)?(\/[^\s]*)*/gi, "")
