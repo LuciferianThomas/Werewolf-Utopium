@@ -56,7 +56,7 @@ module.exports = {
         )}**.`
       )
       
-      if (targetPlayer.role == "Junior Werewolf" && targetPlayer.avenge) {
+      if (targetPlayer.role == "Junior Werewolf" && targetPlayer.avenge && game.players[targetPlayer.avenge].alive) {
         let avengedPlayer = game.players[targetPlayer.avenge-1]
         
         avengedPlayer.alive = false

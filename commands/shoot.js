@@ -58,7 +58,7 @@ module.exports = {
         client, game.players.filter(p => !p.left).map(p => p.id), 
         `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
       
-    if (["Junior Werewolf","Avenger"].includes(targetPlayer.role) && targetPlayer.avenge) {
+    if (["Junior Werewolf","Avenger"].includes(targetPlayer.role) && targetPlayer.avenge && game.players[targetPlayer.avenge].alive) {
       let avengedPlayer = game.players[targetPlayer.avenge-1]
 
       avengedPlayer.alive = false

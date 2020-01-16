@@ -177,7 +177,7 @@ client.on('ready', async () => {
                 `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
                   game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
               
-              if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge) {
+              if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge && game.players[lynchedPlayer.avenge].alive) {
                 let avengedPlayer = game.players[lynchedPlayer.avenge-1]
 
                 avengedPlayer.alive = false
@@ -418,6 +418,28 @@ client.on('ready', async () => {
                     : ""
                 }**.`
               )
+              
+              if (["Junior Werewolf","Avenger"].includes(attackedPlayer.role) && attackedPlayer.avenge && game.players[attackedPlayer.avenge].alive) {
+                let avengedPlayer = game.players[attackedPlayer.avenge-1]
+
+                avengedPlayer.alive = false
+                if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+                fn.broadcastTo(
+                  client,
+                  game.players.filter(p => !p.left),
+                  `${fn.getEmoji(
+                    client,
+                    `${attackedPlayer.role} Select`
+                  )} The ${attackedPlayer.role.toLowerCase()}'s death has been avenged, **${
+                    avengedPlayer.number
+                  } ${fn.getUser(client, avengedPlayer.id).username}${
+                    game.config.deathReveal
+                      ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+                      : ""
+                  }** is dead!`
+                )
+              }
             }
           }
           
@@ -543,7 +565,7 @@ client.on('ready', async () => {
                     }**.`
                   )
 
-                  if (weakestWW.role == "Junior Werewolf" && weakestWW.avenge) {
+                  if (weakestWW.role == "Junior Werewolf" && weakestWW.avenge && game.players[weakestWW.avenge].alive) {
                     let avengedPlayer = game.players[weakestWW.avenge-1]
 
                     avengedPlayer.alive = false
