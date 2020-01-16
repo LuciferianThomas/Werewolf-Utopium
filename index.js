@@ -532,7 +532,8 @@ client.on('ready', async () => {
         
         for (var j = 0; j < game.players.length; j++) {
           game.players[j].vote = null
-          if (game.players[j].role == "Tough Guy" && !game.players[j].health) {
+          
+          if (game.currentPhase % 3 == 0 && game.players[j].role == "Tough Guy" && !game.players[j].health) {
             Object.assign(game.players[j], {
               health: 1,
               alive: false,
@@ -541,7 +542,7 @@ client.on('ready', async () => {
             
             fn.broadcastTo(
               client, game.players.filter(p => !p.left),
-              `The tough guy****`
+              `The tough guy **${game.players[j].number} ${fn.getUser(client, game.players[j].id)}** was wounded last night and has died now.`
             )
           }
         }

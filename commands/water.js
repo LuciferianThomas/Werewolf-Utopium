@@ -82,7 +82,7 @@ module.exports = {
         game.players.filter(p => !p.left),
         `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${
           message.author.username
-        }** tried holy water on **${targetPlayer.number} ${
+        }** tried to throw holy water on **${targetPlayer.number} ${
           fn.getUser(client, targetPlayer.id).username
         }** and killed themselves. They are not a werewolf!`
       )
