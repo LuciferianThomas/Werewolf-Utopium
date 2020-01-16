@@ -166,22 +166,23 @@ client.on('ready', async () => {
             Object.assign(game.players[x], {usedAbilityTonight: false, enchanted: []})
           
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
-              sks = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.id)
+              sks = game.players.filter(player => player.alive && player.role == "Serial Killer")
           for (var x = 0; x < skKills.length; x++) {
             if (!skKills[x]) continue;
             let attacked = skKills[x],
-                attackedPlayer = game.players[attacked-1]
+                attackedPlayer = game.players[attacked-1],
+                sk = game.players[sks[x].number-1]
             
             if (attackedPlayer.protectors.length) {
-              fn.getUser(client, sks[x]).send(
+              fn.getUser(client, sk.id).send(
                 `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
               )
               for (var x of attackedPlayer.protectors) {
                 let protector = game.players[x-1]
 
                 if (protector.role == "Bodyguard") {
-                  game.players[x-1].health -= 1
-                  if (game.players[x-1].health) {
+                  protector.health -= 1
+                  if (protector.health) {
                     fn.getUser(client, protector.id).send(
                       new Discord.RichEmbed()
                         .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
@@ -206,7 +207,23 @@ client.on('ready', async () => {
                   }
                 }
                 else if (protector.role == "Tough Guy") {
-                  // TODO
+                  protector.health = 0
+                  
+                  fn.getUser(client, protector.id).send(
+                    new Discord.RichEmbed()
+                      .setAuthor(
+                        "Attacked!",
+                        fn.getEmoji(client, "Bodyguard Protect").url
+                      )
+                      .setDescription(
+                        `You protected **${attackedPlayer.number} ${
+                          fn.getUser(client, attackedPlayer.id).username
+                        }** who was attacked by **${sk.number} ${
+                          client.getUser(client, sk.id).username
+                        } ${client.getEmoji(client, sk.role)}**.\n` +
+                        "You have been wounded and will die at the end of the day."
+                      )
+                  )
                 }
                 else if (protector.role == "Doctor") {
                   fn.getUser(client, protector.id).send(
@@ -218,6 +235,8 @@ client.on('ready', async () => {
                   )
                 }
                 else if (protector.role == "Witch") {
+                  protector.elixirUsed = true
+                  
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
                       .setAuthor("Elixir", fn.getEmoji("Witch Elixir").url)
@@ -255,7 +274,21 @@ client.on('ready', async () => {
               }
             }
             else if (attackedPlayer.role == "Tough Guy") {
-              // TODO
+              attackedPlayer.health = 0
+
+              fn.getUser(client, attackedPlayer.id).send(
+                new Discord.RichEmbed()
+                  .setAuthor(
+                    "Attacked!",
+                    fn.getEmoji(client, "Bodyguard Protect").url
+                  )
+                  .setDescription(
+                    `You were attacked by **${sk.number} ${
+                      client.getUser(client, sk.id).username
+                    } ${client.getEmoji(client, sk.role)}**.\n` +
+                    "You have been wounded and will die at the end of the day."
+                  )
+              )
             }
             else {
               game.lastDeath = game.currentPhase - 1
@@ -370,6 +403,8 @@ client.on('ready', async () => {
                   )
                 }
                 else if (protector.role == "Witch") {
+                  protector.elixirUsed = true
+                  
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
                       .setAuthor("Elixir", fn.getEmoji(client, "Witch Elixir").url)
@@ -497,6 +532,18 @@ client.on('ready', async () => {
         
         for (var j = 0; j < game.players.length; j++) {
           game.players[j].vote = null
+          if (game.players[j].role == "Tough Guy" && !game.players[j].health) {
+            Object.assign(game.players[j], {
+              health: 1,
+              alive: false,
+              roleRevealed: game.players[j].role
+            })
+            
+            fn.broadcastTo(
+              client, game.players.filter(p => !p.left),
+              `The tough guy****`
+            )
+          }
         }
         
         if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
