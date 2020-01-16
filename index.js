@@ -295,6 +295,21 @@ client.on('ready', async () => {
                 client, wolves,
                 `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
               )
+              
+              let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
+
+              let wwByStrength = game.players
+                .filter(p => p.alive && roles[p.role].team == "Werewolves")
+              wwByStrength.sort((a,b) => {
+                if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
+                  return 1
+                if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
+                  return -1
+                return 0
+              })
+              
+              let weakestWW = game.players[wwByStrength[0].number-1]
+              
               for (var x of attackedPlayer.protectors) {
                 let protector = game.players[x-1]
 
@@ -356,8 +371,8 @@ client.on('ready', async () => {
                     return 0
                   })
                   
-                  game.players[wwByStrength[0].number-1].alive = false
-                  if (game.config.roleReveal) game.players[wwByStrength[0].number-1].alive
+                  weakestWW.alive = false
+                  if (game.config.roleReveal) weakestWW.
                 }
               }
             }
