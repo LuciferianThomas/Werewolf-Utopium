@@ -21,23 +21,19 @@ module.exports = {
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
     if (gamePlayer.role !== "Grumpy Grandma")
-      return await message.author.send("You do not have the abilities to mute a player.")
+      return await message.author.send("You do not have the abilities to activate a frenzy.")
     if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer mute a player.")
+      return await message.author.send("You are dead. You can no longer activate a frenzy.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
-    if (game.currentPhase == 0 || game.currentPhase % 3 != 0)
-      return await message.author.send("You can only select to mute a player now!")
+    if (game.currentPhase % 3 == 0)
+      return await message.author.send("You can only activate frenzy at day!")
         
     game.frenzy = true
     
-    fn.broadcastTo(
-      client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer"),
-      new Discord.RichEmbed()
-        .setTitle("Frenzy")
-        .setThumbnail(fn.getEmoji(client, "Werewolf Berserk Frenzy").url)
-        .setDescription("The werewolf berserk activated frenzy!")
+    message.author.send(
+      "You activated frenzy for tonight!"
     )
     
     QuickGames[index] = game

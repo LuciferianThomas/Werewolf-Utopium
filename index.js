@@ -180,10 +180,12 @@ client.on('ready', async () => {
               if (lynchedPlayer.role == "President" ) {
                 game.currentPhase = 999
                 fn.broadcastTo(
-                client, game.players.filter(p => !p.left),
-                new Discord.RichEmbed()
-                	.setTitle("Game has ended!")
-                	.setDescription) 
+                  client, game.players.filter(p => !p.left),
+                  new Discord.RichEmbed()
+                    .setTitle("Game has ended!")
+                    .setThumbnail(client.emojis.find(e => e.name == "President").url) 
+                    .setDescription("The President <:President:660497498430767104> was killed:skull:! E")
+                )
               }
   
               
@@ -488,7 +490,7 @@ client.on('ready', async () => {
               )
             }
             else if (attackedPlayer.protectors.length) {
-              fn.broadcastTo(
+              if (!game.frenzy) fn.broadcastTo(
                 client, wolves,
                 `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
               )
@@ -497,12 +499,24 @@ client.on('ready', async () => {
                 let protector = game.players[x-1]
                 
                 if (game.frenzy) {
+                  game.lastDeath = game.currentPhase - 1
+                  attackedPlayer.alive = false
+                  if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left).map(p => p.id),
+                    `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
+                      game.config.deathReveal
+                        ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
+                        : ""
+                    }**.`
+                  )
+                  
                   protector.alive = false
                   if (game.config.deathReveal) protector.roleRevealed = protector.role
                   
                   fn.broadcastTo(
                     client, game.players.filter(p => !p.left),
-                    `**$**`
+                    `The Wolf Frenzy killed **${protector.number} ${fn.getUser(client, protector.id).username}**.`
                   )
                 }
 
@@ -808,6 +822,14 @@ client.on('ready', async () => {
         )
         
         if (game.currentPhase % 3 == 0) {
+          if (game.frenzy) fn.broadcastTo(
+            client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer"),
+            new Discord.RichEmbed()
+              .setTitle("Frenzy")
+              .setThumbnail(fn.getEmoji(client, "Werewolf Berserk Frenzy").url)
+              .setDescription("The werewolf berserk activated frenzy!")
+          )
+          
           if (game.roles.includes("Gunner")) {
             let gunners = game.players.filter(p => p.role == "Gunner").map(p => p.number)
             for (var x = 0; x < gunners.length; x++) 
