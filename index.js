@@ -57,6 +57,11 @@ client.on('ready', async () => {
     
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
+      for (let pl = 0; pl < game.players.length; pl++) {
+        if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment())
+          fn.promp
+      }
+      
       if (game.currentPhase === 999) {
         fn.broadcastTo(
           client, game.players.filter(p => !p.left).map(p => p.id),
@@ -778,7 +783,6 @@ client.on('ready', async () => {
           " Please contact staff members."
         )
       }
-      QuickGames[i] = game
     }
     games.set('quick', QuickGames)
   }, 1000)
@@ -826,11 +830,18 @@ client.on('message', async message => {
 client.on('message', async message => {
   if (!message.author.bot) console.log(message.author.tag + ' | ' + message.cleanContent)
   
-  if (message.channel.type !== "dm" || message.author.bot) return;
-  if (message.content.startsWith('w!')) return;
-  
   let player = players.get(message.author.id)
   if (!player.currentGame) return;
+  
+  let QG = games.get("quick")
+  let game = QG.find(game => game.gameID == player.currentGame)
+  let gamePlayer = game.players.find(player => player.id == message.author.id)
+  
+  gamePlayer.lastAction = moment()
+  games.set("quick", QG)
+  
+  if (message.channel.type !== "dm" || message.author.bot) return;
+  if (message.content.startsWith('w!')) return;
 
   let content = message.cleanContent
   content = content.replace(/(https?:\/\/)?((([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+\.)+([^.,\/#!$%\^&\*;:{}=\-_`~()\[\]\s])+|localhost)(:\d+)?(\/[^\s]*)*/gi, "")
@@ -843,8 +854,6 @@ client.on('message', async message => {
     content = content.replace(new RegExp(`\\b(${abbrs.join("|")})\\b`, 'gi'), `$1 (${full})`)
   }
   
-  let game = games.get("quick").find(game => game.gameID == player.currentGame)
-  let gamePlayer = game.players.find(player => player.id == message.author.id)
   if (game.currentPhase == -1)
     return fn.broadcast(client, game, `**${message.author.username}**: ${content}`, [message.author.id])
   
