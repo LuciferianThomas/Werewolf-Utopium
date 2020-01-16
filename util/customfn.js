@@ -36,7 +36,7 @@ const addWin = (game, winners, team) => {
     if (winners.includes(game.players[i].number))
       players.push(`${game.players[i].id}.wins`, {
         role: game.players[i].role,
-        team: team
+        team: team ? team : roles[game.players[i].role].team
       })
     else 
       players.push(`${game.players[i].id}.loses`, {

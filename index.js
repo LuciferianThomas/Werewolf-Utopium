@@ -184,7 +184,7 @@ client.on('ready', async () => {
                   new Discord.RichEmbed()
                     .setTitle("Game has ended!")
                     .setThumbnail(client.emojis.find(e => e.name == "President").url) 
-                    .setDescription("The President <:President:660497498430767104> was killed:skull:! E")
+                    .setDescription("The President <:President:660497498430767104> was killed:skull:! All but the villagers have won!")
                 )
               }
   
@@ -515,9 +515,17 @@ client.on('ready', async () => {
                   if (game.config.deathReveal) protector.roleRevealed = protector.role
                   
                   fn.broadcastTo(
-                    client, game.players.filter(p => !p.left),
-                    `The Wolf Frenzy killed **${protector.number} ${fn.getUser(client, protector.id).username}**.`
+                    client,
+                    game.players.filter(p => !p.left),
+                    `The Wolf Frenzy killed **${protector.number} ${
+                      fn.getUser(client, protector.id).username
+                    }${
+                      game.config.deathReveal
+                        ? ` ${fn.getEmoji(client, protector.role)}`
+                        : ""
+                    }**.`
                   )
+                  continue;
                 }
 
                 if (protector.role == "Bodyguard") {
