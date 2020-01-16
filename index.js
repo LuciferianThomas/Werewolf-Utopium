@@ -57,33 +57,6 @@ client.on('ready', async () => {
     
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
-      for (let pl = 0; pl < game.players.length; pl++) {
-        if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
-          game.players[pl].alive = false
-          game.players[pl].left = true
-          game.players[pl].suicide = true
-          if (game.config.deathReveal) game.players[pl].roleRevealed = game.players[pl].role
-          
-          fn.broadcastTo(
-            client,
-            game.players.filter(p => !p.left),
-            `**${game.players[pl].number} ${fn.getUser(
-              client,
-              game.players[pl].id
-            )}${
-              game.config.deathReveal
-                ? ` ${fn.getEmoji(client, game.players[pl].role)}`
-                : ""
-            }** suicided.`
-          )
-        } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment()) {
-          fn.getUser(client, game.players[pl].id).send(
-            "**You have been inactive for 1.5 minutes.**\n" +
-            "Please respond `w!` within 30 seconds to show your activity.\n" +
-            "You will be considered as suicide if you fail to do so."
-          )
-        }
-      }
       
       if (game.currentPhase === 999) {
         fn.broadcastTo(
@@ -104,6 +77,37 @@ client.on('ready', async () => {
           players.set(`${game.players[j].id}.currentGame`, 0)
       }
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
+      
+      for (let pl = 0; pl < game.players.length; pl++) {
+        if (!game.players[pl].alive || game.players[pl].left) continue;
+        if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
+          game.players[pl].alive = false
+          game.players[pl].left = true
+          game.players[pl].suicide = true
+          if (game.config.deathReveal) game.players[pl].roleRevealed = game.players[pl].role
+          
+          fn.broadcastTo(
+            client,
+            game.players.filter(p => !p.left),
+            `**${game.players[pl].number} ${fn.getUser(
+              client,
+              game.players[pl].id
+            )}${
+              game.config.deathReveal
+                ? ` ${fn.getEmoji(client, game.players[pl].role)}`
+                : ""
+            }** suicided.`
+          )
+        } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
+          game.players[pl].prompted = true
+          fn.getUser(client, game.players[pl].id).send(
+            "**You have been inactive for 1.5 minutes.**\n" +
+            "Please respond `w!` within 30 seconds to show your activity.\n" +
+            "You will be considered as suicide if you fail to do so."
+          )
+        }
+      }
+      
       if (moment(game.nextPhase) <= moment()) try { 
         if (game.currentPhase % 3 == 2)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
@@ -614,15 +618,19 @@ client.on('ready', async () => {
           fn.addXP(
             game.players.filter(
               p =>
-                roles[p.role].team == "Village" ||
-                (p.role == "Headhunter" && !game.players.find(pl => pl.headhunter == p.number).alive)
+                !p.suicide &&
+                (roles[p.role].team == "Village" ||
+                  (p.role == "Headhunter" &&
+                    !game.players.find(pl => pl.headhunter == p.number).alive))
             ), 50
           )
           fn.addXP(game.players.filter(p => !p.left), 15)
           fn.addWin(game, game.players.filter(
             p =>
-              roles[p.role].team == "Village" ||
-              (p.role == "Headhunter" && !game.players.find(pl => pl.headhunter == p.number).alive)
+              !p.suicide &&
+              (roles[p.role].team == "Village" ||
+                (p.role == "Headhunter" &&
+                  !game.players.find(pl => pl.headhunter == p.number).alive))
           ).map(p => p.number), "Village")
           continue;
         }
@@ -640,9 +648,9 @@ client.on('ready', async () => {
                 `The werewolves win!`
               )
           )
-          fn.addXP(game.players.filter(p => roles[p.role].team == "Werewolves"), 50)
+          fn.addXP(game.players.filter(p => !p.suicide && roles[p.role].team == "Werewolves"), 50)
           fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addWin(game, game.players.filter(p => roles[p.role].team == "Werewolves").map(p => p.number), "Werewolves")
+          fn.addWin(game, game.players.filter(p => !p.suicide && roles[p.role].team == "Werewolves").map(p => p.number), "Werewolves")
           continue;
         }
         

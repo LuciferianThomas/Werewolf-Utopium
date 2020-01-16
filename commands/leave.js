@@ -40,7 +40,7 @@ module.exports = {
       ).catch(() => {})
       if (!reactions) return await message.author.send("Prompt cancelled.")
       game = games.get("quick").find(g => g.gameID == player.currentGame)
-      game.players[gamePlayer.number-1].left = true
+      gamePlayer.left = true
     }
     else {
       let m = await message.author.send("Are you sure you want to suicide?")
@@ -52,7 +52,9 @@ module.exports = {
       ).catch(() => {})
       if (!reactions) return await message.author.send("Prompt cancelled.")
       game = games.get("quick").find(g => g.gameID == player.currentGame)
-      game.players[gamePlayer.number-1].left = true
+      gamePlayer.alive = false
+      gamePlayer.left = true
+      gamePlayer.suicide = true
     }
 
     QuickGames = games.get("quick")

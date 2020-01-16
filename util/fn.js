@@ -161,10 +161,23 @@ const addXP = (users, xp) => {
 
 const addWin = (game, winners, team) => {
   for (var i = 0; i < game.players.length; i++) {
+    if (game.players[i].suicide) continue;
     if (winners.includes(game.players[i].number))
-      players.push(`${game.players[i].id}.wins`, {role: game.players[i].role, team: team})
+      players.push(`${game.players[i].id}.wins`, {
+        role: game.players[i].role,
+        team: team
+      })
     else 
-      players.push(`${game.players[i].id}.loses`, {role: game.players[i].role, team: team == "Village" && game.players[i].role == "Headhunter" ? "Solo" : roles[game.players[i].role].team})
+      players.push(`${game.players[i].id}.loses`, {
+        role: game.players[i].role,
+        team:
+          game.players[i].role == "Headhunter" &&
+          game.players.find(
+            p => p.alive && p.headhunter == game.players[i].number
+          )
+            ? "Solo"
+            : roles[game.players[i].role].team
+      })
   }
 }
 
