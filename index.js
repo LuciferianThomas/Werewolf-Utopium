@@ -726,6 +726,30 @@ client.on('ready', async () => {
           }
         }
         
+        if (game.players.find(p => p.role == "President" && !p.alive && !p.suicide)) {
+          let president = game.players.find(p => p.role == "President")
+          game.currentPhase = 999
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended!")
+              .setThumbnail(client.emojis.find(e => e.name == "President").url) 
+              .setDescription(`The President ${president.number} ${client.users.get(president.id).username} <:President:660497498430767104> was killed! All but the villagers have won!`)
+          )
+          fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
+          fn.addXP(game.players.filter(p => (roles[p.role].team == "Werewolves" || p.role == "Zombie") && !p.suicide), 75)
+          fn.addXP(game.players.filter(p => ["Headhunter","Fool","Bomber","Arsonist","Corruptor"].includes(p.role) && !p.suicide), 100)
+          fn.addXP(game.players.filter(p => p.role == "Sect Leader" && !p.suicide), 100)
+          fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addWin(game, game.players.filter(
+            p =>
+              !p.suicide &&
+              (roles[p.role].team == "Village" ||
+                (p.role == "Headhunter" &&
+                  !game.players.find(pl => pl.headhunter == p.number).alive))
+          ).map(p => p.number))
+        }
+        
         if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
           game.currentPhase = 999
           fn.broadcastTo(

@@ -39,6 +39,9 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot mute yourself.")
     
+    if (!gamePlayer.sect && targetPlayer.role == "President")
+      return await message.author.send("You cannot mute the President!")
+    
     gamePlayer.mute = target
     
     message.author.send(
