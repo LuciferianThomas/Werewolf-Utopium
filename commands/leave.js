@@ -42,7 +42,18 @@ module.exports = {
       game = games.get("quick").find(g => g.gameID == player.currentGame)
       game.players[gamePlayer.number-1].left = true
     }
-    else return undefined
+    else {
+      let m = await message.author.send("Are you sure you want to suicide?")
+      m.react(client.emojis.find(e => e.name == "green_tick"))
+      let reactions = await m.awaitReactions(
+        (r, u) => r.emoji.id == client.emojis.find(e => e.name == "green_tick").id &&
+                  u.id == message.author.id,
+        { max: 1, time: 5000, errors: ["time"] }
+      ).catch(() => {})
+      if (!reactions) return await message.author.send("Prompt cancelled.")
+      game = games.get("quick").find(g => g.gameID == player.currentGame)
+      game.players[gamePlayer.number-1].left = true
+    }
 
     QuickGames = games.get("quick")
     QuickGames[QuickGames.indexOf(QuickGames.find(g => g.gameID == game.gameID))] = game

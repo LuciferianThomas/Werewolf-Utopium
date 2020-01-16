@@ -52,19 +52,42 @@ client.login(token)
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
-  setInterval( async () => { 
+  setInterval( () => { 
     let QuickGames = games.get("quick")
     
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
       for (let pl = 0; pl < game.players.length; pl++) {
-        if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment())
-          fn.promp
+        if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
+          game.players[pl].alive = false
+          game.players[pl].left = true
+          game.players[pl].suicide = true
+          if (game.config.deathReveal) game.players[pl].roleRevealed = game.players[pl].role
+          
+          fn.broadcastTo(
+            client,
+            game.players.filter(p => !p.left),
+            `**${game.players[pl].number} ${fn.getUser(
+              client,
+              game.players[pl].id
+            )}${
+              game.config.deathReveal
+                ? ` ${fn.getEmoji(client, game.players[pl].role)}`
+                : ""
+            }** suicided.`
+          )
+        } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment()) {
+          fn.getUser(client, game.players[pl].id).send(
+            "**You have been inactive for 1.5 minutes.**\n" +
+            "Please respond `w!` within 30 seconds to show your activity.\n" +
+            "You will be considered as suicide if you fail to do so."
+          )
+        }
       }
       
       if (game.currentPhase === 999) {
         fn.broadcastTo(
-          client, game.players.filter(p => !p.left).map(p => p.id),
+          client, game.players.filter(p => !p.left),
           new Discord.RichEmbed()
             .setTitle(`Game #${game.gameID}`)
             .addField(
