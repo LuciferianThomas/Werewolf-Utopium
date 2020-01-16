@@ -38,26 +38,46 @@ module.exports = {
     
     let target = parseInt(args[0])
     if (gamePlayer.role == "Jailer") target = game.players.find(p => p.jailed && p.alive).number
+    let targetPlayer = game.players[target-1]
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
-    if (!game.players[target-1].alive)
+    if (!targetPlayer.alive)
       return await message.author.send("You cannot shoot an dead player.")
     if (target == gamePlayer.number)
       return await message.author.send("You cannot shoot yourself.")
     
-    game.players[target-1].alive = false
+    targetPlayer.alive = false
     if (gamePlayer.role == "Gunner") {
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, game.players[target-1].id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, game.players[target-1].role)}` : ""}**.`)
+        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""}**.`)
       game.players[gamePlayer.number-1].roleRevealed = true
     }
     if (gamePlayer.role == "Jailer")
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${fn.getUser(client, game.players[target-1].id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, game.players[target-1].role)}` : ""})**.`)
+        `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
+      
+    if (["Junior Werewolf","Avenger"].includes(targetPlayer.role) && targetPlayer.avenge) {
+      let avengedPlayer = game.players[targetPlayer.avenge-1]
+
+      avengedPlayer.alive = false
+      if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+      fn.broadcastTo(
+        client,
+        game.players.filter(p => !p.left),
+        `<:Junior_Werewolf_Select:660668473847840798> The junior werewolf's death has been avenged, **${
+          targetPlayer.number
+        } ${fn.getUser(client, targetPlayer.id).username}${
+          game.config.deathReveal
+            ? ` ${fn.getEmoji(client, targetPlayer.role)}`
+            : ""
+        }**.`
+      )
+    }
     
-    if (game.config.deathReveal) game.players[target-1].roleRevealed = true
+    if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
     game.players[gamePlayer.number-1].bullets -= 1
     game.lastDeath = game.currentPhase
     if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true

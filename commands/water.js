@@ -50,7 +50,7 @@ module.exports = {
           message.author.username
         }** has thrown holy water at and killed **${targetPlayer.number} ${
           fn.getUser(client, targetPlayer.id).username
-        } ${fn.getEmoji(
+        }${fn.getEmoji(
           client,
           game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf"
         )}**.`
@@ -60,8 +60,19 @@ module.exports = {
         let avengedPlayer = game.players[targetPlayer.avenge-1]
         
         avengedPlayer.alive = false
-        if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
-        
+        if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+      
+        fn.broadcastTo(
+          client,
+          game.players.filter(p => !p.left),
+          `<:Junior_Werewolf_Select:660668473847840798> The junior werewolf's death has been avenged, **${
+            targetPlayer.number
+          } ${fn.getUser(client, targetPlayer.id).username}${
+            game.config.deathReveal
+              ? ` ${fn.getEmoji(client, targetPlayer.role)}`
+              : ""
+          }**.`
+        )
       }
     }
     else {
@@ -76,7 +87,7 @@ module.exports = {
         }** and killed themselves. They are not a werewolf!`
       )
     }
-    gamePlayer.roleRevealed = true
+    gamePlayer.roleRevealed = gamePlayer.role
     gamePlayer.bullets = 0
     
     game.lastDeath = game.currentPhase

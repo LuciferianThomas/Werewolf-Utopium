@@ -28,29 +28,17 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
-    /*
-    if (gamePlayer.usedAbilityTonight) {
-      let prevA = game.players[gamePlayer.dousedTonight[0]-1]
-      let prevB = game.players[gamePlayer.dousedTonight[1]-1]
-      prevA.doused.splice(prevA.doused.indexOf(gamePlayer.number), 1)
-      prevB.doused.splice(prevB.doused.indexOf(gamePlayer.number), 1)
-    }*/
-    
-    // is that needed? 
-    // this? the above is for doused right? 
-    
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only ignite players during the night!")
     
     let doused = game.players.filter(p => p.alive && p.doused.includes(gamePlayer.number))
-    //           ^^^^^^^^^^^^^^^^^^^  k
-    // this is not the doused var in the player profile,
-    // this is the player profiles with the doused var.... ok
     
     if (!doused.length)
-      return await message.author.send("You haven't doused anyone or every doused player is dead! Do `w!douse [player1] [player 2]` first!") 
+      return await message.author.send("You haven't doused anyone or every doused player is dead! Do `w!douse [player1] [player2]` first!") 
     
     for (var i = 0; i < doused.length; i++) {
+      let dousedPlayer = 
+      
       game.players[doused[i].number-1].alive = false
       if (game.config.deathReveal) game.players[doused[i].number-1].roleRevealed = true
       
@@ -64,6 +52,5 @@ module.exports = {
     
     QuickGames[index] = game
     games.set("quick", QuickGames)
-    
   }
 } 

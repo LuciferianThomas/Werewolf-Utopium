@@ -21,12 +21,14 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (gamePlayer.role != "Medium")
+    if (!["Junior Werewolf","Avenger"].includes(gamePlayer.role))
       return await message.author.send("You do not have the abilities to avenge on a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer avenge on a player.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and you cannot use your abilities!")
+    if (gamePlayer.role == "Avenger" && game.currentPhase == 0)
+      return await message.author.send("You cannot select a player to be avenged on right now!")
     
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
