@@ -177,14 +177,14 @@ client.on('ready', async () => {
                 `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
                   game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
               
-              if (lynchedPlayer.role == "President" ) {
+              if (lynchedPlayer.role == "President") {
                 game.currentPhase = 999
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
                   new Discord.RichEmbed()
                     .setTitle("Game has ended!")
                     .setThumbnail(client.emojis.find(e => e.name == "President").url) 
-                    .setDescription("The President <:President:660497498430767104> was killed:skull:! All but the villagers have won!")
+                    .setDescription(`The President ${lynched} ${client.users.get(lynchedPlayer.id).username} <:President:660497498430767104> was killed! All but the villagers have won!`)
                 )
               }
   
