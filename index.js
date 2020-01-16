@@ -485,6 +485,16 @@ client.on('ready', async () => {
               
               for (var x of attackedPlayer.protectors) {
                 let protector = game.players[x-1]
+                
+                if (game.frenzy) {
+                  protector.alive = false
+                  if (game.config.deathReveal) protector.roleRevealed = protector.role
+                  
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left),
+                    `**$**`
+                  )
+                }
 
                 if (protector.role == "Bodyguard") {
                   protector.health -= 1

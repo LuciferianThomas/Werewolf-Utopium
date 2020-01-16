@@ -53,7 +53,7 @@ module.exports = {
           .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == "Aura_Seer").url)
           .setThumbnail(client.emojis.find(e => e.name == `${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura}_Aura`).url)
           .setDescription(
-            `${target} ${client.users.get(targetPlayer.id).username} has a${
+            `**${target} ${fn.getUser(client, targetPlayer.id).username}** has a${
             (targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura) == "Good" ? "" : "n"
             } ${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} aura.`
           )
@@ -65,11 +65,17 @@ module.exports = {
           .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_")).url)
           .setThumbnail(client.emojis.find(e => e.name == (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role).replace(/ /g, "_")).url)
           .setDescription(
-            `${target} ${client.users.get(targetPlayer.id).username} is a${
+            `**${target} ${fn.getUser(client, targetPlayer.id).username}** is a${
               ["A", "E", "I", "O", "U"].includes(!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
             } ${!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
           )
       )
+      
+      if (gamePlayer.role == "Wolf Seer")
+        fn.broadcastTo(
+          client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer"),
+          `The wolf seer checked **${target} ${fn.getUser(client, targetPlayer.id).username} ${fn.getEmoji(client, targetPlayer.role)}**.`
+        )
     }
     gamePlayer.usedAbilityTonight = true
     

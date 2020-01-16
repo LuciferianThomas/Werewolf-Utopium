@@ -33,7 +33,11 @@ module.exports = {
     game.frenzy = true
     
     fn.broadcastTo(
-      client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer")
+      client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer"),
+      new Discord.RichEmbed()
+        .setTitle("Frenzy")
+        .setThumbnail(fn.getEmoji(client, "Werewolf Berserk Frenzy").url)
+        .setDescription("The werewolf berserk activated frenzy!")
     )
     
     QuickGames[index] = game
