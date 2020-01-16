@@ -102,12 +102,35 @@ client.on('ready', async () => {
             } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
               game.players[pl].prompted = true
               fn.getUser(client, game.players[pl].id).send(
-                "**You have been inactive for 1.5 minutes.**\n" +
-                "Please respond `w!` within 30 seconds to show your activity.\n" +
-                "You will be kicked from the game if you fail to do so."
+                new Discord.RichEmbed()
+                  .setTitle("❗ You have been inactive for 1.5 minutes.")
+                  .setDescription(
+                    "Please respond `w!` within 30 seconds to show your activity.\n" +
+                    "You will be kicked from the game if you fail to do so."
+                  )
               )
             }
           } else {
+            if (!fn.getUser(client, game.players[pl].id)) {
+              game.players[pl].alive = false
+              game.players[pl].left = true
+              game.players[pl].suicide = true
+              if (game.config.deathReveal) game.players[pl].roleRevealed = game.players[pl].role
+              players.add(`${game.players[pl].id}.suicides`, 1)
+              players.set(`${game.players[pl].id}.currentGame`, 0)
+              
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                `**${game.players[pl].number} ${fn.getUser(
+                  client,
+                  game.players[pl].id
+                )}${
+                  game.config.deathReveal
+                    ? ` ${fn.getEmoji(client, game.players[pl].role)}`
+                    : ""
+                }** suicided.`
+              )
+            }
             if (!game.players[pl].alive || game.players[pl].left) continue;
             if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
               game.players[pl].alive = false
