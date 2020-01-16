@@ -66,8 +66,8 @@ module.exports = {
     
     message.author.send(`You left Game #${game.gameID}.`)
     if (game.players.length)
-      fn.broadcast(
-        client, game, 
+      fn.broadcastTo(
+        client, game.currentPhase == -1 ? game.players : game.players.filter(p => !p.left), 
         game.currentPhase == -1 ?
           new Discord.RichEmbed()
             .setAuthor(`${message.author.username} left the game.`, message.author.displayAvatarURL)

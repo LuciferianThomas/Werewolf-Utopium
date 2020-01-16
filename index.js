@@ -58,6 +58,59 @@ client.on('ready', async () => {
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
       
+      if (game.currentPhase < 999)
+        for (let pl = 0; pl < game.players.length; pl++) {
+          if (game.currentPhase == -1) {
+            if (!game.players[pl].alive || game.players[pl].left) continue;
+            if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
+              fn.getUser(client, game.players[pl].id).send(
+              "")
+              game.players.splice(pl--, 1)
+              fn.broadcastTo(
+                client,
+                game.players.filter(p => !p.left),
+                `**${fn.getUser(client, game.players[pl].id
+                )} left the game.`
+              )
+            } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
+              game.players[pl].prompted = true
+              fn.getUser(client, game.players[pl].id).send(
+                "**You have been inactive for 1.5 minutes.**\n" +
+                "Please respond `w!` within 30 seconds to show your activity.\n" +
+                "You will be kicked from the game if you fail to do so."
+              )
+            }
+          } else {
+            if (!game.players[pl].alive || game.players[pl].left) continue;
+            if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
+              game.players[pl].alive = false
+              game.players[pl].left = true
+              game.players[pl].suicide = true
+              if (game.config.deathReveal) game.players[pl].roleRevealed = game.players[pl].role
+
+              fn.broadcastTo(
+                client,
+                game.players.filter(p => !p.left),
+                `**${game.players[pl].number} ${fn.getUser(
+                  client,
+                  game.players[pl].id
+                )}${
+                  game.config.deathReveal
+                    ? ` ${fn.getEmoji(client, game.players[pl].role)}`
+                    : ""
+                }** suicided.`
+              )
+            } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
+              game.players[pl].prompted = true
+              fn.getUser(client, game.players[pl].id).send(
+                "**You have been inactive for 1.5 minutes.**\n" +
+                "Please respond `w!` within 30 seconds to show your activity.\n" +
+                "You will be considered as suicide if you fail to do so."
+              )
+            }
+          }
+        }
+      
       if (game.currentPhase === 999) {
         fn.broadcastTo(
           client, game.players.filter(p => !p.left),
@@ -77,36 +130,6 @@ client.on('ready', async () => {
           players.set(`${game.players[j].id}.currentGame`, 0)
       }
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
-      
-      for (let pl = 0; pl < game.players.length; pl++) {
-        if (!game.players[pl].alive || game.players[pl].left) continue;
-        if (moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
-          game.players[pl].alive = false
-          game.players[pl].left = true
-          game.players[pl].suicide = true
-          if (game.config.deathReveal) game.players[pl].roleRevealed = game.players[pl].role
-          
-          fn.broadcastTo(
-            client,
-            game.players.filter(p => !p.left),
-            `**${game.players[pl].number} ${fn.getUser(
-              client,
-              game.players[pl].id
-            )}${
-              game.config.deathReveal
-                ? ` ${fn.getEmoji(client, game.players[pl].role)}`
-                : ""
-            }** suicided.`
-          )
-        } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
-          game.players[pl].prompted = true
-          fn.getUser(client, game.players[pl].id).send(
-            "**You have been inactive for 1.5 minutes.**\n" +
-            "Please respond `w!` within 30 seconds to show your activity.\n" +
-            "You will be considered as suicide if you fail to do so."
-          )
-        }
-      }
       
       if (moment(game.nextPhase) <= moment()) try { 
         if (game.currentPhase % 3 == 2)  {
@@ -869,6 +892,7 @@ client.on('message', async message => {
   let gamePlayer = game.players.find(player => player.id == message.author.id)
   
   gamePlayer.lastAction = moment()
+  gamePlayer.prompted = false
   games.set("quick", QG)
   
   if (message.channel.type !== "dm" || message.author.bot) return;
