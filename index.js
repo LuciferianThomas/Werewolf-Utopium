@@ -105,6 +105,28 @@ client.on('ready', async () => {
                 client, game.players.filter(p => !p.left), 
                 `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
                   game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
+              
+              if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge) {
+                let avengedPlayer = game.players[lynchedPlayer.avenge-1]
+
+                avengedPlayer.alive = false
+                if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+                fn.broadcastTo(
+                  client,
+                  game.players.filter(p => !p.left),
+                  `${fn.getEmoji(
+                    client,
+                    `${lynchedPlayer.role} Select`
+                  )} The ${lynchedPlayer.role.toLowerCase()}'s death has been avenged, **${
+                    avengedPlayer.number
+                  } ${fn.getUser(client, avengedPlayer.id).username}${
+                    game.config.deathReveal
+                      ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+                      : ""
+                  }** is dead!`
+                )
+              }
               if (lynchedPlayer.role == "Fool") {
                 game.currentPhase = 999
                 fn.broadcastTo(
@@ -163,7 +185,10 @@ client.on('ready', async () => {
           }
           
           for (var x = 0; x < game.players.length; x++)
-            Object.assign(game.players[x], {usedAbilityTonight: false, enchanted: []})
+            Object.assign(game.players[x], {
+              usedAbilityTonight: false,
+              enchanted: []
+            })
           
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
               sks = game.players.filter(player => player.alive && player.role == "Serial Killer")
