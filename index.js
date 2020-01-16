@@ -890,8 +890,9 @@ client.on('message', async message => {
 	}
 })
 
-client.on('message', async message => {
-  if (!message.author.bot) console.log(message.author.tag + ' | ' + message.cleanContent)
+client.on('message', async message => {  
+  if (message.author.bot) return;
+  console.log(message.author.tag + ' | ' + message.cleanContent)
   
   let player = players.get(message.author.id)
   if (!player.currentGame) return;
