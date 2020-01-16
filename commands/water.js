@@ -21,39 +21,63 @@ module.exports = {
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
     if (gamePlayer.role !== "Priest")
-      return await message.author.send("You do not have the abilities to shoot a player.")
+      return await message.author.send("You do not have the abilities to throw holy water at a player.")
     if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer shoot a player.")
+      return await message.author.send("You are dead. You can no longer throw holy water at a player.")
     
-    if (gamePlayer.waterUsed)
+    if (!gamePlayer.bullets)
       return await message.author.send("You have used your holy water.")
         
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
-    if (!game.players[target-1].alive)
-      return await message.author.send("You cannot shoot an dead player.")
-    if (target == gamePlayer.number)
-      return await message.author.send("You cannot shoot yourself.")
     
     let targetPlayer = game.players[target-1]
+    if (!targetPlayer.alive)
+      return await message.author.send("You cannot throw holy water at an dead player.")
+    if (targetPlayer.number == gamePlayer.number)
+      return await message.author.send("You cannot throw holy water at yourself.")
+    
     if (roles[targetPlayer.role].team == "Werewolves") {
-      game.players[target-1].alive = false
-      if (game.config.deathReveal) game.players[target-1].roleRevealed = true
+      targetPlayer.alive = false
+      if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
+      else targetPlayer.roleRevealed = "Fellow Werewolf"
+      
       fn.broadcastTo(
-        client, game.players.filter(p => !p.left).map(p => p.id),
-        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** has thrown holy water at and killed **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username} ${fn.getEmoji(client, game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf")}**.`
+        client,
+        game.players.filter(p => !p.left),
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${
+          message.author.username
+        }** has thrown holy water at and killed **${targetPlayer.number} ${
+          fn.getUser(client, targetPlayer.id).username
+        } ${fn.getEmoji(
+          client,
+          game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf"
+        )}**.`
       )
+      
+      if (targetPlayer.role == "Junior Werewolf" && targetPlayer.avenge) {
+        let avengedPlayer = game.players[targetPlayer.avenge-1]
+        
+        avengedPlayer.alive = false
+        if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
+        
+      }
     }
     else {
-      game.players[gamePlayer.number-1].alive = false
+      gamePlayer.alive = false
       fn.broadcastTo(
-        client, game.players.filter(p => !p.left).map(p => p.id),
-        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${message.author.username}** tried holy water on **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}** and killed themselves. They are not a werewolf!`
+        client,
+        game.players.filter(p => !p.left),
+        `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${
+          message.author.username
+        }** tried holy water on **${targetPlayer.number} ${
+          fn.getUser(client, targetPlayer.id).username
+        }** and killed themselves. They are not a werewolf!`
       )
     }
-    game.players[gamePlayer.number-1].roleRevealed = true
-    game.players[gamePlayer.number-1].waterUsed = true
+    gamePlayer.roleRevealed = true
+    gamePlayer.bullets = 0
     
     game.lastDeath = game.currentPhase
     

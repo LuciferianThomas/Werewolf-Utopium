@@ -31,21 +31,17 @@ module.exports = {
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
-    if (game.players[target-1].alive)
+    
+    let targetPlayer = game.players[target-1]
+    if (targetPlayer.alive)
       return await message.author.send("You cannot revive an alive player.")
-    if (roles[game.players[target-1].role].team.includes("Village"))
-      return await message.author.send("You can only revive villagers!")
+    if (roles[gamePlayer.role].team == roles[targetPlayer.role].team == "Werewolves")
+      return await message.author.send("You cannot avenge on your fellow werewolves!")
     
-    // game.players[gamePlayer.number-1].revUsed = true
-    if (game.players.find(p => p.revive && p.revive.includes(gamePlayer.number))) {
-      let prevRev = game.players.find(p => p.revive && p.revive.includes(gamePlayer.number)).number - 1
-      game.players[prevRev].revive.splice(game.players[prevRev].revive.indexOf(gamePlayer.number),1)
-    }
-    if (!game.players[target-1].revive) game.players[target-1].revive = []
-    game.players[target-1].revive.push(gamePlayer.number)
+    gamePlayer.avenge = targetPlayer.number
     
-    message.author.send(`${client.emojis.find(e => e.name == "Medium_Revive")
-                        } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be revived.`)
+    message.author.send(`${fn.getEmoji(client, gamePlayer.role == "Avenger" ? "Avenger Select" : "Junior Werewolf Select")
+                        } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be avenged on when you die.`)
     
     QuickGames[index] = game
     
