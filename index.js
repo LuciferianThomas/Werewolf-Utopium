@@ -285,6 +285,20 @@ client.on('ready', async () => {
             let attackedPlayer = game.players[attacked-1]
             
             let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.left).map(p => p.id)
+              
+            let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
+
+            let wwByStrength = game.players
+              .filter(p => p.alive && roles[p.role].team == "Werewolves")
+            wwByStrength.sort((a,b) => {
+              if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
+                return 1
+              if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
+                return -1
+              return 0
+            })
+
+            let weakestWW = game.players[wwByStrength[0].number-1]
             
             if (["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role)) {
               fn.broadcastTo(
@@ -297,20 +311,6 @@ client.on('ready', async () => {
                 client, wolves,
                 `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
               )
-              
-              let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
-
-              let wwByStrength = game.players
-                .filter(p => p.alive && roles[p.role].team == "Werewolves")
-              wwByStrength.sort((a,b) => {
-                if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
-                  return 1
-                if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
-                  return -1
-                return 0
-              })
-              
-              let weakestWW = game.players[wwByStrength[0].number-1]
               
               for (var x of attackedPlayer.protectors) {
                 let protector = game.players[x-1]
@@ -342,11 +342,21 @@ client.on('ready', async () => {
                   }
                 }
                 else if (protector.role == "Tough Guy") {
+                  protector.health = 0
+                  
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
-                      .setAuthor("Attacked!", fn.getEmoji(client, "Bodyguard Protect").url)
+                      .setAuthor(
+                        "Attacked!",
+                        fn.getEmoji(client, "Bodyguard Protect").url
+                      )
                       .setDescription(
-                        `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
+                        `You protected **${attackedPlayer.number} ${
+                          fn.getUser(client, attackedPlayer.id).username
+                        }** who was attacked by **${weakestWW.number} ${
+                          client.getUser(client, weakestWW.id).username
+                        } ${client.getEmoji(client, weakestWW.role)}**.\n` +
+                        "You have been wounded and will die at the end of the day."
                       )
                   )
                 }
@@ -448,7 +458,21 @@ client.on('ready', async () => {
               }
             }
             else if (attackedPlayer.role == "Tough Guy") {
-              // TODO
+              attackedPlayer.health = 0
+
+              fn.getUser(client, attackedPlayer.id).send(
+                new Discord.RichEmbed()
+                  .setAuthor(
+                    "Attacked!",
+                    fn.getEmoji(client, "Bodyguard Protect").url
+                  )
+                  .setDescription(
+                    `You were attacked by **${weakestWW.number} ${
+                      client.getUser(client, weakestWW.id).username
+                    } ${client.getEmoji(client, weakestWW.role)}**.\n` +
+                    "You have been wounded and will die at the end of the day."
+                  )
+              )
             }
             else {
               game.lastDeath = game.currentPhase - 1

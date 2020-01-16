@@ -27,6 +27,7 @@ module.exports = async (client, game) => {
       )
     Object.assign(game.players[i], {alive: true, protectors: [], enchanted: [], doused: []})
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
+    if (game.players[i].role == "Tough Guy") game.players[i].health = 0
     if (game.players[i].role == "Medium") game.players[i].revUsed = false
     if (game.players[i].role == "Jailer") game.players[i].bullets = 1
     if (game.players[i].role == "Gunner") game.players[i].bullets = 2
