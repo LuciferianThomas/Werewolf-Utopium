@@ -52,6 +52,9 @@ module.exports = {
     }
     
     if (game.currentPhase % 3 == 2) {
+      if (game.players.find(p => p.mute == gamePlayer.number))
+        return await message.author.send("You cannot vote today!")
+      
       let vote = parseInt(args[0])
       if (isNaN(vote) || vote > game.players.length || vote < 1)
         return await message.author.send("Invalid vote.")

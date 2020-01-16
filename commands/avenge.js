@@ -27,7 +27,7 @@ module.exports = {
       return await message.author.send("You are dead. You can no longer avenge on a player.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and you cannot use your abilities!")
-    if (gamePlayer.role == "Avenger" && game.currentPhase == 0)
+    if (game.currentPhase == 0)
       return await message.author.send("You cannot select a player to be avenged on right now!")
     
     let target = parseInt(args[0])
@@ -35,8 +35,8 @@ module.exports = {
       return await message.author.send("Invalid target.")
     
     let targetPlayer = game.players[target-1]
-    if (targetPlayer.alive)
-      return await message.author.send("You cannot revive an alive player.")
+    if (!targetPlayer.alive)
+      return await message.author.send("You cannot avenge on a dead player.")
     if (roles[gamePlayer.role].team == roles[targetPlayer.role].team == "Werewolves")
       return await message.author.send("You cannot avenge on your fellow werewolves!")
     

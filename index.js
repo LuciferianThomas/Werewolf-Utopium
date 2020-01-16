@@ -261,6 +261,12 @@ client.on('ready', async () => {
               let muted = game.players[ggs[x].mute-1]
               if (!muted) continue;
               
+              fn.getUser(client, muted.id).send(
+                new Discord.RichEmbed()
+                  .setAuthor("Muted!", fn.getEmoji(client, "Grumpy Grandma Mute").url)
+                  .setThumbnail(fn.getEmoji(client, "Grumpy Grandma").url)
+                  .setDescription("You cannot speak or vote today!")
+              )
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left),
                 `<:Grumpy_Grandma_Mute:660495619483238410> Grumpy Grandma muted **${muted.number} ${fn.getUser(client, muted.id)}**!` +

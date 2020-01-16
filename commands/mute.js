@@ -26,8 +26,8 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
-    if (game.currentPhase % 3 != 0)
-      return await message.author.send("You can only select to mute a player at night.")
+    if (game.currentPhase == 0 || game.currentPhase % 3 != 0)
+      return await message.author.send("You can only select to mute a player now!")
     
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
