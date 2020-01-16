@@ -9,8 +9,8 @@ const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
 
 module.exports = {
-  name: "revive",
-  aliases: ["rev"],
+  name: "avenge",
+  aliases: ["tag"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -22,26 +22,18 @@ module.exports = {
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
     if (gamePlayer.role != "Medium")
-      return await message.author.send("You do not have the abilities to revive a player.")
+      return await message.author.send("You do not have the abilities to avenge on a player.")
     if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer revive a player.")
+      return await message.author.send("You are dead. You can no longer avenge on a player.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and you cannot use your abilities!")
-    
-    if (gamePlayer.revUsed)
-      return await message.author.send("You have already revived a player.")
-    
-    if (game.currentPhase % 3 != 0)
-      return await message.author.send("You can only revive on a player at night.")
     
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
-    
-    let targetPlayer = game.players[target-1]
-    if (targetPlayer.alive)
+    if (game.players[target-1].alive)
       return await message.author.send("You cannot revive an alive player.")
-    if (roles[targetPlayer.role].team !== "Village" && targetPlayer.role == "Headhunter")
+    if (roles[game.players[target-1].role].team.includes("Village"))
       return await message.author.send("You can only revive villagers!")
     
     // game.players[gamePlayer.number-1].revUsed = true
@@ -49,11 +41,11 @@ module.exports = {
       let prevRev = game.players.find(p => p.revive && p.revive.includes(gamePlayer.number)).number - 1
       game.players[prevRev].revive.splice(game.players[prevRev].revive.indexOf(gamePlayer.number),1)
     }
-    if (!targetPlayer.revive) targetPlayer.revive = []
-    targetPlayer.revive.push(gamePlayer.number)
+    if (!game.players[target-1].revive) game.players[target-1].revive = []
+    game.players[target-1].revive.push(gamePlayer.number)
     
-    message.author.send(`${fn.getEmoji(client, "Medium Revive")
-                        } You selected **${target} ${fn.getUser(client, targetPlayer.id).username}** to be revived.`)
+    message.author.send(`${client.emojis.find(e => e.name == "Medium_Revive")
+                        } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be revived.`)
     
     QuickGames[index] = game
     

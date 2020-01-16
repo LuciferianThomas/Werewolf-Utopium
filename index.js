@@ -66,7 +66,7 @@ client.on('ready', async () => {
               `Players`, 
               game.players.map(p => 
                 `${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"} ${
-                client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}`
+                fn.getEmoji(client, p.roleRevealed)}`
               ).join('\n')
             )
         )
@@ -320,7 +320,7 @@ client.on('ready', async () => {
                   if (protector.health) {
                     fn.getUser(client, protector.id).send(
                       new Discord.RichEmbed()
-                        .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                        .setAuthor("Attacked!", fn.getEmoji(client, "Bodyguard Protect").url)
                         .setDescription(
                           "You fought off an attack last night and survived.\n" +
                           "Next time you are attacked you will die."
@@ -342,12 +342,18 @@ client.on('ready', async () => {
                   }
                 }
                 else if (protector.role == "Tough Guy") {
-                  // TODO
+                  fn.getUser(client, protector.id).send(
+                    new Discord.RichEmbed()
+                      .setAuthor("Attacked!", fn.getEmoji(client, "Bodyguard Protect").url)
+                      .setDescription(
+                        `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
+                      )
+                  )
                 }
                 else if (protector.role == "Doctor") {
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
-                      .setTitle("<:Doctor_Protect:660491111155892224> Protection")
+                      .setAuthor("Protection", fn.getEmoji(client, "Doctor Protect").url)
                       .setDescription(
                         `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
                       )
@@ -356,17 +362,24 @@ client.on('ready', async () => {
                 else if (protector.role == "Witch") {
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
-                      .setTitle("<:Witch_Elixir:660667541827485726> Elixir")
+                      .setAuthor("Elixir", fn.getEmoji(client, "Witch Elixir").url)
                       .setDescription("Last night your potion saved a life!")
                   )
                 }
                 else if (protector.role == "Beast Hunter") {
                   weakestWW.alive = false
                   if (game.config.deathReveal) weakestWW.roleRevealed = weakestWW.role
+                  else weakestWW.roleRevealed = "Fellow Werewolf"
                   
                   fn.broadcastTo(
                     client, game.players.filter(p => !p.left),
-                    `The beast hunter's trap killed **${weakestWW.number} ${client.getUser(client, weakestWW.id).username}${game.config.deathReveal ? client.getEmoji(client, weakestWW.role) : }**.`
+                    `The beast hunter's trap killed **${weakestWW.number} ${
+                      client.getUser(client, weakestWW.id).username
+                    } ${
+                      game.config.deathReveal
+                        ? client.getEmoji(client, weakestWW.role)
+                        : client.getEmoji(client, "Fellow Werewolf")
+                    }**.`
                   )
                 }
               }
@@ -725,14 +738,14 @@ client.on('message', async message => {
     else {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && !p.alive && p.id != message.author.id).map(p => p.id),
-        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(e => e.name == gamePlayer.roleRevealed.replace(/ /g, "_"))}` : ""}: ${content}_`
+        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
       )
     }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && (!p.alive || (p.alive && p.role == "Medium")) && p.id != message.author.id).map(p => p.id),
-        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.roleRevealed.replace(/ /g, "_"))}` : ""}: ${content}_`
+        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
       )
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive && !gamePlayer.jailed) {

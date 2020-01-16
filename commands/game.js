@@ -29,14 +29,14 @@ module.exports = {
                     .map(p => 
                            `${p.id == message.author.id ? "**" : ""}${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"}${
                              p.id == message.author.id || p.roleRevealed
-                               ? ` ${client.emojis.find(e => e.name == p.role.replace(/ /g, "_"))}` 
+                               ? ` ${fn.getEmoji(client, p.roleRevealed)}` 
                                : roles[gamePlayer.role].team == "Werewolves" && roles[p.role].team == "Werewolves"
-                               ? ` ${client.emojis.find(e => e.name == "Fellow_Werewolf")}`
+                               ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
                                : ""}${p.left ? " *off*" : ""}${p.id == message.author.id ? "**" : ""}`)
                     .join('\n')
                  )
         .addField(`Roles`, game.roles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1})
-                            .map(r => `${client.emojis.find(e => e.name == r.replace(/ /g, "_"))} ${r}`)
+                            .map(r => `${fn.getEmoji(client, r)} ${r}`)
                             .join('\n'))
     )
   }
