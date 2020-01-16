@@ -32,10 +32,15 @@ module.exports = {
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
+    
+    let targetPlayer = game.players[target-1]
     if (!game.players[target-1].alive)
       return await message.author.send("You cannot jail an dead player.")
     if (target == gamePlayer.number)
       return await message.author.send("You cannot jail yourself.")
+    
+    if (!gamePlayer.sect && targetPlayer.role == "President")
+      return await message.author.send("You cannot jail the President!")
     
     for (var i = 0; i < game.players.length; i++) game.players[i].jailed = false
     game.players[target-1].jailed = true

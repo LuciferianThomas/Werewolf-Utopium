@@ -51,6 +51,9 @@ module.exports = {
     if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
     gamePlayer.poisonUsed = true
     game.lastDeath = game.currentPhase
+    
+    if (!gamePlayer.sect && targetPlayer.role == "President")
+      return await message.author.send("You cannot poison the President!")
 
     if (["Junior Werewolf","Avenger"].includes(targetPlayer.role) && targetPlayer.avenge && game.players[targetPlayer.avenge].alive) {
       let avengedPlayer = game.players[targetPlayer.avenge-1]

@@ -168,6 +168,13 @@ client.on('ready', async () => {
               lynched = lynched[0]
               let lynchedPlayer = game.players[lynched-1]
               
+              if (
+                lynchedPlayer.role !== "President" ||
+                (lynchedPlayer.role == "President" &&
+                  game.players.filter(
+                    p => p.alive && roles[p.role].team == "Werewolves"
+                  ).length == 2 &&)
+              )
               lynchedPlayer.alive = false
               if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
             
@@ -176,18 +183,6 @@ client.on('ready', async () => {
                 client, game.players.filter(p => !p.left), 
                 `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
                   game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
-              
-              if (lynchedPlayer.role == "President") {
-                game.currentPhase = 999
-                fn.broadcastTo(
-                  client, game.players.filter(p => !p.left),
-                  new Discord.RichEmbed()
-                    .setTitle("Game has ended!")
-                    .setThumbnail(client.emojis.find(e => e.name == "President").url) 
-                    .setDescription(`The President ${lynched} ${client.users.get(lynchedPlayer.id).username} <:President:660497498430767104> was killed! All but the villagers have won!`)
-                )
-              }
-  
               
               if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge && game.players[lynchedPlayer.avenge].alive) {
                 let avengedPlayer = game.players[lynchedPlayer.avenge-1]
@@ -210,6 +205,7 @@ client.on('ready', async () => {
                   }** is dead!`
                 )
               }
+              
               if (lynchedPlayer.role == "Fool") {
                 game.currentPhase = 999
                 fn.broadcastTo(

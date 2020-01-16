@@ -40,6 +40,9 @@ module.exports = {
     if (roles[gamePlayer.role].team == roles[targetPlayer.role].team == "Werewolves")
       return await message.author.send("You cannot avenge on your fellow werewolves!")
     
+    if (gamePlayer.role == "Avenger" && !gamePlayer.sect && targetPlayer.role == "President")
+      return await message.author.send("You cannot avenge on the President!")
+    
     gamePlayer.avenge = targetPlayer.number
     
     message.author.send(`${fn.getEmoji(client, gamePlayer.role == "Avenger" ? "Avenger Select" : "Junior Werewolf Select")

@@ -33,10 +33,15 @@ module.exports = {
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
+    
+    let targetPlayer = game.players[target-1]
     if (!game.players[target-1].alive)
       return await message.author.send("You cannot kill an dead player.")
     if (target == gamePlayer.number)
       return await message.author.send("You cannot kill yourself.")
+    
+    if (targetPlayer.role == "President")
+      return await message.author.send("You cannot stab the President!")
     
     game.players[gamePlayer.number-1].vote = target
     message.author.send(

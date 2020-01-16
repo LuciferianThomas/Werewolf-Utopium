@@ -46,6 +46,9 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot shoot yourself.")
     
+    if (!gamePlayer.sect && targetPlayer.role == "President")
+      return await message.author.send("You cannot shoot the President!")
+    
     targetPlayer.alive = false
     if (gamePlayer.role == "Gunner") {
       fn.broadcastTo(

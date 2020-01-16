@@ -54,6 +54,9 @@ module.exports = {
     if (game.players[targetB-1].doused.includes(gamePlayer.number))
       return await message.author.send(`You doused **${game.players[targetB-1]} ${fn.getUser(client, game.players[targetB-1]).username}** already!`)
     
+    if (targetPlayerA.role == "President" || targetPlayerB.role == "President")
+      return await message.author.send("You cannot douse the President!")
+    
     let targetPlayerA = game.players[targetA-1],
         targetPlayerB = game.players[targetB-1]
     
