@@ -54,7 +54,7 @@ module.exports = {
         }**.`
       ) 
 
-      if (["Junior Werewolf","Avenger"].includes(dousedPlayer.role) && dousedPlayer.avenge) {
+      if (["Junior Werewolf","Avenger"].includes(dousedPlayer.role) && dousedPlayer.avenge && game.players[]) {
         let avengedPlayer = game.players[dousedPlayer.avenge-1]
 
         avengedPlayer.alive = false
