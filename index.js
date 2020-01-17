@@ -697,6 +697,7 @@ client.on('ready', async () => {
           for (var j = 0; j < game.players.length; j++) {
             game.players[j].jailed = false
             game.players[j].protectors = []
+            if (game.players[j].protected) game.players[j].protected = undefined
           }
         }
         

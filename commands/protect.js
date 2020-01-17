@@ -46,7 +46,9 @@ module.exports = {
       return await message.author.send("You cannot protect yourself.")
     
     if (gamePlayer.protected) {
-      let protected = gamePlayer.protected
+      let protectedPlayer = game.players[gamePlayer.protected-1]
+      
+      protectedPlayer.protectors.splice(protectedPlayer.protectors.indexOf(gamePlayer.number), 1)
     }
     
     targetPlayer.protectors.push(gamePlayer.number)
