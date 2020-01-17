@@ -45,7 +45,11 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot protect yourself.")
     
-    if (gamePlayer.protected) {
+    if (["Flower Child","Guardian Wolf"].includes(gamePlayer.role)) {
+      
+    }
+    else {
+      if (gamePlayer.protected) {
       let protectedPlayer = game.players[gamePlayer.protected-1]
       
       protectedPlayer.protectors.splice(protectedPlayer.protectors.indexOf(gamePlayer.number), 1)
@@ -54,15 +58,18 @@ module.exports = {
     targetPlayer.protectors.push(gamePlayer.number)
     gamePlayer.protected = targetPlayer.number
     
-    message.author.send(
-      `${
-        gamePlayer.role == "Doctor"
-          ? client.emojis.find(e => e.name == "Doctor_Protect")
-          : client.emojis.find(e => e.name == "Bodyguard_Shield")
-      } You selected **${target} ${
-        client.users.get(game.players[target - 1].id).username
-      }** to be protected.`
-    )
+      message.author.send(
+        `${
+          gamePlayer.role == "Doctor"
+            ? client.emojis.find(e => e.name == "Doctor_Protect")
+            : gamePlayer.role == "Witch"
+            ? fn.getEmoji(client, "Witch Elixir")
+            : client.emojis.find(e => e.name == "Bodyguard_Shield")
+        } You selected **${target} ${
+          client.users.get(game.players[target - 1].id).username
+        }** to be protected.`
+      )
+    }
     
     QuickGames[index] = game
     

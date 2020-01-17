@@ -61,8 +61,8 @@ client.on('ready', async () => {
       if (game.currentPhase < 999)
         for (let pl = 0; pl < game.players.length; pl++) {
           if (game.currentPhase == -1) {
-            if (!fn.getUser(client, game.players[pl].id) && moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
-              if (!fn.getUser(client, game.players[pl].id))
+            if (!fn.getUser(client, game.players[pl].id) && moment(game.players[pl].lastAction).add(3, 'm') <= moment()) {
+              if (fn.getUser(client, game.players[pl].id))
                 fn.getUser(client, game.players[pl].id).send(`You are removed from Game #${game.gameID} for inactivity.`)
               
               players.set(`${game.players[pl].id}.currentGame`, 0)
@@ -81,11 +81,11 @@ client.on('ready', async () => {
                   )
               )
               game.players.splice(pl--, 1)
-            } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
+            } else if (moment(game.players[pl].lastAction).add(2.5, 'm') <= moment() && !game.players[pl].prompted) {
               game.players[pl].prompted = true
               fn.getUser(client, game.players[pl].id).send(
                 new Discord.RichEmbed()
-                  .setTitle("❗ You have been inactive for 1.5 minutes.")
+                  .setTitle("❗ You have been inactive for 2.5 minutes.")
                   .setDescription(
                     "Please respond `w!` within 30 seconds to show your activity.\n" +
                     "You will be kicked from the game if you fail to do so."
@@ -102,7 +102,7 @@ client.on('ready', async () => {
               players.add(`${game.players[pl].id}.suicides`, 1)
               players.set(`${game.players[pl].id}.currentGame`, 0)
 
-              if (!fn.getUser(client, game.players[pl].id))
+              if (fn.getUser(client, game.players[pl].id))
                 fn.getUser(client, game.players[pl].id).send(`You were removed from Game #${game.gameID} for inactivity.`)
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left && p.id == game.players[pl].id),
