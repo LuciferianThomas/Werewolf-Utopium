@@ -61,7 +61,7 @@ client.on('ready', async () => {
       if (game.currentPhase < 999)
         for (let pl = 0; pl < game.players.length; pl++) {
           if (game.currentPhase == -1) {
-            if (!fn.getUser(client, game.players[pl].id) && moment(game.players[pl].lastAction).add(3, 'm') <= moment()) {
+            if (!fn.getUser(client, game.players[pl].id) || moment(game.players[pl].lastAction).add(3, 'm') <= moment()) {
               if (fn.getUser(client, game.players[pl].id))
                 fn.getUser(client, game.players[pl].id).send(`You are removed from Game #${game.gameID} for inactivity.`)
               
