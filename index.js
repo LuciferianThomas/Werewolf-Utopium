@@ -205,7 +205,7 @@ client.on('ready', async () => {
                     client, game.players.filter(p => !p.left),
                     new Discord.RichEmbed()
                       .setTitle("Game has ended.")
-                      .setThumbnail(client.emojis.find(e => e.name == "Fool").url)
+                      .setThumbnail(fn.getEmoji(client, "Fool").url)
                       .setDescription(`Fool ${lynched} ${fn.getUser(client, lynchedPlayer.id).username} wins!`)
                   )
                   fn.addXP(game.players.filter(p => p.number == lynched), 100)
@@ -222,7 +222,7 @@ client.on('ready', async () => {
                     client, game.players.filter(p => !p.left),
                     new Discord.RichEmbed()
                       .setTitle("Game has ended.")
-                      .setThumbnail(client.emojis.find(e => e.name == "Headhunter").url)
+                      .setThumbnail(fn.getEmoji(client, "Headhunter").url)
                       .setDescription(`Headhunter **${headhunter.number} ${fn.getUser(client, headhunter.id).username}** wins!`)
                   )
                   fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
@@ -723,9 +723,9 @@ client.on('ready', async () => {
           fn.broadcastTo(
             client, game.players.filter(p => !p.left),
             new Discord.RichEmbed()
-              .setTitle("Game has ended!")
-              .setThumbnail(client.emojis.find(e => e.name == "President").url) 
-              .setDescription(`The President ${president.number} ${client.users.get(president.id).username} <:President:660497498430767104> was killed! All but the villagers have won!`)
+              .setTitle("Game has ended.")
+              .setThumbnail(fn.getEmoji(client, "President").url) 
+              .setDescription(`The President **${president.number} ${client.users.get(president.id).username}** <:President:660497498430767104> was killed! All but the villagers have won!`)
           )
           fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
           fn.addXP(game.players.filter(p => (roles[p.role].team == "Werewolves" || p.role == "Zombie") && !p.suicide), 75)
@@ -742,7 +742,7 @@ client.on('ready', async () => {
             client, game.players.filter(p => !p.left).map(p => p.id),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(client.emojis.find(e => e.name == "Villager").url)
+              .setThumbnail(fn.getEmoji(client, "Villager").url)
               .setDescription(
                 `The village wins!`
               )
@@ -775,7 +775,7 @@ client.on('ready', async () => {
             client, game.players.filter(p => !p.left).map(p => p.id),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(client.emojis.find(e => e.name == "Werewolf").url)
+              .setThumbnail(fn.getEmoji(client, "Werewolf").url)
               .setDescription(
                 `The werewolves win!`
               )
@@ -792,10 +792,10 @@ client.on('ready', async () => {
             (alive.length == 2 && alive.map(p => roles[p.role].team).includes("Solo") && !alive.map(p => p.role).includes("Headhunter") && alive.map(p => p.role).includes("Jailer"))) {
           game.currentPhase = 999
           fn.broadcastTo(
-            client, game.players.filter(p => !p.left).map(p => p.id),
+            client, game.players.filter(p => !p.left),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(client.emojis.find(e => e.name == alive.find(p => roles[p.role].team == "Solo")).url)
+              .setThumbnail(fn.getEmoji(client, alive.find(p => roles[p.role].team == "Solo")).url)
               .setDescription(
                 `${alive.find(p => roles[p.role].team == "Solo")} **${alive.find(p => roles[p.role].team == "Solo").number} ` +
                 `${fn.getUser(client, alive.find(p => roles[p.role].team == "Solo").id)}** wins!`
@@ -820,11 +820,12 @@ client.on('ready', async () => {
             client, game.players.filter(p => !p.left),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              // .setThumbnail(client.emojis.find(e => e.name == "Headhunter").url)
-              .setDescription(`It was a tie.`)
+              .setThumbnail(fn.getEmoji(client, "Death").url)
+              .setDescription(`It was a tie. There are no winners.`)
           )
           fn.addXP(game.players.filter(p => !p.suicide), 15)
           fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addWin(game, [])
           continue;
         }
         
@@ -834,7 +835,7 @@ client.on('ready', async () => {
           game.currentPhase % 3 == 1 ? 
             new Discord.RichEmbed()
               .setTitle(`Day ${Math.floor(game.currentPhase/3)+1} has started!`)
-              .setThumbnail(client.emojis.find(e => e.name == "Day").url)
+              .setThumbnail(fn.getEmoji(client, "Day").url)
               .setDescription("Start discussing!") :
           `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
         )
@@ -871,7 +872,7 @@ client.on('ready', async () => {
                     "Werewolf Berserk","Sorcerer",
                     "Serial Killer","Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
             new Discord.RichEmbed()
-              .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
+              .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
               .setDescription("Nothing to do right now.\n" +
                               "Go back to sleep!"),
           )
@@ -882,7 +883,7 @@ client.on('ready', async () => {
               p => p.alive &&
                    ["Seer", "Wolf Seer", "Sorcerer"].includes(p.role)).map(p => p.id), 
             new Discord.RichEmbed()
-              .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
+              .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
               .setDescription("Select a player to view their role (`w!check [player]`)."),
           )
           
@@ -892,7 +893,7 @@ client.on('ready', async () => {
               p => p.alive &&
                    p.role == "Aura Seer").map(p => p.id), 
             new Discord.RichEmbed()
-              .setAuthor(`Night`, client.emojis.find(e => e.name == "Night").url)
+              .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
               .setDescription("Select a player to view their aura (`w!check [player]`)."),
           )
           
@@ -911,14 +912,14 @@ client.on('ready', async () => {
                       .map(p => p.id),
                     new Discord.RichEmbed()
                       .setTitle(`Jailed!`)
-                      .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
+                      .setThumbnail(fn.getEmoji(client, "Jail").url)
                       .setDescription(`Fellow Werewolf **${jailed.number} ${client.users.get(jailed.id).username}** is jailed!`)
                   )
 
                 fn.getUser(client, jailer.id).send(
                   new Discord.RichEmbed()
                     .setTitle(`Jail`)
-                    .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
+                    .setThumbnail(fn.getEmoji(client, "Jail").url)
                     .setDescription("You did not select a player last day or your target could not be jailed.\n" +
                                     "Go back to sleep!")
                 )
@@ -927,7 +928,7 @@ client.on('ready', async () => {
                   .send(
                     new Discord.RichEmbed()
                       .setTitle(`Jailed`)
-                      .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
+                      .setThumbnail(fn.getEmoji(client, "Jail").url)
                       .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
                   )
               } else 
@@ -937,7 +938,7 @@ client.on('ready', async () => {
               fn.getUser(client, jailer.id).send(
                 new Discord.RichEmbed()
                     .setTitle(`Jail`)
-                    .setThumbnail(client.emojis.find(e => e.name == "Jail").url)
+                    .setThumbnail(fn.getEmoji(client, "Jail").url)
                   .setDescription("You did not select a player last day or your target could not be jailed.\n" +
                                   "Go back to sleep!")
               )

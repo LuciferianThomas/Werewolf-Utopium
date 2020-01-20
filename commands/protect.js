@@ -61,10 +61,10 @@ module.exports = {
       message.author.send(
         `${
           gamePlayer.role == "Doctor"
-            ? client.emojis.find(e => e.name == "Doctor_Protect")
+            ? fn.emoji(client, "Doctor_Protect")
             : gamePlayer.role == "Witch"
             ? fn.getEmoji(client, "Witch Elixir")
-            : client.emojis.find(e => e.name == "Bodyguard_Shield")
+            : fn.emoji(client, "Bodyguard_Shield")
         } You selected **${target} ${
           client.users.get(game.players[target - 1].id).username
         }** to be protected.`
