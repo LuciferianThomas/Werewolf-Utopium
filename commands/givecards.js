@@ -50,18 +50,16 @@ module.exports = {
           await message.author.send("You cannot give cards to yourself.")
           continue;
         }
-        if (targetPlayer.card) {
-          await message.author.send(`**${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}** already has a card!`)
+        if (gamePlayer.cards.includes(targetPlayer.number)) {
+          await message.author.send(`**${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}** already has your card!`)
           continue;
         }
         
-        targetPlayer.card = 2-gamePlayer.cardsLeft
-        
-        message.author.send(
+        gamePlayer.cards.push(targetPlayer.number)
+message.author.send(
           new Discord.RichEmbed()
             .setTitle("Card given!")
-            .setThumbnail(fn.getEmoji(client, `Fortune Teller Card${targetPlayer.card}`).url)
-            .setDescription(`You gave **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id)}** a card to reveal their roles at day.`)
+            .setThumbnail(fn.getEmoji(client, `Fortune Teller Card${targetPlayer.cardgamePlayer    .setDescription(`You gave **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id)}** a card to reveal their roles at day.`)
         )
         
         fn.getUser(client, targetPlayer.id).send(
@@ -74,11 +72,7 @@ module.exports = {
             )
         )
         
-        gamePlayer.cardsLeft -= 1
-      }
-    }
-
-    QuickGames[index] = game
+          QuickGames[index] = game
 
     games.set("quick", QuickGames)
   }

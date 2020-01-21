@@ -51,6 +51,7 @@ module.exports = {
     
       gamePlayer.roleRevealed = "Mayor"
     }
+    //else if (gamePlayer
       
     QuickGames[index] = game
     
