@@ -9,7 +9,7 @@ const fn = require('/app/util/fn'),
       roles = require('/app/util/roles')
 
 module.exports = {
-  name: "mute",
+  name: "frenzy",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 

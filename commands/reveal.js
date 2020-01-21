@@ -19,24 +19,38 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (gamePlayer.role !== "Mayor")
-      return await message.author.send("You are not the Mayor.")
-    if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer reveal yourself.")
+    if (gamePlayer.role == "Pacifist") {
+      if (!gamePlayer.alive)
+        return await message.author.send("You are dead. You can no longer reveal a player's role!")
+      if (game.players.find(p => p.paciReveal == gamePlayer.number))
+        return await message.author.send("You have already revealed a player!")
+      
+      let target = parseInt(args[0])
+      if (isNaN(target) || target > game.players.length || target < 1)
+        return await message.author.send("Invalid target.")
+      
+      let targetPlayer = game.players[target-1]
+      if (!targetPlayer.alive)
+        return await message.author.send("You cannot reveal a dead player's role!")
+      
+    }
+    else if (gamePlayer.role == "Mayor") {
+      if (!gamePlayer.alive)
+        return await message.author.send("You are dead. You can no longer reveal yourself.")
     
-    if (gamePlayer.roleRevealed == "Mayor")
-      return await message.author.send("Your mayorship has already been revealed!")
+      if (gamePlayer.roleRevealed == "Mayor")
+        return await message.author.send("Your mayorship has already been revealed!")
     
-    if (game.currentPhase % 3 == 0)
-      return await message.author.send("You cannot reveal yourself at night.")
+      if (game.currentPhase % 3 == 0)
+        return await message.author.send("You cannot reveal yourself at night.")
     
-    fn.broadcastTo(
-      client, game.players.filter(p => !p.left).map(p => p.id), 
-      `<:Mayor_Reveal:660495261042475036> **${gamePlayer.number} ${message.author.username}** revealed themselves as Mayor!.`)
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left).map(p => p.id), 
+        `<:Mayor_Reveal:660495261042475036> **${gamePlayer.number} ${message.author.username}** revealed themselves as Mayor!.`)
     
-    gamePlayer.roleRevealed = true
-    gamePlayer.poisonUsed = true
-    
+      gamePlayer.roleRevealed = "Mayor"
+    }
+      
     QuickGames[index] = game
     
     games.set("quick", QuickGames)
