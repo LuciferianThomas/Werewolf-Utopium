@@ -44,14 +44,19 @@ module.exports = {
           .setAuthor("Peace For Today", fn.getEmoji(client, "Pacifist Reveal").url)
           .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
           .setDescription(
-            `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card. They are ${
+            `Pacifist revealed **${gamePlayer.number} ${message.author.username}**. They are ${
               ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
                 ? "the"
                 : ["A","E","I","O","U"].includes(gamePlayer.role[0])
                 ? "an"
                 : "a"
             } ${gamePlayer.role}!`
+          )
       )
+      
+      gamePlayer.revealed = true
+      targetPlayer.roleRevealed = targetPlayer.role
+      targetPlayer.paciRevealed = true
     }
     else if (gamePlayer.role == "Mayor") {
       if (!gamePlayer.alive)
