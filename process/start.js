@@ -27,7 +27,7 @@ module.exports = async (client, game) => {
       )
     Object.assign(game.players[i], {alive: true, protectors: [], enchanted: [], doused: []})
     if (game.players[i].role == "Bodyguard") game.players[i].health = 2
-    if (game.players[i].role == "Tough Guy") game.players[i].health = 0
+    if (game.players[i].role == "Tough Guy") game.players[i].health = 1
     if (game.players[i].role == "Medium") game.players[i].revUsed = false
     if (game.players[i].role == "Jailer") game.players[i].bullets = 1
     if (game.players[i].role == "Gunner") game.players[i].bullets = 2
@@ -60,8 +60,6 @@ module.exports = async (client, game) => {
       )
   }
   
-  Games[Games.indexOf(Games.find(g => g.gameID == game.gameID))] = game
-  
   fn.broadcastTo(
     client, game.players.filter(p => !p.left),
     "Night 1 has started."
@@ -75,11 +73,13 @@ module.exports = async (client, game) => {
       new Discord.RichEmbed()
         .setTitle("President")
         .setThumbnail(fn.getEmoji(client, "President"))
-        .setDescription(`${game.players.find(p => p.role == "President")}`)
+        .setDescription(`**${president.number} ${fn.getUser(client, president.id).username}** is the President!`)
     )
     
-    game.players.find(p => p.role == "President").roleRevealed = "President"
+    president.roleRevealed = "President"
   }
+  
+  Games[Games.indexOf(Games.find(g => g.gameID == game.gameID))] = game
   
   games.set("quick", Games)
 }
