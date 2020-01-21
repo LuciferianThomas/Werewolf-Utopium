@@ -32,7 +32,8 @@ module.exports = {
       let targetPlayer = game.players[target-1]
       if (!targetPlayer.alive)
         return await message.author.send("You cannot reveal a dead player's role!")
-      
+      if (targetPlayer.paciReveal)
+        return await message.author.send("This player is already revealed by another Pacifist!")
     }
     else if (gamePlayer.role == "Mayor") {
       if (!gamePlayer.alive)

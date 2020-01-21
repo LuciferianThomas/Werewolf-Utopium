@@ -32,6 +32,7 @@ module.exports = async (client, game) => {
     if (game.players[i].role == "Jailer") game.players[i].bullets = 1
     if (game.players[i].role == "Gunner") game.players[i].bullets = 2
     if (game.players[i].role == "Priest") game.players[i].bullets = 1
+    if (game.players[i].role == "Pacifist") game.players[i].cardsLeft = 2
   }
   
   game.lastDeath = 0

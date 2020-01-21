@@ -56,12 +56,25 @@ module.exports = {
         }
         
         targetPlayer.card = 2-gamePlayer.cardsLeft
+        
         message.author.send(
           new Discord.RichEmbed()
             .setTitle("Card given!")
             .setThumbnail(fn.getEmoji(client, `Fortune Teller Card${targetPlayer.card}`).url)
-            .setDescription(`You gave ****`)
+            .setDescription(`You gave **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id)}** a card to reveal their roles at day.`)
         )
+        
+        fn.getUser(client, targetPlayer.id).send(
+          new Discord.RichEmbed()
+            .setTitle("Fortune Teller's Card")
+            .setThumbnail(fn.getEmoji(client, `Fortune Teller Card${targetPlayer.card}`).url)
+            .setDescription(
+              "The Fortune Teller gave you a card to reveal your identity (`w!usecard`)." +
+              " You can use your card at any daytime."
+            )
+        )
+        
+        gamePlayer.cardsLeft -= 1
       }
     }
 
