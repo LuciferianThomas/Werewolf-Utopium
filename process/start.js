@@ -62,7 +62,24 @@ module.exports = async (client, game) => {
   
   Games[Games.indexOf(Games.find(g => g.gameID == game.gameID))] = game
   
-  await fn.broadcast(client, game, "Night 1 has started.")
+  fn.broadcastTo(
+    client, game.players.filter(p => !p.left),
+    "Night 1 has started."
+  )
+  
+  if (game.roles.includes("President")) {
+    let president = game.players.find(p => p.role == "President")
+    
+    fn.broadcastTo(
+      client, game.players.filter(p => !p.left),
+      new Discord.RichEmbed()
+        .setTitle("President")
+        .setThumbnail(fn.getEmoji(client, "President"))
+        .setDescription(`${game.players.find(p => p.role == "President")}`)
+    )
+    
+    game.players.find(p => p.role == "President").roleRevealed = "President"
+  }
   
   games.set("quick", Games)
 }
