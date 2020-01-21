@@ -30,41 +30,32 @@ module.exports = {
     
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only check on a player at night.")
-      
-    if (gamePlayer.usedAbilityTonight)
-      return await message.author.send("You have already checked on a player tonight.")
     
-    if (args.length == 1) {
-      
-    }
+    if (args.length > 2 || !gamePlayer.cardsLeft || (args.length > 1 && gamePlayer.cardsLeft == 1)) 
+      return await message.author.send("You can only give cards to two players!")
     else {
-      let targetA = parseInt(args[0]),
-          targetB = parseInt(args[1])
-      if (isNaN(targetA) || targetA > game.players.length || targetA < 1 ||
-          isNaN(targetB) || targetB > game.players.length || targetB < 1)
-        return await message.author.send("Invalid target.")
-      if (!game.players[targetA-1].alive || !game.players[targetB-1].alive)
-        return await message.author.send("You cannot give cards to a dead player.")
-      if (targetA == gamePlayer.number || targetB == gamePlayer.number)
-        return await message.author.send("You cannot give cards to yourself.")
-      if (targetA == targetB)
-        return await message.author.send("You cannot give cards to the same player.")
+      for (var i = 0; i < args.length; i++) {
+        let target = parseInt(args[0])
+        if (isNaN(target) || target > game.players.length || target < 1) {
+          await message.author.send("Invalid target.")
+          continue;
+        }
 
-      let targetPlayerA = game.players[targetA-1],
-          targetPlayerB = game.players[targetB-1]
-      
-      if (!targetPlayerA.card) {
-        
+        let targetPlayer = game.players[target-1]
+        if (!targetPlayer.alive) {
+          await message.author.send("You cannot give cards to an dead player.")
+          continue;
+        }
+        if (target == gamePlayer.number) {
+          await message.author.send("You cannot give cards to yourself.")
+          continue;
+        }
+        if (targetPlayer.card)
       }
-      else {
-        message.author.send(`**${targetPlayerA.number} ${fn.getUser(client, targetPlayerA.id).username}** already has a card!`)
-      }
-
-      game.players[gamePlayer.number-1].usedAbilityTonight = true
-
-      QuickGames[index] = game
-
-      games.set("quick", QuickGames)
     }
+
+    QuickGames[index] = game
+
+    games.set("quick", QuickGames)
   }
 }
