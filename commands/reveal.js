@@ -19,12 +19,12 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (gamePlayer.role !== "Witch")
-      return await message.author.send("You do not have the abilities to poison a player.")
+    if (gamePlayer.role !== "Mayor")
+      return await message.author.send("You are not the Mayor.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer reveal yourself.")
     
-    if (gamePlayer.roleRevealed)
+    if (gamePlayer.roleRevealed == "Mayor")
       return await message.author.send("Your mayorship has already been revealed!")
     
     if (game.currentPhase % 3 == 0)

@@ -60,7 +60,7 @@ module.exports = {
           new Discord.RichEmbed()
             .setTitle("Card given!")
             .setThumbnail(fn.getEmoji(client, `Fortune Teller Card${targetPlayer.card}`).url)
-            .setDescription(`You gave `)
+            .setDescription(`You gave ****`)
         )
       }
     }
