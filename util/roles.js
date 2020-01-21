@@ -73,13 +73,13 @@ module.exports = {
     abbr: ["doc", "medic"]
   },
   "Flower Child": {
- 		desc: "Once a game, you can protect anyone from being lynched by using (`w!petal [player]`).",
+ 		desc: "Once a game, you can protect anyone from being lynched by using (`w!protect [player]`).",
     aura: "Good", 
     team: "Village", 
  		abbr: ["fc", "flower"] 
   }, 
   "Fortune Teller": {
-  	desc: "During the first night, give two cards to two players with (`w!givecards [player1] [player2]`)." +
+  	desc: "During the first night, give two cards to two players (`w!givecards [player1] [player2]`)." +
     			" These players can use the cards and reveal their role.",
     aura: "Unknown",
     team: "Village",
@@ -220,7 +220,7 @@ module.exports = {
     abbr: ["aww","alpha", "alpha ww"]
   },
   "Guardian Wolf": {
-  	desc: "Once a game, you can protect anyone from being lynched by doing (`w!guard [player]`).",
+  	desc: "Once a game, you can protect anyone from being lynched by doing (`w!protect [player]`).",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["gww"] 
