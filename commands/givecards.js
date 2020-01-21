@@ -50,7 +50,18 @@ module.exports = {
           await message.author.send("You cannot give cards to yourself.")
           continue;
         }
-        if (targetPlayer.card)
+        if (targetPlayer.card) {
+          await message.author.send(`**${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}** already has a card!`)
+          continue;
+        }
+        
+        targetPlayer.card = 2-gamePlayer.cardsLeft
+        message.author.send(
+          new Discord.RichEmbed()
+            .setTitle("Card given!")
+            .setThumbnail(fn.getEmoji(client, `Fortune Teller Card${targetPlayer.card}`).url)
+            .setDescription(`You gave `)
+        )
       }
     }
 
