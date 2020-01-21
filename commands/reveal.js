@@ -67,9 +67,9 @@ module.exports = {
         new Discord.RichEmbed()
           .setAuthor(
             "Fortune Teller's Card",
-            fn.getEmoji(client, `Fortune Teller Card${game.players.find(p => p.cards.includes(gamePlayer.number)).cards.indexOf(gamePlayer.number)}`).url
+            fn.getEmoji(client, `Fortune Teller Card${game.players.find(p => p.cards.includes(gamePlayer.number)).cards.indexOf(gamePlayer.number)+1}`).url
           )
-          .setThumbnail(fn.getEmoji(client, gamePlayer.role))
+          .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
           .setDescription(
             `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card. They are ${
              ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
@@ -80,6 +80,9 @@ module.exports = {
             } ${gamePlayer.role}!`
           )
       )
+      
+      gamePlayer.roleRevealed = gamePlayer.role
+      gamePlayer.ftCard = game.players.find(p => p.cards.includes(gamePlayer.number)).cards.indexOf(gamePlayer.number)+1
     }
       
     QuickGames[index] = game
