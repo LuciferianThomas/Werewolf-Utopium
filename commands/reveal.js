@@ -49,7 +49,8 @@ module.exports = {
         client, game.players.filter(p => !p.left), 
         new Discord.RichEmbed()
           .setTitle(`The Honorable ${message.author.username}`)
-          .set`<:Mayor_Reveal:660495261042475036> **${gamePlayer.number} ${message.author.username}** revealed themselves as Mayor!.`
+          .setThumbnail(fn.getEmoji(client, "Mayor Reveal").url)
+          .setDescription(`**${gamePlayer.number} ${message.author.username}** revealed themselves as Mayor!`)
       )
     
       gamePlayer.roleRevealed = "Mayor"
@@ -63,7 +64,21 @@ module.exports = {
       
       fn.broadcastTo(
         client, game.players.filter(p => !p.left),
-        `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card to reveal their role. They are`
+        new Discord.RichEmbed()
+          .setAuthor(
+            "Fortune Teller's Card",
+            fn.getEmoji(client, `Fortune Teller Card${game.players.find(p => p.cards.includes(gamePlayer.number)).cards.indexOf(gamePlayer.number)}`).url
+          )
+          .setThumbnail(fn.getEmoji(client, gamePlayer.role))
+          .setDescription(
+            `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card. They are ${
+             ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
+                ? "the"
+                : ["A","E","I","O","U"].includes(gamePlayer.role[0])
+                ? "an"
+                : "a"
+            } ${gamePlayer.role}!`
+          )
       )
     }
       
