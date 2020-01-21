@@ -46,12 +46,26 @@ module.exports = {
         return await message.author.send("You cannot reveal yourself at night.")
     
       fn.broadcastTo(
-        client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Mayor_Reveal:660495261042475036> **${gamePlayer.number} ${message.author.username}** revealed themselves as Mayor!.`)
+        client, game.players.filter(p => !p.left), 
+        new Discord.RichEmbed()
+          .setTitle(`The Honorable ${message.author.username}`)
+          .set`<:Mayor_Reveal:660495261042475036> **${gamePlayer.number} ${message.author.username}** revealed themselves as Mayor!.`
+      )
     
       gamePlayer.roleRevealed = "Mayor"
     }
-    //else if (gamePlayer
+    else if (game.players.find(p => p.cards.includes(gamePlayer.number))) {
+      if (!gamePlayer.alive)
+        return await message.author.send("You are dead. You can no longer reveal yourself.")
+      
+      if (game.currentPhase % 3 == 0)
+        return await message.author.send("You cannot use the Fortune Teller's card at night!")
+      
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left),
+        `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card to reveal their role. They are`
+      )
+    }
       
     QuickGames[index] = game
     
