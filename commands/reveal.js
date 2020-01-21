@@ -22,8 +22,11 @@ module.exports = {
     if (gamePlayer.role == "Pacifist") {
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer reveal a player's role!")
-      if (game.players.find(p => p.paciReveal == gamePlayer.number))
+      if (gamePlayer.revealed)
         return await message.author.send("You have already revealed a player!")
+      
+      if (game.currentPhase % 3 == 0)
+        return await message.author.send("You can only reveal players at day!")
       
       let target = parseInt(args[0])
       if (isNaN(target) || target > game.players.length || target < 1)
@@ -32,8 +35,23 @@ module.exports = {
       let targetPlayer = game.players[target-1]
       if (!targetPlayer.alive)
         return await message.author.send("You cannot reveal a dead player's role!")
-      if (targetPlayer.paciReveal)
-        return await message.author.send("This player is already revealed by another Pacifist!")
+    //  if (targetPlayer.paciReveal)
+    //    return await message.author.send("This player is already revealed by another Pacifist!")
+      
+      fn.broadcastTo(
+        client, game.players.filter(p => !p.left),
+        new Discord.RichEmbed()
+          .setAuthor("Peace For Today", fn.getEmoji(client, "Pacifist Reveal").url)
+          .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
+          .setDescription(
+            `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card. They are ${
+              ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
+                ? "the"
+                : ["A","E","I","O","U"].includes(gamePlayer.role[0])
+                ? "an"
+                : "a"
+            } ${gamePlayer.role}!`
+      )
     }
     else if (gamePlayer.role == "Mayor") {
       if (!gamePlayer.alive)
@@ -72,7 +90,7 @@ module.exports = {
           .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
           .setDescription(
             `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card. They are ${
-             ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
+              ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
                 ? "the"
                 : ["A","E","I","O","U"].includes(gamePlayer.role[0])
                 ? "an"

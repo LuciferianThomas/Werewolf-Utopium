@@ -46,7 +46,7 @@ module.exports = {
       return await message.author.send("You cannot protect yourself.")
     
     if (["Flower Child","Guardian Wolf"].includes(gamePlayer.role)) {
-      gamePlayer
+      //gamePlayer
     }
     else {
       if (gamePlayer.protected) {
