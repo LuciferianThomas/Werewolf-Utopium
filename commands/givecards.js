@@ -31,7 +31,7 @@ module.exports = {
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only check on a player at night.")
     
-    if (args.length > 2 || !gamePlayer.cardsLeft || (args.length > 1 && gamePlayer.cardsLeft == 1)) 
+    if (args.length > 2 || gamePlayer.cards.length == 2 || (args.length > 1 && gamePlayer.cards.length == 1)) 
       return await message.author.send("You can only give cards to two players!")
     else {
       for (var i = 0; i < args.length; i++) {
