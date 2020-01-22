@@ -52,8 +52,10 @@ module.exports = {
     if (!targetPlayer.revive) targetPlayer.revive = []
     targetPlayer.revive.push(gamePlayer.number)
     
-    message.author.send(`${fn.getEmoji(client, "Medium Revive")
-                        } You selected **${target} ${fn.getUser(client, targetPlayer.id).username}** to be revived.`)
+    message.author.send(
+      `${fn.getEmoji(client, "Medium Revive")
+      } You selected **${target} ${fn.getUser(client, targetPlayer.id).username}** to be revived.`
+    )
     
     QuickGames[index] = game
     
