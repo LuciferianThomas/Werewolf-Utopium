@@ -66,11 +66,13 @@ client.on('ready', async () => {
                 fn.getUser(client, game.players[pl].id).send(`You are removed from Game #${game.gameID} for inactivity.`)
               
               players.set(`${game.players[pl].id}.currentGame`, 0)
+              
+              
               fn.broadcastTo(
-                client, game.players.filter(p => p.id == game.players[pl].id),
+                client, game.players.filter(p => p.id !== game.players[pl].id),
                 new Discord.RichEmbed()
                   .setAuthor(
-                    `**${fn.getUser(client, game.players[pl].id).username}** left the game.`,
+                    `${fn.getUser(client, game.players[pl].id).username} left the game.`,
                     fn.getUser(client, game.players[pl].id).displayAvatarURL
                   )
                   .addField(
@@ -1012,7 +1014,7 @@ client.on('message', async message => {
 })
 
 client.on('message', async message => {  
-  if (message.author.bot) return;
+  if (message.author.bot || message.channel.type !== 'dm') return;
   console.log(message.author.tag + ' | ' + message.cleanContent)
   
   let player = players.get(message.author.id)
