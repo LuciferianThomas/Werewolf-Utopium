@@ -67,13 +67,15 @@ client.on('ready', async () => {
               
               players.set(`${game.players[pl].id}.currentGame`, 0)
               
+              let leftPlayer = game.players[pl].id
+              game.players.splice(pl--, 1)
               
               fn.broadcastTo(
-                client, game.players.filter(p => p.id !== game.players[pl].id),
+                client, game.players,
                 new Discord.RichEmbed()
                   .setAuthor(
-                    `${fn.getUser(client, game.players[pl].id).username} left the game.`,
-                    fn.getUser(client, game.players[pl].id).displayAvatarURL
+                    `${fn.getUser(client, leftPlayer).username} left the game.`,
+                    fn.getUser(client, leftPlayer).displayAvatarURL
                   )
                   .addField(
                     `Players [${game.players.length}]`,
@@ -82,7 +84,6 @@ client.on('ready', async () => {
                       .join("\n")
                   )
               )
-              game.players.splice(pl--, 1)
             } else if (moment(game.players[pl].lastAction).add(2.5, 'm') <= moment() && !game.players[pl].prompted) {
               game.players[pl].prompted = true
               fn.getUser(client, game.players[pl].id).send(
@@ -107,7 +108,7 @@ client.on('ready', async () => {
               if (fn.getUser(client, game.players[pl].id))
                 fn.getUser(client, game.players[pl].id).send(`You were removed from Game #${game.gameID} for inactivity.`)
               fn.broadcastTo(
-                client, game.players.filter(p => !p.left && p.id == game.players[pl].id),
+                client, game.players.filter(p => !p.left),
                 `**${game.players[pl].number} ${fn.getUser(
                   client,
                   game.players[pl].id

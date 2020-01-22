@@ -18,6 +18,6 @@ module.exports = {
           )
       )
     
-    require(`./${gamemode}`)(client, message, args, shared)
+    require(`./${gamemode}`).run(client, message, args, shared)
   }
 }
