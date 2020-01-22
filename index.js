@@ -70,19 +70,20 @@ client.on('ready', async () => {
               let leftPlayer = game.players[pl].id
               game.players.splice(pl--, 1)
               
-              fn.broadcastTo(
-                client, game.players,
-                new Discord.RichEmbed()
-                  .setAuthor(
-                    `${fn.getUser(client, leftPlayer).username} left the game.`,
-                    fn.getUser(client, leftPlayer).displayAvatarURL
-                  )
-                  .addField(
-                    `Players [${game.players.length}]`,
-                    game.players
-                      .map(p => fn.getUser(client, p.id).username)
-                      .join("\n")
-                  )
+              if (game.players.length)
+                fn.broadcastTo(
+                  client, game.players,
+                  new Discord.RichEmbed()
+                    .setAuthor(
+                      `${fn.getUser(client, leftPlayer).username} left the game.`,
+                      fn.getUser(client, leftPlayer).displayAvatarURL
+                    )
+                    .addField(
+                      `Players [${game.players.length}]`,
+                      game.players
+                        .map(p => fn.getUser(client, p.id).username)
+                        .join("\n")
+                    )
               )
             } else if (moment(game.players[pl].lastAction).add(2.5, 'm') <= moment() && !game.players[pl].prompted) {
               game.players[pl].prompted = true
