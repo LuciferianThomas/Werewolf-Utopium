@@ -10,8 +10,7 @@ const fn = require('/app/util/fn'),
 
 module.exports = {
   name: "sect",
-  run: async (client, message, args, shared) => { return;
-    let player = players.get(message.author.id)
+  run: async (client, message, args, shared) => { return;    let player = players.get(message.author.id)
     if (!player.currentGame) 
       return await message.author.send("**You are not currently in a game!**\nDo `w!quick` to join a Quick Game!")
     
@@ -30,8 +29,12 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You cannot vote while in jail!")
     
+    let target = parseInt(args[0])
+    if (isNaN(target) || target > game.players.length || target < 1)
+      return await message.author.send("Invalid target.")
     
-    
+                                                 
+                                                     
     QuickGames[index] = game
     
     games.set("quick", QuickGames)
