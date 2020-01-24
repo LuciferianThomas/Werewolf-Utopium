@@ -740,6 +740,46 @@ client.on('ready', async () => {
           fn.addWin(game, game.players.filter(p => !p.suicide && roles[p.role].team != "Village").map(p => p.number))
         }
         
+        let alive = game.players.filter(p => p.alive)
+        
+        if ((alive.length == 1 && roles[alive[0].role].team == "Solo" && alive[0].role != "Headhunter") ||
+            (alive.length == 2 && alive.map(p => roles[p.role].team).includes("Solo") && !alive.map(p => p.role).includes("Headhunter") && alive.map(p => p.role).includes("Jailer"))) {
+          game.currentPhase = 999
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(fn.getEmoji(client, alive.find(p => roles[p.role].team == "Solo")).url)
+              .setDescription(
+                `${alive.find(p => roles[p.role].team == "Solo")} **${alive.find(p => roles[p.role].team == "Solo").number} ` +
+                `${fn.getUser(client, alive.find(p => roles[p.role].team == "Solo").id)}** wins!`
+              )
+          )
+          fn.addXP(alive.find(p => roles[p.role].team == "Solo"), 250)
+          fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addWin(game, [alive.find(p => roles[p.role].team == "Solo").number], "Solo")
+          continue;
+        }
+        
+        if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
+            game.players.filter(p => p.alive && (roles[p.role].team.includes("Village") || p.role == "Fool")).length &&
+            !game.players.filter(p => p.alive && roles[p.role].team == "Solo" && p.role != "Fool").length) {
+          game.currentPhase = 999
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left).map(p => p.id),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(fn.getEmoji(client, "Werewolf").url)
+              .setDescription(
+                `The werewolves win!`
+              )
+          )
+          fn.addXP(game.players.filter(p => !p.suicide && roles[p.role].team == "Werewolves"), 50)
+          fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addWin(game, game.players.filter(p => !p.suicide && roles[p.role].team == "Werewolves").map(p => p.number), "Werewolves")
+          continue;
+        }
+        
         if (game.players.filter(p => p.alive && !roles[p.role].team.includes("Village")).length == 0) {
           game.currentPhase = 999
           fn.broadcastTo(
@@ -771,46 +811,6 @@ client.on('ready', async () => {
           continue;
         }
         
-        if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
-            game.players.filter(p => p.alive && (roles[p.role].team.includes("Village") || p.role == "Fool")).length &&
-            !game.players.filter(p => p.alive && roles[p.role].team == "Solo" && p.role != "Fool").length) {
-          game.currentPhase = 999
-          fn.broadcastTo(
-            client, game.players.filter(p => !p.left).map(p => p.id),
-            new Discord.RichEmbed()
-              .setTitle("Game has ended.")
-              .setThumbnail(fn.getEmoji(client, "Werewolf").url)
-              .setDescription(
-                `The werewolves win!`
-              )
-          )
-          fn.addXP(game.players.filter(p => !p.suicide && roles[p.role].team == "Werewolves"), 50)
-          fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addWin(game, game.players.filter(p => !p.suicide && roles[p.role].team == "Werewolves").map(p => p.number), "Werewolves")
-          continue;
-        }
-        
-        let alive = game.players.filter(p => p.alive)
-        
-        if ((alive.length == 1 && roles[alive[0].role].team == "Solo" && alive[0].role != "Headhunter") ||
-            (alive.length == 2 && alive.map(p => roles[p.role].team).includes("Solo") && !alive.map(p => p.role).includes("Headhunter") && alive.map(p => p.role).includes("Jailer"))) {
-          game.currentPhase = 999
-          fn.broadcastTo(
-            client, game.players.filter(p => !p.left),
-            new Discord.RichEmbed()
-              .setTitle("Game has ended.")
-              .setThumbnail(fn.getEmoji(client, alive.find(p => roles[p.role].team == "Solo")).url)
-              .setDescription(
-                `${alive.find(p => roles[p.role].team == "Solo")} **${alive.find(p => roles[p.role].team == "Solo").number} ` +
-                `${fn.getUser(client, alive.find(p => roles[p.role].team == "Solo").id)}** wins!`
-              )
-          )
-          fn.addXP(alive.find(p => roles[p.role].team == "Solo"), 250)
-          fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addWin(game, [alive.find(p => roles[p.role].team == "Solo").number], "Solo")
-          continue;
-        }
-        
         if (game.lastDeath + 6 == game.currentPhase) {
           fn.broadcastTo(
             client, game.players.filter(p => !p.left), 
@@ -835,13 +835,16 @@ client.on('ready', async () => {
         
         fn.broadcastTo(
           client, game.players.filter(p => !p.left), 
-          game.currentPhase % 3 == 0 ? `Night ${Math.floor(game.currentPhase/3)+1} has started!` :
-          game.currentPhase % 3 == 1 ? 
-            new Discord.RichEmbed()
-              .setTitle(`Day ${Math.floor(game.currentPhase/3)+1} has started!`)
-              .setThumbnail(fn.getEmoji(client, "Day").url)
-              .setDescription("Start discussing!") :
-          `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+          game.currentPhase % 3 == 0
+            ? `Night ${Math.floor(game.currentPhase/3)+1} has started!`
+            : game.currentPhase % 3 == 1
+            ? new Discord.RichEmbed()
+                .setTitle(`Day ${Math.floor(game.currentPhase/3)+1} has started!`)
+                .setThumbnail(fn.getEmoji(client, "Day").url)
+                .setDescription("Start discussing!")
+            : !game.players.find(p => p.paciRevealed == game.currentPhase)
+          ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+          : "There will be no voting today!"
         )
         
         if (game.currentPhase % 3 == 0) {
@@ -879,26 +882,6 @@ client.on('ready', async () => {
               .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
               .setDescription("Nothing to do right now.\n" +
                               "Go back to sleep!"),
-          )
-          
-          fn.broadcastTo(
-            client,
-            game.players.filter(
-              p => p.alive &&
-                   ["Seer", "Wolf Seer", "Sorcerer"].includes(p.role)).map(p => p.id), 
-            new Discord.RichEmbed()
-              .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
-              .setDescription("Select a player to view their role (`w!check [player]`)."),
-          )
-          
-          fn.broadcastTo(
-            client,
-            game.players.filter(
-              p => p.alive &&
-                   p.role == "Aura Seer").map(p => p.id), 
-            new Discord.RichEmbed()
-              .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
-              .setDescription("Select a player to view their aura (`w!check [player]`)."),
           )
           
           if (game.players.find(p => p.role == "Jailer")) {

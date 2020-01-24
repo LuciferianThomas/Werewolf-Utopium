@@ -19,7 +19,7 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (gamePlayer.role == "Pacifist") {
+    if (gamePlayer.role == "Pacifist" && args.length) {
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer reveal a player's role!")
       if (gamePlayer.revealed)
@@ -50,13 +50,14 @@ module.exports = {
                 : ["A","E","I","O","U"].includes(gamePlayer.role[0])
                 ? "an"
                 : "a"
-            } ${gamePlayer.role}!`
+            } ${gamePlayer.role}!\n` +
+            "There will be no voting today!"
           )
       )
       
       gamePlayer.revealed = true
       targetPlayer.roleRevealed = targetPlayer.role
-      targetPlayer.paciRevealed = true
+      targetPlayer.paciRevealed = game.currentPhase
     }
     else if (gamePlayer.role == "Mayor") {
       if (!gamePlayer.alive)
