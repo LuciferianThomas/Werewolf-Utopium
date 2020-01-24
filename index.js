@@ -185,7 +185,7 @@ client.on('ready', async () => {
                   game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`
               )
 
-              client.emit('death', game, lynchedPlayer.number)
+              fn.death(client, game, lynchedPlayer.number)
 
               if (lynchedPlayer.role == "Fool") {
                 game.currentPhase = 999
@@ -311,7 +311,7 @@ client.on('ready', async () => {
                       }**.`
                     )
                     
-                    client.emit('death', game, protector.number)
+                    fn.death(client, game, protector.number)
                   }
                 }
                 else if (protector.role == "Tough Guy") {
@@ -391,7 +391,7 @@ client.on('ready', async () => {
                       : ""
                   }**.`
                 )
-                client.emit('death', game, attackedPlayer.number)
+                fn.death(client, game, attackedPlayer.number)
               }
             }
             else if (attackedPlayer.role == "Tough Guy") {
@@ -423,7 +423,7 @@ client.on('ready', async () => {
                     : ""
                 }**.`
               )
-              client.emit('death', game, attackedPlayer.number)
+              fn.death(client, game, attackedPlayer.number)
             }
           }
           
@@ -481,7 +481,7 @@ client.on('ready', async () => {
                   }**.`
                 )
                 
-                client.emit('death', game, attackedPlayer.number)
+                fn.death(client, game, attackedPlayer.number)
               }
               
               for (var x of attackedPlayer.protectors) {
@@ -503,7 +503,7 @@ client.on('ready', async () => {
                     }**.`
                   )
                 
-                  client.emit('death', game, protector.number)
+                  fn.death(client, game, protector.number)
                   continue;
                 }
 
@@ -532,7 +532,7 @@ client.on('ready', async () => {
                       }**.`
                     )
                 
-                    client.emit('death', game, protector.number)
+                    fn.death(client, game, protector.number)
                   }
                 }
                 else if (protector.role == "Tough Guy") {
@@ -588,7 +588,7 @@ client.on('ready', async () => {
                     }**.`
                   )
                   
-                  client.emit('death', game, weakestWW.number)
+                  fn.death(client, game, weakestWW.number)
                 }
               }
             }
@@ -632,7 +632,7 @@ client.on('ready', async () => {
                   }**.`
                 )
                 
-                client.emit('death', game, attackedPlayer.number)
+                fn.death(client, game, attackedPlayer.number)
               }
             }
             else if (attackedPlayer.role == "Tough Guy") {
@@ -665,7 +665,7 @@ client.on('ready', async () => {
                 }**.`
               )
                 
-              client.emit('death', game, attackedPlayer.number)
+              fn.death(client, game, attackedPlayer.number)
             }
           }
           
