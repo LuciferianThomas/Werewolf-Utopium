@@ -248,8 +248,8 @@ client.on('ready', async () => {
               "The village cannot decide on who to lynch."
             )
         }
+        else if (game.currentPhase % 3 == 2) game.noVoting = false
         
-        if (game.currentPhase % 3 == 2) game.noVoting = false
         game.currentPhase += 1
         game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 45, 's')
         
