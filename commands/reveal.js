@@ -57,7 +57,8 @@ module.exports = {
       
       gamePlayer.revealed = true
       targetPlayer.roleRevealed = targetPlayer.role
-      targetPlayer.paciRevealed = game.currentPhase
+      targetPlayer.paciRevealed = true
+      game.noVoting = Math.floor(game.currentPhase/3)*3+2
     }
     else if (gamePlayer.role == "Mayor") {
       if (!gamePlayer.alive)

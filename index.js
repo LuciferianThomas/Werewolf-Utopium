@@ -834,17 +834,18 @@ client.on('ready', async () => {
         }
         
         fn.broadcastTo(
-          client, game.players.filter(p => !p.left), 
+          client, game.players.filter(p => !p.left),
           game.currentPhase % 3 == 0
-            ? `Night ${Math.floor(game.currentPhase/3)+1} has started!`
+            ? `Night ${Math.floor(game.currentPhase / 3) + 1} has started!`
             : game.currentPhase % 3 == 1
             ? new Discord.RichEmbed()
-                .setTitle(`Day ${Math.floor(game.currentPhase/3)+1} has started!`)
+                .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
                 .setThumbnail(fn.getEmoji(client, "Day").url)
                 .setDescription("Start discussing!")
-            : !game.players.find(p => p.paciRevealed == game.currentPhase)
-          ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length/2)} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
-          : "There will be no voting today!"
+            : !game.players.find(p => [game.currentPhase - 1].includes(p.paciRevealed))
+            ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length / 2)
+              } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+            : "There will be no voting today!"
         )
         
         if (game.currentPhase % 3 == 0) {
