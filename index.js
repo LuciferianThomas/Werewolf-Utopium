@@ -1049,13 +1049,11 @@ client.on('death', (game, number) => {
   }
 
   // LOVE COUPLE SUICIDE
-  if (!deadPlayer.alive && !deadPlayer.suicide && deadPlayer.lover && !deadPlayer.loveSuicided) {
+  if (!deadPlayer.alive && !deadPlayer.suicide && deadPlayer.lover) {
     let deadLover = deadPlayer
     let otherLover = game.players.find(p => p.number !== deadLover.number && p.lover)
 
     otherLover.alive = false
-    deadLover.loveSuicided = true
-    otherLover.loveSuicided = true
     if (game.config.deathReveal) otherLover.roleRevealed = otherLover.role
 
     fn.broadcastTo(
@@ -1080,8 +1078,12 @@ client.on('death', (game, number) => {
 
     for (var sectMember of sectMembers) {
       sectMember.alive = false
+    if (game.config.deathReveal) otherLover.roleRevealed = otherLover.role
     }
   }
 
-
+  let allGames = games.get("quick")
+  let thisGame = allGames.find(thisGame => thisGame.gameID == game.gameID)
+  thisGame = game
+  games.set("quick", allGames)
 })
