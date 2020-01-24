@@ -28,41 +28,20 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
-    if (gamePlayer.role == "Jailer" && (game.currentPhase % 3 != 0 || !game.players.find(p => p.jailed && p.alive)))
-      return await message.author.send("You can only shoot on a player in jail at night.")
-    
-    if (gamePlayer.role == "Gunner" && (game.currentPhase == 1 || game.currentPhase % 3 == 0 || gamePlayer.shotToday))
-      return await message.author.send("You cannot shoot right now.")
-    
-    let target = parseInt(args[0])
-    if (gamePlayer.role == "Jailer") target = game.players.find(p => p.jailed && p.alive).number
-    let targetPlayer = game.players[target-1]
+    if (gamePlayer.role == "Red Lady" && (game.currentPhase % 3 != 0)) 
+      return await message.author.send("You can only visit a player at night!")
+
+    let target = parseInt(args[0]) 
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
+    
+    let targetPlayer = game.players[target-1]
     if (!targetPlayer.alive)
-      return await message.author.send("You cannot shoot an dead player.")
-    if (target == gamePlayer.number)
-      return await message.author.send("You cannot shoot yourself.")
-    
-    if (!gamePlayer.sect && targetPlayer.role == "President")
-      return await message.author.send("You cannot shoot the President!")
-    
-    targetPlayer.alive = false
-    if (gamePlayer.role == "Gunner") {
-      fn.broadcastTo(
-        client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""}**.`)
-      game.players[gamePlayer.number-1].roleRevealed = true
-    }
-    if (gamePlayer.role == "Jailer")
-      fn.broadcastTo(
-        client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
-    
-    if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
-    game.players[gamePlayer.number-1].bullets -= 1
-    game.lastDeath = game.currentPhase
-    if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true
+      return await message.author.send("You cannot throw holy water at an dead player.")
+    if (targetPlayer.number == gamePlayer.number)
+      return await message.author.send("You cannot throw holy water at yourself.")
+
+
     
     QuickGames[index] = game
     
