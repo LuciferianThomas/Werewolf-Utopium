@@ -37,11 +37,13 @@ module.exports = {
     
     let targetPlayer = game.players[target-1]
     if (!targetPlayer.alive)
-      return await message.author.send("You cannot throw holy water at an dead player.")
+      return await message.author.send("You cannot visit a dead player.")
     if (targetPlayer.number == gamePlayer.number)
-      return await message.author.send("You cannot throw holy water at yourself.")
+      return await message.author.send("You cannot visit yourself.")
+    
+    if (roles[targetPlayer.role].team == "Werewolves" || roles[targetPlaye.role].team == "Solo" && roles[targetPlayer.role].role != "Fool" || roles[targetPlayer.role].role == "Headhunter") {
 
-
+    } 
     
     QuickGames[index] = game
     
