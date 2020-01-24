@@ -300,7 +300,7 @@ client.on('ready', async () => {
                   }
                   else {
                     game.lastDeath = game.currentPhase - 1
-                    game.players[x-1].alive = false
+                    protector.alive = false
                     if (game.config.deathReveal) protector.roleRevealed = protector.role
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
@@ -310,6 +310,8 @@ client.on('ready', async () => {
                           : ""
                       }**.`
                     )
+                    
+                    client.emit('death', game, protector.number)
                   }
                 }
                 else if (protector.role == "Tough Guy") {
@@ -359,7 +361,7 @@ client.on('ready', async () => {
                         fn.getEmoji(client, "Beast Hunter TrapInactive").url
                       )
                       .setDescription(
-                        """
+                        "Your target was too string to be killed!"
                       )
                   )
                 }
@@ -389,6 +391,7 @@ client.on('ready', async () => {
                       : ""
                   }**.`
                 )
+                client.emit('death', game, attackedPlayer.number)
               }
             }
             else if (attackedPlayer.role == "Tough Guy") {
@@ -420,6 +423,7 @@ client.on('ready', async () => {
                     : ""
                 }**.`
               )
+              client.emit('death', game, attackedPlayer.number)
             }
           }
           
@@ -458,27 +462,32 @@ client.on('ready', async () => {
               )
             }
             else if (attackedPlayer.protectors.length) {
-              if (!game.frenzy) fn.broadcastTo(
-                client, wolves,
-                `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
-              )
+              if (!game.frenzy) {
+                fn.broadcastTo(
+                  client, wolves,
+                  `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
+                )
+              }
+              else {
+                game.lastDeath = game.currentPhase - 1
+                attackedPlayer.alive = false
+                if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
+                fn.broadcastTo(
+                  client, game.players.filter(p => !p.left).map(p => p.id),
+                  `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
+                    game.config.deathReveal
+                      ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
+                      : ""
+                  }**.`
+                )
+                
+                client.emit('death', game, attackedPlayer.number)
+              }
               
               for (var x of attackedPlayer.protectors) {
                 let protector = game.players[x-1]
                 
                 if (game.frenzy) {
-                  game.lastDeath = game.currentPhase - 1
-                  attackedPlayer.alive = false
-                  if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
-                  fn.broadcastTo(
-                    client, game.players.filter(p => !p.left).map(p => p.id),
-                    `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
-                      game.config.deathReveal
-                        ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
-                        : ""
-                    }**.`
-                  )
-                  
                   protector.alive = false
                   if (game.config.deathReveal) protector.roleRevealed = protector.role
                   
@@ -493,6 +502,8 @@ client.on('ready', async () => {
                         : ""
                     }**.`
                   )
+                
+                  client.emit('death', game, protector.number)
                   continue;
                 }
 
@@ -520,6 +531,8 @@ client.on('ready', async () => {
                           : ""
                       }**.`
                     )
+                
+                    client.emit('death', game, protector.number)
                   }
                 }
                 else if (protector.role == "Tough Guy") {
@@ -574,6 +587,8 @@ client.on('ready', async () => {
                         : client.getEmoji(client, "Fellow Werewolf")
                     }**.`
                   )
+                  
+                  client.emit('death', game, weakestWW.number)
                 }
               }
             }
@@ -616,6 +631,8 @@ client.on('ready', async () => {
                       : ""
                   }**.`
                 )
+                
+                client.emit('death', game, attackedPlayer.number)
               }
             }
             else if (attackedPlayer.role == "Tough Guy") {
@@ -647,6 +664,8 @@ client.on('ready', async () => {
                     : ""
                 }**.`
               )
+                
+              client.emit('death', game, attackedPlayer.number)
             }
           }
           
@@ -834,7 +853,7 @@ client.on('ready', async () => {
             new Discord.RichEmbed()
               .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
               .setDescription("Nothing to do right now.\n" +
-                              "Go back to sleep!"),
+                              " Go back to sleep!"),
           )
           
           if (game.players.find(p => p.role == "Jailer")) {
@@ -861,7 +880,7 @@ client.on('ready', async () => {
                     .setTitle(`Jail`)
                     .setThumbnail(fn.getEmoji(client, "Jail").url)
                     .setDescription("You did not select a player last day or your target could not be jailed.\n" +
-                                    "Go back to sleep!")
+                                    " Go back to sleep!")
                 )
 
                 fn.getUser(client, jailed.id)
@@ -880,7 +899,7 @@ client.on('ready', async () => {
                     .setTitle(`Jail`)
                     .setThumbnail(fn.getEmoji(client, "Jail").url)
                   .setDescription("You did not select a player last day or your target could not be jailed.\n" +
-                                  "Go back to sleep!")
+                                  " Go back to sleep!")
               )
             }
           }
@@ -1116,8 +1135,5 @@ client.on('death', (game, number) => {
     }
   }
 
-  let allGames = games.get("quick")
-  let thisGame = allGames.find(thisGame => thisGame.gameID == game.gameID)
-  thisGame = game
-  games.set("quick", allGames)
+  return game
 })
