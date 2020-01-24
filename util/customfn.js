@@ -58,7 +58,8 @@ const addWin = (game, winners, team) => {
 const death = (client, game, number, suicide = false) => {
   let deadPlayer = game.players.find(p => p.number == number)
   
-  if (!suicide) {// AVENGING
+  if (!suicide) {
+    // AVENGING
     if (!deadPlayer.alive && ["Junior Werewolf","Avenger"].includes(deadPlayer.role)
         && !deadPlayer.avenged && !deadPlayer.suicide) {
       let avengingPlayer = deadPlayer
@@ -138,8 +139,6 @@ const death = (client, game, number, suicide = false) => {
       }
     }
   }
-  
-  
 
   return game
 }
