@@ -9,7 +9,7 @@ const games = new db.table("Games"),
 const fn = require('/app/util/fn')
 
 module.exports = {
-  name: "shoot",
+  name: "visit",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -20,14 +20,11 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
-    if (!["Gunner","Jailer"].includes(gamePlayer.role))
-      return await message.author.send("You do not have the abilities to shoot a player.")
+    if (gamePlayer.role != "Red Lady")
+      return await message.author.send("You do not have the abilities to visit a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer shoot a player.")
-    
-    if (!gamePlayer.bullets)
-      return await message.author.send("You have no more bullets.")
-    
+        
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
