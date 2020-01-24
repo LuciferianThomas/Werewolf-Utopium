@@ -98,67 +98,6 @@ client.on('ready', async () => {
             }
           }
           else {
-            // AVENGING
-            if (!game.players[pl].alive && ["Junior Werewolf","Avenger"].includes(game.players[pl].role)
-                && !game.players[pl].avenged && !game.players[pl].suicide) {
-              let avengingPlayer = game.players[pl]
-              let avengedPlayer = game.players[avengingPlayer.avenge-1]
-
-              avengedPlayer.alive = false
-              avengingPlayer.avenged = true
-              if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
-              fn.broadcastTo(
-                client,
-                game.players.filter(p => !p.left),
-                `${fn.getEmoji(
-                  client,
-                  `${avengingPlayer.role} Select`
-                )} The ${avengingPlayer.role.toLowerCase()}'s death has been avenged, **${
-                  avengedPlayer.number
-                } ${fn.getUser(client, avengedPlayer.id).username}${
-                  game.config.deathReveal
-                    ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-                    : ""
-                }** is dead!`
-              )
-            }
-            
-            // LOVE COUPLE SUICIDE
-            if (!game.players[pl].alive && !game.players[pl].suicide && game.players[pl].lover && !game.player[pl].loveSuicided) {
-              let deadLover = game.players[pl]
-              let otherLover = game.players.find(p => p.number !== deadLover.number && p.lover)
-
-              otherLover.alive = false
-              deadLover.loveSuicided = true
-              otherLover.loveSuicided = true
-              if (game.config.deathReveal) otherLover.roleRevealed = otherLover.role
-
-              fn.broadcastTo(
-                client,
-                game.players.filter(p => !p.left),
-                `${fn.getEmoji(
-                  client, `Cupid Lovers`
-                )} **${
-                  otherLover.number
-                } ${fn.getUser(client, otherLover.id).username}${
-                  game.config.deathReveal
-                    ? ` ${fn.getEmoji(client, otherLover.role)}`
-                    : ""
-                }** lost the love of their life and has suicided!`
-              )
-            }
-            
-            // LOVE COUPLE SUICIDE
-            if (!game.players[pl].alive && !game.players[pl].suicide && game.players[pl].role == "Sect Leader" && game.players[pl].sectSuicided) {
-              let sectLeader = game.players.find(p => p.role == "Sect Leader")
-              let sectMembers = game.players.filter(p => p.alive & p.sect)
-              
-              for (var x = 0; x < sectMembers.length; x++) {
-                
-              }
-            }
-            
             if (!game.players[pl].alive || game.players[pl].left) continue;
             
             // AFK SUICIDE
@@ -1078,4 +1017,71 @@ client.on('message', async message => {
         `**<:Fellow_Werewolf:660825937109057587> ${gamePlayer.number} ${message.author.username}**: ${content}`)
     }
   }
+})
+
+client.on('death', (game, number) => {
+  let deadPlayer = game.players.find(p => p.number == number)
+  
+  // AVENGING
+  if (!deadPlayer.alive && ["Junior Werewolf","Avenger"].includes(deadPlayer.role)
+      && !deadPlayer.avenged && !deadPlayer.suicide) {
+    let avengingPlayer = deadPlayer
+    let avengedPlayer = game.players[avengingPlayer.avenge-1]
+
+    avengedPlayer.alive = false
+    avengingPlayer.avenged = true
+    if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+    fn.broadcastTo(
+      client,
+      game.players.filter(p => !p.left),
+      `${fn.getEmoji(
+        client,
+        `${avengingPlayer.role} Select`
+      )} The ${avengingPlayer.role.toLowerCase()}'s death has been avenged, **${
+        avengedPlayer.number
+      } ${fn.getUser(client, avengedPlayer.id).username}${
+        game.config.deathReveal
+          ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+          : ""
+      }** is dead!`
+    )
+  }
+
+  // LOVE COUPLE SUICIDE
+  if (!deadPlayer.alive && !deadPlayer.suicide && deadPlayer.lover && !deadPlayer.loveSuicided) {
+    let deadLover = deadPlayer
+    let otherLover = game.players.find(p => p.number !== deadLover.number && p.lover)
+
+    otherLover.alive = false
+    deadLover.loveSuicided = true
+    otherLover.loveSuicided = true
+    if (game.config.deathReveal) otherLover.roleRevealed = otherLover.role
+
+    fn.broadcastTo(
+      client,
+      game.players.filter(p => !p.left),
+      `${fn.getEmoji(
+        client, `Cupid Lovers`
+      )} **${
+        otherLover.number
+      } ${fn.getUser(client, otherLover.id).username}${
+        game.config.deathReveal
+          ? ` ${fn.getEmoji(client, otherLover.role)}`
+          : ""
+      }** lost the love of their life and has suicided!`
+    )
+  }
+
+  // LOVE COUPLE SUICIDE
+  if (!deadPlayer.alive && !deadPlayer.suicide && deadPlayer.role == "Sect Leader" && deadPlayer.sectSuicided) {
+    let sectLeader = game.players.find(p => p.role == "Sect Leader")
+    let sectMembers = game.players.filter(p => p.alive & p.sect)
+
+    for (var sectMember of sectMembers) {
+      sectMember.alive = false
+    }
+  }
+
+
 })
