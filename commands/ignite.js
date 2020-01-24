@@ -52,29 +52,7 @@ module.exports = {
             ? ` ${fn.getEmoji(client, dousedPlayer.role)}`
             : ""
         }**.`
-      ) 
-
-      if (["Junior Werewolf","Avenger"].includes(dousedPlayer.role) && dousedPlayer.avenge && game.players[dousedPlayer.avenge].alive) {
-        let avengedPlayer = game.players[dousedPlayer.avenge-1]
-
-        avengedPlayer.alive = false
-        if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
-        fn.broadcastTo(
-          client,
-          game.players.filter(p => !p.left),
-          `${fn.getEmoji(
-            client,
-            `${dousedPlayer.role} Select`
-          )} The ${dousedPlayer.role.toLowerCase()}'s death has been avenged, **${
-            avengedPlayer.number
-          } ${fn.getUser(client, avengedPlayer.id).username}${
-            game.config.deathReveal
-              ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-              : ""
-          }** is dead!`
-        )
-      }
+      )
     }
     gamePlayer.usedAbilityTonight = true
     

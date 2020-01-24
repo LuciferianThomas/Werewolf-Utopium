@@ -47,7 +47,7 @@ module.exports = {
         return await message.author.send("You cannot vote at night!")
     }
     
-    if (game.currentPhase % 3 == 1) {
+    if (game.currentPhase % 3 == 1 || (game.currentPhase % 3 == 2 && game.noVoting)) {
       message.author.send("There is currently nothing to vote for!")
     }
     

@@ -96,7 +96,32 @@ client.on('ready', async () => {
                   )
               )
             }
-          } else {
+          }
+          else {
+            if (!game.players[pl].alive && ["Junior Werewolf","Avenger"].includes(game.players[pl].role) && !game.players[pl].avenged) {
+              let avengingPlayer = game.players[pl]
+              let avengedPlayer = game.players[avengingPlayer.avenge-1]
+
+              avengedPlayer.alive = false
+              avengingPlayer.avenged = true
+              if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+
+              fn.broadcastTo(
+                client,
+                game.players.filter(p => !p.left),
+                `${fn.getEmoji(
+                  client,
+                  `${avengingPlayer.role} Select`
+                )} The ${avengingPlayer.role.toLowerCase()}'s death has been avenged, **${
+                  avengedPlayer.number
+                } ${fn.getUser(client, avengedPlayer.id).username}${
+                  game.config.deathReveal
+                    ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
+                    : ""
+                }** is dead!`
+              )
+            }
+            
             if (!game.players[pl].alive || game.players[pl].left) continue;
             if (!fn.getUser(client, game.players[pl].id) && moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
               game.players[pl].alive = false
@@ -129,6 +154,8 @@ client.on('ready', async () => {
                 )
           }
         }
+          
+          
       }
       
       if (game.currentPhase === 999) {
@@ -152,7 +179,7 @@ client.on('ready', async () => {
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
       
       if (moment(game.nextPhase) <= moment()) try { 
-        if (game.currentPhase % 3 == 2)  {
+        if (game.currentPhase % 3 == 2 && !game.noVoting)  {
           let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
               lynchCount = []
           for (var j = 0; j < lynchVotes.length; j++) {
@@ -180,28 +207,6 @@ client.on('ready', async () => {
                   client, game.players.filter(p => !p.left), 
                   `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
                     game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`)
-
-                if (["Junior Werewolf","Avenger"].includes(lynchedPlayer.role) && lynchedPlayer.avenge && game.players[lynchedPlayer.avenge].alive) {
-                  let avengedPlayer = game.players[lynchedPlayer.avenge-1]
-
-                  avengedPlayer.alive = false
-                  if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
-                  fn.broadcastTo(
-                    client,
-                    game.players.filter(p => !p.left),
-                    `${fn.getEmoji(
-                      client,
-                      `${lynchedPlayer.role} Select`
-                    )} The ${lynchedPlayer.role.toLowerCase()}'s death has been avenged, **${
-                      avengedPlayer.number
-                    } ${fn.getUser(client, avengedPlayer.id).username}${
-                      game.config.deathReveal
-                        ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-                        : ""
-                    }** is dead!`
-                  )
-                }
 
                 if (lynchedPlayer.role == "Fool") {
                   game.currentPhase = 999
@@ -424,28 +429,6 @@ client.on('ready', async () => {
                     : ""
                 }**.`
               )
-              
-              if (["Junior Werewolf","Avenger"].includes(attackedPlayer.role) && attackedPlayer.avenge && game.players[attackedPlayer.avenge].alive) {
-                let avengedPlayer = game.players[attackedPlayer.avenge-1]
-
-                avengedPlayer.alive = false
-                if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
-                fn.broadcastTo(
-                  client,
-                  game.players.filter(p => !p.left),
-                  `${fn.getEmoji(
-                    client,
-                    `${attackedPlayer.role} Select`
-                  )} The ${attackedPlayer.role.toLowerCase()}'s death has been avenged, **${
-                    avengedPlayer.number
-                  } ${fn.getUser(client, avengedPlayer.id).username}${
-                    game.config.deathReveal
-                      ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-                      : ""
-                  }** is dead!`
-                )
-              }
             }
           }
           
@@ -600,28 +583,6 @@ client.on('ready', async () => {
                         : client.getEmoji(client, "Fellow Werewolf")
                     }**.`
                   )
-
-                  if (weakestWW.role == "Junior Werewolf" && weakestWW.avenge && game.players[weakestWW.avenge].alive) {
-                    let avengedPlayer = game.players[weakestWW.avenge-1]
-
-                    avengedPlayer.alive = false
-                    if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
-                    fn.broadcastTo(
-                      client,
-                      game.players.filter(p => !p.left),
-                      `${fn.getEmoji(
-                        client,
-                        `Junior Werewolf Select`
-                      )} The junior werewolf's death has been avenged, **${
-                        avengedPlayer.number
-                      } ${fn.getUser(client, avengedPlayer.id).username}${
-                        game.config.deathReveal
-                          ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-                          : ""
-                      }** is dead!`
-                    )
-                  }
                 }
               }
             }
@@ -842,7 +803,7 @@ client.on('ready', async () => {
                 .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
                 .setThumbnail(fn.getEmoji(client, "Day").url)
                 .setDescription("Start discussing!")
-            : !game.players.find(p => [game.currentPhase - 1].includes(p.paciRevealed))
+            : !game.noVoting
             ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length / 2)
               } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
             : "There will be no voting today!"

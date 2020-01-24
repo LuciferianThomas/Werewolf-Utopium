@@ -54,28 +54,6 @@ module.exports = {
     
     if (!gamePlayer.sect && targetPlayer.role == "President")
       return await message.author.send("You cannot poison the President!")
-
-    if (["Junior Werewolf","Avenger"].includes(targetPlayer.role) && targetPlayer.avenge && game.players[targetPlayer.avenge].alive) {
-      let avengedPlayer = game.players[targetPlayer.avenge-1]
-
-      avengedPlayer.alive = false
-      if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
-      fn.broadcastTo(
-        client,
-        game.players.filter(p => !p.left),
-        `${fn.getEmoji(
-          client,
-          `${targetPlayer.role} Select`
-        )} The ${targetPlayer.role.toLowerCase()}'s death has been avenged, **${
-          avengedPlayer.number
-        } ${fn.getUser(client, avengedPlayer.id).username}${
-          game.config.deathReveal
-            ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-            : ""
-        }** is dead!`
-      )
-    }
     
     QuickGames[index] = game
     

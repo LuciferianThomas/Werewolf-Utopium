@@ -55,25 +55,6 @@ module.exports = {
           game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf"
         )}**.`
       )
-      
-      if (targetPlayer.role == "Junior Werewolf" && targetPlayer.avenge && game.players[targetPlayer.avenge].alive) {
-        let avengedPlayer = game.players[targetPlayer.avenge-1]
-        
-        avengedPlayer.alive = false
-        if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-      
-        fn.broadcastTo(
-          client,
-          game.players.filter(p => !p.left),
-          `<:Junior_Werewolf_Select:660668473847840798> The junior werewolf's death has been avenged, **${
-            avengedPlayer.number
-          } ${fn.getUser(client, avengedPlayer.id).username}${
-            game.config.deathReveal
-              ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
-              : ""
-          }** is dead!`
-        )
-      }
     }
     else {
       gamePlayer.alive = false
