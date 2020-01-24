@@ -98,7 +98,9 @@ client.on('ready', async () => {
             }
           }
           else {
-            if (!game.players[pl].alive && ["Junior Werewolf","Avenger"].includes(game.players[pl].role) && !game.players[pl].avenged) {
+            // AVENGING
+            if (!game.players[pl].alive && ["Junior Werewolf","Avenger"].includes(game.players[pl].role)
+                && !game.players[pl].avenged && !game.players[pl].suicide) {
               let avengingPlayer = game.players[pl]
               let avengedPlayer = game.players[avengingPlayer.avenge-1]
 
@@ -122,7 +124,44 @@ client.on('ready', async () => {
               )
             }
             
+            // LOVE COUPLE SUICIDE
+            if (!game.players[pl].alive && !game.players[pl].suicide && game.players[pl].lover && !game.player[pl].loveSuicided) {
+              let deadLover = game.players[pl]
+              let otherLover = game.players.find(p => p.number !== deadLover.number && p.lover)
+
+              otherLover.alive = false
+              deadLover.loveSuicided = true
+              otherLover.loveSuicided = true
+              if (game.config.deathReveal) otherLover.roleRevealed = otherLover.role
+
+              fn.broadcastTo(
+                client,
+                game.players.filter(p => !p.left),
+                `${fn.getEmoji(
+                  client, `Cupid Lovers`
+                )} **${
+                  otherLover.number
+                } ${fn.getUser(client, otherLover.id).username}${
+                  game.config.deathReveal
+                    ? ` ${fn.getEmoji(client, otherLover.role)}`
+                    : ""
+                }** lost the love of their life and has suicided!`
+              )
+            }
+            
+            // LOVE COUPLE SUICIDE
+            if (!game.players[pl].alive && !game.players[pl].suicide && game.players[pl].role == "Sect Leader" && game.players[pl].sectSuicided) {
+              let sectLeader = game.players.find(p => p.role == "Sect Leader")
+              let sectMembers = game.players.filter(p => p.alive & p.sect)
+              
+              for (var x = 0; x < sectMembers.length; x++) {
+                
+              }
+            }
+            
             if (!game.players[pl].alive || game.players[pl].left) continue;
+            
+            // AFK SUICIDE
             if (!fn.getUser(client, game.players[pl].id) && moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
               game.players[pl].alive = false
               game.players[pl].left = true
@@ -153,9 +192,7 @@ client.on('ready', async () => {
                   "You will be considered as suicided if you fail to do so."
                 )
           }
-        }
-          
-          
+        }  
       }
       
       if (game.currentPhase === 999) {
@@ -166,8 +203,8 @@ client.on('ready', async () => {
             .addField(
               `Players`, 
               game.players.map(p => 
-                `${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"} ${
-                fn.getEmoji(client, p.roleRevealed)}`
+                `${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " <:Death:668750728650555402>"} ${
+                fn.getEmoji(client, p.role)}`
               ).join('\n')
             )
         )
@@ -916,7 +953,7 @@ client.on('ready', async () => {
       }
     }
     games.set('quick', QuickGames)
-  }, 1000)
+  }, 500)
 })
 
 client.on('message', async message => {
