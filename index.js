@@ -249,6 +249,7 @@ client.on('ready', async () => {
             )
         }
         
+        if (game.currentPhase % 3 == 2) game.noVoting = false
         game.currentPhase += 1
         game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 45, 's')
         
