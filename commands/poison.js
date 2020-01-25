@@ -42,6 +42,9 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot poison yourself.")
     
+    if (!gamePlayer.sect && targetPlayer.role == "President")
+      return await message.author.send("You cannot poison the President!")
+
     targetPlayer.alive = false
     
     fn.broadcastTo(
@@ -52,8 +55,7 @@ module.exports = {
     gamePlayer.poisonUsed = true
     game.lastDeath = game.currentPhase
     
-    if (!gamePlayer.sect && targetPlayer.role == "President")
-      return await message.author.send("You cannot poison the President!")
+    game = fn.death(client, game, targetPlayer.number)
     
     QuickGames[index] = game
     

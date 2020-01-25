@@ -38,7 +38,7 @@ module.exports = {
     if (targetPlayer.number == gamePlayer.number)
       return await message.author.send("You cannot throw holy water at yourself.")
     
-    if (roles[targetPlayer.role].team == "Werewolves") {
+    if (roles[targetPlayer.role].team == "Werewolves" && targetPlayer.role !== "Sorcerer") {
       targetPlayer.alive = false
       if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
       else targetPlayer.roleRevealed = "Fellow Werewolf"
@@ -55,6 +55,8 @@ module.exports = {
           game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf"
         )}**.`
       )
+      
+      game = fn.death(client, game, targetPlayer.number)
     }
     else {
       gamePlayer.alive = false
@@ -67,6 +69,8 @@ module.exports = {
           fn.getUser(client, targetPlayer.id).username
         }** and killed themselves. They are not a werewolf!`
       )
+      
+      game = fn.death(client, game, gamePlayer.number)
     }
     gamePlayer.roleRevealed = gamePlayer.role
     gamePlayer.bullets = 0

@@ -55,7 +55,7 @@ module.exports = {
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id), 
         `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""}**.`)
-      game.players[gamePlayer.number-1].roleRevealed = true
+      gamePlayer.roleRevealed = gamePlayer.role
     }
     if (gamePlayer.role == "Jailer")
       fn.broadcastTo(
@@ -66,6 +66,7 @@ module.exports = {
     game.players[gamePlayer.number-1].bullets -= 1
     game.lastDeath = game.currentPhase
     if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true
+    game = fn.death(client, game, targetPlayer.number)
     
     QuickGames[index] = game
     
