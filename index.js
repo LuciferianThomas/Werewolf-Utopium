@@ -122,6 +122,8 @@ client.on('ready', async () => {
                     : ""
                 }** suicided.`
               )
+              
+              game = fn.death(client, game, game.players[pl].number, true)
             } else if (moment(game.players[pl].lastAction).add(1.5, 'm') <= moment() && !game.players[pl].prompted) {
               game.players[pl].prompted = true
               new Discord.RichEmbed()
