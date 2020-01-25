@@ -1,4 +1,3 @@
-
 const Discord = require("discord.js"),
       moment = require("moment"),
       db = require("quick.db")
@@ -6,7 +5,8 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require('/app/util/roles')
 
 module.exports = {
   name: "visit",
@@ -41,9 +41,7 @@ module.exports = {
     if (targetPlayer.number == gamePlayer.number)
       return await message.author.send("You cannot visit yourself.")
     
-    if (roles[targetPlayer.role].team == "Werewolves" || roles[targetPlaye.role].team == "Solo" && roles[targetPlayer.role].role != "Fool" || roles[targetPlayer.role].role == "Headhunter") {
-
-    } 
+    gamePlayer.usedAbilityTonight = targetPlayer.number
     
     QuickGames[index] = game
     
