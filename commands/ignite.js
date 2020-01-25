@@ -53,6 +53,8 @@ module.exports = {
             : ""
         }**.`
       )
+      
+      game = fn.death(client, game, dousedPlayer.number)
     }
     gamePlayer.usedAbilityTonight = true
     
