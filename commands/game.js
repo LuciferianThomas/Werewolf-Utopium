@@ -29,12 +29,19 @@ module.exports = {
                   game.currentPhase == -1 ? game.players.map(p => client.users.get(p.id).username).join('\n') :
                   game.players
                     .map(p => 
-                           `${p.id == message.author.id ? "**" : ""}${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " 💀"}${
-                             p.id == message.author.id || p.roleRevealed
+                           `${p.id == message.author.id ? "**" : ""}${p.number} ${client.users.get(p.id).username}${
+                             p.alive ? "" : " <:Death:668750728650555402>"}${
+                             p.id == message.author.id || p.roleRevealed || (gamePlayer.couple && p.couple)
                                ? ` ${fn.getEmoji(client, p.roleRevealed)}` 
                                : roles[gamePlayer.role].team == "Werewolves" && roles[p.role].team == "Werewolves"
                                ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
-                               : ""}${p.left ? " *off*" : ""}${p.id == message.author.id ? "**" : ""}`)
+                               : ""
+                           }${
+                             gamePlayer.sect && p.sect
+                               ? ``
+                               : ""
+                           }${
+                             p.left ? " *off*" : ""}${p.id == message.author.id ? "**" : ""}`)
                     .join('\n')
                  )
         .addField(`Roles`, game.roles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1})
