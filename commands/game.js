@@ -37,11 +37,12 @@ module.exports = {
                                ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
                                : ""
                            }${
-                             gamePlayer.sect && p.sect
-                               ? ``
-                               : ""
+                             gamePlayer.couple && p.couple
+                               ? ` ${fn.getEmoji(client, "Cupid Lovers")}` : ""
                            }${
-                             p.left ? " *off*" : ""}${p.id == message.author.id ? "**" : ""}`)
+                             gamePlayer.sect && p.sect
+                               ? ` ${fn.getEmoji(client, "Sect Member")}` : ""
+                           }${ p.left ? " *off*" : "" }${ p.id == message.author.id ? "**" : "" }`)
                     .join('\n')
                  )
         .addField(`Roles`, game.roles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1})
