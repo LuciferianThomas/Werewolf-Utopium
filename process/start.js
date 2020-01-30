@@ -7,10 +7,19 @@ const games = new db.table("Games")
 const fn = require("/app/util/fn"),
       roles = require('/app/util/roles')
 
+const random = {
+  "Random Voting": ["Headhunter", "Fool"],
+  "Random Regular Villager": [],
+  "Random Strong Villager": [],
+  "
+}
+
 module.exports = async (client, game) => {
   let Games = games.get("quick")
   
   await fn.broadcast(client, game, "Game is starting...")
+  
+  game.roles = []
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
@@ -33,6 +42,8 @@ module.exports = async (client, game) => {
       )
     Object.assign(game.players[i], {alive: true, protectors: []})
     
+    game.roles.push(thisPlayer.role)
+    
     switch (thisPlayer.role) {
       case "Bodyguard":
         thisPlayer.health = 2; break;
@@ -47,12 +58,11 @@ module.exports = async (client, game) => {
       case "Fortune Teller":
         thisPlayer.cards = []; break;
       case "Random Voting":
-        
+        thisPlayer.role = [][]
     }
   }
   
   game.lastDeath = 0
-  game.roles = game.players.map(player => player.role)
   game.currentPhase += 1
   game.nextPhase = moment().add(30, "s")
   
@@ -96,7 +106,8 @@ module.exports = async (client, game) => {
     president.roleRevealed = "President"
   }
   
-  Games[Games.indexOf(Games.find(g => g.gameID == game.gameID))] = game
+  let thisGame = Games.find(g => g.gameID == game.gameID)
+  thisGame = game
   
   games.set("quick", Games)
 }
