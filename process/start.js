@@ -8,7 +8,7 @@ const fn = require("/app/util/fn"),
       roles = require('/app/util/roles')
 
 const random = {
-  "Random Regular Villager": [],
+  "Random Regular Villager": ["Villager", "Doctor", "Bodyguard", "Tough Guy", "Red Lady", "Priest", "Marksman", "Aura Seer", "Spirit Seer", "Seer Apprentice", "Sheriff", "Mayor", "Witch", "Avenger", "Beast Hunter", "Pacifist", "Flower Child", "Fortune Teller", "Grumpy Grandma", "Santa Claus",],
   "Random Strong Villager": [],
   "Random Werewolf": [],
   "Random Voting": ["Headhunter", "Fool"],
