@@ -50,7 +50,7 @@ module.exports = async (client, game) => {
     
     
     if (thisPlayer.role.includes("Random")) {
-      let rdmRoles = roles.filter()
+      let rdmRoles = roles.filter(role => role`Random ${role.cat}`)
       
       role = thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
     }

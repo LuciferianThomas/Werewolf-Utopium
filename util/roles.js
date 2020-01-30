@@ -1,4 +1,4 @@
-module.exports = {
+let roles = {
   
   // Villager roles
   
@@ -408,3 +408,8 @@ module.exports = {
     cat : "Killer"
   }
 }
+
+for (const [key, ] of Object.entries(roles))
+  roles[key].name = key
+
+module.exports = roles
