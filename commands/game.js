@@ -45,7 +45,7 @@ module.exports = {
                            }${ p.left ? " *off*" : "" }${ p.id == message.author.id ? "**" : "" }`)
                     .join('\n')
                  )
-        .addField(`Roles`, game.roles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1})
+        .addField(`Roles`, game.originalRoles.sort((a,b) => {if (a > b) return 1; if (a < b) return -1})
                             .map(r => `${fn.getEmoji(client, r)} ${r}`)
                             .join('\n'))
     )
