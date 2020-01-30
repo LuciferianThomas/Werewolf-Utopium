@@ -139,13 +139,15 @@ module.exports = {
           " Once per game, you can revive a dead player (`w!revive [player]`).", // alias: w!rev
     aura: "Unknown",
     team: "Village",
-    abbr: ["med"]
+    abbr: ["med"],
+    cat : "Regular Villager"
   },
   "Pacifist": {
   	desc: "Once a game, you can reveal one player with (`w!reveal [player]`) and skip the voting session.",
     aura: "Good",
     team: "Village",
-    abbr: ["paci"] 
+    abbr: ["paci"],
+    cat : "Regular Villager"
   },
   "President": {
   	desc: "Your role is revealed to everyone. If you die the village loses." +
@@ -160,7 +162,8 @@ module.exports = {
           " If that player is not a werewolf, you dies.",
     aura: "Good",
     team: "Village",
-    abbr: ["pri"]
+    abbr: ["pri"],
+    cat : "Regular Villager"
   },
   "Red Lady": {
   	desc: "Every night, you can choose to visit a player with (`w!visit [player]`)." +
@@ -168,13 +171,15 @@ module.exports = {
           " However, if the player you visited is evil or attacked, you will die.",
     aura: "Good",
     team: "Village",
-    abbr: ["rl", "prostitute"] 
+    abbr: ["rl", "prostitute"],
+    cat : "Regular Villager"
   },
   "Seer": {
     desc: "Every night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
     aura: "Good",
     team: "Village",
-    abbr: []
+    abbr: [],
+    cat : "Strong Villager"
   },
   "Seer Apprentice": {
     desc: "You start out as an ordinary villager with no special powers." +
@@ -182,14 +187,16 @@ module.exports = {
           " If the original seer is revived, you will remain a Seer.",
     aura: "Good",
     team: "Village",
-    abbr: ["sapp", "sa", "app", "seer app"]
+    abbr: ["sapp", "sa", "app", "seer app"],
+    cat : "Regular Villager"
   },
   "Sheriff": {
   	desc: "Every night, select a player to look at with (`w!lookout [player]`)." +
     			" If that player is killed, you will get 2 suspects. One is the real killer of that player while the other is random.",
     aura: "Good",
     team: "Village",
-    abbr: ["sher", "cowboy"] 
+    abbr: ["sher", "cowboy"], 
+    cat : "Regular Villager"
   }, 
   "Spirit Seer": {
   	desc: "Every night, watch 2 players with (`w!watch [player]`)." +
@@ -197,7 +204,8 @@ module.exports = {
           " If none of them killed, you will receive blue spirits.", 
     aura: "Good",
     team: "Village",
-    abbr: ["ss", "spirit", "spz", "sps"] 
+    abbr: ["ss", "sz", "spirit", "spz", "sps"],
+    cat : "Regular Villager"
   }, 
   "Tough Guy": {
   	desc: "During the night, you can select one player to protect (`w!defend [player]`)." + // alias: w!protect
@@ -207,7 +215,8 @@ module.exports = {
           " Unfortunately, because of your wounds, you will die at the end of the day",
     aura: "Good",
     team: "Village",
-    abbr: ["tg"] 
+    abbr: ["tg"],
+    cat : "Regular Villager"
   }, 
   "Witch": {
   	desc: "You have 2 potions that you can use at night." +
@@ -216,7 +225,8 @@ module.exports = {
           " This potion can kill a player instantly by doing (`w!poison [player]`). You can use both potions once.",
     aura: "Unknown",
     team: "Village",
-    abbr: [] 
+    abbr: [],
+    cat : "Regular Villager"
   },
   
   // Werewolf roles
@@ -224,25 +234,29 @@ module.exports = {
     desc: "You are a regular werewolf with no special abilities. Do `w!vote [player]` to vote with your werewolf teammates.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["ww"]
+    abbr: ["ww"],
+    cat : "Werewolf"
   },
   "Alpha Werewolf": {
     desc: "You are a regular werewolf except when you vote with the werewolves (`w!vote [player]`), your vote counts as double!",
     aura: "Unknown",
     team: "Werewolves",
-    abbr: ["aww","alpha", "alpha ww"]
+    abbr: ["aww","alpha", "alpha ww"],
+    cat : "Werewolf"
   },
   "Guardian Wolf": {
   	desc: "Once a game, you can protect anyone from being lynched by doing (`w!protect [player]`).",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["gww"] 
+    abbr: ["gww"],
+    cat : "Werewolf"
   }, 
   "Junior Werewolf": {
     desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["jww", "jr", "jnr", "jrww", "jnrww"]
+    abbr: ["jww", "jr", "jnr", "jrww", "jnrww"],
+    cat : "Werewolf"
   },
   "Kitten Wolf": {
     desc: "You can select can choose a player to convert a player to the Werewolves team (`w!scratch [player]`)." +
@@ -250,7 +264,7 @@ module.exports = {
           " Protector roles can negate this ability.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["kww"]
+    abbr: ["kww"],
   }, 
   "Nightmare Werewolf": {
     desc: "Each day you can select a player to be numbed at night (`w!numb [player]`). That player cannot use their abilities that night.",
