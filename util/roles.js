@@ -265,12 +265,14 @@ module.exports = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["kww"],
+    cat : "Werewolf"
   }, 
   "Nightmare Werewolf": {
     desc: "Each day you can select a player to be numbed at night (`w!numb [player]`). That player cannot use their abilities that night.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["nww"]
+    abbr: ["nww"],
+    cat : "Werewolf"
   },
   "Sorcerer": {
     desc: "Each night you can see the roles of a player (`w!check [player]`)." +
@@ -287,7 +289,8 @@ module.exports = {
           " If during the night of the frenzy their target is protected, all protectors of the victim will die, along with the victim.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["wwb","bww","bers","berz"]
+    abbr: ["wwb","bww","bers","berz"],
+    cat : "Werewolf"
   },
   "Wolf Seer": {
     desc: "Each night you can uncover the role of one player (`w!check [player]`)." +
@@ -296,7 +299,8 @@ module.exports = {
           " If you are the last werewolf alive you instantly resign your seeing ability.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["wws", "wwz", "wwseer", "ww seer"]
+    abbr: ["wws", "wwz", "wwseer", "ww seer"],
+    cat : "Werewolf"
   },
   "Wolf Shaman": {
     desc: "Each night, you can vote on a player to kill (`w!vote [player]`) and talk with the other werewolves." +
@@ -305,7 +309,8 @@ module.exports = {
           " Evil to the <:Aura_Seer:658632880490020874> Aura Seer and on the werewolves team for <:Detective:660070860832505863> Detective.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["ww sham","sham","shaman"]
+    abbr: ["ww sham","sham","shaman"],
+    cat : "Werewolf"
   },
   
   // Solo non-killing roles
@@ -314,7 +319,8 @@ module.exports = {
     desc: "Your only goal is to get lynched by the village.",
     aura: "Unknown",
     team: "Solo",
-    abbr: []
+    abbr: [],
+    cat : "Solo Voting"
   },
   "Headhunter": {
     desc: "Your only goal is to get your target lynched by the village." +
