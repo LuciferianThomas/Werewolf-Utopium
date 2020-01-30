@@ -50,7 +50,8 @@ module.exports = {
           " If one your couple dies, the other couple dies along and you become a regular villager.",
     aura: "Good",
     team: "Village",
-    abbr: []
+    abbr: [],
+    oneOnly: true
   },
   "Cursed": {
     desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
@@ -117,7 +118,8 @@ module.exports = {
     aura: "Unknown",
     team: "Village",
     abbr: ["jail"],
-    cat : "Strong Villager"
+    cat : "Strong Villager",
+    oneOnly: true
   },
   "Marksman": {
  		desc: "During the night, select one player to mark with (`w!mark [player]`)." +
@@ -154,7 +156,8 @@ module.exports = {
           " You cannot be killed by werewolves unless there are 4 villagers or below.",
     aura: "Good",
     team: "Village",
-    abbr: ["trump","obama"] 
+    abbr: ["trump","obama"],
+    oneOnly: true
   },
   "Priest": {
     desc: "Once per game, you can throw holy water at one player (`w!water [player]`). You can only do this during the day." +
@@ -320,14 +323,15 @@ module.exports = {
     aura: "Unknown",
     team: "Solo",
     abbr: [],
-    cat : "Solo Voting"
+    cat : "Voting"
   },
   "Headhunter": {
     desc: "Your only goal is to get your target lynched by the village." +
           " If your target dies in a way other than being lynched, you become a regular villager.",
     aura: "Unknown",
-    team: "Solo/Village",
-    abbr: ["hh"]
+    team: "Solo",
+    abbr: ["hh"],
+    cat : "Voting"
   },
   
   // Solo killing roles
@@ -338,7 +342,8 @@ module.exports = {
           " You win if you are the last player alive.", 
     aura: "Unknown", 
     team: "Solo",
-    abbr: ["ars", "arso", "arson", "pyro"]
+    abbr: ["ars", "arso", "arson", "pyro"],
+    cat : "Killer"
   }, 
   "Bomber": {
   	desc: "At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb [player]`)." +
@@ -346,7 +351,8 @@ module.exports = {
           " You cannot be killed by the werewolves. You win if you are the last player alive.",
  		aura: "Unknown",
     team: "Solo",
-    abbr: ["bb", "bomb"]
+    abbr: ["bb", "bomb"],
+    cat : "Killer"
   },
   "Corruptor": {
   	desc: "Every night, select a player 'glitch' by doing (`w!glitch [player]`)." +
@@ -354,14 +360,16 @@ module.exports = {
   				" The role of the player won't be revealed. You cannot be killed by the werewolves. You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
-    abbr: ["corr"] 
+    abbr: ["corr"],
+    cat : "Killer"
   },
   "Cannibal": {
   	desc: "Every night, you can kill a player or save up your hunger to kill more the next night by doing (`w!eat [player]`)." +
     			" You can only stack up to 5 kills. You cannot be killed by the werewolves. You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
-    abbr: ["canni", "cani", "cb"]
+    abbr: ["canni", "cani", "cb"],
+    cat : "Killer"
   },
   "Illusionist": {
   	desc: "Every night, select a player to disguise." +
@@ -371,27 +379,32 @@ module.exports = {
           " You cannot be killed by the werewolves. You win if you are the last player alive.",
     aura: "Unknown", 
     team: "Solo", 
-    abbr: ["illu", "illusion"]
+    abbr: ["illu", "illusion"],
+    cat : "Killer"
   },
   "Sect Leader": {
   	desc: "Every night, select a player to convert into a Sect Member with (`w!sect [player]`). You can only convert villagers to the Sect Team." +
     			" However, if you're killed, every Sect Member dies along. You win if everyone alive is converted into a Sect Member.", 
     aura: "Unknown",
     team: "Sect",
-    abbr: ["sl"] 
+    abbr: ["sl"],
+    cat : "Killer",
+    oneOnly: true
 	},
   "Serial Killer": {
     desc: "Each night, stab one player with (`w!stab [player]`)." + // alias: w!kill
           " You cannot be killed by the werewolves. You win if you are the last player alive.", 
     aura: "Unknown",
     team: "Solo",
-    abbr: ["sk"]
+    abbr: ["sk"],
+    cat : "Killer"
   },
   "Zombie": {
   	desc: "Each night, select a player to convert to a Zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
     			" However, players take one day to convert before turning to a zombie. You win if all alive players are converted into Zombies.",
     aura: "Unknown",
     team: "Zombies",
-    abbr: ["zomb", "zom", "zb"]
+    abbr: ["zomb", "zom", "zb"],
+    cat : "Killer"
   }
 }
