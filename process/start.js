@@ -8,11 +8,12 @@ const fn = require("/app/util/fn"),
       roles = require('/app/util/roles')
 
 const random = {
-  "Random Regular Villager": ["Villager", "Doctor", "Bodyguard", "Tough Guy", "Red Lady", "Priest", "Marksman", "Aura Seer", "Spirit Seer", "Seer Apprentice", "Sheriff", "Mayor", "Witch", "Avenger", "Beast Hunter", "Pacifist", "Flower Child", "Fortune Teller", "Grumpy Grandma", "Santa Claus",],
-  "Random Strong Villager": [],
-  "Random Werewolf": [],
+  "Random Regular Villager": ["Villager", "Doctor", "Bodyguard", "Tough Guy", "Red Lady", "Priest", "Marksman", "Aura Seer", "Spirit Seer", "Seer Apprentice", "Sheriff", "Mayor", "Witch", "Avenger", "Beast Hunter", "Pacifist", "Flower Child", "Fortune Teller", "Grumpy Grandma"],
+  "Random Strong Villager": ["Seer", "Jailer", "Gunner", "Medium", "Detective"],
+  "Random Werewolf": ["Werewolf", "Wolf Shaman", "Wolf Seer", "Junior Werewolf", "Werewolf Berserk", "Alpha Werewolf", "Guardian Wolf", "Kitten Werewolf"],
   "Random Voting": ["Headhunter", "Fool"],
-  "Random Killer": []
+  "Random Killer": ["Serial Killer", "Arsonist", "Bomber", "Corruptor", "Sect Leader", "Zombie", "Illusionist"],
+  "Random": Object.keys(roles).filter(r => !r.includes("Random"))
 }
 
 module.exports = async (client, game) => {
