@@ -46,9 +46,9 @@ module.exports = async (client, game) => {
     }
     
     
-if (thisPlayer.role.includes("Random))) 
+    if (thisPlayer.role.includes("Random")) 
       thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
-    {
+    
     
     await client.users.get(thisPlayer.id).send(
       new Discord.RichEmbed()
