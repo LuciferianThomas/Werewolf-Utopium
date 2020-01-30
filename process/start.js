@@ -22,17 +22,16 @@ module.exports = async (client, game) => {
   let Games = games.get("quick")
   
   await fn.broadcast(client, game, "Game is starting...")
-  
-  game.roles = []
+    
+  game.originalRoles = fn.clone(game.roles)
+  game.originalRoles.splice(game.players.length)
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
     let thisPlayer = game.players[i]
     let role = thisPlayer.role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     Object.assign(game.players[i], {alive: true, protectors: []})
-    
-    game.roles.push(thisPlayer.role)
-    
+        
     switch (thisPlayer.role) {
       case "Bodyguard":
         thisPlayer.health = 2; break;
@@ -50,7 +49,7 @@ module.exports = async (client, game) => {
     
     
     if (thisPlayer.role.includes("Random")) {
-      let rdmRoles = roles.filter(role => role`Random ${role.cat}`)
+      let rdmRoles = roles.filter(role => thisPlayer.role == "Random" || (thisPlayer.role == `Random ${role.cat}` && game.roles))
       
       role = thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
     }
