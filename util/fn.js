@@ -157,6 +157,10 @@ let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
   }
 }
 
+const deepClone = (object) => {
+  return JSON.parse(JSON.stringify(object))
+}
+
 module.exports = Object.assign({
   time: time,
   utcTime: utcTime,
@@ -170,5 +174,7 @@ module.exports = Object.assign({
   getRole: getRole,
   ModCase: ModCase,
   modCaseEmbed: modCaseEmbed,
-  paginator: paginator
+  paginator: paginator,
+  deepClone: deepClone,
+  clone: deepClone
 }, require('./customfn'))

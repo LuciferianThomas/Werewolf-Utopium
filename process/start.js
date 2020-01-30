@@ -16,6 +16,8 @@ const random = {
   "Random": Object.keys(roles).filter(r => !r.includes("Random"))
 }
 
+const oneOnly = ["Jailer", "President", "Sect Leader", "Cupid"]
+
 module.exports = async (client, game) => {
   let Games = games.get("quick")
   
@@ -47,16 +49,19 @@ module.exports = async (client, game) => {
     }
     
     
-    if (thisPlayer.role.includes("Random")) 
-      thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
-    
+    if (thisPlayer.role.includes("Random")) {
+      let rdmRoles = fn.clone(random[thisPlayer.role])
+      for (const role of oneOnly)
+        if (rdmRoles.includes("Jailer") && game.players.map(p => p.role).includes("Jailer")) rdmRoles.splice(rdmRoles.indexOf("Jailer"), 1)
+      role = thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
+    }
     
     await client.users.get(thisPlayer.id).send(
       new Discord.RichEmbed()
         .setThumbnail(fn.getEmoji(client, game.players[i]).url)
         .setTitle(
           `You are ${
-            ["Jailer", "Cupid", "President", "Sect Leader"].includes(role)
+            oneOnly.includes(role)
               ? "the"
               : /^([aeiou])/i.test(role)
               ? "an"
