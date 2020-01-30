@@ -4,9 +4,8 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games")
 
-const fn = require("/app/util/fn")
-
-const roles = require('/app/util/roles')
+const fn = require("/app/util/fn"),
+      roles = require('/app/util/roles')
 
 module.exports = async (client, game) => {
   let Games = games.get("quick")
@@ -14,10 +13,10 @@ module.exports = async (client, game) => {
   await fn.broadcast(client, game, "Game is starting...")
   
   for (var i = 0; i < game.players.length; i++) {
-    if (game.players[i].spectator) continue;
     game.players[i].number = i+1
-    let role = game.players[i].role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
-    await client.users.get(game.players[i].id)
+    let thisPlayer = game.players[i]
+    let role = thisPlayer.role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
+    await client.users.get(game.players[i.id)
       .send(
         new Discord.RichEmbed()
           .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")).url)
@@ -33,6 +32,7 @@ module.exports = async (client, game) => {
     if (game.players[i].role == "Gunner") game.players[i].bullets = 2
     if (game.players[i].role == "Priest") game.players[i].bullets = 1
     if (game.players[i].role == "Pacifist") game.players[i].cards = []
+    
   }
   
   game.lastDeath = 0
