@@ -6,7 +6,8 @@ module.exports = {
     desc: "You are a regular Villager with no special abilities.",
     aura: "Good",
     team: "Village",
-    abbr: ["reg","vil","vill","forkman","forkmen"]
+    abbr: ["reg","vil","vill","forkman","forkmen"],
+    cat : "Regular Villager"
   },
   "Aura Seer": {
     desc: "Each night you can select one player to see whether this player is good, evil or unknown (`w!check [player]`)." + // alias: w!see
@@ -14,13 +15,15 @@ module.exports = {
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
     aura: "Good",
     team: "Village",
-    abbr: ["az","aura"]
+    abbr: ["az","aura"],
+    cat : "Regular Villager"
   }, 
   "Avenger": {
     desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
     aura: "Good",
     team: "Village",
-    abbr: ["hunter"]
+    abbr: ["hunter"],
+    cat : "Regular Villager"
   }, 
   "Beast Hunter": {
     desc: "At night you can set a trap on a person (`w!trap [player]`). The trap activates on the following night." +
@@ -29,7 +32,8 @@ module.exports = {
           " Your trap will deactivate when solo killers try to kill you but it won't kill them.",
     aura: "Unknown",
     team: "Village",
-    abbr: ["bh"]
+    abbr: ["bh"],
+    cat : "Regular Villager"
   },
   "Bodyguard": {
     desc: "Each night you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
@@ -37,7 +41,8 @@ module.exports = {
           " However, if you are attacked again you will die.",
     aura: "Good",
     team: "Village",
-    abbr: ["bg"]
+    abbr: ["bg"],
+    cat : "Regular Villager"
   },
   "Cupid": {
   	desc: "During the first night, select 2 players to be a couple with (`w!couple [player1] [player2]`). They will know each other's roles at the beginning of the next day." +
@@ -63,41 +68,47 @@ module.exports = {
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
-    abbr: ["det","sherlock","holmes"]
+    abbr: ["det","sherlock","holmes"],
+    cat : "Strong Villager"
   },
   "Doctor": {
     desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
           " You will be notified when your protected player was attaked. You cannot protect yourself.",
     aura: "Good",
     team: "Village",
-    abbr: ["doc", "medic"]
+    abbr: ["doc", "medic"],
+    cat : "Regular Villager"
   },
   "Flower Child": {
  		desc: "Once a game, you can protect anyone from being lynched by using (`w!protect [player]`).",
     aura: "Good", 
     team: "Village", 
- 		abbr: ["fc", "flower"] 
+ 		abbr: ["fc", "flower"],
+    cat : "Regular Villager"
   }, 
   "Fortune Teller": {
   	desc: "During the first night, give two cards to two players (`w!givecards [player1] [player2]`)." +
     			" These players can use the cards and reveal their role.",
     aura: "Unknown",
     team: "Village",
-    abbr: ["ft"]
+    abbr: ["ft"],
+    cat : "Regular Villager"
   }, 
   "Grumpy Grandma": {
     desc: "After the first night, select a player to mute with (`w!mute [player]`). This player won't be able to talk or vote the next day." +
     			" However, if someone is muted, the village will be notified. You cannot mute the same person twice in a row.",
     aura: "Good",
     team: "Village",
-    abbr: ["granny","gg"]
+    abbr: ["granny","gg"],
+    cat : "Regular Villager"
   },
   "Gunner": {
     desc: "During the day, you have two bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
           " However, the shots are loud, so your role will be revealed after the first shot. ",
     aura: "Unknown",
     team: "Village",
-    abbr: ["gun"]
+    abbr: ["gun"],
+    cat : "Strong Villager"
   },
   "Jailer": {
     desc: "Every day, select one player to jail by doing (`w!jail [number]`)." +
@@ -105,7 +116,8 @@ module.exports = {
     			" If you find your target suspicious, you can execute them (`w!shoot [player]`).",
     aura: "Unknown",
     team: "Village",
-    abbr: ["jail"]
+    abbr: ["jail"],
+    cat : "Strong Villager"
   },
   "Marksman": {
  		desc: "During the night, select one player to mark with (`w!mark [player]`)." +
@@ -113,13 +125,14 @@ module.exports = {
     			" If you try to shoot a villager, your shot will backfire and kill you instead.",
     aura: "Unknown",
     team: "Village",
-    abbr: ["mm"] 
+    abbr: ["mm"],
+    cat : "Regular Villager"
   }, 
   "Mayor": {
   	desc: "Once a game, you can reveal your role with (`w!reveal`) and your vote will count as double.",
     aura: "Good",
     team: "Village",
-    abbr: [], 
+    abbr: [],
   },
   "Medium": {
     desc: "During the night, you can talk anonymously with the dead players." +

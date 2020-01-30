@@ -52,7 +52,8 @@ module.exports = async (client, game) => {
     if (thisPlayer.role.includes("Random")) {
       let rdmRoles = fn.clone(random[thisPlayer.role])
       for (const role of oneOnly)
-        if (rdmRoles.includes("Jailer") && game.players.map(p => p.role).includes("Jailer")) rdmRoles.splice(rdmRoles.indexOf("Jailer"), 1)
+        if (rdmRoles.includes(role) && game.players.map(p => p.role).includes(role))
+          rdmRoles.splice(rdmRoles.indexOf(role), 1)
       role = thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
     }
     
