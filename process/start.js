@@ -35,16 +35,19 @@ module.exports = async (client, game) => {
     
     switch (thisPlayer.role) {
       case "Bodyguard":
-        game.players[i].health = 2; break;
+        thisPlayer.health = 2; break;
       case "Tough Guy":
-        game.players[i].health = 1; break;
+        thisPlayer.health = 1; break;
       case "Medium":
-        game.players[i].revUsed = false; break;
-      case "Jailer":
-        game.players[i].bullets = 1; break;
-      case "Gunner": game.players[i].bullets = 2
-      case "Marksman": game.players[i].bullets = 1
-    if (game.players[i].role == "Pacifist") game.players[i].cards = []
+        thisPlayer.revUsed = false; break;
+      case "Jailer": case "Priest":
+        thisPlayer.bullets = 1; break;
+      case "Gunner": case "Marksman":
+        thisPlayer.bullets = 2; break;
+      case "Fortune Teller":
+        thisPlayer.cards = []; break;
+      case "Random Voting":
+        
     }
   }
   
