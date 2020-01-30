@@ -8,10 +8,11 @@ const fn = require("/app/util/fn"),
       roles = require('/app/util/roles')
 
 const random = {
-  "Random Voting": ["Headhunter", "Fool"],
   "Random Regular Villager": [],
   "Random Strong Villager": [],
-  "
+  "Random Werewolf": [],
+  "Random Voting": ["Headhunter", "Fool"],
+  "Random Killer": []
 }
 
 module.exports = async (client, game) => {
@@ -25,21 +26,6 @@ module.exports = async (client, game) => {
     game.players[i].number = i+1
     let thisPlayer = game.players[i]
     let role = thisPlayer.role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
-    await client.users.get(thisPlayer.id)
-      .send(
-        new Discord.RichEmbed()
-          .setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")).url)
-          .setTitle(
-            `You are ${
-              ["Jailer","Cupid","President","Sect Leader"].includes(role)
-                ? "the"
-                : (/^([aeiou])/i).test(role)
-                ? "an"
-                : "a"
-            } ${role}.`
-          )
-          .setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`)
-      )
     Object.assign(game.players[i], {alive: true, protectors: []})
     
     game.roles.push(thisPlayer.role)
@@ -57,10 +43,13 @@ module.exports = async (client, game) => {
         thisPlayer.bullets = 2; break;
       case "Fortune Teller":
         thisPlayer.cards = []; break;
-      case "Random Voting":
-        thisPlayer.role = [][]
     }
-  }
+    
+    
+if (thisPlayer.role.includes("Random))) 
+      thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
+    {
+    await client.users.get(thisPlayer.id).send(new Discord.RichEmbed().setThumbnail(client.emojis.find(e => e.name == game.players[i].role.replace(/ /g, "_")).url).setTitle(`You are ${["Jailer","Cupid","President","Sect Leader"].includes(role)? "the": (/^([aeiou])/i).test(role)? "an": "a"} ${role}.`).setDescription(`${roles[role].desc}\n\nAura: ${roles[role].aura}\nTeam: ${roles[role].team}`))}  }
   
   game.lastDeath = 0
   game.currentPhase += 1
