@@ -5,11 +5,7 @@ const config = require('/app/util/config'),
       fn = require('/app/util/fn')
 
 module.exports = {
-  name: "status",
-  usage: "status",
-  description: "Bot information.",
-  aliases: ["botstatus", "botinfo", "links", "invite"],
-  category: "Utility",
+  name: "botinfo",
   run: async (client, message, args, shared) => {        
     let embed = new Discord.RichEmbed()
       .setColor(shared.embedColor)
