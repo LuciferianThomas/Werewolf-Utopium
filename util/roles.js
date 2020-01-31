@@ -411,35 +411,35 @@ let roles = {
   // Random Roles
   
   "Random": {
-    desc: "All roles.",
+    desc: "Any role.",
     abbr: ["rdm"],
     cat : "Random"
   },
   "Random Regular Villager": {
-    desc: "Any of:\n Villager, Aura Seer, Avenger, Beast Hunter, Bodyguard, Doctor, Flower Child," +
+    desc: "Any of:\nVillager, Aura Seer, Avenger, Beast Hunter, Bodyguard, Doctor, Flower Child," +
           " Fortune Teller, Grumpy Grandma, Marksman, Pacifist, Priest, Red Lady," +
           " Seer Apprentice, Sheriff, Spirit Seer, Tough Guy or Witch",
     abbr: ["rrv"],
     cat : "Random"
   },
   "Random Strong Villager": {
-    desc: "Any of:\n Detective, Gunner, Jailer, Medium or Seer",
+    desc: "Any of:\nDetective, Gunner, Jailer, Medium or Seer",
     abbr: ["rsv"],
     cat : "Random"
   },
   "Random Werewolf": {
-    desc: "Any of:\n Werewolf, Alpha Werewolf, Guardian Wolf, Junior Werewolf," +
+    desc: "Any of:\nWerewolf, Alpha Werewolf, Guardian Wolf, Junior Werewolf," +
           "Kitten Wolf, Nightmare Werewolf, Werewolf Berserk, Wolf Seer, Wolf Shaman",
     abbr: ["rw"],
     cat : "Random"
   },
   "Random Voting": {
-    desc: "Any of:\n Fool or Headhunter",
+    desc: "Any of:\nFool or Headhunter",
     abbr: ["rv"],
     cat : "Random"
   },
   "Random Killer": {
-    desc: "Any of:\n Arsonist, Bomber, Corruptor, Cannibal, Illusionist," +
+    desc: "Any of:\nArsonist, Bomber, Corruptor, Cannibal, Illusionist," +
           " Sect Leader, Serial Killer, Zombie",
     abbr: ["rk"],
     cat : "Random"
