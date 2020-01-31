@@ -7,29 +7,18 @@ const games = new db.table("Games")
 const fn = require("/app/util/fn"),
       roles = require('/app/util/roles')
 
-const random = {
-  "Random Regular Villager": ["Villager", "Doctor", "Bodyguard", "Tough Guy", "Red Lady", "Priest", "Marksman", "Aura Seer", "Spirit Seer", "Seer Apprentice", "Sheriff", "Mayor", "Witch", "Avenger", "Beast Hunter", "Pacifist", "Flower Child", "Fortune Teller", "Grumpy Grandma"],
-  "Random Strong Villager": ["Seer", "Jailer", "Gunner", "Medium", "Detective"],
-  "Random Werewolf": ["Werewolf", "Wolf Shaman", "Wolf Seer", "Junior Werewolf", "Werewolf Berserk", "Alpha Werewolf", "Guardian Wolf", "Kitten Werewolf"],
-  "Random Voting": ["Headhunter", "Fool"],
-  "Random Killer": ["Serial Killer", "Arsonist", "Bomber", "Corruptor", "Sect Leader", "Zombie", "Illusionist"],
-  "Random": Object.keys(roles).filter(r => !r.includes("Random"))
-}
-
-const oneOnly = ["Jailer", "President", "Sect Leader", "Cupid"]
-
 module.exports = async (client, game) => {
   let Games = games.get("quick")
   
   await fn.broadcast(client, game, "Game is starting...")
     
-  game.originalRoles = fn.clone(game.roles)
   game.originalRoles.splice(game.players.length)
+  let gameRoles = fn.clone(game.originalRoles)
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
     let thisPlayer = game.players[i]
-    let role = thisPlayer.role = game.roles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
+    let role = thisPlayer.role = gameRoles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     Object.assign(game.players[i], {alive: true, protectors: []})
         
     switch (thisPlayer.role) {
@@ -46,7 +35,6 @@ module.exports = async (client, game) => {
       case "Fortune Teller":
         thisPlayer.cards = []; break;
     }
-    
     
     if (thisPlayer.role.includes("Random")) {
       let rdmRoles = roles.filter(
@@ -77,6 +65,7 @@ module.exports = async (client, game) => {
     )
   }
   
+  game.roles = game.players.map(p => p.role)
   game.lastDeath = 0
   game.currentPhase += 1
   game.nextPhase = moment().add(30, "s")

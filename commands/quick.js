@@ -38,9 +38,7 @@ module.exports = {
         gameID: games.add("count", 1),
         nextPhase: null,
         currentPhase: -1,
-        roles: quickGameRoles[Math.floor(Math.random()*quickGameRoles.length)],
-               // ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", /*Math.random() < 0.5 ? */"Fool" /*: "Headhunter"*/,
-               //  "Bodyguard", "Gunner", "Wolf Shaman", "Serial Killer", "Cursed", "Priest", "Wolf Seer", "Aura Seer"],
+        originalRoles: quickGameRoles[Math.floor(Math.random()*quickGameRoles.length)],
         players: [{
           id: message.author.id
         }],
