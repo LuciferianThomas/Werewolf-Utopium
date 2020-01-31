@@ -13,12 +13,11 @@
     "es6-shim": "^0.35.5",
     "moment": "^2.24.0",
     "quick.db": "^7.0.0-b22",
-    "express": "^4.16.4",
-    "better-sqlite-pool": "^0.2.2",
+    "express": "^4.17.1",
+    "better-sqlite-pool": "^0.2.3",
     "striptags": "^3.1.1",
     "https": "^1.0.0",
-    "node-fetch": "^2.6.0",
-    "diff": "^4.0.0"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {},
   "scripts": {

@@ -6,6 +6,14 @@ module.exports = {
   name: "joingame",
   aliases: ["join","jg"],
   run: async (client, message, args, shared) => {
+    if (!args[0]) return await message.channel.send(
+      new Discord.RichEmbed()
+        .setColor("RED")
+        .setTitle("Missing Arguments")
+        .setDescription(
+          "`w!joingame <gamemode>`"
+        )
+    )
     let gamemode = args[0].toLowerCase()
     if (!gamemodes.includes(gamemode))
       return await message.channel.send(
