@@ -37,14 +37,13 @@ module.exports = async (client, game) => {
     }
     
     if (thisPlayer.role.includes("Random")) {
-      let rdmRoles = roles.filter(
+      let rdmRoles = Object.values(roles).filter(
         role =>
-          thisPlayer.role == "Random" ||
-          (thisPlayer.role == `Random ${role.cat}` &&
-            (game.originalRoles.includes(role.name) && !role.oneOnly))
+          ((thisPlayer.role == "Random" && role.cat !== "Random") || thisPlayer.role == `Random ${role.cat}`) && 
+            (game.originalRoles.includes(role.name) && !role.oneOnly)
       )
       
-      role = thisPlayer.role = random[thisPlayer.role][Math.floor(Math.random()*random[thisPlayer.role].length)]
+      role = thisPlayer.role = rdmRoles[thisPlayer.role][Math.floor(Math.random()*rdmRoles[thisPlayer.role].length)]
     }
     
     await client.users.get(thisPlayer.id).send(
@@ -52,7 +51,7 @@ module.exports = async (client, game) => {
         .setThumbnail(fn.getEmoji(client, game.players[i]).url)
         .setTitle(
           `You are ${
-            oneOnly.includes(role)
+            roles[role].oneOnly
               ? "the"
               : /^([aeiou])/i.test(role)
               ? "an"

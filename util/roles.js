@@ -142,7 +142,7 @@ let roles = {
     aura: "Unknown",
     team: "Village",
     abbr: ["med"],
-    cat : "Regular Villager"
+    cat : "Strong Villager"
   },
   "Pacifist": {
   	desc: "Once a game, you can reveal one player with (`w!reveal [player]`) and skip the voting session.",
@@ -406,6 +406,29 @@ let roles = {
     team: "Zombies",
     abbr: ["zomb", "zom", "zb"],
     cat : "Killer"
+  },
+  
+  // Random Roles
+  
+  "Random": {
+    desc: "All roles.",
+    abbr: ["rdm"],
+    cat : "Random"
+  },
+  "Random Regular Villager": {
+    desc: "Any of Villager, Aura Seer, Avenger, Beast Hunter, Bodyguard, Doctor, Flower Child," +
+          " Fortune Teller, Grumpy Grandma, Marksman, Pacifist, Priest, Red Lady," +
+          " Seer Apprentice, Sheriff, Spirit Seer, Tough Guy or Witch",
+    abbr: ["rrv", "rv"],
+    cat : "Random"
+  },
+  "Random Strong Villager": {
+    desc: "Any of Detective, Gunner, Jailer, Medium or Seer",
+    abbr: ["rsv"],
+    cat : "Random"
+  },
+  "Random Werewolf": {
+    
   }
 }
 
