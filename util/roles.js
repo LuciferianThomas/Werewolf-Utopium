@@ -446,7 +446,7 @@ let roles = {
   }
 }
 
-for (const [key, ] of Object.entries(roles))
+for (const [key,] of Object.entries(roles))
   roles[key].name = key
 
 module.exports = roles
