@@ -50,8 +50,8 @@ module.exports = {
     if (gamePlayer.role == "Aura Seer") {
       message.author.send(
         new Discord.RichEmbed()
-          .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == "Aura_Seer").url)
-          .setThumbnail(client.emojis.find(e => e.name == `${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura}_Aura`).url)
+          .setAuthor(`Seeing Results`, fn.getEmoji(client, "Aura Seer").url)
+          .setThumbnail(fn.getEmoji(client, `${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} Aura`).url)
           .setDescription(
             `**${target} ${fn.getUser(client, targetPlayer.id).username}** has a${
             (targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura) == "Good" ? "" : "n"
@@ -62,11 +62,11 @@ module.exports = {
     else {
       message.author.send(
         new Discord.RichEmbed()
-          .setAuthor(`Seeing Results`, client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_")).url)
-          .setThumbnail(client.emojis.find(e => e.name == (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role).replace(/ /g, "_")).url)
+          .setAuthor(`Seeing Results`, fn.getEmoji(client, gamePlayer.role).url)
+          .setThumbnail(fn.getEmoji(client, (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role)).url)
           .setDescription(
             `**${target} ${fn.getUser(client, targetPlayer.id).username}** is a${
-              ["A", "E", "I", "O", "U"].includes(!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
+              ["A", "E", "I", "O", "U"].includes(!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted && targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
             } ${!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
           )
       )
