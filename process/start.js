@@ -21,18 +21,17 @@ module.exports = async (client, game) => {
     let role = thisPlayer.role = gameRoles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     Object.assign(game.players[i], {alive: true, protectors: []})
         
-    switch (thisPlayer.role) {
-      case "Bodyguard":
-        thisPlayer.health = 2; break;
-      case "Tough Guy":
-        thisPlayer.health = 1; break;
-      case "Medium":
-        thisPlayer.revUsed = false; break;
-      case "Jailer": case "Priest":
+    if (thisPlayer.role == "Bodyguard")
+        thisPlayer.health = 2
+    if (thisPlayer.role == "Tough Guy")
+        thisPlayer.health = 1
+    if (thisPlayer.role == "Medium")
+        thisPlayer.revUsed = false
+    if (thisPlayer.role == "Jailer" || thisPlayer.role == "Priest")
         thisPlayer.bullets = 1; break;
-      case "Gunner": case "Marksman":
+    if (thisPlayer.role == "Gunner" || thisPlayer.role == "Marksman")
         thisPlayer.bullets = 2; break;
-      case "Fortune Teller":
+    if (thisPlayer.role == "Fortune Teller":
         thisPlayer.cards = []; break;
     }
     
@@ -48,7 +47,7 @@ module.exports = async (client, game) => {
     
     await client.users.get(thisPlayer.id).send(
       new Discord.RichEmbed()
-        .setThumbnail(fn.getEmoji(client, game.players[i]).url)
+        .setThumbnail(fn.getEmoji(client, game.players[i].role).url)
         .setTitle(
           `You are ${
             roles[role].oneOnly
