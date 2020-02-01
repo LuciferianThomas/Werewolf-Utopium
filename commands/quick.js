@@ -30,7 +30,7 @@ module.exports = {
     
     let currentGame = QuickGames.find(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "quick")
     if (currentGame) {
-      QuickGames[QuickGames.indexOf(currentGame)].players.push({ id: message.author.id })
+      QuickGames[QuickGames.indexOf(currentGame)].players.push({ id: message.author.id, lastAction: moment() })
       currentGame = QuickGames.find(game => game.gameID == currentGame.gameID)
     } else {
       currentGame = {
@@ -40,7 +40,8 @@ module.exports = {
         currentPhase: -1,
         originalRoles: quickGameRoles[Math.floor(Math.random()*quickGameRoles.length)],
         players: [{
-          id: message.author.id
+          id: message.author.id,
+          lastAction: moment()
         }],
         spectators: [],
         config: {
