@@ -22,18 +22,18 @@ module.exports = async (client, game) => {
     Object.assign(game.players[i], {alive: true, protectors: []})
         
     if (thisPlayer.role == "Bodyguard")
-        thisPlayer.health = 2
+      thisPlayer.health = 2
     if (thisPlayer.role == "Tough Guy")
-        thisPlayer.health = 1
+      thisPlayer.health = 1
     if (thisPlayer.role == "Medium")
-        thisPlayer.revUsed = false
+      thisPlayer.revUsed = false
     if (thisPlayer.role == "Jailer" || thisPlayer.role == "Priest")
-        thisPlayer.bullets = 1; break;
+      thisPlayer.bullets = 1
     if (thisPlayer.role == "Gunner" || thisPlayer.role == "Marksman")
-        thisPlayer.bullets = 2; break;
-    if (thisPlayer.role == "Fortune Teller":
-        thisPlayer.cards = []; break;
-    }
+      thisPlayer.bullets = 2
+    if (thisPlayer.role == "Fortune Teller")
+      thisPlayer.cards = []
+  
     
     if (thisPlayer.role.includes("Random")) {
       let rdmRoles = Object.values(roles).filter(
@@ -63,6 +63,8 @@ module.exports = async (client, game) => {
     )
   }
   
+  console.log(1)
+  
   game.roles = game.players.map(p => p.role)
   game.lastDeath = 0
   game.currentPhase += 1
@@ -89,6 +91,8 @@ module.exports = async (client, game) => {
       )
   }
   
+  console.log(2)
+  
   fn.broadcastTo(
     client, game.players.filter(p => !p.left),
     "Night 1 has started."
@@ -108,8 +112,11 @@ module.exports = async (client, game) => {
     president.roleRevealed = "President"
   }
   
-  let thisGame = Games.find(g => g.gameID == game.gameID)
-  thisGame = game
+  console.log(3)
   
+  let thisGame = Games.find(g => g.gameID == game.gameID)
+  Games[Games.indexOf(thisGame)] = game
+  
+  console.log(Games)
   games.set("quick", Games)
 }

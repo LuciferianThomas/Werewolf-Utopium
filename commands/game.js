@@ -30,7 +30,7 @@ module.exports = {
                            `${p.id == message.author.id ? "**" : ""}${p.number} ${client.users.get(p.id).username}${
                              p.alive ? "" : " <:Death:668750728650555402>"}${
                              p.id == message.author.id || p.roleRevealed || (gamePlayer.couple && p.couple)
-                               ? ` ${fn.getEmoji(client, p.roleRevealed)}` 
+                               ? ` ${fn.getEmoji(client, p.roleRevealed || p.role)}` 
                                : roles[gamePlayer.role].team == "Werewolves" && roles[p.role].team == "Werewolves"
                                ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
                                : ""
