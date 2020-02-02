@@ -20,20 +20,21 @@ module.exports = async (client, game) => {
     let thisPlayer = game.players[i]
     let role = thisPlayer.role = gameRoles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     Object.assign(game.players[i], {alive: true, protectors: []})
-        
-    if (thisPlayer.role == "Bodyguard")
-      thisPlayer.health = 2
-    if (thisPlayer.role == "Tough Guy")
-      thisPlayer.health = 1
-    if (thisPlayer.role == "Medium")
-      thisPlayer.revUsed = false
-    if (thisPlayer.role == "Jailer" || thisPlayer.role == "Priest")
-      thisPlayer.bullets = 1
-    if (thisPlayer.role == "Gunner" || thisPlayer.role == "Marksman")
-      thisPlayer.bullets = 2
-    if (thisPlayer.role == "Fortune Teller")
-      thisPlayer.cards = []
-  
+      
+    switch (thisPlayer.role) {
+      case "Bodyguard":
+        thisPlayer.health = 2; break;
+      case "Tough Guy":
+        thisPlayer.health = 1; break;
+      case "Medium":
+        thisPlayer.revUsed = false; break;
+      case "Jailer": case "Priest":
+        thisPlayer.bullets = 1; break;
+      case "Gunner" thisPlayer.role == "Marksman")
+        thisPlayer.bullets = 2
+      if (thisPlayer.role == "Fortune Teller")
+        thisPlayer.cards = []
+    }
     
     if (thisPlayer.role.includes("Random")) {
       let rdmRoles = Object.values(roles).filter(
