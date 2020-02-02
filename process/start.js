@@ -30,9 +30,9 @@ module.exports = async (client, game) => {
         thisPlayer.revUsed = false; break;
       case "Jailer": case "Priest":
         thisPlayer.bullets = 1; break;
-      case "Gunner" thisPlayer.role == "Marksman")
-        thisPlayer.bullets = 2
-      if (thisPlayer.role == "Fortune Teller")
+      case "Gunner": case "Marksman":
+        thisPlayer.bullets = 2; break;
+      case "Fortune Teller":
         thisPlayer.cards = []
     }
     
