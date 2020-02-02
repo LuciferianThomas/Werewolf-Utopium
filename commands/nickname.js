@@ -1,5 +1,6 @@
 const Discord = require("discord.js"),
-      db = require("quick.db")
+      db = require("quick.db"),
+      moment = require("moment")
 
 const players = new db.table("Players")
 
@@ -8,6 +9,8 @@ module.exports = {
   aliases: ["nick"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
+    
+    if (moment(player.lastNick).add(7,'d') 
     
     let input = message.content.slice(shared.commandName.length + 2)
     if (!input.match(/^[a-z0-9\_]{4,14}$/i)) 

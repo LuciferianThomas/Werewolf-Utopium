@@ -965,10 +965,21 @@ client.on('message', async message => {
       let m = await message.author.send(
         new Discord.RichEmbed()
           .setTitle("Please choose a nickname to proceed.")
-          .setDescription("You have 
-      ).catch(() => message.channel.send("I cannot DM you!"))
-      if (!m) return undefined
-      let response = await m
+          .setDescription("You have 1 minute to respond.")
+      ).catch(() => {})
+      if (!m) return await message.channel.send("I cannot DM you!")
+      
+      let input
+      while (!input) {
+        let response = await m.awaitMessages(msg => msg.author.id == message.author.id, { max: 1, time: 60*1000, errors: ["time"] }).catch(() => {})
+        if (!m) return await message.channel.send("Question timed out.")
+        
+        if (response.content.match(/^[a-z0-9\_]{4,14}$/i))
+          input = response.content
+      }
+      
+      player.nickname = input
+      player.lastNick = moment()
     }
     
 		try {
