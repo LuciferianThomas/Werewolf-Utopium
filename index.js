@@ -11,7 +11,8 @@ const Discord = require('discord.js'),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const roles = require("/app/util/roles")
 
@@ -974,11 +975,13 @@ client.on('message', async message => {
         let response = await m.awaitMessages(msg => msg.author.id == message.author.id, { max: 1, time: 60*1000, errors: ["time"] }).catch(() => {})
         if (!m) return await message.channel.send("Question timed out.")
         
+        let usedNicknames = nicknames.all().map(x => x.data)
+        
         if (response.content.match(/^[a-z0-9\_]{4,14}$/i))
           input = response.content
       }
       
-      player.nickname = input
+      nicknames.set(message.author.id, input)
       player.lastNick = moment()
     }
     
