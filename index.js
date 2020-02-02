@@ -977,12 +977,16 @@ client.on('message', async message => {
         
         let usedNicknames = nicknames.all().map(x => x.data)
         
-        if (response.content.match(/^[a-z0-9\_]{4,14}$/i))
+        if (response.content.match(/^[a-z0-9\_]{4,14}$/i) && !usedNicknames.includes(response.content))
           input = response.content
+        else if (usedNicknames.includes(response.content))
+          await message.channel.send(
       }
       
       nicknames.set(message.author.id, input)
       player.lastNick = moment()
+      
+      players.set(message.author.id, player)
     }
     
 		try {
