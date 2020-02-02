@@ -951,17 +951,26 @@ client.on('message', async message => {
 
 		if (!command) return;
     
-    if (!players.get(message.author.id)) 
-       players.set(message.author.id, {
-         xp: 0,
-         coins: 0,
-         roses: 0,
-         currentGame: null,
-         wins: [],
-         loses: [],
-         suicides: 0
-       })   
-        
+    if (!players.get(message.author.id)) {
+      let player = {
+        xp: 0,
+        coins: 0,
+        roses: 0,
+        currentGame: null,
+        wins: [],
+        loses: [],
+        suicides: 0
+      }
+       
+      let m = await message.author.send(
+        new Discord.RichEmbed()
+          .setTitle("Please choose a nickname to proceed.")
+          .setDescription("You have 
+      ).catch(() => message.channel.send("I cannot DM you!"))
+      if (!m) return undefined
+      let response = await m
+    }
+    
 		try {
 			await command.run(client, message, args, shared)
 		} catch (error) {
