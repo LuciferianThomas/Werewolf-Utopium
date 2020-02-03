@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 
-const gamemodes = ["quick"/*, "ranked", "sandbox"*/]
+const gamemodes = ["quick", "custom"/*, "ranked", "sandbox"*/]
 
 module.exports = {
   name: "joingame",

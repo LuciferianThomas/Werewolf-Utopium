@@ -34,7 +34,7 @@ module.exports = {
         .setAuthor(`User Profile | ${nicknames.get(target.id).replace(/\\_/g, "_") || `\* ${target.username}`}`)
         .setThumbnail(target.displayAvatarURL)
         .addField("Games played", player.wins.length + player.loses.length + player.suicides, true)
-        .addField("Coins", 0, true)
+        .addField("Coins", player.coins, true)
         .addField("XP", player.xp, true)
         .addField(
           "Statistics",
