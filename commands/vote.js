@@ -29,6 +29,10 @@ module.exports = {
     if (game.currentPhase % 3 == 0) {
       if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" || 
           (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0)) {
+        if (args[0].toLowerCase == "cancel") {
+          
+        }
+        
         let vote = parseInt(args[0])
         if (isNaN(vote) || vote > game.players.length || vote < 1)
           return await message.author.send("Invalid vote.")
