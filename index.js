@@ -890,8 +890,7 @@ client.on('ready', async () => {
                   new Discord.RichEmbed()
                     .setTitle(`Jail`)
                     .setThumbnail(fn.getEmoji(client, "Jail").url)
-                    .setDescription("You did not select a player last day or your target could not be jailed.\n" +
-                                    " Go back to sleep!")
+                    .setDescription(`**${jailed.number} ${nicknames.get(jailed.id)}** is now jailed!\nY`)
                 )
 
                 fn.getUser(client, jailed.id)
