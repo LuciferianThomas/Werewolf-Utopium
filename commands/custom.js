@@ -40,14 +40,17 @@ module.exports = {
     
     if (activeGames.length && !args.length)
       return await message.channel.send(
-        new Discord.RichEmbed({fields: activeGames.map(x => { return { name: x.name, value: x.originalRoles.map(y => fn.getEmoji(client, y)).join('') } })})
+        new Discord.RichEmbed({fields: activeGames.map(x => { return { name: `**${x.name}** [\`${x.gameID}\`]`, value: x.originalRoles.map(y => fn.getEmoji(client, y)).join('') } })})
           .setColor("GOLD")
           .setTitle("Active Custom Games")
       )
+
+    let currentGame = activeGames.find(game => game.gameID.toLowerCase() == args[args.length-1].toLowerCase())
+    if (!currentGame) 
+      return await message.channel.send(`<:red_tick:597374220267290624> \`${args[args.length-1]}\` is not a valid custom game code!`)
+      
+      
     
-    if (activeGames.find(game => game.gameID.toLowerCase() == args[args.length-1].toLowerCase())) {
-      let currentGame = activeGames.find(game => game.gameID.toLowerCase() == args[args.length-1].toLowerCase())
-    }
 //     if (currentGame) {
 //       Games[Games.indexOf(currentGame)].players.push({ id: message.author.id, lastAction: moment() })
 //       currentGame = Games.find(game => game.gameID == currentGame.gameID)
