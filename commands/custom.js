@@ -30,38 +30,55 @@ module.exports = {
     if (!games.get("quick")) games.set("quick", [])
     let Games = games.get("quick")
     
-    let currentGame = Games.find(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "custom")
-    if (currentGame) {
-      Games[Games.indexOf(currentGame)].players.push({ id: message.author.id, lastAction: moment() })
-      currentGame = Games.find(game => game.gameID == currentGame.gameID)
-    } else {
+    let activeGames = Games.filter(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "custom")
+    if (!activeGames.length)
       return await message.channel.send(
         new Discord.RichEmbed()
           .setColor("RED")
           .setTitle(`There aren't any custom games right now!`)
       )
+    
+    if (activeGames.length && !args.length)
+      return await message.channel.send(
+        new Discord.RichEmbed({fields: activeGames.map(x => { return { name: x.name, value: x.originalRoles.map(y => fn.getEmoji(client, y)).join('') } })})
+          .setColor("GOLD")
+          .setTitle("Active Custom Games")
+      )
+    
+    if (activeGames.find(game => game.gameID.toLowerCase() == args[args.length-1].toLowerCase())) {
+      let currentGame = activeGames.find(game => game.gameID.toLowerCase() == args[args.length-1].toLowerCase())
     }
+//     if (currentGame) {
+//       Games[Games.indexOf(currentGame)].players.push({ id: message.author.id, lastAction: moment() })
+//       currentGame = Games.find(game => game.gameID == currentGame.gameID)
+//     } else {
+//       return await message.channel.send(
+//         new Discord.RichEmbed()
+//           .setColor("RED")
+//           .setTitle(`There aren't any custom games right now!`)
+//       )
+//     }
     
-    let m = message.author.send(
-      new Discord.RichEmbed()
-        .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
-        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
-    ).catch(async error => {
-      await message.channel.send("**I cannot DM you!**\nPlease make sure you enabled Direct Messages on at least one server the bot is on.")
-      return undefined
-    })
-    if (!m) return undefined
+//     let m = message.author.send(
+//       new Discord.RichEmbed()
+//         .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
+//         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
+//     ).catch(async error => {
+//       await message.channel.send("**I cannot DM you!**\nPlease make sure you enabled Direct Messages on at least one server the bot is on.")
+//       return undefined
+//     })
+//     if (!m) return undefined
     
-    fn.broadcastTo(
-      client, currentGame.players.filter(p => p.id !== message.author.id),
-      new Discord.RichEmbed()
-        .setAuthor(`${nicknames.get(message.author.id).replace(/\\_/g, "_")} joined the game.`, message.author.displayAvatarURL)         
-        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
-    )
+//     fn.broadcastTo(
+//       client, currentGame.players.filter(p => p.id !== message.author.id),
+//       new Discord.RichEmbed()
+//         .setAuthor(`${nicknames.get(message.author.id).replace(/\\_/g, "_")} joined the game.`, message.author.displayAvatarURL)         
+//         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
+//     )
       
-    if (currentGame.players.length == 16) require('/app/process/start')(client, currentGame)
+//     if (currentGame.players.length == 16) require('/app/process/start')(client, currentGame)
     
-    games.set("quick", Games)
-    players.set(`${message.author.id}.currentGame`, currentGame.gameID)
+//     games.set("quick", Games)
+//     players.set(`${message.author.id}.currentGame`, currentGame.gameID)
   }
 }
