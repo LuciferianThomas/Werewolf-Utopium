@@ -17,8 +17,14 @@ module.exports = async (client, game) => {
   game.originalRoles.splice(game.players.length)
   let gameRoles = fn.clone(game.originalRoles)
 
-  for (var i = 0; i < game.players.length; i++)
-    [gameRoles[i], gameRoles[Math.floor(Math.random()*game.players.length)]] = [gameRoles[Math.floor(Math.random()*game.players.length)], gameRoles[i]]
+  for (var i = 0; i < game.originalRoles.length; i++)
+    [
+      gameRoles[i],
+      gameRoles[Math.floor(Math.random() * game.originalRoles.length)]
+    ] = [
+      gameRoles[Math.floor(Math.random() * game.originalRoles.length)],
+      gameRoles[i]
+    ]
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
