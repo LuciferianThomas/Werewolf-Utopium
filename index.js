@@ -1020,7 +1020,7 @@ client.on('message', async message => {
   console.log(message.author.tag + ' | ' + message.cleanContent)
   
   let player = players.get(message.author.id)
-  if (!player.currentGame) return;
+  if (!player || !player.currentGame) return;
   
   let QG = games.get("quick")
   let game = QG.find(game => game.gameID == player.currentGame)

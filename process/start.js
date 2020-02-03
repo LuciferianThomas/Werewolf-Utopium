@@ -31,21 +31,21 @@ module.exports = async (client, game) => {
       )
       
       role = thisPlayer.role = rdmRoles[thisPlayer.role][Math.floor(Math.random()*rdmRoles[thisPlayer.role].length)]
+    }
       
-      switch (role) {
-        case "Bodyguard":
-          thisPlayer.health = 2; break;
-        case "Tough Guy":
-          thisPlayer.health = 1; break;
-        case "Medium":
-          thisPlayer.revUsed = false; break;
-        case "Jailer": case "Priest":
-          thisPlayer.bullets = 1; break;
-        case "Gunner": case "Marksman":
-          thisPlayer.bullets = 2; break;
-        case "Fortune Teller":
-          thisPlayer.cards = []; break;
-      }
+    switch (thisPlayer.role) {
+      case "Bodyguard":
+        thisPlayer.health = 2; break;
+      case "Tough Guy":
+        thisPlayer.health = 1; break;
+      case "Medium":
+        thisPlayer.revUsed = false; break;
+      case "Jailer": case "Priest":
+        thisPlayer.bullets = 1; break;
+      case "Gunner": case "Marksman":
+        thisPlayer.bullets = 2; break;
+      case "Fortune Teller":
+        thisPlayer.cards = []; break;
     }
     
     await client.users.get(thisPlayer.id).send(

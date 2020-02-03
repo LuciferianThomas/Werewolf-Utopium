@@ -64,9 +64,9 @@ module.exports = {
         `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${nicknames.get(targetPlayer.id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
     
     if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
-    game.players[gamePlayer.number-1].bullets -= 1
+    gamePlayer.bullets -= 1
     game.lastDeath = game.currentPhase
-    if (gamePlayer.role == "Gunner") game.players[gamePlayer.number-1].shotToday = true
+    if (gamePlayer.role == "Gunner") gamePlayer.shotToday = true
     game = fn.death(client, game, targetPlayer.number)
     
     QuickGames[index] = game
