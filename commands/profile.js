@@ -25,7 +25,7 @@ module.exports = {
     
     return await message.channel.send(
       new Discord.RichEmbed()
-        .setAuthor(`User Profile | ${nicknames.get(target.id) || `\* ${target.username}`}`)
+        .setAuthor(`User Profile | ${nicknames.get(target.id).replace(/\\_/g, "_") || `\* ${target.username}`}`)
         .setThumbnail(target.displayAvatarURL)
         .addField("Games played", player.wins.length + player.loses.length, true)
         .addField("Coins", 0, true)
