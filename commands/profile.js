@@ -10,11 +10,9 @@ module.exports = {
   name: "profile",
   aliases: ["prof"],
   run: async (client, message, args) => {
-    let target = message.author
-    if (message.mentions.users.size) target = message.mentions.users.first()
-    
-    console.log(nicknames.all().find(x => JSON.parse(x.data).toLowerCase() == args[0].toLowerCase().replace(/_/g, "\\_")) ? 
-        nicknames.all().find(x => JSON.parse(x.data).toLowerCase() == args[0].toLowerCase().replace(/_/g, "\\_")).ID : args[0])
+    let target
+    if (!args[0]) target = message.author
+    else if (message.mentions.users.size) target = message.mentions.users.first()
     if (!target && args[0]) 
       target = fn.getUser(
         client, 
