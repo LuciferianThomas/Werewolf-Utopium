@@ -22,15 +22,16 @@ module.exports = {
 
     let input
     while (!input) {
-      let response = await m
+      let response = await m.channel
         .awaitMessages(msg => msg.author.id == message.author.id, {
           max: 1,
           time: 60 * 1000,
           errors: ["time"]
         })
         .catch(() => {})
-      if (!m) return await message.channel.send("Question timed out.")
-
+      if (!m) return await m.channel.send("Question timed out.")
+      response = response.first()
+      
       let usedNicknames = nicknames.all().map(x => x.data)
 
       if (
