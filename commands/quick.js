@@ -67,7 +67,7 @@ module.exports = {
     fn.broadcastTo(
       client, currentGame.players.filter(p => p.id !== message.author.id),
       new Discord.RichEmbed()
-        .setAuthor(`${nicknames.get(message.author.id)} joined the game.`, message.author.displayAvatarURL)         
+        .setAuthor(`${nicknames.get(message.author.id).replace(/\\_/g, "_")} joined the game.`, message.author.displayAvatarURL)         
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
     )
       
