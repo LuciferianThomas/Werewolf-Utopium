@@ -39,10 +39,11 @@ module.exports = {
           `**Defeats:** ${player.loses.length} (${Math.floor(player.loses.length/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)\n` +
           `**Suicides:** ${player.suicides} (${Math.floor(player.suicides/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)`
         )
-        // .addField(
-        //   "Teams",
-        //   {}
-        // )
+        .addField(
+          `**Wins as Village:** ${player.wins.filter(x => x.team == "Village").length} (${Math.floor(player.wins.filter(x => x.team == "Village").length/player.wins.length*100)/100})\n`+
+          `**Defeats as Village`,
+          {}
+        )
     )
   }
 }
