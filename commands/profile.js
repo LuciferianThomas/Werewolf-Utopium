@@ -27,11 +27,16 @@ module.exports = {
       new Discord.RichEmbed()
         .setAuthor(`User Profile | ${nicknames.get(target.id).replace(/\\_/g, "_") || `\* ${target.username}`}`)
         .setThumbnail(target.displayAvatarURL)
-        .addField("Games played", player.wins.length + player.loses.length, true)
+        .addField("Games played", player.wins.length + player.loses.length + player.suicides, true)
         .addField("Coins", 0, true)
         .addField("XP", player.xp, true)
+        .addField(
+          "Statistics",
+          `**Wins:** ${player.wins.length} (${})`
+        )
         .addField("Wins", player.wins.length, true)
         .addField("Loses", player.loses.length, true)
+        .addField("Suicides", player.suicides, true)
         // .addField(
         //   "Teams",
         //   {}
