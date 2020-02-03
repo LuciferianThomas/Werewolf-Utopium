@@ -53,6 +53,14 @@ client.login(token)
 client.on('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   
+  await client.user.setPresence({
+		status: 'online',
+		game: {
+			name: `for Werewolf Simulation Games`,
+      type: "WATCHING"
+		}
+	})
+  
   setInterval( () => { 
     let QuickGames = games.get("quick")
     
