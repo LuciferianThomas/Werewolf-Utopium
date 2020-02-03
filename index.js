@@ -1031,7 +1031,7 @@ client.on('message', async message => {
   }
   
   if (game.currentPhase == -1)
-    return fn.broadcast(client, game, `**${message.author.username}**: ${content}`, [message.author.id])
+    return fn.broadcast(client, game, `**${nicknames.get(message.author.id)}**: ${content}`, [message.author.id])
   
   if (game.players.find(p => p.mute == gamePlayer.number)) content = "..."
   
@@ -1039,19 +1039,19 @@ client.on('message', async message => {
     if (gamePlayer.alive)
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && p.id != message.author.id).map(p => p.id),
-        `**${gamePlayer.number} ${message.author.username}**: ${content}`
+        `**${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`
       )
     else {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && !p.alive && p.id != message.author.id).map(p => p.id),
-        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
+        `_**${gamePlayer.number} ${nicknames.get(message.author.id)}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
       )
     }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && (!p.alive || (p.alive && p.role == "Medium")) && p.id != message.author.id).map(p => p.id),
-        `_**${gamePlayer.number} ${message.author.username}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
+        `_**${gamePlayer.number} ${nicknames.get(message.author.id)}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
       )
     }
     if (gamePlayer.role == "Medium" && gamePlayer.alive && !gamePlayer.jailed) {
@@ -1063,7 +1063,7 @@ client.on('message', async message => {
     
     if (gamePlayer.jailed && gamePlayer.alive) 
       return fn.getUser(client, game.players[game.roles.indexOf("Jailer")].id)
-        .send(`**${gamePlayer.number} ${message.author.username}**: ${content}`)
+        .send(`**${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`)
     
     if (gamePlayer.role == "Jailer" && gamePlayer.alive) 
       if (game.players.find(p => p.jailed && p.alive))
@@ -1078,7 +1078,7 @@ client.on('message', async message => {
         game.players
           .filter(p => roles[p.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed && gamePlayer.id != message.author.id)
           .map(p => p.id),
-        `**<:Fellow_Werewolf:660825937109057587> ${gamePlayer.number} ${message.author.username}**: ${content}`)
+        `**<:Fellow_Werewolf:660825937109057587> ${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`)
     }
   }
 })
