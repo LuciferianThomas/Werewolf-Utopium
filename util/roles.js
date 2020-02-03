@@ -174,7 +174,7 @@ let roles = {
           " However, if the player you visited is evil or attacked, you will die.",
     aura: "Good",
     team: "Village",
-    abbr: ["rl", "prostitute"],
+    abbr: ["harlot", "rl", "prostitute"],
     cat : "Regular Villager"
   },
   "Seer": {
@@ -322,7 +322,7 @@ let roles = {
     desc: "Your only goal is to get lynched by the village.",
     aura: "Unknown",
     team: "Solo",
-    abbr: [],
+    abbr: ["tanner"],
     cat : "Voting"
   },
   "Headhunter": {
