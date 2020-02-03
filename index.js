@@ -952,8 +952,8 @@ client.on('message', async message => {
 
 		if (!command) return;
     
-    if (!players.get(message.author.id)) {
-      let player = {
+    if (!players.get(message.author.id) || !nicknames.get(message.author.id)) {
+      let player = players.get(message.author.id) || {
         xp: 0,
         coins: 0,
         roses: 0,

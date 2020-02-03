@@ -1,13 +1,13 @@
 const Discord = require("discord.js"),
-    	moment = require("moment") ,
-      db = require("quick.db") 
+      moment = require("moment"),
+      db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players") 
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const roles = require('/app/util/roles')
-
-const fn = require('/app/util/fn') 
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "ignite",
@@ -49,7 +49,7 @@ module.exports = {
         game.players.filter(p => !p.left),
         `<:Arsonist_Ignite:664263079273431054> The Arsonist <:Arsonist:660365416480243752> has ignited **${
           doused[i].number
-        } ${fn.getUser(client, dousedPlayer.id)}${
+        } ${nicknames.get(dousedPlayer.id)}${
           game.config.deathReveal
             ? ` ${fn.getEmoji(client, dousedPlayer.role)}`
             : ""

@@ -3,9 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "jail",
@@ -34,7 +36,7 @@ module.exports = {
       return await message.author.send("Invalid target.")
     
     let targetPlayer = game.players[target-1]
-    if (!game.players[target-1].alive)
+    if (!targetPlayer.alive)
       return await message.author.send("You cannot jail an dead player.")
     if (target == gamePlayer.number)
       return await message.author.send("You cannot jail yourself.")
@@ -43,10 +45,15 @@ module.exports = {
       return await message.author.send("You cannot jail the President!")
     
     for (var i = 0; i < game.players.length; i++) game.players[i].jailed = false
-    game.players[target-1].jailed = true
-    game.players[target-1].protectors.push(gamePlayer.number)
-    message.author.send(`${client.emojis.find(e => e.name == "Jailer_Handcuffs")
-                        } You selected ${target} ${client.users.get(game.players[target-1].id).username} to be jailed.`)
+    targetPlayer.jailed = true
+    targetPlayer.protectors.push(gamePlayer.number)
+    message.author.send(
+      `${fn.getEmoji(
+        client, "Jailer Handcuffs"
+      )} You selected ${target} ${nicknames.get(
+        targetPlayer.id
+      )} to be jailed.`
+    )
     
     QuickGames[index] = game
     

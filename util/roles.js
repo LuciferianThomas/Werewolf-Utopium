@@ -392,7 +392,7 @@ let roles = {
     oneOnly: true
 	},
   "Serial Killer": {
-    desc: "Each night, stab one player with (`w!stab [player]`)." + // alias: w!kill
+    desc: "Each night, stab one player with (`w!stab [player]`)." +
           " You cannot be killed by the werewolves. You win if you are the last player alive.", 
     aura: "Unknown",
     team: "Solo",

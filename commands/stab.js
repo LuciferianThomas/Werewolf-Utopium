@@ -3,13 +3,14 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
-  name: "kill",
-  aliases: ["stab"],
+  name: "stab",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 

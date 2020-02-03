@@ -3,7 +3,8 @@ const moment = require("moment")
 
 const db = require("quick.db"),
       games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const { defaultPrefix, embedColor } = require('./config.js'),
       fn = require('./fn'),
@@ -77,14 +78,14 @@ const death = (client, game, number, suicide = false) => {
           `${avengingPlayer.role} Select`
         )} The ${avengingPlayer.role.toLowerCase()}'s death has been avenged, **${
           avengedPlayer.number
-        } ${fn.getUser(client, avengedPlayer.id).username}${
+        } ${nicknames.get(avengedPlayer.id)}${
           game.config.deathReveal
             ? ` ${fn.getEmoji(client, avengedPlayer.role)}`
             : ""
         }** is dead!`
       )
 
-      client.emit('death', game, avengedPlayer.number)
+      game = death(client, game, avengedPlayer.number)
     }
 
     // LOVE COUPLE SUICIDE
@@ -102,14 +103,14 @@ const death = (client, game, number, suicide = false) => {
           client, `Cupid Lovers`
         )} **${
           otherLover.number
-        } ${fn.getUser(client, otherLover.id).username}${
+        } ${nicknames.get(otherLover.id)}${
           game.config.deathReveal
             ? ` ${fn.getEmoji(client, otherLover.role)}`
             : ""
         }** lost the love of their life and has suicided!`
       )
 
-      client.emit('death', game, otherLover.number)
+      game = death(client, game, otherLover.number)
     }
 
     // SECT SUICIDE
@@ -128,14 +129,14 @@ const death = (client, game, number, suicide = false) => {
             client, `Sect Member`
           )} Sect Member **${
             sectMember.number
-          } ${fn.getUser(client, sectMember.id).username}${
+          } ${nicknames.get(sectMember.id)}${
             game.config.deathReveal
               ? ` ${fn.getEmoji(client, sectMember.role)}`
               : ""
           }** committed suicide!`
         )
 
-        client.emit('death', game, sectMember.number)
+        game = death(client, game, sectMember.number)
       }
     }
   }

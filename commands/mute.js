@@ -3,9 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "mute",
@@ -27,7 +29,7 @@ module.exports = {
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
     if (game.currentPhase == 0 || game.currentPhase % 3 != 0)
-      return await message.author.send("You can only select to mute a player now!")
+      return await message.author.send("You cannot select to mute a player now!")
     
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
@@ -48,7 +50,7 @@ module.exports = {
       `${
         fn.getEmoji(client, "Grumpy Grandma Mute")
       } You selected **${target} ${
-        client.users.get(game.players[target - 1].id).username
+        nicknames.get(game.players[target - 1].id)
       }** to be muted the next day.`
     )
     
