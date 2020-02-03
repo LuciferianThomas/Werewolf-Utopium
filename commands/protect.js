@@ -63,7 +63,7 @@ module.exports = {
       message.author.send(
         `${
           gamePlayer.role == "Doctor"
-            ? fn.emoji(client, "Doctor_Protect")
+            ? fn.getEmoji(client, "Doctor_Protect")
             : gamePlayer.role == "Witch"
             ? fn.getEmoji(client, "Witch Elixir")
             : fn.emoji(client, "Bodyguard_Shield")
