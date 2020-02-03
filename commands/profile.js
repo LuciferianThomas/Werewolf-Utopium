@@ -11,14 +11,14 @@ module.exports = {
   aliases: ["prof"],
   run: async (client, message, args) => {
     let target = message.author
-    if (args[0]) target = fn.getUser(client, args[0])
+    if (args[0]) target = nicknames.all().find(x => x.data.toLowerCase() == args[0].toLowerCase())fn.getUser(client, args[0])
     if (message.mentions.users.size) target = message.mentions.users.first()
     
     let player = players.get(target.id)
     
     return await message.channel.send(
       new Discord.RichEmbed()
-        .setAuthor(`User Profile | ${nicknames.get(target.id) || target.username}`)
+        .setAuthor(`User Profile | ${nicknames.get(target.id) || `\* ${target.username}`}`)
         .setThumbnail(target.displayAvatarURL)
         .addField("Games played", player.wins.length + player.loses.length, true)
         .addField("Coins", 0, true)

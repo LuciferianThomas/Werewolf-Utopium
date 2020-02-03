@@ -973,7 +973,7 @@ client.on('message', async message => {
        
       let m = await message.author.send(
         new Discord.RichEmbed()
-          .setTitle("Please choose a nickname to proceed.")
+          .setTitle("Please choose a username to proceed.")
           .setDescription("You have 1 minute to respond.")
       ).catch(() => {})
       if (!m) return await message.channel.send("I cannot DM you!")
@@ -984,14 +984,18 @@ client.on('message', async message => {
         if (!m) return await m.channel.send("Question timed out.")
         response = response.first()
         
-        let usedNicknames = nicknames.all().map(x => x.data)
+        let usedNicknames = nicknames.all().map(x => x.data.toLowerCase())
         
-        if (response.content.match(/^[a-z0-9\_]{4,14}$/i) && !usedNicknames.includes(response.content))
+        if (response.content.match(/^[a-z0-9\_]{4,14}$/i) && !usedNicknames.includes(response.content.toLowerCase()))
           input = response.content.replace(/_/g, "\\_")
+        else if (response.length > 14)
+          await message.channel.send("This username is too long!")
+        else if (!response.match(/^[a-z0-9\_]{4,14}$/i))
+          await message.channel.send("This username contains invalid characters! Only alphanumerical characters or underscores are accepted.")
         else if (usedNicknames.includes(response.content))
-          await message.channel.send("This nickname has been taken!")
+          await message.channel.send("This username has been taken!")
         else
-          await message.channel.send("Invalid nickname. Please try again.")
+          await message.channel.send("Invalid username. Please try again.")
       }
       
       nicknames.set(message.author.id, input)
