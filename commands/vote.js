@@ -30,7 +30,8 @@ module.exports = {
       if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" || 
           (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0)) {
         if (args[0].toLowerCase == "cancel") {
-          
+          gamePlayer.vote = null
+          return await message.author.send("You have withdrawn your vote.")
         }
         
         let vote = parseInt(args[0])
@@ -40,7 +41,7 @@ module.exports = {
           return await message.author.send("You cannot vote a fellow werewolf.")
         if (!game.players[vote-1].alive) 
           return await message.author.send("You cannot vote a dead player.")
-        game.players[gamePlayer.number-1].vote = vote
+        gamePlayer.vote = vote
         
         fn.broadcastTo(
           client,
@@ -74,6 +75,11 @@ module.exports = {
     }
     
     if (game.currentPhase % 3 == 2) {
+      if (args[0].toLowerCase == "cancel") {
+        gamePlayer.vote = null
+        return await message.author.send("You have withdrawn your vote.")
+      }
+      
       if (game.players.find(p => p.mute == gamePlayer.number))
         return await message.author.send("You cannot vote today!")
       
