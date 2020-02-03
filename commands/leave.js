@@ -2,7 +2,8 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require("/app/util/fn")
 
@@ -70,12 +71,12 @@ module.exports = {
         client, game.currentPhase == -1 ? game.players : game.players.filter(p => !p.left), 
         game.currentPhase == -1 ?
           new Discord.RichEmbed()
-            .setAuthor(`${message.author.username} left the game.`, message.author.displayAvatarURL)
+            .setAuthor(`${nicknames.get(message.author.id).replace(/\\_/g, "_")} left the game.`, message.author.displayAvatarURL)
             .addField(
               `Players [${game.players.length}]`,
-              game.players.map(p => client.users.get(p.id).username).join("\n")
+              game.players.map(p => nicknames.get(p.id)).join("\n")
             ) :
-          `**${gamePlayer.number} ${message.author.username}** left the game.`
+          `**${gamePlayer.number} ${nicknames.get(message.author.id)}** left the game.`
       )
   }
 }
