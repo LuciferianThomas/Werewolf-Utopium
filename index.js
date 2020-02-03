@@ -982,17 +982,17 @@ client.on('message', async message => {
       while (!input) {
         let response = await m.channel.awaitMessages(msg => msg.author.id == message.author.id, { max: 1, time: 60*1000, errors: ["time"] }).catch(() => {})
         if (!m) return await m.channel.send("Question timed out.")
-        response = response.first()
+        response = response.first().content
         
         let usedNicknames = nicknames.all().map(x => x.data.toLowerCase())
         
-        if (response.content.match(/^[a-z0-9\_]{4,14}$/i) && !usedNicknames.includes(response.content.toLowerCase()))
-          input = response.content.replace(/_/g, "\\_")
+        if (response.match(/^[a-z0-9\_]{4,14}$/i) && !usedNicknames.includes(response.toLowerCase()))
+          input = response.replace(/_/g, "\\_")
         else if (response.length > 14)
           await message.channel.send("This username is too long!")
         else if (!response.match(/^[a-z0-9\_]{4,14}$/i))
           await message.channel.send("This username contains invalid characters! Only alphanumerical characters or underscores are accepted.")
-        else if (usedNicknames.includes(response.content))
+        else if (usedNicknames.includes(response.toLowerCase()))
           await message.channel.send("This username has been taken!")
         else
           await message.channel.send("Invalid username. Please try again.")

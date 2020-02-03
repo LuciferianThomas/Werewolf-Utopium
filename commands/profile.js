@@ -11,7 +11,14 @@ module.exports = {
   aliases: ["prof"],
   run: async (client, message, args) => {
     let target = message.author
-    if (args[0]) target = nicknames.all().find(x => x.data.toLowerCase() == args[0].toLowerCase())fn.getUser(client, args[0])
+    if (args[0]) 
+      target = fn.getUser(
+        client, 
+        nicknames.all().find(x => JSON.parse(x.data).toLowerCase() == args[0].toLowerCase().replace(/_/g, "\\_")) ? 
+        nicknames.all().find(x => JSON.parse(x.data).toLowerCase() == args[0].toLowerCase().replace(/_/g, "\\_")).ID : args[0]
+      )
+    if (args[0] && !target)
+      return await message.channel.send(`<:red_tick:597374220267290624> User \`${args[0]}\` not found.`)
     if (message.mentions.users.size) target = message.mentions.users.first()
     
     let player = players.get(target.id)
