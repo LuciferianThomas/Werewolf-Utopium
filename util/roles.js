@@ -69,7 +69,7 @@ let roles = {
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
-    abbr: ["det","sherlock","holmes"],
+    abbr: ["det","sherlock","holmes","sherlock holmes"],
     cat : "Strong Villager"
   },
   "Doctor": {
@@ -156,7 +156,7 @@ let roles = {
           " You cannot be killed by werewolves unless there are 4 villagers or below.",
     aura: "Good",
     team: "Village",
-    abbr: ["trump","obama"],
+    abbr: ["trump"],
     oneOnly: true
   },
   "Priest": {
@@ -404,7 +404,7 @@ let roles = {
     			" However, players take one day to convert before turning to a zombie. You win if all alive players are converted into Zombies.",
     aura: "Unknown",
     team: "Zombies",
-    abbr: ["zomb", "zom", "zb"],
+    abbr: ["zomb", "zom", "zb", "zombert"],
     cat : "Killer"
   },
   
