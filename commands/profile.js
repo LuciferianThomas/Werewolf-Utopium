@@ -26,6 +26,9 @@ module.exports = {
     
     let player = players.get(target.id)
     
+    let allGamesPlayed = fn.clone(player.wins)
+    allGamesPlayed.push(...player.loses)
+    
     return await message.channel.send(
       new Discord.RichEmbed()
         .setAuthor(`User Profile | ${nicknames.get(target.id).replace(/\\_/g, "_") || `\* ${target.username}`}`)
@@ -40,9 +43,13 @@ module.exports = {
           `**Suicides:** ${player.suicides} (${Math.floor(player.suicides/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)`
         )
         .addField(
-          `**Wins as Village:** ${player.wins.filter(x => x.team == "Village").length} (${Math.floor(player.wins.filter(x => x.team == "Village").length/player.wins.length*100)/100})\n`+
-          `**Defeats as Village`,
-          {}
+          "Teams",
+          `**Wins as Village:** ${player.wins.filter(x => x.team == "Village").length} (${Math.floor(player.wins.filter(x => x.team == "Village").length/allGamesPlayed.filter(x => x.team == "Village").length*10000)/100}%)\n` +
+          `**Defeats as Village:** ${player.loses.filter(x => x.team == "Village").length} (${Math.floor(player.loses.filter(x => x.team == "Village").length/allGamesPlayed.filter(x => x.team == "Village").length*10000)/100}%)\n` +
+          `**Wins as Werewolves:** ${player.wins.filter(x => x.team == "Werewolves").length} (${Math.floor(player.wins.filter(x => x.team == "Werewolves").length/allGamesPlayed.filter(x => x.team == "Werewolves").length*10000)/100}%)\n` +
+          `**Defeats as Werewolves:** ${player.loses.filter(x => x.team == "Werewolves").length} (${Math.floor(player.loses.filter(x => x.team == "Werewolves").length/allGamesPlayed.filter(x => x.team == "Werewolves").length*10000)/100}%)\n` +
+          `**Wins as Solo:** ${player.wins.filter(x => x.team == "Solo").length} (${Math.floor(player.wins.filter(x => x.team == "Solo").length/allGamesPlayed.filter(x => x.team == "Solo").length*10000)/100}%)\n` +
+          `**Defeats as Solo:** ${player.loses.filter(x => x.team == "Solo").length} (${Math.floor(player.loses.filter(x => x.team == "Solo").length/allGamesPlayed.filter(x => x.team == "Solo").length*10000)/100}%)`
         )
     )
   }
