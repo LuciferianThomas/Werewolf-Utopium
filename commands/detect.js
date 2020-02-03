@@ -3,11 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const roles = require('/app/util/roles')
-
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "detect",
@@ -56,7 +56,7 @@ module.exports = {
         .setAuthor(`Detection Results`, fn.getEmoji(client, "Detective").url)
         .setThumbnail(fn.getEmoji(client, "Solo" !== roleA.team == roleB.team ? "Detective_Equal" : "Detective_NotEqual").url)
         .setDescription(
-          `**${targetA} ${fn.getUser(client, targetPlayerA.id).username}** and **${targetB} ${fn.getUser(client, targetPlayerB.id).username}**` +
+          `**${targetA} ${nicknames.get(targetPlayerA.id)}** and **${targetB} ${nicknames.get(targetPlayerB.id)}**` +
           ` belong to ${"Solo" !== roleA.team == roleB.team ? "the same team" : "different teams"}.`
         )
     )

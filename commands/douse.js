@@ -1,13 +1,13 @@
 const Discord = require("discord.js"),
-    	moment = require("moment") ,
-      db = require("quick.db") 
+      moment = require("moment"),
+      db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players") 
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const roles = require('/app/util/roles')
-
-const fn = require('/app/util/fn') 
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: 'douse', 
@@ -50,9 +50,9 @@ module.exports = {
     if (targetA == gamePlayer.number || targetB == gamePlayer.number)
       return await message.author.send("You cannot douse yourself.") 
     if (game.players[targetA-1].doused.includes(gamePlayer.number))
-      return await message.author.send(`You doused **${game.players[targetA-1]} ${fn.getUser(client, game.players[targetA-1]).username}** already!`) 
+      return await message.author.send(`You doused **${game.players[targetA-1]} ${nicknames.get(game.players[targetA-1])}** already!`) 
     if (game.players[targetB-1].doused.includes(gamePlayer.number))
-      return await message.author.send(`You doused **${game.players[targetB-1]} ${fn.getUser(client, game.players[targetB-1]).username}** already!`)
+      return await message.author.send(`You doused **${game.players[targetB-1]} ${nicknames.get(game.players[targetB-1])}** already!`)
     
     if (targetPlayerA.role == "President" || targetPlayerB.role == "President")
       return await message.author.send("You cannot douse the President!")
@@ -65,7 +65,7 @@ module.exports = {
       .setAuthor(`Doused Players`, fn.getEmoji(client, "Arsonist").url)
       .setThumnail(fn.getEmoji(client, "Arsonist_Doused").url)
       .setDescription(
-        `You have doused **${targetA} ${fn.getUser(client, targetPlayerA.id).username}** and **${targetA} ${fn.getUser(client, targetPlayerB.id).username}**!`
+        `You have doused **${targetA} ${nicknames.get(targetPlayerA.id)}** and **${targetA} ${nicknames.get(targetPlayerB.id)}**!`
       )
     )
 

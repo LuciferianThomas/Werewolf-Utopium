@@ -3,11 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const roles = require('/app/util/roles')
-
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "givecards",
@@ -51,7 +51,7 @@ module.exports = {
           continue;
         }
         if (gamePlayer.cards.includes(targetPlayer.number)) {
-          await message.author.send(`**${targetPlayer.number} ${fn.getUser(client, targetPlayer.id).username}** already has your card!`)
+          await message.author.send(`**${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** already has your card!`)
           continue;
         }
         

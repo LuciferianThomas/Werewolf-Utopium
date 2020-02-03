@@ -3,7 +3,8 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
@@ -45,8 +46,10 @@ module.exports = {
     
     gamePlayer.avenge = targetPlayer.number
     
-    message.author.send(`${fn.getEmoji(client, gamePlayer.role == "Avenger" ? "Avenger Select" : "Junior Werewolf Select")
-                        } You selected **${target} ${client.users.get(game.players[target-1].id).username}** to be avenged on when you die.`)
+    message.author.send(
+      `${fn.getEmoji(client, gamePlayer.role == "Avenger" ? "Avenger Select" : "Junior Werewolf Select")
+      } You selected **${target} ${nicknames.get(targetPlayer.id)}** to be avenged on when you die.`
+    )
     
     QuickGames[index] = game
     

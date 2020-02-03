@@ -76,13 +76,13 @@ client.on('ready', async () => {
                   client, game.players,
                   new Discord.RichEmbed()
                     .setAuthor(
-                      `${fn.getUser(client, leftPlayer).username} left the game.`,
+                      `${nicknames.get(leftPlayer)} left the game.`,
                       fn.getUser(client, leftPlayer).displayAvatarURL
                     )
                     .addField(
                       `Players [${game.players.length}]`,
                       game.players
-                        .map(p => fn.getUser(client, p.id).username)
+                        .map(p => nicknames.get(p.id))
                         .join("\n")
                     )
               )
@@ -145,7 +145,7 @@ client.on('ready', async () => {
             .addField(
               `Players`, 
               game.players.map(p => 
-                `${p.number} ${client.users.get(p.id).username}${p.alive ? "" : " <:Death:668750728650555402>"} ${
+                `${p.number} ${nicknames.get(p.id)}${p.alive ? "" : " <:Death:668750728650555402>"} ${
                 fn.getEmoji(client, p.role)}`
               ).join('\n')
             )
@@ -184,7 +184,7 @@ client.on('ready', async () => {
               game.lastDeath = game.currentPhase
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left), 
-                `**${lynched} ${client.users.get(lynchedPlayer.id).username}${
+                `**${lynched} ${nicknames.get(lynchedPlayer.id)}${
                   game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`
               )
 
@@ -197,7 +197,7 @@ client.on('ready', async () => {
                   new Discord.RichEmbed()
                     .setTitle("Game has ended.")
                     .setThumbnail(fn.getEmoji(client, "Fool").url)
-                    .setDescription(`Fool ${lynched} ${fn.getUser(client, lynchedPlayer.id).username} wins!`)
+                    .setDescription(`Fool ${lynched} ${nicknames.get(lynchedPlayer.id)} wins!`)
                 )
                 fn.addXP(game.players.filter(p => p.number == lynched), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
@@ -214,7 +214,7 @@ client.on('ready', async () => {
                   new Discord.RichEmbed()
                     .setTitle("Game has ended.")
                     .setThumbnail(fn.getEmoji(client, "Headhunter").url)
-                    .setDescription(`Headhunter **${headhunter.number} ${fn.getUser(client, headhunter.id).username}** wins!`)
+                    .setDescription(`Headhunter **${headhunter.number} ${nicknames.get(headhunter.id)}** wins!`)
                 )
                 fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
@@ -239,7 +239,7 @@ client.on('ready', async () => {
           for (var x = 0; x < revivedPlayers.length; x++){
             fn.broadcastTo(
               client, game.players.filter(p => !p.left).map(p => p.id),
-              `<:Medium_Revive:660667751253278730> Medium has revived **${revivedPlayers[x].number} ${fn.getUser(client, revivedPlayers[x].id).username}**.`
+              `<:Medium_Revive:660667751253278730> Medium has revived **${revivedPlayers[x].number} ${nicknames.get(revivedPlayers[x].id)}**.`
             )
             
             game.players[revivedPlayers[x].number-1].alive = true
@@ -284,7 +284,7 @@ client.on('ready', async () => {
             
             if (attackedPlayer.protectors.length) {
               fn.getUser(client, sk.id).send(
-                `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
+                `**${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** cannot be killed!`
               )
               for (var x of attackedPlayer.protectors) {
                 let protector = game.players[x-1]
@@ -328,7 +328,7 @@ client.on('ready', async () => {
                       )
                       .setDescription(
                         `You protected **${attackedPlayer.number} ${
-                          fn.getUser(client, attackedPlayer.id).username
+                          nicknames.get(attackedPlayer.id)
                         }** who was attacked by **${sk.number} ${
                           client.getUser(client, sk.id).username
                         } ${client.getEmoji(client, sk.role)}**.\n` +
@@ -341,7 +341,7 @@ client.on('ready', async () => {
                     new Discord.RichEmbed()
                       .setAuthor("Protection", fn.getEmoji("Doctor_Protection").url)
                       .setDescription(
-                        `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
+                        `Your protection saved **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** last night!`
                       )
                   )
                 }
@@ -420,7 +420,7 @@ client.on('ready', async () => {
               if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
-                `The serial killer stabbed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
+                `The serial killer stabbed **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}${
                   game.config.deathReveal
                     ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                     : ""
@@ -461,14 +461,14 @@ client.on('ready', async () => {
             if (["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role)) {
               fn.broadcastTo(
                 client, wolves,
-                `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
+                `**${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** cannot be killed!`
               )
             }
             else if (attackedPlayer.protectors.length) {
               if (!game.frenzy) {
                 fn.broadcastTo(
                   client, wolves,
-                  `**${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** cannot be killed!`
+                  `**${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** cannot be killed!`
                 )
               }
               else {
@@ -477,7 +477,7 @@ client.on('ready', async () => {
                 if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left).map(p => p.id),
-                  `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
+                  `The werewolves killed **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}${
                     game.config.deathReveal
                       ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                       : ""
@@ -498,7 +498,7 @@ client.on('ready', async () => {
                     client,
                     game.players.filter(p => !p.left),
                     `The Wolf Frenzy killed **${protector.number} ${
-                      fn.getUser(client, protector.id).username
+                      nicknames.get(protector.id)
                     }${
                       game.config.deathReveal
                         ? ` ${fn.getEmoji(client, protector.role)}`
@@ -549,7 +549,7 @@ client.on('ready', async () => {
                       )
                       .setDescription(
                         `You protected **${attackedPlayer.number} ${
-                          fn.getUser(client, attackedPlayer.id).username
+                          nicknames.get(attackedPlayer.id)
                         }** who was attacked by **${weakestWW.number} ${
                           client.getUser(client, weakestWW.id).username
                         } ${client.getEmoji(client, weakestWW.role)}**.\n` +
@@ -562,7 +562,7 @@ client.on('ready', async () => {
                     new Discord.RichEmbed()
                       .setAuthor("Protection", fn.getEmoji(client, "Doctor Protect").url)
                       .setDescription(
-                        `Your protection saved **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}** last night!`
+                        `Your protection saved **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** last night!`
                       )
                   )
                 }
@@ -606,7 +606,7 @@ client.on('ready', async () => {
               fn.broadcastTo(
                 client, wolves,
                 `**${attackedPlayer.number} ${
-                  fn.getUser(client, attackedPlayer.id).username
+                  nicknames.get(attackedPlayer.id)
                 }** is the <:Cursed:659724101258313768> Cursed and is turned into a <:Werewolf:658633322439639050> Werewolf!`
               )
             }
@@ -661,7 +661,7 @@ client.on('ready', async () => {
               if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
-                `The werewolves killed **${attackedPlayer.number} ${fn.getUser(client, attackedPlayer.id).username}${
+                `The werewolves killed **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}${
                   game.config.deathReveal
                     ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
                     : ""
@@ -703,7 +703,7 @@ client.on('ready', async () => {
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
               .setThumbnail(fn.getEmoji(client, "President").url) 
-              .setDescription(`The President **${president.number} ${client.users.get(president.id).username}** <:President:660497498430767104> was killed! All but the villagers have won!`)
+              .setDescription(`The President **${president.number} ${nicknames.get(president.id)}** <:President:660497498430767104> was killed! All but the villagers have won!`)
           )
           fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
           fn.addXP(game.players.filter(p => (roles[p.role].team == "Werewolves" || p.role == "Zombie") && !p.suicide), 75)
@@ -875,7 +875,7 @@ client.on('ready', async () => {
                     new Discord.RichEmbed()
                       .setTitle(`Jailed!`)
                       .setThumbnail(fn.getEmoji(client, "Jail").url)
-                      .setDescription(`Fellow Werewolf **${jailed.number} ${client.users.get(jailed.id).username}** is jailed!`)
+                      .setDescription(`Fellow Werewolf **${jailed.number} ${nicknames.get(jailed.id)}** is jailed!`)
                   )
 
                 fn.getUser(client, jailer.id).send(

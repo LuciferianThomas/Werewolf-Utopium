@@ -2,12 +2,12 @@ const Discord = require("discord.js"),
       moment = require("moment"),
       db = require("quick.db")
 
-const roles = require('/app/util/roles')
-
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "check",
@@ -53,7 +53,7 @@ module.exports = {
           .setAuthor(`Seeing Results`, fn.getEmoji(client, "Aura Seer").url)
           .setThumbnail(fn.getEmoji(client, `${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} Aura`).url)
           .setDescription(
-            `**${target} ${fn.getUser(client, targetPlayer.id).username}** has a${
+            `**${target} ${nicknames.get(targetPlayer.id)}** has a${
             (targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura) == "Good" ? "" : "n"
             } ${targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} aura.`
           )
@@ -65,7 +65,7 @@ module.exports = {
           .setAuthor(`Seeing Results`, fn.getEmoji(client, gamePlayer.role).url)
           .setThumbnail(fn.getEmoji(client, (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role)).url)
           .setDescription(
-            `**${target} ${fn.getUser(client, targetPlayer.id).username}** is a${
+            `**${target} ${nicknames.get(targetPlayer.id)}** is a${
               ["A", "E", "I", "O", "U"].includes(!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted && targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
             } ${!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
           )
@@ -74,7 +74,7 @@ module.exports = {
       if (gamePlayer.role == "Wolf Seer")
         fn.broadcastTo(
           client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer"),
-          `The wolf seer checked **${target} ${fn.getUser(client, targetPlayer.id).username} ${fn.getEmoji(client, targetPlayer.role)}**.`
+          `The wolf seer checked **${target} ${nicknames.get(targetPlayer.id)} ${fn.getEmoji(client, targetPlayer.role)}**.`
         )
     }
     gamePlayer.usedAbilityTonight = true

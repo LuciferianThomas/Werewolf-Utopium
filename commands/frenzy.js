@@ -3,10 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require('/app/util/fn'),
-      roles = require('/app/util/roles')
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "frenzy",
