@@ -986,11 +986,13 @@ client.on('message', async message => {
         
         let usedNicknames = nicknames.all().map(x => x.data.toLowerCase())
         
-        if (response.match(/^[a-z0-9\_]{4,14}$/i) && !usedNicknames.includes(response.toLowerCase()))
+        if (response.match(/^[a-z0-9\_]{3,14}$/i) && !usedNicknames.includes(response.toLowerCase()))
           input = response.replace(/_/g, "\\_")
         else if (response.length > 14)
           await message.channel.send("This username is too long!")
-        else if (!response.match(/^[a-z0-9\_]{4,14}$/i))
+        else if (response.length < 3)
+          await message.channel.send("This username is too short!")
+        else if (!response.match(/^[a-z0-9\_]{3,14}$/i))
           await message.channel.send("This username contains invalid characters! Only alphanumerical characters or underscores are accepted.")
         else if (usedNicknames.includes(response.toLowerCase()))
           await message.channel.send("This username has been taken!")

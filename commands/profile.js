@@ -11,7 +11,8 @@ module.exports = {
   aliases: ["prof"],
   run: async (client, message, args) => {
     let target = message.author
-    if (args[0]) 
+    if (message.mentions.users.size) target = message.mentions.users.first()
+    if (!target && args[0]) 
       target = fn.getUser(
         client, 
         nicknames.all().find(x => JSON.parse(x.data).toLowerCase() == args[0].toLowerCase().replace(/_/g, "\\_")) ? 
@@ -19,7 +20,8 @@ module.exports = {
       )
     if (args[0] && !target)
       return await message.channel.send(`<:red_tick:597374220267290624> User \`${args[0]}\` not found.`)
-    if (message.mentions.users.size) target = message.mentions.users.first()
+    if (!target)
+      return await message.channel.send(`<:red_tick:597374220267290624> Target not found.`)
     
     let player = players.get(target.id)
     
@@ -32,11 +34,10 @@ module.exports = {
         .addField("XP", player.xp, true)
         .addField(
           "Statistics",
-          `**Wins:** ${player.wins.length} (${})`
+          `**Wins:** ${player.wins.length} (${Math.floor(player.wins.length/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)\n` +
+          `**Defeats:** ${player.loses.length} (${Math.floor(player.loses.length/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)\n` +
+          `**Suicides:** ${player.suicides} (${Math.floor(player.suicides/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)`
         )
-        .addField("Wins", player.wins.length, true)
-        .addField("Loses", player.loses.length, true)
-        .addField("Suicides", player.suicides, true)
         // .addField(
         //   "Teams",
         //   {}
