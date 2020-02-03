@@ -40,7 +40,8 @@ module.exports = {
                     (gamePlayer.couple && p.couple)
                       ? ` ${fn.getEmoji(client, p.roleRevealed || p.role)}`
                       : roles[gamePlayer.role].team == "Werewolves" &&
-                        roles[p.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer"
+                        roles[p.role].team == "Werewolves" &&
+                        gamePlayer.role !== "Sorcerer" && p.role !== "Sorcerer"
                       ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
                       : ""
                   }${

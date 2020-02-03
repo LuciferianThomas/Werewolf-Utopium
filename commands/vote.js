@@ -3,7 +3,8 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
@@ -26,7 +27,7 @@ module.exports = {
       return await message.author.send("You cannot vote while in jail!")
     
     if (game.currentPhase % 3 == 0) {
-      if (roles[gamePlayer.role].team == "Werewolves" || 
+      if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" || 
           (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0)) {
         let vote = parseInt(args[0])
         if (isNaN(vote) || vote > game.players.length || vote < 1)
@@ -37,12 +38,29 @@ module.exports = {
           return await message.author.send("You cannot vote a dead player.")
         game.players[gamePlayer.number-1].vote = vote
         
-        let wolves = game.players.filter(p => p.role.toLowerCase().includes("wolf") && !p.jailed).map(p => p.id)
-        for (var i = 0; i < wolves.length; i++) 
-          client.users.get(wolves[i]).send(
-            `${gamePlayer.number} ${message.author.username}${gamePlayer.roleRevealed ? ` ${client.emojis.find(e => e.name == gamePlayer.role.replace(/ /g, "_"))}` : ""
-             } voted to kill ${vote} ${client.users.get(game.players[vote-1].id).username}${game.players[vote-1].roleRevealed ? ` ${client.emojis.find(e => e.name == game.players[vote-1].role.replace(/ /g, "_"))}` : ""}.`
-          )
+        fn.broadcastTo(
+          client,
+          game.players.filter(
+            p =>
+              roles[p.role].team == "Werewolves" &&
+              gamePlayer.role !== "Sorcerer" &&
+              !p.jailed &&
+              !p.left
+          ),
+          `${gamePlayer.number} ${nicknames.get(message.author.id)}${
+            gamePlayer.roleRevealed
+              ? ` ${client.emojis.find(
+                  e => e.name == gamePlayer.role.replace(/ /g, "_")
+                )}`
+              : ""
+          } voted to kill ${vote} ${nicknames.get(game.players[vote - 1].id)}${
+            game.players[vote - 1].roleRevealed
+              ? ` ${client.emojis.find(
+                  e => e.name == game.players[vote - 1].role.replace(/ /g, "_")
+                )}`
+              : ""
+          }.`
+        )
       } else 
         return await message.author.send("You cannot vote at night!")
     }
@@ -64,16 +82,15 @@ module.exports = {
         return await message.author.send("You cannot vote yourself.")
       game.players[gamePlayer.number-1].vote = vote
       fn.broadcastTo(
-        client,
-        game.players.filter(p => !p.left),
-        `**${gamePlayer.number} ${message.author.username}${
+        client, game.players.filter(p => !p.left),
+        `**${gamePlayer.number} ${nicknames.get(message.author.id)}${
           gamePlayer.roleRevealed
             ? ` ${client.emojis.find(
                 e => e.name == gamePlayer.role.replace(/ /g, "_")
               )}`
             : ""
         }** voted to lynch **${vote} ${
-          client.users.get(game.players[vote - 1].id).username
+          nicknames.get(game.players[vote - 1].id)
         }${
           game.players[vote - 1].roleRevealed
             ? ` ${client.emojis.find(

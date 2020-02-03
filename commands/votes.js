@@ -3,9 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "votes",
@@ -28,14 +30,14 @@ module.exports = {
           game.players.filter(p => p.alive)
             .map(
               p =>
-                `${p.number} ${fn.getUser(client, p.id).username}${
+                `${p.number} ${nicknames.get(p.id)}${
                   p.roleRevealed
                     ? ` ${fn.getEmoji(client, p.roleRevealed)}`
                     : ""
                 }${
                   p.vote
                     ? ` voted to lynch ${p.vote} ${
-                        client.users.get(game.players[p.vote - 1].id).username
+                        nicknames.get(game.players[p.vote - 1].id)
                       }`
                     : " did not vote"
                 }.`

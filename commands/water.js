@@ -3,7 +3,8 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
@@ -47,9 +48,9 @@ module.exports = {
         client,
         game.players.filter(p => !p.left),
         `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${
-          message.author.username
+          nicknames.get(message.author.id)
         }** has thrown holy water at and killed **${targetPlayer.number} ${
-          fn.getUser(client, targetPlayer.id).username
+          nicknames.get(targetPlayer.id)
         }${fn.getEmoji(
           client,
           game.config.deathReveal ? targetPlayer.role : "Fellow Werewolf"
@@ -64,9 +65,9 @@ module.exports = {
         client,
         game.players.filter(p => !p.left),
         `<:Priest_HolyWater:660491433253273630> Priest **${gamePlayer.number} ${
-          message.author.username
+          nicknames.get(message.author.id)
         }** tried to throw holy water on **${targetPlayer.number} ${
-          fn.getUser(client, targetPlayer.id).username
+          nicknames.get(targetPlayer.id)
         }** and killed themselves. They are not a werewolf!`
       )
       

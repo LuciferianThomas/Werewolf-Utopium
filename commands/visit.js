@@ -3,10 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require('/app/util/fn'),
-      roles = require('/app/util/roles')
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "visit",
@@ -42,6 +43,9 @@ module.exports = {
       return await message.author.send("You cannot visit yourself.")
     
     gamePlayer.usedAbilityTonight = targetPlayer.number
+    message.author.send(
+      `<:Red_Lady:660662479206088724> You decided to visit **${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** tonight.`
+    )
     
     QuickGames[index] = game
     

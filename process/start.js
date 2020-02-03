@@ -120,7 +120,8 @@ module.exports = async (client, game) => {
                     p.roleRevealed
                       ? ` ${fn.getEmoji(client, p.roleRevealed || p.role)}`
                       : roles[thisPlayer.role].team == "Werewolves" &&
-                        roles[p.role].team == "Werewolves" && thisPlayer.role !== "Sorcerer"
+                        roles[p.role].team == "Werewolves" &&
+                        thisPlayer.role !== "Sorcerer" && p.role !== "Sorcerer"
                       ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
                       : ""
                   }${p.left ? " *off*" : ""}${

@@ -3,7 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
+
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "start",
@@ -28,7 +32,11 @@ module.exports = {
       await message.author.send(`You have already voted to start.`)
     
     for (var i = 0; i < game.players.length; i++) {
-      await client.users.get(game.players[i].id).send(`**${message.author.username}** voted to start! (${votes.length}/${game.players.length})\nDo \`w!start\` if you want the game to start.`)
+      fn.broadcastTo(
+        client, game.players,
+        `**${nicknames.get(message.author.id)}** voted to start! (${votes.length}/${game.players.length})\n` +
+        "Do \`w!start\` if you want the game to start."
+      )
     }
     
     games.set("quick", QuickGames)
