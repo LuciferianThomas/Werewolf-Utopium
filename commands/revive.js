@@ -3,7 +3,8 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
@@ -54,7 +55,7 @@ module.exports = {
     
     message.author.send(
       `${fn.getEmoji(client, "Medium Revive")
-      } You selected **${target} ${fn.getUser(client, targetPlayer.id).username}** to be revived.`
+      } You selected **${target} ${nicknames.get(targetPlayer.id)}** to be revived.`
     )
     
     QuickGames[index] = game

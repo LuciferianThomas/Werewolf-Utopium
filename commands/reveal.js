@@ -47,9 +47,9 @@ module.exports = {
           .setThumbnail(fn.getEmoji(client, targetPlayer.role).url)
           .setDescription(
             `Pacifist revealed **${targetPlayer.number} ${nicknames.get(targetPlayer.id)}**. They are ${
-              ["Jailer", "President", "Cupid", "Sect Leader"].includes(targetPlayer.role)
+              roles[targetPlayer.role].oneOnly
                 ? "the"
-                : ["A","E","I","O","U"].includes(targetPlayer.role[0])
+                : /^([aeiou])/i.test(targetPlayer.role)
                 ? "an"
                 : "a"
             } ${gamePlayer.role}!\n` +
@@ -86,9 +86,6 @@ module.exports = {
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer reveal yourself.")
       
-      if (game.currentPhase % 3 == 0)
-        return await message.author.send("You cannot use the Fortune Teller's card at night!")
-      
       fn.broadcastTo(
         client, game.players.filter(p => !p.left),
         new Discord.RichEmbed()
@@ -99,9 +96,9 @@ module.exports = {
           .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
           .setDescription(
             `**${gamePlayer.number} ${nicknames.get(message.author.id)}** used the Fortune Teller's card. They are ${
-              ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
+              roles[gamePlayer.role].oneOnly
                 ? "the"
-                : ["A","E","I","O","U"].includes(gamePlayer.role[0])
+                : /^([aeiou])/i.test(gamePlayer.role)
                 ? "an"
                 : "a"
             } ${gamePlayer.role}!`

@@ -63,15 +63,25 @@ module.exports = {
       message.author.send(
         new Discord.RichEmbed()
           .setAuthor(`Seeing Results`, fn.getEmoji(client, gamePlayer.role).url)
-          .setThumbnail(fn.getEmoji(client, (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role)).url)
+          .setThumbnail(
+            fn.getEmoji(
+              client,
+              targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role
+            ).url
+          )
           .setDescription(
             `**${target} ${nicknames.get(targetPlayer.id)}** is ${
-            roles[targetPlayer.role].oneOnly
-              ? "the"
-              : /^([aeiou])/i.test(targetPlayer.role)
-              ? "an"
-              : "a"
-          } ${!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
+              roles[targetPlayer.role].oneOnly
+                ? "the"
+                : /^([aeiou])/i.test(targetPlayer.role)
+                ? "an"
+                : "a"
+            } ${
+              !["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) &&
+              targetPlayer.enchanted.length
+                ? "Wolf Shaman"
+                : targetPlayer.role
+            }.`
           )
       )
       

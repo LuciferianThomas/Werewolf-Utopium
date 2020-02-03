@@ -3,9 +3,10 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require("/app/util/fn"),
+const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
 
 module.exports = {
@@ -46,7 +47,7 @@ module.exports = {
     
     message.author.send(
       `<:Sect_Member:660825083245232159> You selected **${targetPlayer.number} ${
-      fn.getUser(client, targetPlayer.id).username}** to be turned into your sect!`
+      nicknames.get(targetPlayer.id)}** to be turned into your sect!`
     )
     
     QuickGames[index] = game

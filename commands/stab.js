@@ -47,7 +47,7 @@ module.exports = {
     game.players[gamePlayer.number-1].vote = target
     message.author.send(
       `<:Serial_Killer_Knife:660823278902050826> You selected to stab **${target} ${
-        fn.getUser(client, game.players[target - 1].id).username
+        nicknames.get(game.players[target - 1].id)
       }**.`
     )
     

@@ -2,7 +2,9 @@ const Discord = require("discord.js"),
       moment = require("moment"),
       db = require("quick.db")
 
-const games = new db.table("Games")
+const games = new db.table("Games"),
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require("/app/util/fn"),
       roles = require('/app/util/roles')
@@ -20,21 +22,6 @@ module.exports = async (client, game) => {
     let thisPlayer = game.players[i]
     let role = thisPlayer.role = gameRoles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     Object.assign(game.players[i], {alive: true, protectors: []})
-      
-    switch (thisPlayer.role) {
-      case "Bodyguard":
-        thisPlayer.health = 2; break;
-      case "Tough Guy":
-        thisPlayer.health = 1; break;
-      case "Medium":
-        thisPlayer.revUsed = false; break;
-      case "Jailer": case "Priest":
-        thisPlayer.bullets = 1; break;
-      case "Gunner": case "Marksman":
-        thisPlayer.bullets = 2; break;
-      case "Fortune Teller":
-        thisPlayer.cards = []
-    }
     
     if (thisPlayer.role.includes("Random")) {
       let rdmRoles = Object.values(roles).filter(
@@ -44,11 +31,33 @@ module.exports = async (client, game) => {
       )
       
       role = thisPlayer.role = rdmRoles[thisPlayer.role][Math.floor(Math.random()*rdmRoles[thisPlayer.role].length)]
+      
+      switch (role) {
+        case "Bodyguard":
+          thisPlayer.health = 2; break;
+        case "Tough Guy":
+          thisPlayer.health = 1; break;
+        case "Medium":
+          thisPlayer.revUsed = false; break;
+        case "Jailer": case "Priest":
+          thisPlayer.bullets = 1; break;
+        case "Gunner": case "Marksman":
+          thisPlayer.bullets = 2; break;
+        case "Fortune Teller":
+          thisPlayer.cards = []; break;
+      }
     }
     
     await client.users.get(thisPlayer.id).send(
       new Discord.RichEmbed()
-        .setThumbnail(fn.getEmoji(client, game.players[i].role).url)
+        .setTitle(
+          `You are Player #${thisPlayer.number}.`
+        )
+    )
+    
+    await client.users.get(thisPlayer.id).send(
+      new Discord.RichEmbed()
+        .setThumbnail(fn.getEmoji(client, thisPlayer.role).url)
         .setTitle(
           `You are ${
             roles[role].oneOnly
@@ -63,8 +72,6 @@ module.exports = async (client, game) => {
         )
     )
   }
-  
-  console.log(1)
   
   game.roles = game.players.map(p => p.role)
   game.lastDeath = 0
@@ -87,22 +94,64 @@ module.exports = async (client, game) => {
     await client.users.get(game.players.find(player => player.role == "Headhunter").id)
       .send(
         new Discord.RichEmbed()
-          .setAuthor(`Target`, client.emojis.find(e => e.name == "Headhunter_Target").url)
+          .setAuthor(`Target`, fn.getEmoji(client, "Headhunter Target").url)
           .setDescription(`Your target is ${target} ${client.users.get(game.players[target-1].id).username}.`)
       )
   }
   
-  console.log(2)
+  for (var i = 0; i < game.players.length; i++) {
+    let thisPlayer = game.players[i]
+    
+    await fn.getUser(client, thisPlayer.id).send(
+      new Discord.RichEmbed()
+        .setTitle(`Game #${game.gameID}`)
+        .addField(
+          `Players [${game.players.length}]`,
+          game.currentPhase == -1
+            ? game.players.map(p => nicknames.get(p.id)).join("\n")
+            : game.players.map(
+                p =>
+                  `${p.id == thisPlayer.id ? "**" : ""}${
+                    p.number
+                  } ${nicknames.get(p.id)}${
+                    p.alive ? "" : " <:Death:668750728650555402>"
+                  }${
+                    p.id == thisPlayer.id ||
+                    p.roleRevealed
+                      ? ` ${fn.getEmoji(client, p.roleRevealed || p.role)}`
+                      : roles[thisPlayer.role].team == "Werewolves" &&
+                        roles[p.role].team == "Werewolves" && thisPlayer.role !== "Sorcerer"
+                      ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
+                      : ""
+                  }${p.left ? " *off*" : ""}${
+                    p.id == thisPlayer.id ? "**" : ""
+                  }`
+              ).join("\n")
+        )
+        .addField(
+          `Roles`,
+          game.originalRoles
+            .sort((a, b) => {
+              if (a > b) return 1
+              if (a < b) return -1
+            })
+            .map(r => `${fn.getEmoji(client, r)} ${r}`)
+            .join("\n")
+        )
+    )
+  }
   
-  fn.broadcastTo(
+  await fn.broadcastTo(
     client, game.players.filter(p => !p.left),
-    "Night 1 has started."
+    new Discord.RichEmbed()
+      .setTitle("Night 1 has started.")
+      .setThumbnail(fn.getEmoji(client, "Night").url)
   )
   
   if (game.roles.includes("President")) {
     let president = game.players.find(p => p.role == "President")
     
-    fn.broadcastTo(
+    await fn.broadcastTo(
       client, game.players.filter(p => !p.left),
       new Discord.RichEmbed()
         .setTitle("President")
@@ -112,8 +161,6 @@ module.exports = async (client, game) => {
     
     president.roleRevealed = "President"
   }
-  
-  console.log(3)
   
   let thisGame = Games.find(g => g.gameID == game.gameID)
   Games[Games.indexOf(thisGame)] = game

@@ -1,12 +1,13 @@
-
 const Discord = require("discord.js"),
       moment = require("moment"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "shoot",
@@ -54,13 +55,13 @@ module.exports = {
     if (gamePlayer.role == "Gunner") {
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${message.author.username}** shot **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""}**.`)
+        `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${nicknames.get(message.author.id)}** shot **${target} ${nicknames.get(targetPlayer.id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""}**.`)
       gamePlayer.roleRevealed = gamePlayer.role
     }
     if (gamePlayer.role == "Jailer")
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id), 
-        `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
+        `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${nicknames.get(targetPlayer.id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
     
     if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
     game.players[gamePlayer.number-1].bullets -= 1
