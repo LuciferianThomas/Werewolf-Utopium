@@ -1,7 +1,8 @@
 const Discord = require("discord.js"),
       db = require("quick.db")
 
-const players = new db.table("Players")
+const players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
 const fn = require('/app/util/fn')
 
@@ -17,7 +18,7 @@ module.exports = {
     
     return await message.channel.send(
       new Discord.RichEmbed()
-        .setAuthor(`User Profile | ${target.tag}`)
+        .setAuthor(`User Profile | ${nicknames.get(target.id) || target.username}`)
         .setThumbnail(target.displayAvatarURL)
         .addField("Games played", player.wins.length + player.loses.length, true)
         .addField("Coins", 0, true)

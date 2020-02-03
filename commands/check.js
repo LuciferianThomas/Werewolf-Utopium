@@ -65,9 +65,13 @@ module.exports = {
           .setAuthor(`Seeing Results`, fn.getEmoji(client, gamePlayer.role).url)
           .setThumbnail(fn.getEmoji(client, (targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role)).url)
           .setDescription(
-            `**${target} ${nicknames.get(targetPlayer.id)}** is a${
-              ["A", "E", "I", "O", "U"].includes(!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted && targetPlayer.enchanted.length ? "W" : targetPlayer.role[0]) ? "n" : ""
-            } ${!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
+            `**${target} ${nicknames.get(targetPlayer.id)}** is ${
+            roles[targetPlayer.role].oneOnly
+              ? "the"
+              : /^([aeiou])/i.test(targetPlayer.role)
+              ? "an"
+              : "a"
+          } ${!["Wolf Seer", "Sorcerer"].includes(gamePlayer.role) && targetPlayer.enchanted.length ? "Wolf Shaman" : targetPlayer.role}.`
           )
       )
       

@@ -1,10 +1,13 @@
 const Discord = require("discord.js"),
       moment = require("moment"),
-      db = require("quick.db"),
-      games = new db.table("Games"),
-      players = new db.table("Players")
+      db = require("quick.db")
 
-const fn = require('/app/util/fn')
+const games = new db.table("Games"),
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
+
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 const quickGameRoles = [
   ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
@@ -54,7 +57,7 @@ module.exports = {
     let m = message.author.send(
       new Discord.RichEmbed()
         .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
-        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
+        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
     ).catch(async error => {
       await message.channel.send("**I cannot DM you!**\nPlease make sure you enabled Direct Messages on at least one server the bot is on.")
       return undefined
@@ -62,10 +65,10 @@ module.exports = {
     if (!m) return undefined
     
     fn.broadcastTo(
-      client, currentGame.players,
+      client, currentGame.players.filter(p => p.id !== message.author.id),
       new Discord.RichEmbed()
-        .setAuthor(`${message.author.username} joined the game.`, message.author.displayAvatarURL)         
-        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => client.users.get(player.id).username).join("\n"))
+        .setAuthor(`${nicknames.get(message.author.id)} joined the game.`, message.author.displayAvatarURL)         
+        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
     )
       
     if (currentGame.players.length == 16) require('/app/process/start')(client, currentGame)

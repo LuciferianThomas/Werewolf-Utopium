@@ -3,9 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "reveal",
@@ -42,12 +44,12 @@ module.exports = {
         client, game.players.filter(p => !p.left),
         new Discord.RichEmbed()
           .setAuthor("Peace For Today", fn.getEmoji(client, "Pacifist Reveal").url)
-          .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
+          .setThumbnail(fn.getEmoji(client, targetPlayer.role).url)
           .setDescription(
-            `Pacifist revealed **${gamePlayer.number} ${message.author.username}**. They are ${
-              ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
+            `Pacifist revealed **${targetPlayer.number} ${nicknames.get(targetPlayer.id)}**. They are ${
+              ["Jailer", "President", "Cupid", "Sect Leader"].includes(targetPlayer.role)
                 ? "the"
-                : ["A","E","I","O","U"].includes(gamePlayer.role[0])
+                : ["A","E","I","O","U"].includes(targetPlayer.role[0])
                 ? "an"
                 : "a"
             } ${gamePlayer.role}!\n` +
@@ -73,9 +75,9 @@ module.exports = {
       fn.broadcastTo(
         client, game.players.filter(p => !p.left), 
         new Discord.RichEmbed()
-          .setTitle(`The Honorable ${message.author.username}`)
+          .setTitle(`The Honorable ${nicknames.get(message.author.id)}`)
           .setThumbnail(fn.getEmoji(client, "Mayor Reveal").url)
-          .setDescription(`**${gamePlayer.number} ${message.author.username}** revealed themselves as Mayor!`)
+          .setDescription(`**${gamePlayer.number} ${nicknames.get(message.author.id)}** revealed themselves as Mayor!`)
       )
     
       gamePlayer.roleRevealed = "Mayor"
@@ -96,7 +98,7 @@ module.exports = {
           )
           .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
           .setDescription(
-            `**${gamePlayer.number} ${message.author.username}** used the Fortune Teller's card. They are ${
+            `**${gamePlayer.number} ${nicknames.get(message.author.id)}** used the Fortune Teller's card. They are ${
               ["Jailer", "President", "Cupid", "Sect Leader"].includes(gamePlayer.role)
                 ? "the"
                 : ["A","E","I","O","U"].includes(gamePlayer.role[0])

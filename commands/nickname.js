@@ -38,7 +38,7 @@ module.exports = {
         response.content.match(/^[a-z0-9\_]{4,14}$/i) &&
         !usedNicknames.includes(response.content)
       )
-        input = response.content
+        input = response.content.replace(/_/g, "\\_")
       else if (usedNicknames.includes(response.content))
         await message.channel.send("This nickname has been taken!")
       else await message.channel.send("Invalid nickname. Please try again.")

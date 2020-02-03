@@ -3,9 +3,11 @@ const Discord = require("discord.js"),
       db = require("quick.db")
 
 const games = new db.table("Games"),
-      players = new db.table("Players")
+      players = new db.table("Players"),
+      nicknames = new db.table("Nicknames")
 
-const fn = require('/app/util/fn')
+const fn = require('/app/util/fn'),
+      roles = require("/app/util/roles")
 
 module.exports = {
   name: "poison",
@@ -49,7 +51,7 @@ module.exports = {
     
     fn.broadcastTo(
       client, game.players.filter(p => !p.left).map(p => p.id), 
-      `<:Witch_Poison:660667541185626112> Witch poisoned **${target} ${fn.getUser(client, targetPlayer.id).username}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
+      `<:Witch_Poison:660667541185626112> Witch poisoned **${target} ${nicknames.get(targetPlayer.id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
     
     if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
     gamePlayer.poisonUsed = true
