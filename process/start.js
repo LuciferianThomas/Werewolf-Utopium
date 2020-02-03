@@ -16,20 +16,11 @@ module.exports = async (client, game) => {
     
   game.originalRoles.splice(game.players.length)
   let gameRoles = fn.clone(game.originalRoles)
-
-  for (var i = 0; i < game.originalRoles.length; i++)
-    [
-      gameRoles[i],
-      gameRoles[Math.floor(Math.random() * game.originalRoles.length)]
-    ] = [
-      gameRoles[Math.floor(Math.random() * game.originalRoles.length)],
-      gameRoles[i]
-    ]
   
   for (var i = 0; i < game.players.length; i++) {
     game.players[i].number = i+1
     let thisPlayer = game.players[i]
-    let role = thisPlayer.role = gameRoles[i]
+    let role = thisPlayer.role = gameRoles.splice(Math.floor(Math.random() * (game.players.length-i)), 1)[0]
     Object.assign(game.players[i], {alive: true, protectors: []})
     
     if (thisPlayer.role.includes("Random")) {
