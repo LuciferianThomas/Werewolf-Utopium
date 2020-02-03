@@ -1040,10 +1040,10 @@ client.on('message', async message => {
   //  if (!roles[role].abbr.length) continue;
   //  content = content.replace(new RegExp(`\\b(${roles[role].abbr.join("|")})\\b`, 'gi'), `$1 (${role})`)
   //}
-  let abbrList = require('/app/util/abbr')
-  for (var [full, abbrs] of Object.entries(abbrList)) {
-    content = content.replace(new RegExp(`\\b(${abbrs.join("|")})\\b`, 'gi'), `$1 (${full})`)
-  }
+  // let abbrList = require('/app/util/abbr')
+  // for (var [full, abbrs] of Object.entries(abbrList)) {
+  //   content = content.replace(new RegExp(`\\b(${abbrs.join("|")})\\b`, 'gi'), `$1 (${full})`)
+  // }
   
   if (game.currentPhase == -1)
     return fn.broadcast(client, game, `**${nicknames.get(message.author.id)}**: ${content}`, [message.author.id])

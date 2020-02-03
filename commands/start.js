@@ -30,14 +30,11 @@ module.exports = {
       QuickGames[QuickGames.indexOf(game)].startVotes.push(message.author.id)
     else
       await message.author.send(`You have already voted to start.`)
-    
-    for (var i = 0; i < game.players.length; i++) {
-      fn.broadcastTo(
-        client, game.players,
-        `**${nicknames.get(message.author.id)}** voted to start! (${votes.length}/${game.players.length})\n` +
-        "Do \`w!start\` if you want the game to start."
-      )
-    }
+    fn.broadcastTo(
+      client, game.players,
+      `**${nicknames.get(message.author.id)}** voted to start! (${votes.length}/${game.players.length})\n` +
+      "Do \`w!start\` if you want the game to start."
+    )
     
     games.set("quick", QuickGames)
     

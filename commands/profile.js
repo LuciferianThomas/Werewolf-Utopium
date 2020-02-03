@@ -12,6 +12,9 @@ module.exports = {
   run: async (client, message, args) => {
     let target = message.author
     if (message.mentions.users.size) target = message.mentions.users.first()
+    
+    console.log(nicknames.all().find(x => JSON.parse(x.data).toLowerCase() == args[0].toLowerCase().replace(/_/g, "\\_")) ? 
+        nicknames.all().find(x => JSON.parse(x.data).toLowerCase() == args[0].toLowerCase().replace(/_/g, "\\_")).ID : args[0])
     if (!target && args[0]) 
       target = fn.getUser(
         client, 
