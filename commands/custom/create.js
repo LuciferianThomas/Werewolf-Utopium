@@ -168,8 +168,10 @@ module.exports = {
           .setColor("RED")
           .setTitle("Prompt timed out.")
       )
-    reactions = reactions.first()
-    
+    let rection = reactions.first().emoji
+    if (rection.id == fn.getEmoji(client, "red_tick").id) {
+      
+    }
     
     fn.broadcastTo(
       client, currentGame.players.filter(p => p.id !== message.author.id),
