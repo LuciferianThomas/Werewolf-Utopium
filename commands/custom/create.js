@@ -170,7 +170,39 @@ module.exports = {
       )
     let rection = reactions.first().emoji
     if (rection.id == fn.getEmoji(client, "red_tick").id) {
-      
+      // SETUP TIME
+      let timeSuccess = false
+      while (!timeSuccess) {
+        let timePrompt = await message.author.send(
+          new Discord.RichEmbed()
+            .setTitle("Custom Game Setup")
+            .setDescription(
+              `Select the length of night, day and voting periods.\n` +
+              `Input as \`night day voting\` (default: \`45 60 45\`)`
+            )
+        )
+
+        let timeInput = timePrompt.channel
+          .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
+          .catch(() => {})
+        if (!timeInput)
+          return await message.author.send(
+            new Discord.RichEmbed()
+              .setColor("RED")
+              .setTitle("Prompt timed out.")
+          )
+        timeInput = timeInput.first().content.split()
+        if (isNaN(parseInt(timeInput[0])) || isNaN(parseInt(timeInput[1])) || isNaN(parseInt(timeInput[2])) ||
+            timeInput[0] > 120 || timeInput[1] > 120 || timeInput[2] > 120 ||
+            timeInput[0] < 1 || timeInput[1] < 1 || timeInput[2] < 1) {
+          return await message.author.send(
+            new Discord.RichEmbed()
+              .setColor("RED")
+              .setTitle("Prompt timed out.")
+          )
+        }
+        [currentGame.config.nightTime, currentGame.config.dayTime, currentGame.config.votingTime] = timeInput
+      }
     }
     
     fn.broadcastTo(
