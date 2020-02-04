@@ -168,8 +168,8 @@ module.exports = {
           .setColor("RED")
           .setTitle("Prompt timed out.")
       )
-    let rection = reactions.first().emoji
-    if (rection.id == fn.getEmoji(client, "red_tick").id) {
+    let reaction = reactions.first().emoji
+    if (reaction.id == fn.getEmoji(client, "red_tick").id) {
       // SETUP TIME
       let timeSuccess = false
       while (!timeSuccess) {
@@ -178,7 +178,8 @@ module.exports = {
             .setTitle("Custom Game Setup")
             .setDescription(
               `Select the length of night, day and voting periods.\n` +
-              `Input as \`night day voting\` (default: \`45 60 45\`)`
+              `Maxiumum of each period is 120 seconds and minimum is 1 second.\n` +
+              `Input as \`night day voting\` in seconds. (default: \`45 60 45\`)`
             )
         )
 
@@ -195,15 +196,58 @@ module.exports = {
         if (isNaN(parseInt(timeInput[0])) || isNaN(parseInt(timeInput[1])) || isNaN(parseInt(timeInput[2])) ||
             timeInput[0] > 120 || timeInput[1] > 120 || timeInput[2] > 120 ||
             timeInput[0] < 1 || timeInput[1] < 1 || timeInput[2] < 1) {
+          await message.author.send(
+            new Discord.RichEmbed()
+              .setColor("RED")
+              .setTitle("Invalid input.")
+          )
+          continue;
+        }
+        [currentGame.config.nightTime, currentGame.config.dayTime, currentGame.config.votingTime] = timeInput
+        timeSuccess = true
+      }
+      
+      // SETUP TIME
+      let revealSuccess = false
+      while (!revealSuccess) {
+        let revealPrompt = await message.author.send(
+          new Discord.RichEmbed()
+            .setTitle("Custom Game Setup")
+            .setDescription(
+              `Select the length of night, day and voting periods.\n` +
+              `Maxiumum of each period is 120 seconds and minimum is 1 second.\n` +
+              `Input as \`night day voting\` in seconds. (default: \`45 60 45\`)`
+            )
+        )
+        
+        await revealPrompt.react(fn.getEmoji(client, 'green tick'))
+        await revealPrompt.react(fn.getEmoji(client, 'red tick'))
+        let rReactions = revealPrompt.awaitReaction(
+          (r, u) =>
+            (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
+              r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
+            u.id == message.author.id,
+          { time: 30*1000, max: 1, errors: ['time'] }
+        ).catch(() => {})
+        if (!rReactions)
           return await message.author.send(
             new Discord.RichEmbed()
               .setColor("RED")
               .setTitle("Prompt timed out.")
           )
-        }
-        [currentGame.config.nightTime, currentGame.config.dayTime, currentGame.config.votingTime] = timeInput
+        let rReaction = rReactions.first().emoji
+        if (rReaction.emoji.id == fn.getEmoji(client, "green_tick").id) currentGame.config.deathReveal = true
+        else currentGame.config.deathReveal = false
       }
     }
+    
+    await message.author.send(
+      new Discord.RichEmbed()
+        .setTitle('Created new Custom Game!')
+        .setDescription(
+          `**Lobby Name:** ${currentGame.name}`
+        )
+    )
     
     fn.broadcastTo(
       client, currentGame.players.filter(p => p.id !== message.author.id),
