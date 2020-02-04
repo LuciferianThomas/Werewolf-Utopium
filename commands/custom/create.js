@@ -147,12 +147,29 @@ module.exports = {
     }
     
     let settingsPrompt = await message.author.send(
+      new Discord.RichEmbed()
+        .setTitle("Custom Game Setup")
+        .setDescription(
+          `Use default settings?`
+        )
+    )
+    await settingsPrompt.react(fn.getEmoji(client, 'green tick'))
+    await settingsPrompt.react(fn.getEmoji(client, 'red tick'))
+    let reactions = settingsPrompt.awaitReaction(
+      (r, u) =>
+        (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
+          r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
+        u.id == message.author.id,
+      { time: 30*1000, max: 1, errors: ['time'] }
+    ).catch(() => {})
+    if (!reactions)
+      return await message.author.send(
         new Discord.RichEmbed()
-          .setTitle("Custom Game Setup")
-          .setDescription(
-            `Use default settings?`
-          )
+          .setColor("RED")
+          .setTitle("Prompt timed out.")
       )
+    reactions = reactions.first()
+    
     
     fn.broadcastTo(
       client, currentGame.players.filter(p => p.id !== message.author.id),
