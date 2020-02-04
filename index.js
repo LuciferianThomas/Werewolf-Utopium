@@ -209,7 +209,7 @@ client.on('ready', async () => {
                 )
                 fn.addXP(game.players.filter(p => p.number == lynched), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
-                fn.addWin(game, lynched, "Solo")
+                fn.addWin(game, [lynched], "Solo")
                 continue;
               }
               if (lynchedPlayer.headhunter) {
