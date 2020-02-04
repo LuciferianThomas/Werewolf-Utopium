@@ -91,7 +91,7 @@ module.exports = async (client, game) => {
       possibleTargets = game.players.filter(p => !p.headhunter).map(p => p.number)
     let target = possibleTargets[Math.floor(Math.random()*possibleTargets.length)]
     game.players[target-1].headhunter = headhunters[i].number
-    await client.users.get(game.players.find(player => player.role == "Headhunter").id)
+    await fn.getUser(client, headhunters[i].id)
       .send(
         new Discord.RichEmbed()
           .setAuthor(`Target`, fn.getEmoji(client, "Headhunter Target").url)
@@ -102,9 +102,9 @@ module.exports = async (client, game) => {
   for (var i = 0; i < game.players.length; i++) {
     let thisPlayer = game.players[i]
     
-    await fn.getUser(client, thisPlayer.id).send(
+    fn.getUser(client, thisPlayer.id).send(
       new Discord.RichEmbed()
-        .setTitle(`Game #${game.gameID}`)
+        .setTitle(game.mode == 'custom' ? game.name : `Game #${game.gameID}`)
         .addField(
           `Players [${game.players.length}]`,
           game.currentPhase == -1

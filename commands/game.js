@@ -60,10 +60,10 @@ module.exports = {
         .addField(
           `Roles`,
           game.originalRoles
-            .sort((a, b) => {
-              if (a > b) return 1
-              if (a < b) return -1
-            })
+            // .sort((a, b) => {
+            //   if (a > b) return 1
+            //   if (a < b) return -1
+            // })
             .map(r => `${fn.getEmoji(client, r)} ${r}`)
             .join("\n")
         )

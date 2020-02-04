@@ -91,10 +91,6 @@ module.exports = {
         .setTitle("Custom Game Setup")
         .setDescription(
           currentGame.originalRoles
-            .sort((a, b) => {
-              if (a > b) return 1
-              if (a < b) return -1
-            })
             .map(r => `${fn.getEmoji(client, r)} ${r}`).join('\n')
         )
     )
