@@ -14,7 +14,7 @@ module.exports = {
   aliases: ["cc"],
   run: async (client, message, args, shared) => {
     // if (!players.get(`${message.author.id}.custom`))
-    if (client.guilds.get('522638136635817986').members.get(message.author.id).roles.find(r => r.name == 'ww cc'))
+    if (!client.guilds.get('522638136635817986').members.get(message.author.id).roles.find(r => r.name == 'ww cc'))
       return await message.author.send("You cannot create custom games!")
     
     if (players.get(`${message.author.id}.currentGame`)) 
@@ -52,7 +52,7 @@ module.exports = {
     )
     
     for (var i = 0; i < 16; i++) {
-      let inputRole = rolePrompt.channel
+      let inputRole = await rolePrompt.channel
         .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
         .catch(() => {})
       
@@ -90,7 +90,7 @@ module.exports = {
           )
       )
       
-      let gcInput = gcPrompt.channel
+      let gcInput = await gcPrompt.channel
         .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
         .catch(() => {})
       if (!gcInput)
@@ -126,7 +126,7 @@ module.exports = {
           )
       )
       
-      let nameInput = namePrompt.channel
+      let nameInput = await namePrompt.channel
         .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
         .catch(() => {})
       if (!nameInput)
@@ -184,7 +184,7 @@ module.exports = {
             )
         )
 
-        let timeInput = timePrompt.channel
+        let timeInput = await timePrompt.channel
           .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
           .catch(() => {})
         if (!timeInput)
