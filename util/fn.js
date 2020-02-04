@@ -222,27 +222,27 @@ const death = (client, game, number, suicide = false) => {
         && !deadPlayer.avenged && !deadPlayer.suicide) {
       let avengingPlayer = deadPlayer
       let avengedPlayer = game.players[avengingPlayer.avenge-1]
-      if (!avengedPlayer.alive) return undefined
+      if (avengedPlayer  && avengedPlayer.alive) {
+        avengedPlayer.alive = false
+        if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
 
-      avengedPlayer.alive = false
-      if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
-
-      broadcastTo(
-        client,
-        game.players.filter(p => !p.left),
-        `${getEmoji(
+        broadcastTo(
           client,
-          `${avengingPlayer.role} Select`
-        )} The ${avengingPlayer.role.toLowerCase()}'s death has been avenged, **${
-          avengedPlayer.number
-        } ${nicknames.get(avengedPlayer.id)}${
-          game.config.deathReveal
-            ? ` ${getEmoji(client, avengedPlayer.role)}`
-            : ""
-        }** is dead!`
-      )
+          game.players.filter(p => !p.left),
+          `${getEmoji(
+            client,
+            `${avengingPlayer.role} Select`
+          )} The ${avengingPlayer.role.toLowerCase()}'s death has been avenged, **${
+            avengedPlayer.number
+          } ${nicknames.get(avengedPlayer.id)}${
+            game.config.deathReveal
+              ? ` ${getEmoji(client, avengedPlayer.role)}`
+              : ""
+          }** is dead!`
+        )
 
-      game = death(client, game, avengedPlayer.number)
+        game = death(client, game, avengedPlayer.number)
+      }
     }
 
     // LOVE COUPLE SUICIDE
