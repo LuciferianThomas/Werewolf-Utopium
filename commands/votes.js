@@ -30,15 +30,15 @@ module.exports = {
           game.players.filter(p => p.alive)
             .map(
               p =>
-                `${p.number} ${nicknames.get(p.id)}${
+                `**${p.number} ${nicknames.get(p.id)}${
                   p.roleRevealed
                     ? ` ${fn.getEmoji(client, p.roleRevealed)}`
                     : ""
-                }${
+                }**${
                   p.vote
-                    ? ` voted to lynch ${p.vote} ${
+                    ? ` voted to lynch **${p.vote} ${
                         nicknames.get(game.players[p.vote - 1].id)
-                      }`
+                      }**`
                     : " did not vote"
                 }.`
             )

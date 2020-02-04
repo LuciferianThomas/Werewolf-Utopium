@@ -226,7 +226,7 @@ client.on('ready', async () => {
                 )
                 fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
                 fn.addXP(game.players.filter(p => !p.left), 15)
-                fn.addWin(game, headhunter.number, "Solo")
+                fn.addWin(game, [headhunter.number], "Solo")
                 continue;
                 }
               }
