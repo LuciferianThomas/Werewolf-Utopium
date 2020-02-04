@@ -90,7 +90,12 @@ module.exports = {
       new Discord.RichEmbed()
         .setTitle("Custom Game Setup")
         .setDescription(
-          currentGame.originalRoles.map(r => `${fn.getEmoji(client, r)} ${r}`).join('\n')
+          currentGame.originalRoles
+            .sort((a, b) => {
+              if (a > b) return 1
+              if (a < b) return -1
+            })
+            .map(r => `${fn.getEmoji(client, r)} ${r}`).join('\n')
         )
     )
     
@@ -169,7 +174,7 @@ module.exports = {
     )
     await settingsPrompt.react(fn.getEmoji(client, 'green tick'))
     await settingsPrompt.react(fn.getEmoji(client, 'red tick'))
-    let reactions = settingsPrompt.awaitReaction(
+    let reactions = await settingsPrompt.awaitReaction(
       (r, u) =>
         (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
           r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
@@ -236,7 +241,7 @@ module.exports = {
         
         await revealPrompt.react(fn.getEmoji(client, 'green tick'))
         await revealPrompt.react(fn.getEmoji(client, 'red tick'))
-        let rReactions = revealPrompt.awaitReaction(
+        let rReactions = await revealPrompt.awaitReaction(
           (r, u) =>
             (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
               r.emoji.id == fn.getEmoji(client, "red_tick").id) &&

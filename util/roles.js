@@ -198,7 +198,7 @@ let roles = {
     			" If that player is killed, you will get 2 suspects. One is the real killer of that player while the other is random.",
     aura: "Good",
     team: "Village",
-    abbr: ["sher", "cowboy"], 
+    abbr: ["sher", "woody", "cowboy"], 
     cat : "Regular Villager"
   }, 
   "Spirit Seer": {
