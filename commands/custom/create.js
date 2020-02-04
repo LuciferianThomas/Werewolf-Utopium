@@ -62,11 +62,19 @@ module.exports = {
             .setColor("RED")
             .setTitle("Prompt timed out.")
         )
-      else if (!inputRole || inputRole.first().content.toLowerCase() == "end")
+      else if (!inputRole || (inputRole.first().content.toLowerCase() == "end" && i >= 4))
         break;
+      else if (inputRole.first().content.toLowerCase() == "end" && i < 4) {
+        return await message.author.send(
+          new Discord.RichEmbed()
+            .setColor("RED")
+            .setTitle("You cannot create a game with less than 4 roles!")
+        )
+      }
       inputRole = inputRole.first().content.replace(/(_|\s+)/g, " ")
       
-      let role = Object.values(roles).find((data) => data.name.toLowerCase().startsWith(inputRole.toLowerCase()) || (data.abbr && data.abbr.startsWith(inputRole.toLowerCase())))
+      let role = Object.values(roles).find((data) => data.name.toLowerCase().startsWith(inputRole.toLowerCase()) || (data.abbr && data.abbr.includes(inputRole.toLowerCase())))
+      console.log(role)
       if (!role) {
         await message.author.send("Unknown role.")
         i--; continue;
@@ -140,11 +148,11 @@ module.exports = {
       if (nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3-30}$/i))
         currentGame.name = nameInput
       else if (nameInput.length < 3)
-        await namePrompt.channel.send("Your game number must be at least 3 characters long.")
+        await namePrompt.channel.send("Your game name must be at least 3 characters long.")
       else if (nameInput.length > 30)
-        await namePrompt.channel.send("Your game number must be at most 30 characters long.")
+        await namePrompt.channel.send("Your game name must be at most 30 characters long.")
       else if (!nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3-30}$/i))
-        await namePrompt.channel.send("Your game number must only include alphanumerical characters and underscores.")
+        await namePrompt.channel.send("Your game name must only include alphanumerical characters and underscores.")
     }
     
     let settingsPrompt = await message.author.send(
