@@ -240,7 +240,14 @@ client.on('ready', async () => {
         else if (game.currentPhase % 3 == 2) game.noVoting = false
         
         game.currentPhase += 1
-        game.nextPhase = moment().add(game.currentPhase % 3 == 1 ? 60 : 45, 's')
+        game.nextPhase = moment().add(
+          game.currentPhase % 3 == 0
+            ? game.config.nightTime || 45
+            : game.currentPhase % 3 == 1
+            ? game.config.dayTime || 60
+            : game.config.votingTime || 45,
+          's'
+        )
         
         if (game.currentPhase % 3 == 1)  {
           let revivedPlayers = game.players.filter(p => p.revive && p.revive.length)

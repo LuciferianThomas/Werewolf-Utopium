@@ -174,7 +174,7 @@ module.exports = {
     )
     await settingsPrompt.react(fn.getEmoji(client, 'green tick'))
     await settingsPrompt.react(fn.getEmoji(client, 'red tick'))
-    let reactions = await settingsPrompt.awaitReaction(
+    let reactions = await settingsPrompt.awaitReactions(
       (r, u) =>
         (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
           r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
@@ -211,8 +211,9 @@ module.exports = {
               .setColor("RED")
               .setTitle("Prompt timed out.")
           )
-        timeInput = timeInput.first().content.split()
-        if (isNaN(parseInt(timeInput[0])) || isNaN(parseInt(timeInput[1])) || isNaN(parseInt(timeInput[2])) ||
+        timeInput = timeInput.first().content.split(' ')
+        timeInput = [parseInt(timeInput[0]),parseInt(timeInput[1]),parseInt(timeInput[2])]
+        if (timeInput.length < 3 || isNaN(timeInput[0]) || isNaN(timeInput[1]) || isNaN(timeInput[2]) ||
             timeInput[0] > 120 || timeInput[1] > 120 || timeInput[2] > 120 ||
             timeInput[0] < 1 || timeInput[1] < 1 || timeInput[2] < 1) {
           await message.author.send(
@@ -233,15 +234,13 @@ module.exports = {
           new Discord.RichEmbed()
             .setTitle("Custom Game Setup")
             .setDescription(
-              `Select the length of night, day and voting periods.\n` +
-              `Maxiumum of each period is 120 seconds and minimum is 1 second.\n` +
-              `Input as \`night day voting\` in seconds. (default: \`45 60 45\`)`
+              `Reveal roles on death?`
             )
         )
         
         await revealPrompt.react(fn.getEmoji(client, 'green tick'))
         await revealPrompt.react(fn.getEmoji(client, 'red tick'))
-        let rReactions = await revealPrompt.awaitReaction(
+        let rReactions = await revealPrompt.awaitReactions(
           (r, u) =>
             (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
               r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
@@ -255,7 +254,7 @@ module.exports = {
               .setTitle("Prompt timed out.")
           )
         let rReaction = rReactions.first().emoji
-        if (rReaction.emoji.id == fn.getEmoji(client, "green_tick").id) currentGame.config.deathReveal = true
+        if (rReaction.id == fn.getEmoji(client, "green_tick").id) currentGame.config.deathReveal = true
         else currentGame.config.deathReveal = false
       }
     }
