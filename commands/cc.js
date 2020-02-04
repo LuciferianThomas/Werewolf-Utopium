@@ -64,6 +64,7 @@ module.exports = {
         )
       else if (!inputRole || inputRole.first().content.toLowerCase() == "end")
         break;
+      inputRole = inputRole
       
       let role = Object.values(roles).find((data) => data.name.toLowerCase().startsWith(inputRole.toLowerCase()) || (data.abbr && data.abbr.startsWith(inputRole.toLowerCase())))
       if (!role) {
@@ -90,7 +91,9 @@ module.exports = {
           )
       )
       
-      // gcPrompt.channel.awaitMessages()
+      let responsegcPrompt.channel
+        .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
+        .catch(() => {})
     }
     
     fn.broadcastTo(
