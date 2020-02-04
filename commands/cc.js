@@ -25,7 +25,6 @@ module.exports = {
     
     let currentGame = {
       mode: "custom",
-      gameID: "",
       nextPhase: null,
       currentPhase: -1,
       originalRoles: [],
@@ -47,7 +46,7 @@ module.exports = {
         .setTitle("Custom Game Setup")
         .setDescription(
           `Select roles for your custom game by inputting their names or aliases.\n` +
-          "Type `end` to end your selection."
+          "You have 30 seconds for each role. Type `end` to end your selection."
         )
     )
     
@@ -64,7 +63,7 @@ module.exports = {
         )
       else if (!inputRole || inputRole.first().content.toLowerCase() == "end")
         break;
-      inputRole = inputRole
+      inputRole = inputRole.first().content.replace(/(_|\s+)/g, " ")
       
       let role = Object.values(roles).find((data) => data.name.toLowerCase().startsWith(inputRole.toLowerCase()) || (data.abbr && data.abbr.startsWith(inputRole.toLowerCase())))
       if (!role) {
@@ -81,8 +80,7 @@ module.exports = {
         )
     )
     
-    let gameCode
-    while (!gameCode) {
+    while (!currentGame.gameID) {
       let gcPrompt = await message.author.send(
         new Discord.RichEmbed()
           .setTitle("Custom Game Setup")
@@ -91,9 +89,21 @@ module.exports = {
           )
       )
       
-      let responsegcPrompt.channel
+      let gcInput = gcPrompt.channel
         .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
         .catch(() => {})
+      if (!gcInput)
+        return await message.author.send(
+          new Discord.RichEmbed()
+            .setColor("RED")
+            .setTitle("Prompt timed out.")
+        )
+      gcInput = gcInput.first().content
+      
+      let usedGCs = games.all().map(x => JSON.parse(x.data).gameID)
+      
+      if (gcInput.match(/^[a-z0-9\_]{3-10}$/i) && !usedGCs.includes(gcInput))
+        currentGame.gameID = gcInput
     }
     
     fn.broadcastTo(
