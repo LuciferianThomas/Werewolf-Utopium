@@ -1,6 +1,7 @@
 const Discord = require("discord.js"),
       moment = require("moment"),
-      db = require("quick.db")
+      db = require("quick.db"),
+      fs = require('fs')
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
@@ -9,20 +10,31 @@ const games = new db.table("Games"),
 const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
 
-const quickGameRoles = [
-  ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
-   "Bodyguard", "Gunner", "Wolf Shaman", "Aura Seer", "Serial Killer", "Cursed", "Wolf Seer", "Priest"],
-  // ["Cursed", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
-  //  "Bodyguard", "Gunner", "Junior Werewolf", "Detective", "Arsonist", "Priest", "Wolf Seer", "Aura Seer"],
-  ["Aura Seer", "Medium", "Jailer", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
-   "Bodyguard", "Gunner", "Wolf Shaman", "Cursed", "Serial Killer", "Mayor", "Wolf Seer", "Avenger"],
-  // ["Aura Seer", "Medium", "Witch", "Werewolf", "Doctor", "Alpha Werewolf", "Seer", Math.random() < 0.5 ? "Fool" : "Headhunter",
-  //  "Beast Hunter", "Gunner", "Wolf Shaman", "Aura Seer", "Bomber", "Priest", "Wolf Seer", "Mayor"]
-]
+let commands = new Discord.Collection()
+
+const commandFiles = fs.readdirSync('/app/commands/shop').filter(file => file.endsWith('.js'))
+for (const file of commandFiles) {
+  const command = require(`/app/commands/shop/${file}`)
+  commands.set(command.name, command)
+}
 
 module.exports = {
   name: "custom",
   run: async (client, message, args, shared) => {
+    var args = message.content.trim().slice(shared.commandName.length+2).split(/\s+/u)
+    
+		const commandName = args.shift().toLowerCase()
+		const command = commands.get(commandName) || commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName))
+
+		if (!command) return;
+    
+		try {
+			await command.run(client, message, args)
+		} catch (error) {
+			console.log(error)
+		}
+    return
+    
     if (players.get(`${message.author.id}.currentGame`)) 
       return await message.author.send("You are already in a game!")
     

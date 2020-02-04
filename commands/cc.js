@@ -102,8 +102,48 @@ module.exports = {
       
       let usedGCs = games.all().map(x => JSON.parse(x.data).gameID)
       
-      if (gcInput.match(/^[a-z0-9\_]{3-10}$/i) && !usedGCs.includes(gcInput))
+      if (parseInt(gcInput) != gcInput && gcInput.match(/^[a-z0-9\_]{3-10}$/i) && !usedGCs.includes(gcInput))
         currentGame.gameID = gcInput
+      else if (parseInt(gcInput) == gcInput)
+        await gcPrompt.channel.send("You cannot have an integral number as your game code.")
+      else if (gcInput.length < 3)
+        await gcPrompt.channel.send("Your game code must be at least 3 characters long.")
+      else if (gcInput.length > 10)
+        await gcPrompt.channel.send("Your game code must be at most 10 characters long.")
+      else if (!gcInput.match(/^[a-z0-9\_]{3-10}$/i))
+        await gcPrompt.channel.send("Your game code must only include alphanumerical characters and underscores.")
+      else if (usedGCs.includes(gcInput))
+        await gcPrompt.channel.send("Your game code has been taken.")
+    }
+    
+    while (!currentGame.name) {
+      let namePrompt = await message.author.send(
+        new Discord.RichEmbed()
+          .setTitle("Custom Game Setup")
+          .setDescription(
+            `Select a name for your game.`
+          )
+      )
+      
+      let nameInput = namePrompt.channel
+        .awaitMessages(msg => msg.author.id == message.author.id, { time: 30*1000, max: 1, errors: ["time"] })
+        .catch(() => {})
+      if (!nameInput)
+        return await message.author.send(
+          new Discord.RichEmbed()
+            .setColor("RED")
+            .setTitle("Prompt timed out.")
+        )
+      nameInput = nameInput.first().content
+      
+      if (nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3-30}$/i))
+        currentGame.name = nameInput
+      else if (nameInput.length < 3)
+        await namePrompt.channel.send("Your game number must be at least 3 characters long.")
+      else if (nameInput.length > 30)
+        await namePrompt.channel.send("Your game number must be at most 30 characters long.")
+      else if (!nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3-30}$/i))
+        await namePrompt.channel.send("Your game number must only include alphanumerical characters and underscores.")
     }
     
     fn.broadcastTo(
