@@ -13,7 +13,8 @@ module.exports = {
   name: "create",
   aliases: ["cc"],
   run: async (client, message, args, shared) => {
-    if (!players.get(`${message.author.id}.custom`))
+    // if (!players.get(`${message.author.id}.custom`))
+    if (client.guilds.get('522638136635817986').members.get(message.author.id).roles.find(r => r.name == 'ww cc'))
       return await message.author.send("You cannot create custom games!")
     
     if (players.get(`${message.author.id}.currentGame`)) 
@@ -251,7 +252,8 @@ module.exports = {
         )
         .addField(
           'Configuration',
-          `**Time:** Night ${currentGame.config.nightTime}s / Day ${currentGame.config.dayTime}s / Day ${currentGame.config.dayTime}s`
+          `**Time:** Night ${currentGame.config.nightTime}s / Day ${currentGame.config.dayTime}s / Day ${currentGame.config.dayTime}s\n` +
+          `**Death Reveal:** ${currentGame.config.deathReveal}`
         )
     )
     
