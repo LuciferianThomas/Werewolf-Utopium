@@ -72,7 +72,7 @@ client.on('ready', async () => {
           if (game.currentPhase == -1) {
             if (!fn.getUser(client, game.players[pl].id) || moment(game.players[pl].lastAction).add(3, 'm') <= moment()) {
               if (fn.getUser(client, game.players[pl].id))
-                fn.getUser(client, game.players[pl].id).send(`You are removed from Game #${game.gameID} for inactivity.`)
+                fn.getUser(client, game.players[pl].id).send(`You are removed from ${game.mode == 'custom' ? game.name : `Game #${game.gameID}`} for inactivity.`)
               
               players.set(`${game.players[pl].id}.currentGame`, 0)
               
@@ -119,7 +119,7 @@ client.on('ready', async () => {
               players.set(`${game.players[pl].id}.currentGame`, 0)
 
               if (fn.getUser(client, game.players[pl].id))
-                fn.getUser(client, game.players[pl].id).send(`You were removed from Game #${game.gameID} for inactivity.`)
+                fn.getUser(client, game.players[pl].id).send(`You were removed from ${game.mode == 'custom' ? game.name : `Game #${game.gameID}`} for inactivity.`)
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left),
                 `**${game.players[pl].number} ${fn.getUser(
@@ -149,7 +149,7 @@ client.on('ready', async () => {
         fn.broadcastTo(
           client, game.players.filter(p => !p.left),
           new Discord.RichEmbed()
-            .setTitle(`Game #${game.gameID}`)
+            .setTitle(game.mode == 'custom' ? game.name : `Game #${game.gameID}`)
             .addField(
               `Players`, 
               game.players.map(p => 
@@ -921,7 +921,7 @@ client.on('ready', async () => {
             new Discord.RichEmbed()
               .setColor("RED")
               .setTitle("<:red_tick:597374220267290624> Game Terminated")
-              .setDescription(`Game #${game.gameID} has been terminated due to the following reason: \`\`\`${error.stack}\`\`\``)
+              .setDescription(`${game.mode == 'custom' ? game.name : `Game #${game.gameID}`} has been terminated due to the following reason: \`\`\`${error.stack}\`\`\``)
           )
         
         game.currentPhase = 999

@@ -23,7 +23,7 @@ module.exports = {
     
     message.author.send(
       new Discord.RichEmbed()
-        .setTitle(`Game #${game.gameID}`)
+        .setTitle(game.mode == 'custom' ? game.name : `Game #${game.gameID}`)
         .addField(
           `Players [${game.players.length}]`,
           game.currentPhase == -1

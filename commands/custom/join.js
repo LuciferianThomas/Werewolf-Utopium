@@ -43,8 +43,9 @@ module.exports = {
     
     let m = message.author.send(
       new Discord.RichEmbed()
-        .setAuthor(`You have joined Game #${currentGame.gameID}.`, message.author.displayAvatarURL)
+        .setAuthor(`You have joined ${currentGame.name}.`, message.author.displayAvatarURL)
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
+        .setFooter(`Custom Game Code: ${currentGame.gameID}`)
     ).catch(async error => {
       await message.channel.send("**I cannot DM you!**\nPlease make sure you enabled Direct Messages on at least one server the bot is on.")
       return undefined
@@ -56,6 +57,7 @@ module.exports = {
       new Discord.RichEmbed()
         .setAuthor(`${nicknames.get(message.author.id).replace(/\\_/g, "_")} joined the game.`, message.author.displayAvatarURL)         
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
+        .setFooter(`Custom Game Code: ${currentGame.gameID}`)
     )
       
     if (currentGame.players.length == currentGame.roles.length) require('/app/process/start')(client, currentGame)

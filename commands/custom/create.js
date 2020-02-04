@@ -245,7 +245,13 @@ module.exports = {
       new Discord.RichEmbed()
         .setTitle('Created new Custom Game!')
         .setDescription(
-          `**Lobby Name:** ${currentGame.name}`
+          `**Lobby Name:** ${currentGame.name}\n` +
+          `**Game Code:** ${currentGame.gameID.replace(/_/g, "\\_")}\n` +
+          `**Game Roles:** ${currentGame.originalRoles.map(x => fn.getEmoji(client, x)).join('')}`
+        )
+        .addField(
+          'Configuration',
+          `**Time:** Night ${currentGame.config.nightTime}s / Day ${currentGame.config.dayTime}s / Day ${currentGame.config.dayTime}s`
         )
     )
     
@@ -254,7 +260,7 @@ module.exports = {
       new Discord.RichEmbed()
         .setAuthor(`${nicknames.get(message.author.id).replace(/\\_/g, "_")} joined the game.`, message.author.displayAvatarURL)         
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
-        .setFooter(`Custom Game Code: `)
+        .setFooter(`Custom Game Code: ${currentGame.gameID}`)
     )
     
     games.set("quick", Games)
