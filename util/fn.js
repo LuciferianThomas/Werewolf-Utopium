@@ -77,37 +77,6 @@ let getEmoji = (client, name) => {
   return client.emojis.find(emoji => emoji.name == name.replace(/ /g, "_"))
 }
 
-function ModCase (client, id, type, member, message, reason, period) {
-  this.id = parseInt(id)
-  this.type = type.toUpperCase()
-  this.user = getUser(client, member).id
-  this.moderator = getUser(client, message.member).id
-  this.reason = reason
-  this.time = moment()
-  this.period = period
-  this.active = true
-  this.message = message.id
-}
-
-let modCaseEmbed = (client, thisCase) => {  
-  // if (!(thisCase instanceof ModCase)) throw Error('Passed an invalid ModCase.')
-  
-  let user = getUser(client, thisCase.user)
-  let moderator = getUser(client, thisCase.moderator)
-
-  let embed = new Discord.RichEmbed()
-    .setColor(embedColor)
-    .setAuthor(`[${thisCase.type}] ${user.tag}`, user.displayAvatarURL)
-    .addField(user.bot ? "Bot" : "User", user, true)
-    .addField("Moderator", moderator, true)
-  if (thisCase.period) embed.addField("Duration", `${thisCase.period/1000/60} minute${thisCase.period/1000/60 == 1 ? "" : "s"}`, true)
-  embed.addField("Reason", thisCase.reason)
-    .setFooter(`Case #${thisCase.id}`, client.user.avatarURL)
-    .setTimestamp(moment(thisCase.time))
-
-  return embed
-}
-
 let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
   if (addReactions) {
     await msg.react("⏪")
@@ -312,8 +281,6 @@ module.exports = {
   getMember: getMember,
   getEmoji: getEmoji,
   getRole: getRole,
-  ModCase: ModCase,
-  modCaseEmbed: modCaseEmbed,
   paginator: paginator,
   deepClone: deepClone,
   clone: deepClone,

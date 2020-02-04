@@ -69,7 +69,7 @@ let roles = {
           " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
     aura: "Good",
     team: "Village",
-    abbr: ["det","sherlock","holmes","sherlock holmes"],
+    abbr: ["det","sherlock","holmes","sherlock holmes","conan"],
     cat : "Strong Villager"
   },
   "Doctor": {
