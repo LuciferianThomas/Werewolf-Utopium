@@ -59,10 +59,10 @@ module.exports = {
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
         .setFooter(`Custom Game Code: ${currentGame.gameID}`)
     )
-      
-    if (currentGame.players.length == currentGame.roles.length) require('/app/process/start')(client, currentGame)
     
     games.set("quick", Games)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)
+      
+    if (currentGame.players.length == currentGame.originalRoles.length) require('/app/process/start')(client, currentGame)
   }
 }

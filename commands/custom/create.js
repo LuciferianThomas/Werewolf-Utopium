@@ -256,6 +256,7 @@ module.exports = {
         let rReaction = rReactions.first().emoji
         if (rReaction.id == fn.getEmoji(client, "green_tick").id) currentGame.config.deathReveal = true
         else currentGame.config.deathReveal = false
+        revealSuccess = true
       }
     }
     
@@ -281,6 +282,8 @@ module.exports = {
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
         .setFooter(`Custom Game Code: ${currentGame.gameID}`)
     )
+    
+    Games.push(currentGame)
     
     games.set("quick", Games)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)

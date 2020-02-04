@@ -70,10 +70,10 @@ module.exports = {
         .setAuthor(`${nicknames.get(message.author.id).replace(/\\_/g, "_")} joined the game.`, message.author.displayAvatarURL)         
         .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
     )
-      
-    if (currentGame.players.length == 16) require('/app/process/start')(client, currentGame)
     
     games.set("quick", QuickGames)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)
+      
+    if (currentGame.players.length == 16) require('/app/process/start')(client, currentGame)
   }
 }
