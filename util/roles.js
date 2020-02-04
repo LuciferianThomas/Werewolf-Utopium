@@ -404,7 +404,7 @@ let roles = {
     			" However, players take one day to convert before turning to a zombie. You win if all alive players are converted into Zombies.",
     aura: "Unknown",
     team: "Zombies",
-    abbr: ["zomb", "zom", "zb", "zombert"],
+    abbr: ["zomb", "zom", "zb", "zombert", "walking dead"],
     cat : "Killer"
   },
   
