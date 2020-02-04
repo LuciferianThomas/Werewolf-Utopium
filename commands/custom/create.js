@@ -20,6 +20,11 @@ module.exports = {
     if (players.get(`${message.author.id}.currentGame`)) 
       return await message.author.send("You are already in a game!")
     
+    if (players.get(`${message.author.id}.prompting`)) 
+      return await message.author.send("You have an active prompt already!")
+    
+    // players.set(`${message.author.id}.prompting`, true)
+    
     // if (!games.get("count")) games.set("count", 0)
     if (!games.get("quick")) games.set("quick", [])
     let Games = games.get("quick")
@@ -74,13 +79,13 @@ module.exports = {
       inputRole = inputRole.first().content.replace(/(_|\s+)/g, " ")
       
       let role = Object.values(roles).find((data) => data.name.toLowerCase().startsWith(inputRole.toLowerCase()) || (data.abbr && data.abbr.includes(inputRole.toLowerCase())))
-      console.log(role)
       if (!role) {
         await message.author.send("Unknown role.")
         i--; continue;
       }
       currentGame.originalRoles.push(role.name)
     }
+    
     await message.author.send(
       new Discord.RichEmbed()
         .setTitle("Custom Game Setup")
@@ -111,7 +116,7 @@ module.exports = {
       
       let usedGCs = games.all().map(x => JSON.parse(x.data).gameID)
       
-      if (parseInt(gcInput) != gcInput && gcInput.match(/^[a-z0-9\_]{3-10}$/i) && !usedGCs.includes(gcInput))
+      if (parseInt(gcInput) != gcInput && gcInput.match(/^[a-z0-9\_]{3,10}$/i) && !usedGCs.includes(gcInput))
         currentGame.gameID = gcInput
       else if (parseInt(gcInput) == gcInput)
         await gcPrompt.channel.send("You cannot have an integral number as your game code.")
@@ -119,7 +124,7 @@ module.exports = {
         await gcPrompt.channel.send("Your game code must be at least 3 characters long.")
       else if (gcInput.length > 10)
         await gcPrompt.channel.send("Your game code must be at most 10 characters long.")
-      else if (!gcInput.match(/^[a-z0-9\_]{3-10}$/i))
+      else if (!gcInput.match(/^[a-z0-9\_]{3,10}$/i))
         await gcPrompt.channel.send("Your game code must only include alphanumerical characters and underscores.")
       else if (usedGCs.includes(gcInput))
         await gcPrompt.channel.send("Your game code has been taken.")
@@ -145,13 +150,13 @@ module.exports = {
         )
       nameInput = nameInput.first().content
       
-      if (nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3-30}$/i))
+      if (nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3,30}$/i))
         currentGame.name = nameInput
       else if (nameInput.length < 3)
         await namePrompt.channel.send("Your game name must be at least 3 characters long.")
       else if (nameInput.length > 30)
         await namePrompt.channel.send("Your game name must be at most 30 characters long.")
-      else if (!nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3-30}$/i))
+      else if (!nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3,30}$/i))
         await namePrompt.channel.send("Your game name must only include alphanumerical characters and underscores.")
     }
     
@@ -275,5 +280,6 @@ module.exports = {
     
     games.set("quick", Games)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)
+    // players.set(`${message.author.id}.prompting`, false)
   }
 }
