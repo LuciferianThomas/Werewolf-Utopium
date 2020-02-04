@@ -12,7 +12,7 @@ const fn = require('/app/util/fn'),
 module.exports = {
   name: "create",
   aliases: ["cc"],
-  run: async (client, message, args, shared) => { return;
+  run: async (client, message, args, shared) => {
     if (!players.get(`${message.author.id}.custom`))
       return await message.author.send("You cannot create custom games!")
     
@@ -145,6 +145,14 @@ module.exports = {
       else if (!nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3-30}$/i))
         await namePrompt.channel.send("Your game number must only include alphanumerical characters and underscores.")
     }
+    
+    let settingsPrompt = await message.author.send(
+        new Discord.RichEmbed()
+          .setTitle("Custom Game Setup")
+          .setDescription(
+            `Use default settings?`
+          )
+      )
     
     fn.broadcastTo(
       client, currentGame.players.filter(p => p.id !== message.author.id),

@@ -26,6 +26,7 @@ module.exports = {
           )
       )
     
-    require(`./${gamemode}`).run(client, message, args, shared)
+    if (gamemode !== "custom") require(`./${gamemode}`).run(client, message, args, shared)
+    else require(`./custom`).run(client, Object.assign(message, {content: `w!custom join${args[1] ? ` ${args[1]}` : ""}`}), undefined, Object.assign(shared, {commandName: "custom"}))
   }
 }
