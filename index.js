@@ -261,13 +261,7 @@ client.on('ready', async () => {
             for (var y of game.players[revivedPlayers[x].number-1].revive)
               game.players[y-1].revUsed = true
             game.players[revivedPlayers[x].number-1].revive = undefined
-          }
-          
-          for (var x = 0; x < game.players.length; x++)
-            Object.assign(game.players[x], {
-              usedAbilityTonight: false,
-              enchanted: game.players.find(p => p.role == "Wolf Shaman") ? [] : undefined
-            })
+          }          
           
           // SERIAL KILLER KILL
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
@@ -707,7 +701,7 @@ client.on('ready', async () => {
           let ggs = game.players.filter(p => p.role == "Grumpy Grandma")
           for (var x = 0; x < ggs.length; x++) {
             let muted = game.players[ggs[x].usedAbilityTonight-1]
-            if (!muted) continue;
+            if (!muted || !muted.alive) continue;
 
             fn.getUser(client, muted.id).send(
               new Discord.RichEmbed()
@@ -721,6 +715,12 @@ client.on('ready', async () => {
               `They cannot speak or vote today.`
             )
           }
+          
+          for (var x = 0; x < game.players.length; x++)
+            Object.assign(game.players[x], {
+              usedAbilityTonight: false,
+              enchanted: game.players.find(p => p.role == "Wolf Shaman") ? [] : undefined
+            })
         }
 
         for (var j = 0; j < game.players.length; j++) {
@@ -1083,7 +1083,7 @@ client.on('message', async message => {
   if (game.currentPhase == -1)
     return fn.broadcast(client, game, `**${nicknames.get(message.author.id)}**: ${content}`, [message.author.id])
   
-  if (game.players.find(p => p.mute == gamePlayer.number)) content = "..."
+  if (game.players.find(p => p.role == "Grumpy Grandma" && p.usedAbilityTonight == gamePlayer.number)) content = "..."
   
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)

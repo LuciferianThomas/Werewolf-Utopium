@@ -57,7 +57,7 @@ module.exports = {
         .setThumbnail(fn.getEmoji(client, roleA.team == roleB.team && roleA.team !== "Solo" ? "Detective_Equal" : "Detective_NotEqual").url)
         .setDescription(
           `**${targetA} ${nicknames.get(targetPlayerA.id)}** and **${targetB} ${nicknames.get(targetPlayerB.id)}**` +
-          ` belong to ${"Solo" !== roleA.team == roleB.team ? "the same team" : "different teams"}.`
+          ` belong to ${roleA.team == roleB.team && roleA.team !== "Solo" ? "the same team" : "different teams"}.`
         )
     )
     
