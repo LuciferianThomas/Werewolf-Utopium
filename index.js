@@ -697,7 +697,7 @@ client.on('ready', async () => {
                 new Discord.RichEmbed()
                   .setTitle("Welcome to the Gang")
                   .setThumbnail(fn.getEmoji(client, "Sect Member").url)
-                  .setDescription(`You have been turned into **${sl.number} ${nicknames.get(sl.id)} ${fn.getE}**`)
+                  .setDescription(`You have been turned into **${sl.number} ${nicknames.get(sl.id)}**'s sect!'`)
               )
             }
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
