@@ -20,7 +20,7 @@ module.exports = {
         game = QuickGames.find(g => g.gameID == player.currentGame),
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
-    if (!gamePlayer.role.includes("Seer"))
+    if (gamePlayer.role !== "Detective")
       return await message.author.send("You do not have the abilities to check on a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer check on a player.")
