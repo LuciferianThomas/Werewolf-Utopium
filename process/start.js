@@ -166,6 +166,5 @@ module.exports = async (client, game) => {
   let thisGame = Games.find(g => g.gameID == game.gameID)
   Games[Games.indexOf(thisGame)] = game
   
-  console.log(Games)
   games.set("quick", Games)
 }
