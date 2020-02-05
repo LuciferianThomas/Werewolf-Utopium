@@ -692,8 +692,11 @@ client.on('ready', async () => {
           if (sl.usedAbilityTonight) {
             let sectTarget = game.players[sl.usedAbilityTonight-1]
             
-            if (roles[sectTarget.role] == "Village") {
-              
+            if (roles[sectTarget.role] == "Village" || ["Fool","Headhunter"].includes(sectTarget.role)) {
+              fn.getUser(client, sectTarget.id).send(
+                new Discord.RichEmbed()
+                  .setTitle("")
+              )
             }
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
           }
