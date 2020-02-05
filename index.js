@@ -692,7 +692,10 @@ client.on('ready', async () => {
           if (sl.usedAbilityTonight) {
             let sectTarget = game.players[sl.usedAbilityTonight-1]
             
-            if (sectTarget)
+            if (roles[sectTarget.role] == "Village") {
+              
+            }
+            else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
           }
           
           // GRUMPY GRANDMA MUTE
