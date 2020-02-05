@@ -704,31 +704,29 @@ client.on('ready', async () => {
           }
           
           // GRUMPY GRANDMA MUTE
-          if (game.roles.includes("Grumpy Grandma")) {
-            let ggs = game.players.filter(p => p.role == "Grumpy Grandma").map(p => p.number)
-            for (var x = 0; x < ggs.length; x++) {
-              let muted = game.players[ggs[x].mute-1]
-              if (!muted) continue;
-              
-              fn.getUser(client, muted.id).send(
-                new Discord.RichEmbed()
-                  .setAuthor("Muted!", fn.getEmoji(client, "Grumpy Grandma Mute").url)
-                  .setThumbnail(fn.getEmoji(client, "Grumpy Grandma").url)
-                  .setDescription("You cannot speak or vote today!")
-              )
-              fn.broadcastTo(
-                client, game.players.filter(p => !p.left),
-                `<:Grumpy_Grandma_Mute:660495619483238410> Grumpy Grandma muted **${muted.number} ${fn.getUser(client, muted.id)}**!` +
-                `They cannot speak or vote today.`
-              )
-            }
+          let ggs = game.players.filter(p => p.role == "Grumpy Grandma")
+          for (var x = 0; x < ggs.length; x++) {
+            let muted = game.players[ggs[x].usedAbilityTonight-1]
+            if (!muted) continue;
+
+            fn.getUser(client, muted.id).send(
+              new Discord.RichEmbed()
+                .setAuthor("Muted!", fn.getEmoji(client, "Grumpy Grandma Mute").url)
+                .setThumbnail(fn.getEmoji(client, "Grumpy Grandma").url)
+                .setDescription("You cannot speak or vote today!")
+            )
+            fn.broadcastTo(
+              client, game.players.filter(p => !p.left),
+              `<:Grumpy_Grandma_Mute:660495619483238410> Grumpy Grandma muted **${muted.number} ${fn.getUser(client, muted.id)}**!` +
+              `They cannot speak or vote today.`
+            )
           }
-          
-          for (var j = 0; j < game.players.length; j++) {
-            game.players[j].jailed = false
-            game.players[j].protectors = []
-            if (game.players[j].protected) game.players[j].protected = undefined
-          }
+        }
+
+        for (var j = 0; j < game.players.length; j++) {
+          game.players[j].jailed = false
+          game.players[j].protectors = []
+          if (game.players[j].protected) game.players[j].protected = undefined
         }
         
         for (var j = 0; j < game.players.length; j++) {

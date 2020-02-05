@@ -44,7 +44,7 @@ module.exports = {
     if (!gamePlayer.sect && targetPlayer.role == "President")
       return await message.author.send("You cannot mute the President!")
     
-    gamePlayer.mute = target
+    gamePlayer.usedAbilityTonight = target
     
     message.author.send(
       `${
