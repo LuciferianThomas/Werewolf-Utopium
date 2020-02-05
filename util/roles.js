@@ -36,9 +36,10 @@ let roles = {
     cat : "Regular Villager"
   },
   "Bodyguard": {
-    desc: "Each night you can select one player to protect (`w!protect [player]`). You automatically protect yourself." +
-          " If you or the player you are protecting gets attacked, you will survive." +
-          " However, if you are attacked again you will die.",
+    desc: "You can choose one player to protect every night (`w!protect [player]`)." +
+          " That player cannot be killed that night and instead you will be attacked." +
+          " Because you are strong you survive the first attack, but you will die on the second attack." +
+          " Every night you automatically protect yourself.",
     aura: "Good",
     team: "Village",
     abbr: ["bg"],
@@ -74,7 +75,7 @@ let roles = {
   },
   "Doctor": {
     desc: "Choose a player to protect every night (`w!heal [player]`)." + // alias: w!protect
-          " You will be notified when your protected player was attaked. You cannot protect yourself.",
+          " That player cannot be killed that night.",
     aura: "Good",
     team: "Village",
     abbr: ["doc", "medic"],
@@ -211,11 +212,9 @@ let roles = {
     cat : "Regular Villager"
   }, 
   "Tough Guy": {
-  	desc: "During the night, you can select one player to protect (`w!defend [player]`)." + // alias: w!protect
-          " If you or your target is attacked, you get hit." + 
-    			" However, you will know the role of the attacker or the weakest werewolf." +
-          " If more than 1 attacker or team attacks you, you will know all their roles." +
-          " Unfortunately, because of your wounds, you will die at the end of the day",
+  	desc: "You can choose one player to protect every night." +
+          " If you or that player is attacked, neither dies and instead you and the attacker will both see each others' roles." +
+          " Because of your injuries, you will die at the end of the following day.",
     aura: "Good",
     team: "Village",
     abbr: ["tg"],

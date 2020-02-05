@@ -345,7 +345,23 @@ client.on('ready', async () => {
                         `You protected **${attackedPlayer.number} ${
                           nicknames.get(attackedPlayer.id)
                         }** who was attacked by **${sk.number} ${
-                          client.getUser(client, sk.id).username
+                          nicknames.get(sk.id)
+                        } ${client.getEmoji(client, sk.role)}**.\n` +
+                        "You have been wounded and will die at the end of the day."
+                      )
+                  )
+                  
+                  fn.getUser(client, sk.id).send(
+                    new Discord.RichEmbed()
+                      .setAuthor(
+                        "Attacked!",
+                        fn.getEmoji(client, "Bodyguard Protect").url
+                      )
+                      .setDescription(
+                        `You protected **${attackedPlayer.number} ${
+                          nicknames.get(attackedPlayer.id)
+                        }** who was attacked by **${sk.number} ${
+                          nicknames.get(sk.id)
                         } ${client.getEmoji(client, sk.role)}**.\n` +
                         "You have been wounded and will die at the end of the day."
                       )
@@ -423,7 +439,7 @@ client.on('ready', async () => {
                   )
                   .setDescription(
                     `You were attacked by **${sk.number} ${
-                      client.getUser(client, sk.id).username
+                      nicknames.get(sk.id)
                     } ${client.getEmoji(client, sk.role)}**.\n` +
                     "You have been wounded and will die at the end of the day."
                   )
@@ -566,7 +582,7 @@ client.on('ready', async () => {
                         `You protected **${attackedPlayer.number} ${
                           nicknames.get(attackedPlayer.id)
                         }** who was attacked by **${weakestWW.number} ${
-                          client.getUser(client, weakestWW.id).username
+                          nicknames.get(weakestWW.id)
                         } ${client.getEmoji(client, weakestWW.role)}**.\n` +
                         "You have been wounded and will die at the end of the day."
                       )
@@ -598,7 +614,7 @@ client.on('ready', async () => {
                   fn.broadcastTo(
                     client, game.players.filter(p => !p.left),
                     `The beast hunter's trap killed **${weakestWW.number} ${
-                      client.getUser(client, weakestWW.id).username
+                      nicknames.get(weakestWW.id)
                     } ${
                       game.config.deathReveal
                         ? client.getEmoji(client, weakestWW.role)
@@ -664,11 +680,13 @@ client.on('ready', async () => {
                   )
                   .setDescription(
                     `You were attacked by **${weakestWW.number} ${
-                      client.getUser(client, weakestWW.id).username
+                      nicknames.get(weakestWW.id)
                     } ${client.getEmoji(client, weakestWW.role)}**.\n` +
                     "You have been wounded and will die at the end of the day."
                   )
               )
+              
+              fn.getUser(client, weakestWW.id).send(`Your target was protected by **${attac}**`)
             }
             else {
               game.lastDeath = game.currentPhase - 1
