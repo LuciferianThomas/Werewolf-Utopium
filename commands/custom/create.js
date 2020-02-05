@@ -11,7 +11,6 @@ const fn = require('/app/util/fn'),
 
 module.exports = {
   name: "create",
-  aliases: ["cc"],
   run: async (client, message, args, shared) => {
     // if (!players.get(`${message.author.id}.custom`))
     if (!client.guilds.get('522638136635817986').members.get(message.author.id).roles.find(r => r.name == 'ww cc'))

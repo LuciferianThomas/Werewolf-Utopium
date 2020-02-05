@@ -786,8 +786,8 @@ client.on('ready', async () => {
         }
         
         if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length >=
-            game.players.filter(p => p.alive && (roles[p.role].team.includes("Village") || p.role == "Fool")).length &&
-            !game.players.filter(p => p.alive && roles[p.role].team == "Solo" && p.role != "Fool").length) {
+            game.players.filter(p => p.alive && (roles[p.role].team == "Village" || ['Headhunter','Fool'].includes(p.role))).length &&
+            !game.players.filter(p => p.alive && roles[p.role].team == "Solo" && !['Headhunter','Fool'].includes(p.role)).length) {
           game.currentPhase = 999
           fn.broadcastTo(
             client, game.players.filter(p => !p.left).map(p => p.id),
@@ -804,7 +804,7 @@ client.on('ready', async () => {
           continue;
         }
         
-        if (game.players.filter(p => p.alive && roles[p.role].team == "Village" && ['Headhunter','Fool'].includes(p.role)).length == 0) {
+        if (game.players.filter(p => p.alive && (roles[p.role].team == "Village" || ['Headhunter','Fool'].includes(p.role))).length == 0) {
           game.currentPhase = 999
           fn.broadcastTo(
             client, game.players.filter(p => !p.left).map(p => p.id),
