@@ -887,12 +887,6 @@ client.on('ready', async () => {
               game.players[gunners[i]-1].shotToday = false
           }
           
-          if (game.roles.includes("Grumpy Grandma")) {
-            let ggs = game.players.filter(p => p.role == "Grumpy Grandma").map(p => p.number)
-            for (var x = 0; x < ggs.length; x++) 
-              game.players[ggs[i]-1].mute = undefined
-          }
-          
           fn.broadcastTo(
             client,
             game.players.filter(

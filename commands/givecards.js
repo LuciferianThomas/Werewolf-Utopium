@@ -35,23 +35,23 @@ module.exports = {
       return await message.author.send("You can only give cards to two players!")
     else {
       for (var i = 0; i < args.length; i++) {
-        let target = parseInt(args[0])
+        let target = parseInt(args[i])
         if (isNaN(target) || target > game.players.length || target < 1) {
-          await message.author.send("Invalid target.")
+          message.author.send("Invalid target.")
           continue;
         }
 
         let targetPlayer = game.players[target-1]
         if (!targetPlayer.alive) {
-          await message.author.send("You cannot give cards to an dead player.")
+          message.author.send("You cannot give cards to an dead player.")
           continue;
         }
         if (target == gamePlayer.number) {
-          await message.author.send("You cannot give cards to yourself.")
+          message.author.send("You cannot give cards to yourself.")
           continue;
         }
         if (gamePlayer.cards.includes(targetPlayer.number)) {
-          await message.author.send(`**${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** already has your card!`)
+          message.author.send(`**${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** already has your card!`)
           continue;
         }
         

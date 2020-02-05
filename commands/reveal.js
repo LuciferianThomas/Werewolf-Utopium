@@ -82,7 +82,7 @@ module.exports = {
     
       gamePlayer.roleRevealed = "Mayor"
     }
-    else if (game.players.find(p => p.cards.includes(gamePlayer.number))) {
+    else if (game.players.find(p => p.cards && p.cards.includes(gamePlayer.number))) {
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer reveal yourself.")
       
