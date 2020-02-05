@@ -11,6 +11,7 @@ const fn = require('/app/util/fn'),
 
 module.exports = {
   name: "shoot",
+  aliases: ["execute"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -23,6 +24,9 @@ module.exports = {
     
     if (!["Gunner","Jailer"].includes(gamePlayer.role))
       return await message.author.send("You do not have the abilities to shoot a player.")
+    if (gamePlayer.role !== "Jailer" && shared.commandName == "execute")
+      return await message.author.send("Only the Jailer can execute their prisoners!")
+      
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer shoot a player.")
     

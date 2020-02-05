@@ -686,7 +686,7 @@ client.on('ready', async () => {
                   )
               )
               
-              fn.getUser(client, weakestWW.id).send(`Your target was protected by **${attac}**`)
+              // fn.getUser(client, weakestWW.id).send(`Your target was a tough guy**.`)
             }
             else {
               game.lastDeath = game.currentPhase - 1

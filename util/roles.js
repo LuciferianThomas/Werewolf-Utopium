@@ -105,17 +105,19 @@ let roles = {
     cat : "Regular Villager"
   },
   "Gunner": {
-    desc: "During the day, you have two bullets which you can use them to shoot players by doing (`w!shoot [player]`)." +
-          " However, the shots are loud, so your role will be revealed after the first shot. ",
+    desc: "You have two bullets which you can use to kill somebody (`w!shoot`)." +
+          " Only one bullet can be fired per day." +
+          " The shots are very loud so that your role will be revealed after the first shot." +
+          " You cannot shoot during the discussion phase on the first day.",
     aura: "Unknown",
     team: "Village",
     abbr: ["gun"],
     cat : "Strong Villager"
   },
   "Jailer": {
-    desc: "Every day, select one player to jail by doing (`w!jail [number]`)." +
-          " Your target will be jailed the following night and cannot use their abilities." +
-    			" If you find your target suspicious, you can execute them (`w!shoot [player]`).",
+    desc: "Select a target each day to put in jail during the next night (`w!jail [player]`)." +
+          " At night you can talk privately with your target." +
+          " Your target cannot act or be attacked, but if you find them suspicious, you can kill them (`w!execute`).",
     aura: "Unknown",
     team: "Village",
     abbr: ["jail"],
@@ -123,9 +125,10 @@ let roles = {
     oneOnly: true
   },
   "Marksman": {
- 		desc: "During the night, select one player to mark with (`w!mark [player]`)." +
-          " The following night, you can either shoot with (`w!release [player]`) or change your target." + // alias: w!shoot
-    			" If you try to shoot a villager, your shot will backfire and kill you instead.",
+ 		desc: "At night you can mark a player as your target (`w!mark [player]`)." +
+          " After the next day, you can kill (`w!shoot`) or change your target." +
+          " If you try to kill a villager, your shot will backfire and kill you." +
+          " You have two arrows.",
     aura: "Unknown",
     team: "Village",
     abbr: ["mm"],
@@ -161,25 +164,24 @@ let roles = {
     oneOnly: true
   },
   "Priest": {
-    desc: "Once per game, you can throw holy water at one player (`w!water [player]`). You can only do this during the day." +
-          " If the water is thrown at a werewolf, they will die (excluding <:Sorcerer:660883179250647045> Sorcerer)." +
-          " If that player is not a werewolf, you dies.",
+    desc: "You can throw holy water on another player (`w!water [player]`)." +
+          " If that player is a werewolf, they die. If he is not a werewolf, you die.",
     aura: "Good",
     team: "Village",
     abbr: ["pri"],
     cat : "Regular Villager"
   },
   "Red Lady": {
-  	desc: "Every night, you can choose to visit a player with (`w!visit [player]`)." +
-    			" If you are selected to be killed that night, you will be protected." +
-          " However, if the player you visited is evil or attacked, you will die.",
+  	desc: "At night you can visit another player (`w!visit [player]`)." +
+          " If you are attacked while visiting, you will not be killed." +
+          " However, if you visit a player that is attacked or is evil, you will die!",
     aura: "Good",
     team: "Village",
-    abbr: ["harlot", "rl", "prostitute"],
+    abbr: ["rl", "harlot", "prostitute"],
     cat : "Regular Villager"
   },
   "Seer": {
-    desc: "Every night, you uncover the role of one player with (`w!check [player]`).", // alias: w!see
+    desc: "Every night, you can select a player to uncover their role (`w!check [player]`).", // alias: w!see
     aura: "Good",
     team: "Village",
     abbr: [],
@@ -212,7 +214,7 @@ let roles = {
     cat : "Regular Villager"
   }, 
   "Tough Guy": {
-  	desc: "You can choose one player to protect every night." +
+  	desc: "You can choose one player to protect every night. (`w!protect [player]`)" +
           " If you or that player is attacked, neither dies and instead you and the attacker will both see each others' roles." +
           " Because of your injuries, you will die at the end of the following day.",
     aura: "Good",
