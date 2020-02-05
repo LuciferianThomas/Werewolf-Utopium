@@ -688,14 +688,16 @@ client.on('ready', async () => {
           }
           
           // SECT CONVERSION
-          let sl = game.players.find(p => p.role == "Sect Leader")
-          if (sl.usedAbilityTonight) {
+          let sl = game.players.find(p => p.role == "Sect Leader" && p.alive)
+          if (sl && sl.usedAbilityTonight) {
             let sectTarget = game.players[sl.usedAbilityTonight-1]
             
             if (roles[sectTarget.role] == "Village" || ["Fool","Headhunter"].includes(sectTarget.role)) {
               fn.getUser(client, sectTarget.id).send(
                 new Discord.RichEmbed()
-                  .setTitle("")
+                  .setTitle("Welcome to the Gang")
+                  .setThumbnail(fn.getEmoji(client, "Sect Member").url)
+                  .setDescription(`You have been turned into **${sl.number} ${nicknames.get(sl.id)} ${fn.getE}**`)
               )
             }
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
