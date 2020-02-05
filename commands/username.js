@@ -10,6 +10,9 @@ module.exports = {
   aliases: ["nick", "nickname"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
+    
+    if (players.get(`${message.author.id}.currentGame`)) 
+      return await message.author.send("You cannot change your username during a game!")
 
     let m = await message.author
       .send(
@@ -52,6 +55,8 @@ module.exports = {
 
     nicknames.set(message.author.id, input)
     player.lastNick = moment()
+    
+    await m.channel.send(`You changed your nickname to **${input}**.`)
 
     players.set(message.author.id, player)
   }
