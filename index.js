@@ -263,32 +263,13 @@ client.on('ready', async () => {
             game.players[revivedPlayers[x].number-1].revive = undefined
           }
           
-          if (game.roles.includes("Grumpy Grandma")) {
-            let ggs = game.players.filter(p => p.role == "Grumpy Grandma").map(p => p.number)
-            for (var x = 0; x < ggs.length; x++) {
-              let muted = game.players[ggs[x].mute-1]
-              if (!muted) continue;
-              
-              fn.getUser(client, muted.id).send(
-                new Discord.RichEmbed()
-                  .setAuthor("Muted!", fn.getEmoji(client, "Grumpy Grandma Mute").url)
-                  .setThumbnail(fn.getEmoji(client, "Grumpy Grandma").url)
-                  .setDescription("You cannot speak or vote today!")
-              )
-              fn.broadcastTo(
-                client, game.players.filter(p => !p.left),
-                `<:Grumpy_Grandma_Mute:660495619483238410> Grumpy Grandma muted **${muted.number} ${fn.getUser(client, muted.id)}**!` +
-                `They cannot speak or vote today.`
-              )
-            }
-          }
-          
           for (var x = 0; x < game.players.length; x++)
             Object.assign(game.players[x], {
               usedAbilityTonight: false,
               enchanted: game.players.find(p => p.role == "Wolf Shaman") ? [] : undefined
             })
           
+          // SERIAL KILLER KILL
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
               sks = game.players.filter(player => player.alive && player.role == "Serial Killer")
           for (var x = 0; x < skKills.length; x++) {
@@ -461,6 +442,7 @@ client.on('ready', async () => {
             }
           }
           
+          // WEREWOLVES KILL
           let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),
               wwRoles = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.role),
               wwVotesCount = []
@@ -702,6 +684,35 @@ client.on('ready', async () => {
               )
                 
               game = fn.death(client, game, attackedPlayer.number)
+            }
+          }
+          
+          // SECT CONVERSION
+          let sl = game.players.find(p => p.role == "Sect Leader")
+          if (sl.usedAbilityTonight) {
+            let sectTarget = game.players[sl.usedAbilityTonight-1]
+            
+            if (sectTarget)
+          }
+          
+          // GRUMPY GRANDMA MUTE
+          if (game.roles.includes("Grumpy Grandma")) {
+            let ggs = game.players.filter(p => p.role == "Grumpy Grandma").map(p => p.number)
+            for (var x = 0; x < ggs.length; x++) {
+              let muted = game.players[ggs[x].mute-1]
+              if (!muted) continue;
+              
+              fn.getUser(client, muted.id).send(
+                new Discord.RichEmbed()
+                  .setAuthor("Muted!", fn.getEmoji(client, "Grumpy Grandma Mute").url)
+                  .setThumbnail(fn.getEmoji(client, "Grumpy Grandma").url)
+                  .setDescription("You cannot speak or vote today!")
+              )
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                `<:Grumpy_Grandma_Mute:660495619483238410> Grumpy Grandma muted **${muted.number} ${fn.getUser(client, muted.id)}**!` +
+                `They cannot speak or vote today.`
+              )
             }
           }
           
