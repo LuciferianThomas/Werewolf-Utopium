@@ -91,7 +91,7 @@ module.exports = {
         new Discord.RichEmbed()
           .setAuthor(
             "Fortune Teller's Card",
-            fn.getEmoji(client, `Fortune Teller Card${game.players.find(p => p.cards.includes(gamePlayer.number)).cards.indexOf(gamePlayer.number)+1}`).url
+            fn.getEmoji(client, `Fortune Teller Card1`).url
           )
           .setThumbnail(fn.getEmoji(client, gamePlayer.role).url)
           .setDescription(

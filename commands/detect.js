@@ -54,7 +54,7 @@ module.exports = {
     message.author.send(
       new Discord.RichEmbed()
         .setAuthor(`Detection Results`, fn.getEmoji(client, "Detective").url)
-        .setThumbnail(fn.getEmoji(client, "Solo" !== roleA.team == roleB.team ? "Detective_Equal" : "Detective_NotEqual").url)
+        .setThumbnail(fn.getEmoji(client, roleA.team == roleB.team && roleA.team !== "Solo" ? "Detective_Equal" : "Detective_NotEqual").url)
         .setDescription(
           `**${targetA} ${nicknames.get(targetPlayerA.id)}** and **${targetB} ${nicknames.get(targetPlayerB.id)}**` +
           ` belong to ${"Solo" !== roleA.team == roleB.team ? "the same team" : "different teams"}.`
