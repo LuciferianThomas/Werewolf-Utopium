@@ -114,7 +114,7 @@ module.exports = {
         )
       gcInput = gcInput.first().content
       
-      let usedGCs = games.all().map(x => JSON.parse(x.data).gameID)
+      let usedGCs = games.get('quick').map(x => x.gameID.toLowerCase())
       
       if (parseInt(gcInput) != gcInput && gcInput.match(/^[a-z0-9\_]{3,10}$/i) && !usedGCs.includes(gcInput))
         currentGame.gameID = gcInput
@@ -126,7 +126,7 @@ module.exports = {
         await gcPrompt.channel.send("Your game code must be at most 10 characters long.")
       else if (!gcInput.match(/^[a-z0-9\_]{3,10}$/i))
         await gcPrompt.channel.send("Your game code must only include alphanumerical characters and underscores.")
-      else if (usedGCs.includes(gcInput))
+      else if (usedGCs.includes(gcInput.toLowerCase()))
         await gcPrompt.channel.send("Your game code has been taken.")
     }
     
