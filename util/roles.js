@@ -3,7 +3,7 @@ let roles = {
   // Villager roles
   
   "Villager": {
-    desc: "You are a regular Villager with no special abilities.",
+    desc: "You are a regular villager without any special abilities.",
     aura: "Good",
     team: "Village",
     abbr: ["reg","vil","vill","forkman","forkmen"],
@@ -73,7 +73,7 @@ let roles = {
     cat : "Strong Villager"
   },
   "Doctor": {
-    desc: "Every night, select a player to save with (`w!heal [player]`)." + // alias: w!protect
+    desc: "Choose a player to protect every night (`w!heal [player]`)." + // alias: w!protect
           " You will be notified when your protected player was attaked. You cannot protect yourself.",
     aura: "Good",
     team: "Village",
