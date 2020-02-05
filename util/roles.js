@@ -10,9 +10,9 @@ let roles = {
     cat : "Regular Villager"
   },
   "Aura Seer": {
-    desc: "Each night you can select one player to see whether this player is good, evil or unknown (`w!check [player]`)." + // alias: w!see
-          " If the player is good, they are on the village and if they are evil they are on the Werewolves." + 
-          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment can make an Aura Seer see a player as evil, regardless of their actual aura.",
+    desc: "Each night you can select a player to uncover his alignment: Good, Evil, or Unknown (`w!check [player]`)." +
+          " Evil players belong to the werewolves and good players belong to the villagers team.\n" +
+          "Unknown targets can be: Gunner, Jailer, Medium, Alpha werewolf, and all solo players.",
     aura: "Good",
     team: "Village",
     abbr: ["az","aura"],
