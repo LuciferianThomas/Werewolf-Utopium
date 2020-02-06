@@ -636,6 +636,7 @@ module.exports = (client) => {
             let sectTarget = game.players[sl.usedAbilityTonight-1]
 
             if (roles[sectTarget.role] == "Village" || ["Fool","Headhunter"].includes(sectTarget.role)) {
+              sectTarget.sect = true
               fn.getUser(client, sectTarget.id).send(
                 new Discord.RichEmbed()
                   .setTitle("Welcome to the Gang")
@@ -666,10 +667,7 @@ module.exports = (client) => {
                   .setTitle("Welcome to the Gang")
                   .setThumbnail(fn.getEmoji(client, "Sect Member").url)
                   .setDescription(
-                    `**${sectTarget.number} ${nicknames.get(sectTarget.id)} ${fn.getEmoji(
-                      client,
-                      sectTarget.role
-                    )}** is turned into the sect!`
+                    `**${sectTarget.number} ${nicknames.get(sectTarget.id)} ${fn.getEmoji(client, sectTarget.role)}** is turned into the sect!`
                   )
                   .addField(
                     "Sect Members",
@@ -695,6 +693,8 @@ module.exports = (client) => {
             let muted = game.players[ggs[x].usedAbilityTonight-1]
             if (!muted || !muted.alive) continue;
 
+            muted.mute = true
+            
             fn.getUser(client, muted.id).send(
               new Discord.RichEmbed()
                 .setAuthor("Muted!", fn.getEmoji(client, "Grumpy Grandma Mute").url)
@@ -708,17 +708,15 @@ module.exports = (client) => {
             )
           }
 
+          // CLEAR NIGHT SELECTIONS
           for (var x = 0; x < game.players.length; x++)
             Object.assign(game.players[x], {
               usedAbilityTonight: false,
-              enchanted: game.players.find(p => p.role == "Wolf Shaman") ? [] : undefined
+              enchanted: game.players.find(p => p.role == "Wolf Shaman") ? [] : undefined,
+              jailed: false,
+              protectors: [],
+              protected: undefined
             })
-        }
-
-        for (var j = 0; j < game.players.length; j++) {
-          game.players[j].jailed = false
-          game.players[j].protectors = []
-          if (game.players[j].protected) game.players[j].protected = undefined
         }
 
         for (var j = 0; j < game.players.length; j++) {

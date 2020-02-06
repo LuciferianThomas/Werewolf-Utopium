@@ -166,7 +166,7 @@ client.on('message', async message => {
   if (game.currentPhase == -1)
     return fn.broadcast(client, game, `**${nicknames.get(message.author.id)}**: ${content}`, [message.author.id])
   
-  if (game.players.find(p => p.role == "Grumpy Grandma" && p.usedAbilityTonight == gamePlayer.number)) content = "..."
+  if (gamePlayer.mute) content = "..."
   
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
