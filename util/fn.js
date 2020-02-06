@@ -219,26 +219,27 @@ const death = (client, game, number, suicide = false) => {
     // LOVE COUPLE SUICIDE
     if (!deadPlayer.alive && !deadPlayer.suicide && deadPlayer.lover) {
       let otherLover = game.players.find(p => p.number !== deadPlayer.number && p.lover)
-      if (!otherLover.alive) return undefined
+      
+      if (otherLover.alive) {
+        otherLover.alive = false
+        if (game.config.deathReveal) otherLover.roleRevealed = otherLover.role
 
-      otherLover.alive = false
-      if (game.config.deathReveal) otherLover.roleRevealed = otherLover.role
+        broadcastTo(
+          client,
+          game.players.filter(p => !p.left),
+          `${getEmoji(
+            client, `Cupid Lovers`
+          )} **${
+            otherLover.number
+          } ${nicknames.get(otherLover.id)}${
+            game.config.deathReveal
+              ? ` ${getEmoji(client, otherLover.role)}`
+              : ""
+          }** lost the love of their life and has suicided!`
+        )
 
-      broadcastTo(
-        client,
-        game.players.filter(p => !p.left),
-        `${getEmoji(
-          client, `Cupid Lovers`
-        )} **${
-          otherLover.number
-        } ${nicknames.get(otherLover.id)}${
-          game.config.deathReveal
-            ? ` ${getEmoji(client, otherLover.role)}`
-            : ""
-        }** lost the love of their life and has suicided!`
-      )
-
-      game = death(client, game, otherLover.number)
+        game = death(client, game, otherLover.number)
+      }
     }
 
     // SECT SUICIDE
@@ -267,6 +268,14 @@ const death = (client, game, number, suicide = false) => {
         game = death(client, game, sectMember.number)
       }
     }
+  }
+  
+  if (deadPlayer.role == "Seer" && game.players.find(p => p.alive && p.role == "Seer Apprentice")) {
+    let seerApps = game.players.filter(p => p.alive && p.role == "Seer Apprentice")
+    let chosenOne = seerApps[Math.floor(Math.random()*seerApps.length)]
+    
+    chosenOne.role = "Seer"
+    getUser()
   }
 
   return game

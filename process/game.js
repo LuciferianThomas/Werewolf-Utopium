@@ -213,26 +213,25 @@ module.exports = (client) => {
           }
           
           // RED LADY KILL
-          let redLadies = game.players.filter(p => p.role == "Red Lady" && p.usedAbilityTonight)
-          for (var rl of redLadies) {
+          let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight)
+          for (var rl of rls) {
             if (roles[game.players[rl.usedAbilityTonight-1].role].team !== "Village") {
               rl.alive = false
               rl.roleRevealed = "Red Lady"
-              game.lastDeath = game.currentPhase
+              game.lastDeath = game.currentPhase - 1
               
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left),
-                ``
+                `<:Red_Lady_LoveLetter:674854554369785857> **${rl.number} ${nicknames.get(rl.id)} ${fn.getEmoji(client, "Red Lady")
+                }** visited an evil player and died!`
               )
             }
           }
 
           // SERIAL KILLER KILL
-          let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
-              sks = game.players.filter(player => player.alive && player.role == "Serial Killer")
-          for (var x = 0; x < skKills.length; x++) {
-            if (!skKills[x]) continue;
-            let attacked = skKills[x],
+          let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
+          for (var sk of sks) {
+            let attacked = sk.usedAbilityTonight,
                 attackedPlayer = game.players[attacked-1],
                 sk = game.players[sks[x].number-1]
 
@@ -652,6 +651,7 @@ module.exports = (client) => {
 
             if (roles[sectTarget.role] == "Village" || ["Fool","Headhunter"].includes(sectTarget.role)) {
               sectTarget.sect = true
+              game.lastDeath = game.currentPhase - 1
               fn.getUser(client, sectTarget.id).send(
                 new Discord.RichEmbed()
                   .setTitle("Welcome to the Gang")
