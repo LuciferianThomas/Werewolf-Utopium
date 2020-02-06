@@ -44,6 +44,7 @@ module.exports = {
     if (targetPlayer.role == "President")
       return await message.author.send("You cannot stab the President!")
     
+    gamePlayer.killedTonight = true
     gamePlayer.usedAbilityTonight = target
     message.author.send(
       `<:Serial_Killer_Knife:660823278902050826> You selected to stab **${target} ${

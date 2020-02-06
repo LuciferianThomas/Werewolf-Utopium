@@ -62,10 +62,12 @@ module.exports = {
         `<:Gunner_Shoot:660666399332630549> Gunner **${gamePlayer.number} ${nicknames.get(message.author.id)}** shot **${target} ${nicknames.get(targetPlayer.id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""}**.`)
       gamePlayer.roleRevealed = gamePlayer.role
     }
-    if (gamePlayer.role == "Jailer")
+    if (gamePlayer.role == "Jailer") {
       fn.broadcastTo(
         client, game.players.filter(p => !p.left).map(p => p.id), 
         `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${nicknames.get(targetPlayer.id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
+      gamePlayer.killedTonight = true
+    }
     
     if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
     gamePlayer.bullets -= 1

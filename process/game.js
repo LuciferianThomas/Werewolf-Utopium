@@ -701,12 +701,26 @@ module.exports = (client) => {
             }
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
           }
+          
+          // SPIRIT SEER RESULTS
+          let spzs = game.players.filter(p => p.alive && p.role == "Spirit Seer" && p.usedAbilityTonight)
+          for (var spz of spzs) {
+            let targetsKilled = spz.usedAbilityTonight.map(p => game.players[p.number-1].killedTonight)
+            
+            if (targetsKilled[0] || targetsKilled[1]) 
+              fn.getUser(client, spz.id).send(
+                new Discord.RichEmbed()
+                  .setTitle("They were up to something...")
+                  .setThumbnail(fn.getEmoji(client, "Spirit Seer Killed").url)
+                  .setDescription(`**`)
+              )
+          }
 
           // GRUMPY GRANDMA MUTE
-          let ggs = game.players.filter(p => p.role == "Grumpy Grandma" && p.usedAbilityTonight)
+          let ggs = game.players.filter(p => p.alive && p.role == "Grumpy Grandma" && p.usedAbilityTonight)
           for (var gg of ggs) {
             let muted = game.players[gg.usedAbilityTonight-1]
-            if ()
+            if (!muted.alive) continue;
 
             muted.mute = true
             

@@ -66,6 +66,7 @@ module.exports = {
               : ""
           }.`
         )
+        gamePlayer.killedTonight = true
       } else 
         return await message.author.send("You cannot vote at night!")
     }

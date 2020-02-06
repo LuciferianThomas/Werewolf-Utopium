@@ -58,6 +58,7 @@ module.exports = {
 
       game = fn.death(client, game, dousedPlayer.number)
     }
+    gamePlayer.killedTonight = true
     gamePlayer.usedAbilityTonight = true
 
     QuickGames[index] = game

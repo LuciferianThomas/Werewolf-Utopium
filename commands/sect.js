@@ -43,6 +43,7 @@ module.exports = {
     if (targetPlayer.sect)
       return await message.author.send("This player is already in the sect!")
     
+    gamePlayer.killedTonight = true
     gamePlayer.usedAbilityTonight = targetPlayer.number
     
     message.author.send(
