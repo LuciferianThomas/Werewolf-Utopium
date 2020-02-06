@@ -748,7 +748,8 @@ module.exports = (client) => {
           fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
           fn.addXP(game.players.filter(p => (roles[p.role].team == "Werewolves" || p.role == "Zombie") && !p.suicide), 75)
           fn.addXP(game.players.filter(p => ["Headhunter","Fool","Bomber","Arsonist","Corruptor"].includes(p.role) && !p.suicide), 100)
-          fn.addXP(game.players.filter(p => p.role == "Sect Leader" && !p.suicide), 120)
+          fn.addXP(game.players.filter(p => p.role == "Sect Leader" && !p.suicide), 70)
+          fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
           fn.addXP(game.players.filter(p => p.role == "Serial Killer" && !p.suicide), 250)
           fn.addXP(game.players.filter(p => !p.left), 15)
           fn.addWin(game, game.players.filter(p => !p.suicide && roles[p.role].team != "Village").map(p => p.number))
@@ -763,15 +764,16 @@ module.exports = (client) => {
             client, game.players.filter(p => !p.left),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(fn.getEmoji(client, alive.find(p => roles[p.role].team == "Solo")).url)
+              .setThumbnail(fn.getEmoji(client, "Sect Leader").url)
               .setDescription(
                 `${alive.find(p => roles[p.role].team == "Solo")} **${alive.find(p => roles[p.role].team == "Solo").number} ` +
                 `${fn.getUser(client, alive.find(p => roles[p.role].team == "Solo").id)}** wins!`
               )
           )
-          fn.addXP(alive.find(p => roles[p.role].team == "Solo"), 250)
+          fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
+          fn.addXP(game.players.filter(p => p.role == "Sect Leader" && !p.suicide), 70)
           fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addWin(game, [alive.find(p => roles[p.role].team == "Solo").number], "Solo")
+          fn.addWin(game, alive.filter(p => p.sect).map(p => p.number), "Sect")
           continue;
         }
 
@@ -828,6 +830,7 @@ module.exports = (client) => {
             game.players.filter(
               p =>
                 !p.suicide &&
+                !p.sect && 
                 (roles[p.role].team == "Village" ||
                   (p.role == "Headhunter" &&
                     !game.players.find(pl => pl.headhunter == p.number).alive))
@@ -837,6 +840,7 @@ module.exports = (client) => {
           fn.addWin(game, game.players.filter(
             p =>
               !p.suicide &&
+              !p.sect &&
               (roles[p.role].team == "Village" ||
                 (p.role == "Headhunter" &&
                   !game.players.find(pl => pl.headhunter == p.number).alive))
