@@ -756,7 +756,7 @@ module.exports = (client) => {
 
         let alive = game.players.filter(p => p.alive)
 
-        if ((alive.length == 1 && roles[alive[0].role].team == "Solo" && alive[0].role != "Headhunter") ||
+        if ((alive.length == 1 && ['Arsonist','Bomber','Cannibal','Corruptor','Illusionist']) ||
             (alive.length == 2 && alive.map(p => roles[p.role].team).includes("Solo") && !alive.map(p => p.role).includes("Headhunter") && alive.map(p => p.role).includes("Jailer"))) {
           game.currentPhase = 999
           fn.broadcastTo(
