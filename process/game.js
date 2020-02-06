@@ -742,17 +742,33 @@ module.exports = (client) => {
             if (!target.killedBy) continue;
             
             let one = Math.floor(Math.random()*2) == 1
-            let random = game.players.filter()
-            if (one)
+            let other = game.players.filter(p => p.alive && p.number !== target.killedBy.number && p.number !== sheriff.number)
+            if (other.length) {
+              let random = other[Math.floor(Math.random()*other.length)]
+
               fn.getUser(client, sheriff.id).send(
                 new Discord.RichEmbed()
-                  .setTitle("Good for tonight")
-                  .setThumbnail(fn.getEmoji(client, "Spirit Seer NotKilled").url)
+                  .setTitle("You guys were up for something...")
+                  .setThumbnail(fn.getEmoji(client, "Sheriff Suspect").url)
                   .setDescription(
-                    `**${target.killedBy.number} ${nicknames.get(target.killedBy.id)
-                    }** or **${random.number} ${nicknames.get(random.id)}** killed last night.`
+                    one ? `**${target.killedBy.number} ${nicknames.get(target.killedBy.id)
+                    }** or **${random.number} ${nicknames.get(random.id)}** killed **${target.number} ${nicknames.get(target.id)}** last night.` 
+                    : `**${random.number} ${nicknames.get(random.id)}** or **${target.killedBy.number} ${nicknames.get(target.killedBy.id)
+                    }** killed **${target.number} ${nicknames.get(target.id)}** last night.` 
                   )
               )
+            }
+            else {
+              fn.getUser(client, sheriff.id).send(
+                new Discord.RichEmbed()
+                  .setTitle("You were up for something...")
+                  .setThumbnail(fn.getEmoji(client, "Sheriff Suspect").url)
+                  .setDescription(
+                    `**${target.killedBy.number} ${nicknames.get(target.killedBy.id)
+                    }** killed **${target.number} ${nicknames.get(target.id)}** last night.`
+                  )
+              )
+            }
           }
 
           // GRUMPY GRANDMA MUTE
