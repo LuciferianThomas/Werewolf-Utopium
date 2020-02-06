@@ -210,7 +210,22 @@ module.exports = (client) => {
             for (var y of game.players[revivedPlayers[x].number-1].revive)
               game.players[y-1].revUsed = true
             game.players[revivedPlayers[x].number-1].revive = undefined
-          }   
+          }
+          
+          // RED LADY KILL
+          let redLadies = game.players.filter(p => p.role == "Red Lady" && p.usedAbilityTonight)
+          for (var rl of redLadies) {
+            if (roles[game.players[rl.usedAbilityTonight-1].role].team !== "Village") {
+              rl.alive = false
+              rl.roleRevealed = "Red Lady"
+              game.lastDeath = game.currentPhase
+              
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                ``
+              )
+            }
+          }
 
           // SERIAL KILLER KILL
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
