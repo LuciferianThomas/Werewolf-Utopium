@@ -205,9 +205,8 @@ let roles = {
     cat : "Regular Villager"
   }, 
   "Spirit Seer": {
-  	desc: "Every night, watch 2 players with (`w!watch [player]`)." +
-          " If one or more of them have killed, you will receive red spirits." +
-          " If none of them killed, you will receive blue spirits.", 
+  	desc: "Each night you can select two players (`w!spirit [player]`)." +
+          " At the beginning of the next day you will be informed if either of those two players has killed last night.",
     aura: "Good",
     team: "Village",
     abbr: ["ss", "sz", "spirit", "spz", "sps"],
