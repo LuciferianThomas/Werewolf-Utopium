@@ -203,7 +203,7 @@ let roles = {
     cat : "Regular Villager"
   }, 
   "Spirit Seer": {
-  	desc: "Each night you can select two players (`w!spirit [player]`)." +
+  	desc: "Each night you can select two players (`w!spirit [player1] [player2]`)." +
           " At the beginning of the next day you will be informed if either of those two players has killed last night.",
     aura: "Good",
     team: "Village",
