@@ -31,11 +31,9 @@ module.exports = {
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only check on a player at night.")
     
-    if (gamePlayer.role == "Wolf Seer" && game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length == 1)
+    if (gamePlayer.role == "Wolf Seer" && 
+        (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length == 1 || gamePlayer.resigned))
       return await message.author.send("You cannot check on a player if you are the last werewolf.")
-      
-    if (gamePlayer.usedAbilityTonight)
-      return await message.author.send("You have already checked on a player tonight.")
     
     if (gamePlayer.role == "Spirit Seer") {
       let targetA = parseInt(args[0]),
@@ -53,6 +51,9 @@ module.exports = {
       gamePlayer.usedAbilityTonight = [targetA, targetB]
     }
     else {
+      if (gamePlayer.usedAbilityTonight)
+        return await message.author.send("You have already checked on a player tonight.")
+      
       let target = parseInt(args[0])
       if (isNaN(target) || target > game.players.length || target < 1)
         return await message.author.send("Invalid target.")

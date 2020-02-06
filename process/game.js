@@ -412,7 +412,7 @@ module.exports = (client) => {
             let attacked = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)[0]
             let attackedPlayer = game.players[attacked-1]
 
-            let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.left).map(p => p.id)
+            let wolves = game.players.filter(p => roles[p.role].team == "Werewolves" && !p.left)
 
             let wwStrength = ["Werewolf", "Junior Werewolf", "Nightmare Werewolf", "Wolf Shaman", "Guardian Wolf", "Werewolf Berserk", "Alpha Werewolf", "Wolf Seer"]
 
@@ -430,14 +430,14 @@ module.exports = (client) => {
 
             if (["Arsonist","Bomber","Cannibal","Illusionist","Serial Killer"].includes(attackedPlayer.role)) {
               fn.broadcastTo(
-                client, wolves,
+                client, wolves.map(p => p.id),
                 `**${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** cannot be killed!`
               )
             }
             else if (attackedPlayer.protectors.length) {
               if (!game.frenzy) {
                 fn.broadcastTo(
-                  client, wolves,
+                  client, wolves.map(p => p.id),
                   `**${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** cannot be killed!`
                 )
               }
@@ -630,6 +630,7 @@ module.exports = (client) => {
             else {
               game.lastDeath = game.currentPhase - 1
               attackedPlayer.alive = false
+              attackedPlayer.killedBy = wolves.
               if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
@@ -705,14 +706,27 @@ module.exports = (client) => {
           // SPIRIT SEER RESULTS
           let spzs = game.players.filter(p => p.alive && p.role == "Spirit Seer" && p.usedAbilityTonight)
           for (var spz of spzs) {
-            let targetsKilled = spz.usedAbilityTonight.map(p => game.players[p.number-1].killedTonight)
+            let targets = spz.usedAbilityTonight.map(p => game.players[p.number-1])
             
-            if (targetsKilled[0] || targetsKilled[1]) 
+            if (targets[0].killedTonight || targets[1].killedTonight) 
               fn.getUser(client, spz.id).send(
                 new Discord.RichEmbed()
-                  .setTitle("They were up to something...")
+                  .setTitle("There was blood...")
                   .setThumbnail(fn.getEmoji(client, "Spirit Seer Killed").url)
-                  .setDescription(`**`)
+                  .setDescription(
+                    `**${targets[0].number} ${nicknames.get(targets[0].id)
+                    }** and/or **${targets[1].number} ${nicknames.get(targets[1].id)}** killed last night!`
+                  )
+              )
+            else 
+              fn.getUser(client, spz.id).send(
+                new Discord.RichEmbed()
+                  .setTitle("Good for tonight")
+                  .setThumbnail(fn.getEmoji(client, "Spirit Seer NotKilled").url)
+                  .setDescription(
+                    `Neither of **${targets[0].number} ${nicknames.get(targets[0].id)
+                    }** or **${targets[1].number} ${nicknames.get(targets[1].id)}** killed last night.`
+                  )
               )
           }
 
