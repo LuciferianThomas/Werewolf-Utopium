@@ -703,10 +703,10 @@ module.exports = (client) => {
           }
 
           // GRUMPY GRANDMA MUTE
-          let ggs = game.players.filter(p => p.role == "Grumpy Grandma")
-          for (var x = 0; x < ggs.length; x++) {
-            let muted = game.players[ggs[x].usedAbilityTonight-1]
-            if (!muted || !muted.alive) continue;
+          let ggs = game.players.filter(p => p.role == "Grumpy Grandma" && p.usedAbilityTonight)
+          for (var gg of ggs) {
+            let muted = game.players[gg.usedAbilityTonight-1]
+            if ()
 
             muted.mute = true
             
@@ -736,6 +736,7 @@ module.exports = (client) => {
 
         for (var j = 0; j < game.players.length; j++) {
           game.players[j].vote = null
+          if (game.currentPhase % 3 == 0) game.players[j].mute = false
           if (game.currentPhase % 3 == 0 && game.players[j].role == "Tough Guy" && !game.players[j].health) {
             Object.assign(game.players[j], {
               health: 1,
@@ -1004,8 +1005,8 @@ module.exports = (client) => {
           )
 
         game.currentPhase = 999
-       // fn.addXP(game.players, 15)
-       // fn.addXP(game.players.filter(p => !p.left), 15)
+        // fn.addXP(game.players, 15)
+        fn.addXP(game.players.filter(p => !p.left), 15)
         fn.broadcastTo(
           client, game.players.filter(p => !p.left),
           "<:red_tick:597374220267290624> There is an error causing this game to be terminated." +

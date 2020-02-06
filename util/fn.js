@@ -275,7 +275,12 @@ const death = (client, game, number, suicide = false) => {
     let chosenOne = seerApps[Math.floor(Math.random()*seerApps.length)]
     
     chosenOne.role = "Seer"
-    getUser()
+    getUser(client, chosenOne.id).send(
+      new Discord.RichEmbed()
+        .setTitle("Master")
+        .setThumbnail(getEmoji(client, "Seer").url)
+        .setDescription("The Seer was killed. You are now a Seer!")
+    )
   }
 
   return game
