@@ -159,6 +159,7 @@ const addXP = (users, xp) => {
 
 const addWin = (game, winners, team) => {
   if (game.mode == 'custom') return undefined
+  
   for (var i = 0; i < game.players.length; i++) {
     if (game.players[i].suicide) continue;
     if (winners.includes(game.players[i].number))

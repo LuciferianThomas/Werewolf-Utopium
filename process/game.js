@@ -640,16 +640,50 @@ module.exports = (client) => {
                 new Discord.RichEmbed()
                   .setTitle("Welcome to the Gang")
                   .setThumbnail(fn.getEmoji(client, "Sect Member").url)
-                  .setDescription(`You have been turned into **${sl.number} ${nicknames.get(sl.id)}**'s sect!'`)
+                  .setDescription(
+                    `You have been turned into **${sl.number} ${nicknames.get(
+                      sl.id
+                    )}**'s sect!'`
+                  )
                   .addField(
                     "Sect Members",
-                    game.players.filter(p => p.sect)
+                    game.players
+                      .filter(p => p.sect)
+                      .map(
+                        p =>
+                          `${p.number} ${nicknames.get(p.id)} ${fn.getEmoji(
+                            client, p.role
+                          )}${
+                            !p.alive ? ` ${fn.getEmoji(client, "Death")}` : ""
+                          }`
+                      )
                   )
               )
               
               fn.broadcastTo(
                 client, game.players.filter(p => p.sect),
-                
+                new Discord.RichEmbed()
+                  .setTitle("Welcome to the Gang")
+                  .setThumbnail(fn.getEmoji(client, "Sect Member").url)
+                  .setDescription(
+                    `**${sectTarget.number} ${nicknames.get(sectTarget.id)} ${fn.getEmoji(
+                      client,
+                      sectTarget.role
+                    )}** is turned into the sect!`
+                  )
+                  .addField(
+                    "Sect Members",
+                    game.players
+                      .filter(p => p.sect)
+                      .map(
+                        p =>
+                          `${p.number} ${nicknames.get(p.id)} ${fn.getEmoji(
+                            client, p.role
+                          )}${
+                            !p.alive ? ` ${fn.getEmoji(client, "Death")}` : ""
+                          }`
+                      )
+                  )
               )
             }
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
