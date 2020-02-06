@@ -33,17 +33,18 @@ module.exports = {
       new Discord.RichEmbed()
         .setAuthor(`User Profile | ${nicknames.get(target.id).replace(/\\_/g, "_") || `\* ${target.username}`}`)
         .setThumbnail(target.displayAvatarURL)
-        .addField("Games played", player.wins.length + player.loses.length + player.suicides, true)
+        .addField("Games played", allGamesPlayed.length + player.suicides, true)
         .addField("Coins", player.coins, true)
         .addField("XP", player.xp, true)
         .addField(
-          "Statistics",
-          `**Wins:** ${player.wins.length} (${Math.floor(player.wins.length/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)\n` +
-          `**Defeats:** ${player.loses.length} (${Math.floor(player.loses.length/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)\n` +
-          `**Suicides:** ${player.suicides} (${Math.floor(player.suicides/(player.wins.length + player.loses.length + player.suicides)*10000)/100}%)`
+          "**Statistics**",
+          `**Games played:** ${allGamesPlayed.length + player.suicides}\n` +
+          `**Wins:** ${player.wins.length} (${Math.floor(player.wins.length/(allGamesPlayed.length + player.suicides)*10000)/100}%)\n` +
+          `**Defeats:** ${player.loses.length} (${Math.floor(player.loses.length/(allGamesPlayed.length + player.suicides)*10000)/100}%)\n` +
+          `**Suicides:** ${player.suicides} (${Math.floor(player.suicides/(allGamesPlayed.length + player.suicides)*10000)/100}%)`
         )
         .addField(
-          "Teams",
+          "**Teams**",
           `**Wins as Village:** ${player.wins.filter(x => x.team == "Village").length} (${Math.floor(player.wins.filter(x => x.team == "Village").length/allGamesPlayed.filter(x => x.team == "Village").length*10000)/100}%)\n` +
           `**Defeats as Village:** ${player.loses.filter(x => x.team == "Village").length} (${Math.floor(player.loses.filter(x => x.team == "Village").length/allGamesPlayed.filter(x => x.team == "Village").length*10000)/100}%)\n` +
           `**Wins as Werewolves:** ${player.wins.filter(x => x.team == "Werewolves").length} (${Math.floor(player.wins.filter(x => x.team == "Werewolves").length/allGamesPlayed.filter(x => x.team == "Werewolves").length*10000)/100}%)\n` +
