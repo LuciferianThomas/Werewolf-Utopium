@@ -7,7 +7,8 @@ let roles = {
     aura: "Good",
     team: "Village",
     abbr: ["reg","vil","vill","forkman","forkmen"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    n1m : ""
   },
   "Aura Seer": {
     desc: "Each night you can select a player to uncover his alignment: Good, Evil, or Unknown (`w!check [player]`)." +

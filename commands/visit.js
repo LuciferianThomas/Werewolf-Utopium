@@ -44,7 +44,7 @@ module.exports = {
     
     gamePlayer.usedAbilityTonight = targetPlayer.number
     message.author.send(
-      `<:Red_Lady:660662479206088724> You decided to visit **${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** tonight.`
+      `<:Red_Lady_LoveLetter:674854554369785857> You decided to visit **${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** tonight.`
     )
     
     QuickGames[index] = game

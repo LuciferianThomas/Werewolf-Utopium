@@ -757,6 +757,24 @@ module.exports = (client) => {
         let alive = game.players.filter(p => p.alive),
             aliveRoles = alive.map(p => p.role)
 
+        if (aliveRoles.includes("Sect Leader") && alive.filter(p => !p.sect).length == 0) {
+          game.currentPhase = 999
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(fn.getEmoji(client, alive.find(p => roles[p.role].team == "Solo")).url)
+              .setDescription(
+                `${alive.find(p => roles[p.role].team == "Solo")} **${alive.find(p => roles[p.role].team == "Solo").number} ` +
+                `${fn.getUser(client, alive.find(p => roles[p.role].team == "Solo").id)}** wins!`
+              )
+          )
+          fn.addXP(alive.find(p => roles[p.role].team == "Solo"), 250)
+          fn.addXP(game.players.filter(p => !p.left), 15)
+          fn.addWin(game, [alive.find(p => roles[p.role].team == "Solo").number], "Solo")
+          continue;
+        }
+
         if ((alive.length == 1 && ['Arsonist','Bomber','Cannibal','Corruptor','Illusionist','Serial Killer'].includes(aliveRoles[0])) ||
             (alive.length == 2 && aliveRoles.includes("Jailer") && aliveRoles.some(r => ['Arsonist','Bomber','Cannibal','Corruptor','Illusionist','Serial Killer'].indexOf(r) >= 0))) {
           game.currentPhase = 999
@@ -878,21 +896,21 @@ module.exports = (client) => {
               game.players[gunners[i]-1].shotToday = false
           }
 
-          fn.broadcastTo(
-            client,
-            game.players.filter(
-              p => p.alive &&
-                  !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
-                    "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma",
-                    game.currentPhase == 0 ? "Cupid" : "",
-                    "Werewolf","Alpha Werewolf","Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf",
-                    "Werewolf Berserk","Sorcerer",
-                    "Serial Killer","Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
-            new Discord.RichEmbed()
-              .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
-              .setDescription("Nothing to do right now.\n" +
-                              " Go back to sleep!"),
-          )
+          // fn.broadcastTo(
+          //   client,
+          //   game.players.filter(
+          //     p => p.alive &&
+          //         !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
+          //           "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma",
+          //           game.currentPhase == 0 ? "Cupid" : "",
+          //           "Werewolf","Alpha Werewolf","Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf",
+          //           "Werewolf Berserk","Sorcerer",
+          //           "Serial Killer","Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
+          //   new Discord.RichEmbed()
+          //     .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
+          //     .setDescription("Nothing to do right now.\n" +
+          //                     " Go back to sleep!"),
+          // )
 
           if (game.players.find(p => p.role == "Jailer")) {
             let jailer = game.players.find(p => p.role == "Jailer")
