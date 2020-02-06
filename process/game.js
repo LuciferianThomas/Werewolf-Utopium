@@ -754,10 +754,11 @@ module.exports = (client) => {
           fn.addWin(game, game.players.filter(p => !p.suicide && roles[p.role].team != "Village").map(p => p.number))
         }
 
-        let alive = game.players.filter(p => p.alive)
+        let alive = game.players.filter(p => p.alive),
+            aliveRoles = alive.map(p => p.role)
 
-        if ((alive.length == 1 && ['Arsonist','Bomber','Cannibal','Corruptor','Illusionist']) ||
-            (alive.length == 2 && alive.map(p => roles[p.role].team).includes("Solo") && !alive.map(p => p.role).includes("Headhunter") && alive.map(p => p.role).includes("Jailer"))) {
+        if ((alive.length == 1 && ['Arsonist','Bomber','Cannibal','Corruptor','Illusionist','Serial Killer'].includes(aliveRoles[0])) ||
+            (alive.length == 2 && aliveRoles.includes("Jailer") && aliveRoles.some(r => ['Arsonist','Bomber','Cannibal','Corruptor','Illusionist','Serial Killer'].indexOf(r) >= 0))) {
           game.currentPhase = 999
           fn.broadcastTo(
             client, game.players.filter(p => !p.left),
