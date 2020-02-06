@@ -188,9 +188,7 @@ let roles = {
     cat : "Strong Villager"
   },
   "Seer Apprentice": {
-    desc: "You start out as an ordinary villager with no special powers." +
-          " However, if the <:Seer:658633721448235019> Seer dies you will become the new Seer." +
-          " If the original seer is revived, you will remain a Seer.",
+    desc: "You are a normal villager until the seer dies, at which point you become the new seer.",
     aura: "Good",
     team: "Village",
     abbr: ["sapp", "sa", "app", "seer app"],
