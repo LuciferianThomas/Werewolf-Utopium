@@ -33,7 +33,6 @@ module.exports = {
       new Discord.RichEmbed()
         .setAuthor(`User Profile | ${nicknames.get(target.id).replace(/\\_/g, "_") || `\* ${target.username}`}`)
         .setThumbnail(target.displayAvatarURL)
-        .addField("Games played", allGamesPlayed.length + player.suicides, true)
         .addField("Coins", player.coins, true)
         .addField("XP", player.xp, true)
         .addField(
