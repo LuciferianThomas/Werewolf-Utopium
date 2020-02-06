@@ -210,7 +210,7 @@ module.exports = (client) => {
             for (var y of game.players[revivedPlayers[x].number-1].revive)
               game.players[y-1].revUsed = true
             game.players[revivedPlayers[x].number-1].revive = undefined
-          }          
+          }   
 
           // SERIAL KILLER KILL
           let skKills = game.players.filter(player => player.alive && player.role == "Serial Killer").map(player => player.vote),
@@ -758,6 +758,22 @@ module.exports = (client) => {
         let alive = game.players.filter(p => p.alive),
             aliveRoles = alive.map(p => p.role)
 
+        if (alive.filter(p => p.role != "Zombie").length == 0) {
+          game.currentPhase = 999
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(fn.getEmoji(client, "Zombie").url)
+              .setDescription(
+                `The zombies wins!`
+              )
+          )
+          fn.addXP(game.players.filter(p => p.role == "Zombie" && !p.suicide), 75)
+          fn.addWin(game, alive.filter(p => p.sect).map(p => p.number))
+          continue;
+        }
+
         if (aliveRoles.includes("Sect Leader") && alive.filter(p => !p.sect).length == 0) {
           game.currentPhase = 999
           fn.broadcastTo(
@@ -766,14 +782,13 @@ module.exports = (client) => {
               .setTitle("Game has ended.")
               .setThumbnail(fn.getEmoji(client, "Sect Leader").url)
               .setDescription(
-                `${alive.find(p => roles[p.role].team == "Solo")} **${alive.find(p => roles[p.role].team == "Solo").number} ` +
-                `${fn.getUser(client, alive.find(p => roles[p.role].team == "Solo").id)}** wins!`
+                `The sect wins!`
               )
           )
           fn.addXP(game.players.filter(p => p.sect && !p.suicide), 50)
           fn.addXP(game.players.filter(p => p.role == "Sect Leader" && !p.suicide), 70)
           fn.addXP(game.players.filter(p => !p.left), 15)
-          fn.addWin(game, alive.filter(p => p.sect).map(p => p.number), "Sect")
+          fn.addWin(game, alive.filter(p => p.sect).map(p => p.number))
           continue;
         }
 
