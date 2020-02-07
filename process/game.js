@@ -292,7 +292,7 @@ module.exports = (client) => {
                           nicknames.get(attackedPlayer.id)
                         }** who was attacked by **${sk.number} ${
                           nicknames.get(sk.id)
-                        } ${client.getEmoji(client, sk.role)}**.\n` +
+                        } ${fn.getEmoji(client, sk.role)}**.\n` +
                         "You have been wounded and will die at the end of the day."
                       )
                   )
@@ -308,7 +308,7 @@ module.exports = (client) => {
                           nicknames.get(attackedPlayer.id)
                         }** who was attacked by **${sk.number} ${
                           nicknames.get(sk.id)
-                        } ${client.getEmoji(client, sk.role)}**.\n` +
+                        } ${fn.getEmoji(client, sk.role)}**.\n` +
                         "You have been wounded and will die at the end of the day."
                       )
                   )
@@ -387,7 +387,7 @@ module.exports = (client) => {
                   .setDescription(
                     `You were attacked by **${sk.number} ${
                       nicknames.get(sk.id)
-                    } ${client.getEmoji(client, sk.role)}**.\n` +
+                    } ${fn.getEmoji(client, sk.role)}**.\n` +
                     "You have been wounded and will die at the end of the day."
                   )
               )
@@ -527,7 +527,7 @@ module.exports = (client) => {
                           nicknames.get(attackedPlayer.id)
                         }** who was attacked by **${weakestWW.number} ${
                           nicknames.get(weakestWW.id)
-                        } ${client.getEmoji(client, weakestWW.role)}**.\n` +
+                        } ${fn.getEmoji(client, weakestWW.role)}**.\n` +
                         "You have been wounded and will die at the end of the day."
                       )
                   )
@@ -561,8 +561,8 @@ module.exports = (client) => {
                       nicknames.get(weakestWW.id)
                     } ${
                       game.config.deathReveal
-                        ? client.getEmoji(client, weakestWW.role)
-                        : client.getEmoji(client, "Fellow Werewolf")
+                        ? fn.getEmoji(client, weakestWW.role)
+                        : fn.getEmoji(client, "Fellow Werewolf")
                     }**.`
                   )
 
@@ -626,7 +626,7 @@ module.exports = (client) => {
                   .setDescription(
                     `You were attacked by **${weakestWW.number} ${
                       nicknames.get(weakestWW.id)
-                    } ${client.getEmoji(client, weakestWW.role)}**.\n` +
+                    } ${fn.getEmoji(client, weakestWW.role)}**.\n` +
                     "You have been wounded and will die at the end of the day."
                   )
               )
@@ -789,6 +789,7 @@ module.exports = (client) => {
           }
 
           // GRUMPY GRANDMA MUTE
+          console.log(ggs)
           for (var gg of ggs) {
             let muted = game.players[gg.usedAbilityTonight-1]
             if (!muted.alive) continue;
