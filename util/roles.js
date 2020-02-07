@@ -8,23 +8,27 @@ let roles = {
     team: "Village",
     abbr: ["reg","vil","vill","forkman","forkmen"],
     cat : "Regular Villager",
-    n1m : ""
+    nite: "Nothing to do. Go back to sleep!"
   },
   "Aura Seer": {
-    desc: "Each night you can select a player to uncover his alignment: Good, Evil, or Unknown (`w!check [player]`)." +
+    desc: "Each night you can select a player to uncover their alignment: Good, Evil, or Unknown (`w!check [player]`)." +
           " Evil players belong to the werewolves and good players belong to the villagers team.\n" +
           "Unknown targets can be: Gunner, Jailer, Medium, Alpha werewolf, and all solo players.",
     aura: "Good",
     team: "Village",
     abbr: ["az","aura"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select a player to uncover their alignment (`w!check [player]`)."
   }, 
   "Avenger": {
     desc: "After the first night you can select a player to kill when you die (`w!avenge [player]`).",
     aura: "Good",
     team: "Village",
     abbr: ["hunter"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    day : "Select a player to kill when you die (`w!avenge [player]`).",
+    nit1: "Nothing to do. Go back to sleep!",
+    nite: "Select a player to kill when you die (`w!avenge [player]`)."
   }, 
   "Beast Hunter": {
     desc: "At night you can place a trap on a person (`w!trap [player]`) which will become active the following night." +
@@ -35,7 +39,8 @@ let roles = {
     aura: "Unknown",
     team: "Village",
     abbr: ["bh"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select a player to kill when you die (`w!avenge [player]`)."
   },
   "Bodyguard": {
     desc: "You can choose one player to protect every night (`w!protect [player]`)." +
@@ -231,7 +236,7 @@ let roles = {
     cat : "Werewolf"
   },
   "Alpha Werewolf": {
-    desc: "You are a regular werewolf except when you vote with the werewolves (`w!vote [player]`), your vote counts as double!",
+    desc: "You are a regular werewolf, except when your vote counts as double.",
     aura: "Unknown",
     team: "Werewolves",
     abbr: ["aww","alpha", "alpha ww"],
@@ -269,17 +274,14 @@ let roles = {
     cat : "Werewolf"
   },
   "Sorcerer": {
-    desc: "Each night you can see the roles of a player (`w!check [player]`)." +
-          " However, you cannot see the roles of the other werewolves nor can you talk to them." +
-          " The role of the checked player will not be known by the other werewolves." +
-          " You can however find out the other wolves by seeing their roles." +
-          " You cannot be killed by the Priest's Holy Water.",
+    desc: "Each night you can select a player to uncover their role (`w!check [player]`)." +
+          " You cannot vote or talk with the werewolves at night.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["sorc"]
   },
   "Werewolf Berserk": {
-    desc: "Once per game, you can active a werewolves \"frenzy\" during the day." +
+    desc: "Once per game, you can active a werewolves \"frenzy\" during the day (`w!frenzy`)." +
           " If during the night your selected victim is being protected, your victim and all protectors of your victim will die." +
           " The frenzy will only be announced to the werewolves.",
     aura: "Evil",
@@ -288,17 +290,15 @@ let roles = {
     cat : "Werewolf"
   },
   "Wolf Seer": {
-    desc: "Each night you can uncover the role of one player (`w!check [player]`)." +
-          " You can talk with the other werewolves and provide any information you found." +
-          " However, you cannot vote on a player to kill unless you resign your ability to see roles." +
-          " If you are the last werewolf alive you instantly resign your seeing ability.",
+    desc: "Each night you can select a player to uncover their role (`w!check [player]`)." +
+          " If you are the last werewolf or you resign your ability (`w!resign`), you become a regular werewolf.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["wws", "wwz", "wwseer", "ww seer"],
     cat : "Werewolf"
   },
   "Wolf Shaman": {
-    desc: "During the day you can enchant another player." +
+    desc: "During the day you can enchant another player (`w!enchant [player]`)." +
           " For investigators, this player will appear to be a wolf shaman at the next night." +
           " If you are the last werewolf, you cannot enchant anybody.",
     aura: "Evil",
