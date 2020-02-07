@@ -990,57 +990,34 @@ module.exports = (client) => {
           continue;
         }
 
-        // fn.broadcastTo(
-        //   client, game.players.filter(p => !p.left),
-        //   game.currentPhase % 3 == 0
-        //     ? `Night ${Math.floor(game.currentPhase / 3) + 1} has started!`
-        //     : game.currentPhase % 3 == 1
-        //     ? new Discord.RichEmbed()
-        //         .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
-        //         .setThumbnail(fn.getEmoji(client, "Day").url)
-        //         .setDescription("Start discussing!")
-        //     : !game.noVoting
-        //     ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length / 2)
-        //       } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
-        //     : "There will be no voting today!"
-        // )
+        fn.broadcastTo(
+          client, game.players.filter(p => !p.left && !p.alive),
+          game.currentPhase % 3 == 0
+            ? `Night ${Math.floor(game.currentPhase / 3) + 1} has started!`
+            : game.currentPhase % 3 == 1
+            ? new Discord.RichEmbed()
+                .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
+                .setThumbnail(fn.getEmoji(client, "Day").url)
+                .setDescription("Start discussing!")
+            : !game.noVoting
+            ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length / 2)
+              } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+            : "There will be no voting today!"
+        )
         
         switch (game.currentPhase % 3) {
           case 0:
-            for (var player of game.players.filter(p =>))
+            for (var player of game.players.filter(p => p.alive && (!p.jailed && game.players.find(p => p.role == "Jailer").alive))) {
+              fn.getUser(client, player.id).send(
+                new Discord.RichEmbed()
+                  .setTitle(`Night ${Math.floor(game.currentPhase / 3) + 1} has started!`)
+                  .setThumbnail(fn.getEmoji(client, "Night").url)
+                  .setDescription(roles[player.role].nite || "Nothing to do. Go back to sleep!")
+              )
+            }
         }
 
         if (game.currentPhase % 3 == 0) {
-          if (game.frenzy) fn.broadcastTo(
-            client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer"),
-            new Discord.RichEmbed()
-              .setTitle("Frenzy")
-              .setThumbnail(fn.getEmoji(client, "Werewolf Berserk Frenzy").url)
-              .setDescription("The werewolf berserk activated frenzy!")
-          )
-
-          if (game.roles.includes("Gunner")) {
-            let gunners = game.players.filter(p => p.role == "Gunner").map(p => p.number)
-            for (var x = 0; x < gunners.length; x++) 
-              game.players[gunners[i]-1].shotToday = false
-          }
-
-          // fn.broadcastTo(
-          //   client,
-          //   game.players.filter(
-          //     p => p.alive &&
-          //         !["Doctor","Bodyguard","Tough Guy","Jailer","Red Lady","Marksman","Seer","Aura Seer","Spirit Seer",
-          //           "Detective","Medium","Witch","Avenger","Beast Hunter","Grumpy Grandma",
-          //           game.currentPhase == 0 ? "Cupid" : "",
-          //           "Werewolf","Alpha Werewolf","Wolf Shaman","Wolf Seer","Junior Werewolf","Nightmare Werewolf",
-          //           "Werewolf Berserk","Sorcerer",
-          //           "Serial Killer","Arsonist","Bomber","Sect Leader","Zombie","Corruptor","Cannibal"].includes(p.role)).map(p => p.id), 
-          //   new Discord.RichEmbed()
-          //     .setAuthor(`Night`, fn.getEmoji(client, "Night").url)
-          //     .setDescription("Nothing to do right now.\n" +
-          //                     " Go back to sleep!"),
-          // )
-
           if (game.players.find(p => p.role == "Jailer")) {
             let jailer = game.players.find(p => p.role == "Jailer")
 
@@ -1062,7 +1039,7 @@ module.exports = (client) => {
 
                 fn.getUser(client, jailer.id).send(
                   new Discord.RichEmbed()
-                    .setTitle(`Jail`)
+                    .setTitle(`Night ${Math.floor(game.currentPhase / 3) + 1} has started!`)
                     .setThumbnail(fn.getEmoji(client, "Jail").url)
                     .setDescription(`**${jailed.number} ${nicknames.get(jailed.id)}** is now jailed!\nYou can talk to them or shoot them (\`w!execute\`).`)
                 )
@@ -1070,7 +1047,7 @@ module.exports = (client) => {
                 fn.getUser(client, jailed.id)
                   .send(
                     new Discord.RichEmbed()
-                      .setTitle(`Jailed`)
+                      .setTitle(`Night ${Math.floor(game.currentPhase / 3) + 1} has started!`)
                       .setThumbnail(fn.getEmoji(client, "Jail").url)
                       .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
                   )
@@ -1080,13 +1057,24 @@ module.exports = (client) => {
             else if (jailer.alive) {
               fn.getUser(client, jailer.id).send(
                 new Discord.RichEmbed()
-                    .setTitle(`Jail`)
-                    .setThumbnail(fn.getEmoji(client, "Jail").url)
+                  .setTitle(`Night ${Math.floor(game.currentPhase / 3) + 1} has started!`)
+                  .setThumbnail(fn.getEmoji(client, "Night").url)
                   .setDescription("You did not select a player last day or your target could not be jailed.\n" +
                                   " Go back to sleep!")
               )
             }
           }
+          
+          if (game.frenzy) fn.broadcastTo(
+            client, game.players.filter(p => !p.left && roles[p.role].team == "Werewolves" && p.role != "Sorcerer" && !p.jailed),
+            new Discord.RichEmbed()
+              .setTitle("Frenzy")
+              .setThumbnail(fn.getEmoji(client, "Werewolf Berserk Frenzy").url)
+              .setDescription("The werewolf berserk activated frenzy!")
+          )
+          
+          for (var gunner of game.players.filter(p => p.role == "Gunner")) 
+            gunner.shotToday = false
         }
       }
       catch (error) {
