@@ -227,9 +227,16 @@ module.exports = (client) => {
               )
             }
           }
+          let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
+          let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),
+              wwRoles = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.role),
+              wwVotesCount = []
+          for (var j = 0; j < wwVotes.length; j++) {
+            if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
+            wwVotesCount[wwVotes[j]] += wwRoles[j] == "Alpha Werewolf" ? 2 : 1
+          }
 
           // SERIAL KILLER KILL
-          let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
           for (var sk of sks) {
             let attacked = sk.usedAbilityTonight,
                 attackedPlayer = game.players[attacked-1]
@@ -402,13 +409,6 @@ module.exports = (client) => {
           }
 
           // WEREWOLVES KILL
-          let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),
-              wwRoles = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.role),
-              wwVotesCount = []
-          for (var j = 0; j < wwVotes.length; j++) {
-            if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
-            wwVotesCount[wwVotes[j]] += wwRoles[j] == "Alpha Werewolf" ? 2 : 1
-          }
           if (wwVotesCount.length) {
             let max = wwVotesCount.reduce((m, n) => Math.max(m, n))
             let attacked = [...wwVotesCount.keys()].filter(i => wwVotesCount[i] === max)[0]
@@ -990,20 +990,25 @@ module.exports = (client) => {
           continue;
         }
 
-        fn.broadcastTo(
-          client, game.players.filter(p => !p.left),
-          game.currentPhase % 3 == 0
-            ? `Night ${Math.floor(game.currentPhase / 3) + 1} has started!`
-            : game.currentPhase % 3 == 1
-            ? new Discord.RichEmbed()
-                .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
-                .setThumbnail(fn.getEmoji(client, "Day").url)
-                .setDescription("Start discussing!")
-            : !game.noVoting
-            ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length / 2)
-              } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
-            : "There will be no voting today!"
-        )
+        // fn.broadcastTo(
+        //   client, game.players.filter(p => !p.left),
+        //   game.currentPhase % 3 == 0
+        //     ? `Night ${Math.floor(game.currentPhase / 3) + 1} has started!`
+        //     : game.currentPhase % 3 == 1
+        //     ? new Discord.RichEmbed()
+        //         .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
+        //         .setThumbnail(fn.getEmoji(client, "Day").url)
+        //         .setDescription("Start discussing!")
+        //     : !game.noVoting
+        //     ? `Voting time has started. ${Math.floor(game.players.filter(player => player.alive).length / 2)
+        //       } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+        //     : "There will be no voting today!"
+        // )
+        
+        switch (game.currentPhase % 3) {
+          case 0:
+            for (var player of game.players.filter(p =>))
+        }
 
         if (game.currentPhase % 3 == 0) {
           if (game.frenzy) fn.broadcastTo(

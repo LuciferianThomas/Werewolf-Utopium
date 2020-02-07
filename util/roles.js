@@ -7,8 +7,7 @@ let roles = {
     aura: "Good",
     team: "Village",
     abbr: ["reg","vil","vill","forkman","forkmen"],
-    cat : "Regular Villager",
-    nite: "Nothing to do. Go back to sleep!"
+    cat : "Regular Villager"
   },
   "Aura Seer": {
     desc: "Each night you can select a player to uncover their alignment: Good, Evil, or Unknown." +
@@ -61,16 +60,14 @@ let roles = {
     abbr: [],
     oneOnly: true,
     nit1: "Select two players to be a love couple." +
-          " If you do not select two players, they will be randomly selected.",
-    nite: "Nothing to do. Go back to sleep!"
+          " If you do not select two players, they will be randomly selected."
   },
   "Cursed": {
     desc: "You are a villager until the werewolves try to kill you, at which point you become a werewolf." +
           " You cannot be converted into another team by sect leader etc.", 
     aura: "Good",
     team: "Village",
-    abbr: ["lycan"],
-    nite: "Nothing to do. Go back to sleep!"
+    abbr: ["lycan"]
   },
   "Detective": {
   	desc: "Each night you can select two players to uncover if they are in the same team.",
@@ -95,8 +92,7 @@ let roles = {
     team: "Village", 
  		abbr: ["fc", "flower"],
     cat : "Regular Villager",
-    day : "You can once protect a player from being lynched by the village (`w!protect [player]`).",
-    nite: "Nothing to do. Go back to sleep!"
+    day : "You can once protect a player from being lynched by the village (`w!protect [player]`)."
   }, 
   "Fortune Teller": {
   	desc: "You have two cards which you can give to other players at night." +
@@ -126,8 +122,7 @@ let roles = {
     abbr: ["gun"],
     cat : "Strong Villager",
     day : "Select a player to kill (`w!shoot [player]`) if you find them suspicious.\n" +
-          "**⚠️ Random shooting is a gamethrowing act, and can result in a ban!**",
-    nite: "Nothing to do. Go back to sleep!"
+          "**⚠️ Random shooting is a gamethrowing act, and can result in a ban!**"
   },
   "Jailer": {
     desc: "Select a target each day to put in jail during the next night." +
@@ -138,8 +133,7 @@ let roles = {
     abbr: ["jail"],
     cat : "Strong Villager",
     oneOnly: true,
-    day : "Select a player to put in jail during the next night (`w!jail [player]`).",
-    nite: "Nothing to do. Go back to sleep!"
+    day : "Select a player to put in jail during the next night (`w!jail [player]`)."
   },
   "Marksman": {
  		desc: "At night you can mark a player as your target." +
@@ -161,8 +155,7 @@ let roles = {
     aura: "Good",
     team: "Village",
     abbr: [],
-    day : "You can reveal your role (`w!reveal mayor`) to make your vote count double during the rest of the game.",
-    nite: "Nothing to do. Go back to sleep!"
+    day : "You can reveal your role (`w!reveal mayor`) to make your vote count double during the rest of the game."
   },
   "Medium": {
     desc: "During the night you can talk anonymously with the dead." +
@@ -181,42 +174,44 @@ let roles = {
     abbr: ["paci"],
     cat : "Regular Villager",
     day : "You can reveal the role of a player (`w!reveal [player]`) and prevent anybody from voting during that day.\n" +
-          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**",
-    nite: "Nothing to do. Go back to sleep!"
+          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**"
   },
   "President": {
   	desc: "Everyone knows who you are! If you die the village loses.",
     aura: "Good",
     team: "Village",
     abbr: ["trump", "donald trump"],
-    oneOnly: true,
-    nite: "Nothing to do. Go back to sleep!"
+    oneOnly: true
   },
   "Priest": {
-    desc: "You can throw holy water on another player (`w!water [player]`)." +
+    desc: "You can throw holy water on another player." +
           " If that player is a werewolf, they die. If he is not a werewolf, you die.",
     aura: "Good",
     team: "Village",
     abbr: ["pri"],
     cat : "Regular Villager",
-    day : "Kill your target (`w!shoot`) if you find them suspicious.\n" +
-          "**⚠️ If your target is a villager, your shot will backfire and kill you!**",
+    day : "You can throw holy water on another player (`w!water [player]`) if you find them suspicious.\n" +
+          "**⚠️ If your target is __not__ a werewolf, you die!**"
   },
   "Red Lady": {
-  	desc: "At night you can visit another player (`w!visit [player]`)." +
+  	desc: "At night you can visit another player." +
           " If you are attacked while visiting, you will not be killed." +
           " However, if you visit a player that is attacked or is evil, you will die!",
     aura: "Good",
     team: "Village",
     abbr: ["rl", "harlot", "prostitute"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "You can visit another player (`w!visit [player]`)." +
+          " If you are attacked while visiting, you will not be killed.\n" +
+          "**⚠️ However, if you visit a player that is attacked or is evil, you will die!**"
   },
   "Seer": {
-    desc: "Every night, you can select a player to uncover their role (`w!check [player]`).", // alias: w!see
+    desc: "Every night, you can select a player to uncover their role.",
     aura: "Good",
     team: "Village",
     abbr: [],
-    cat : "Strong Villager"
+    cat : "Strong Villager",
+    nite: "Select a player to uncover their role (`w!check [player]`)."
   },
   "Seer Apprentice": {
     desc: "You are a normal villager until the seer dies, at which point you become the new seer.",
@@ -226,29 +221,32 @@ let roles = {
     cat : "Regular Villager"
   },
   "Sheriff": {
-  	desc: "At night you can select someone to watch (`w!watch [player]`)." +
+  	desc: "At night you can select someone to watch." +
           " If that player dies during the night, you will uncover two possible suspects who might have killed that player.",
     aura: "Good",
     team: "Village",
     abbr: ["sher", "woody", "cowboy"], 
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select a player to watch (`w!watch [player]`)."
   }, 
   "Spirit Seer": {
-  	desc: "Each night you can select two players (`w!spirit [player1] [player2]`)." +
+  	desc: "Each night you can select two players." +
           " At the beginning of the next day you will be informed if either of those two players has killed last night.",
     aura: "Good",
     team: "Village",
     abbr: ["ss", "sz", "spirit", "spz", "sps"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select two players to see if either of them has killed tonight (`w!check [player1] [player2]`)."
   }, 
   "Tough Guy": {
-  	desc: "You can choose one player to protect every night. (`w!protect [player]`)" +
+  	desc: "You can choose one player to protect every night." +
           " If you or that player is attacked, neither dies and instead you and the attacker will both see each others' roles." +
           " Because of your injuries, you will die at the end of the following day.",
     aura: "Good",
     team: "Village",
     abbr: ["tg"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select a player to protect (`w!protect [player]`)."
   }, 
   "Witch": {
   	desc: "You have two potions: One will kill and the other will protect a player." +
@@ -256,7 +254,10 @@ let roles = {
     aura: "Unknown",
     team: "Village",
     abbr: [],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nit1: "Select a player to heal with your protect potion (`w!heal [player]`).",
+    nite: "Select a player to heal with your protect potion (`w!heal [player]`) or to kill with your poison potion (`w!poison [player]`).\n" +
+          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**"
   },
   
   // Werewolf roles

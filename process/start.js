@@ -142,6 +142,15 @@ module.exports = async (client, game) => {
             .join("\n")
         )
     )
+    
+    fn.getUser(client, thisPlayer.id).send(
+      new Discord.RichEmbed()
+        .setTitle("Night 1 has started.")
+        .setThumbnail(fn.getEmoji(client, "Night").url)
+        .setDescription(
+          roles[thisPlayer.role].nit1 || "Nothing to do. Go back to sleep!"
+        )
+    )
   }
   
   await fn.broadcastTo(
