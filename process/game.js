@@ -834,7 +834,7 @@ module.exports = (client) => {
 
             fn.broadcastTo(
               client, game.players.filter(p => !p.left),
-              `The tough guy **${game.players[j].number} ${fn.getUser(client, game.players[j].id)}** was wounded last night and has died now.`
+              `The tough guy **${game.players[j].number} ${nicknames.get(game.players[j].id)}** was wounded last night and has died now.`
             )
           }
         }

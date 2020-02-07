@@ -205,17 +205,13 @@ client.on('message', async message => {
       else
         return message.author.send("You did not jail anyone or your target cannot be jailed.")
     
-    console.log(game.players
-          .filter(p => roles[p.role].team == "Werewolves" &&
-                  gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed))
     if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed) {
-      
       fn.broadcastTo(
         client,
         game.players
           .filter(p => roles[p.role].team == "Werewolves" &&
                   gamePlayer.role !== "Sorcerer" && !gamePlayer.jailed && 
-                  gamePlayer.id !== message.author.id),
+                  gamePlayer.id != p.id),
         `**<:Fellow_Werewolf:660825937109057587> ${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`)
     }
   }
