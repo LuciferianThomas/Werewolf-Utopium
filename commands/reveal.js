@@ -106,7 +106,7 @@ module.exports = {
       )
       
       gamePlayer.roleRevealed = gamePlayer.role
-      gamePlayer.ftCard = game.players.find(p => p.cards.includes(gamePlayer.number)).cards.indexOf(gamePlayer.number)+1
+      gamePlayer.ftCard = 1
     }
     else return await message.author.send("Missing arguments.")
       

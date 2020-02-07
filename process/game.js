@@ -235,6 +235,7 @@ module.exports = (client) => {
             if (!wwVotesCount[wwVotes[j]]) wwVotesCount[wwVotes[j]] = 0
             wwVotesCount[wwVotes[j]] += wwRoles[j] == "Alpha Werewolf" ? 2 : 1
           }
+          let ggs = game.players.filter(p => p.alive && p.role == "Grumpy Grandma" && p.usedAbilityTonight)
 
           // SERIAL KILLER KILL
           for (var sk of sks) {
@@ -790,7 +791,6 @@ module.exports = (client) => {
           }
 
           // GRUMPY GRANDMA MUTE
-          let ggs = game.players.filter(p => p.alive && p.role == "Grumpy Grandma" && p.usedAbilityTonight)
           for (var gg of ggs) {
             let muted = game.players[gg.usedAbilityTonight-1]
             if (!muted.alive) continue;
@@ -1011,9 +1011,9 @@ module.exports = (client) => {
               p =>
                 p.alive &&
                 p.role !== "Jailer" &&
-                (!p.jailed &&
+                (!game.players.find(p => p.role == "Jailer") || (!p.jailed &&
                   game.players.find(p => p.role == "Jailer") &&
-                  game.players.find(p => p.role == "Jailer").alive)
+                  game.players.find(p => p.role == "Jailer").alive))
             )) {
               fn.getUser(client, player.id).send(
                 new Discord.RichEmbed()

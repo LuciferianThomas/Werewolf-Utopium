@@ -110,6 +110,7 @@ let roles = {
     team: "Village",
     abbr: ["granny","gg"],
     cat : "Regular Villager",
+    nit1: "Nothing to do. Go back to sleep!",
     nite: "Select a player who cannot talk or vote during the day (`w!mute [player]`)."
   },
   "Gunner": {
