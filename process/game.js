@@ -1040,7 +1040,7 @@ module.exports = (client) => {
                 fn.getUser(client, jailer.id).send(
                   new Discord.RichEmbed()
                     .setTitle(`Night ${Math.floor(game.currentPhase / 3) + 1} has started!`)
-                    .setThumbnail(fn.getEmoji(client, "Jail").url)
+                    .setThumbnail(fn.getEmoji(client, "Jail Night").url)
                     .setDescription(`**${jailed.number} ${nicknames.get(jailed.id)}** is now jailed!\nYou can talk to them or shoot them (\`w!execute\`).`)
                 )
 
@@ -1048,7 +1048,7 @@ module.exports = (client) => {
                   .send(
                     new Discord.RichEmbed()
                       .setTitle(`Night ${Math.floor(game.currentPhase / 3) + 1} has started!`)
-                      .setThumbnail(fn.getEmoji(client, "Jail").url)
+                      .setThumbnail(fn.getEmoji(client, "Jail Night").url)
                       .setDescription(`You are now jailed.\nYou can talk to the jailer to prove your innocence.`)
                   )
               } else 
