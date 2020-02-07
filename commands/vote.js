@@ -27,8 +27,8 @@ module.exports = {
       return await message.author.send("You cannot vote while in jail!")
     
     if (game.currentPhase % 3 == 0) {
-      if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role !== "Sorcerer" || 
-          (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0)) {
+      if (roles[gamePlayer.role].team == "Werewolves" && (gamePlayer.role !== "Sorcerer" || 
+          (gamePlayer.role == "Wolf Seer" && game.players.filter(player => player.alive && player.role.includes("Werewolf")).length == 0))) {
         if (args[0].toLowerCase == "cancel") {
           gamePlayer.vote = null
           return await message.author.send("You have withdrawn your vote.")
@@ -52,7 +52,7 @@ module.exports = {
               !p.jailed &&
               !p.left
           ),
-          `${gamePlayer.number} ${nicknames.get(message.author.id)}${
+          `${fn.getEmoji(client, "Voting Werewolf")} ${gamePlayer.number} ${nicknames.get(message.author.id)}${
             gamePlayer.roleRevealed
               ? ` ${client.emojis.find(
                   e => e.name == gamePlayer.role.replace(/ /g, "_")
@@ -94,7 +94,7 @@ module.exports = {
       game.players[gamePlayer.number-1].vote = vote
       fn.broadcastTo(
         client, game.players.filter(p => !p.left),
-        `**${gamePlayer.number} ${nicknames.get(message.author.id)}${
+        `${fn.getEmoji(client, "Voting")} **${gamePlayer.number} ${nicknames.get(message.author.id)}${
           gamePlayer.roleRevealed
             ? ` ${client.emojis.find(
                 e => e.name == gamePlayer.role.replace(/ /g, "_")

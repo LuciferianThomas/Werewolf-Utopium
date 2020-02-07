@@ -1015,6 +1015,30 @@ module.exports = (client) => {
                   .setDescription(roles[player.role].nite || "Nothing to do. Go back to sleep!")
               )
             }
+            break;
+          case 1:
+            for (var player of game.players.filter(p => !p.left)) {
+              fn.getUser(client, player.id).send(
+                new Discord.RichEmbed()
+                  .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
+                  .setThumbnail(fn.getEmoji(client, "Day").url)
+                  .setDescription(`Start discussing!\n${roles[player.role].day || ""}`)
+              )
+            }
+            break;
+          case 2:
+            for (var player of game.players.filter(p => !p.left)) {
+              fn.getUser(client, player.id).send(
+                new Discord.RichEmbed()
+                  .setTitle(`Voting time has started!`)
+                  .setThumbnail(fn.getEmoji(client, "Voting").url)
+                  .setDescription(
+                    `${Math.floor(game.players.filter(player => player.alive).length / 2)
+                    } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+                  )
+              )
+            }
+            break;
         }
 
         if (game.currentPhase % 3 == 0) {
