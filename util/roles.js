@@ -20,17 +20,18 @@ let roles = {
     cat : "Regular Villager"
   }, 
   "Avenger": {
-    desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
+    desc: "After the first night you can select a player to kill when you die (`w!avenge [player]`).",
     aura: "Good",
     team: "Village",
     abbr: ["hunter"],
     cat : "Regular Villager"
   }, 
   "Beast Hunter": {
-    desc: "At night you can set a trap on a person (`w!trap [player]`). The trap activates on the following night." +
-          " If the person you placed a trap on was attacked, the weakest werewolf dies." +
-          " You can place a trap on yourself." +
-          " Your trap will deactivate when solo killers try to kill you but it won't kill them.",
+    desc: "At night you can place a trap on a person (`w!trap [player]`) which will become active the following night." +
+          " This player cannot be killed at night." +
+          " If the player is attacked by werewolves, the weakest werewolf will die." +
+          " Solo killers will not be killed by the trap, but will instead remove the trap after attacking." +
+          " The trap has no effect on zombies and the sect leader.",
     aura: "Unknown",
     team: "Village",
     abbr: ["bh"],
@@ -65,10 +66,7 @@ let roles = {
     abbr: ["lycan"]
   },
   "Detective": {
-  	desc: "Every night, select two players to check if they belong to the same team with (`w!detect [player]`)." +
-    			" Players from the same team will result an <:Detective_Equal:660496165535612958> sign" +
-          " while players from a different team will show a <:Detective_NotEqual:660496385388445725> sign." +
-          " The <:Wolf_Shaman:659722357711306753> Wolf Shaman's enchantment will make you see enchanted players on the werewolf team.",
+  	desc: "Each night you can select two players to uncover if they are in the same team (`w!detect [player1] [player2]`).",
     aura: "Good",
     team: "Village",
     abbr: ["det","sherlock","holmes","sherlock holmes","conan"],
@@ -83,23 +81,22 @@ let roles = {
     cat : "Regular Villager"
   },
   "Flower Child": {
- 		desc: "Once a game, you can protect anyone from being lynched by using (`w!protect [player]`).",
+ 		desc: "You are a villager who can once protect a player from being lynched by the village.",
     aura: "Good", 
     team: "Village", 
  		abbr: ["fc", "flower"],
     cat : "Regular Villager"
   }, 
   "Fortune Teller": {
-  	desc: "During the first night, give two cards to two players (`w!givecards [player1] [player2]`)." +
-    			" These players can use the cards and reveal their role.",
+  	desc: "You have two cards which you can give to other players at night (`w!cards [player1] [player2: optional]`)." +
+          " These players can use these cards to reveal their roles.",
     aura: "Unknown",
     team: "Village",
     abbr: ["ft"],
     cat : "Regular Villager"
   }, 
   "Grumpy Grandma": {
-    desc: "After the first night, select a player to mute with (`w!mute [player]`). This player won't be able to talk or vote the next day." +
-    			" However, if someone is muted, the village will be notified. You cannot mute the same person twice in a row.",
+    desc: "After the first night you can select a player who cannot talk or vote during the day (`w!mute [player]`).",
     aura: "Good",
     team: "Village",
     abbr: ["granny","gg"],
@@ -136,21 +133,21 @@ let roles = {
     cat : "Regular Villager"
   }, 
   "Mayor": {
-  	desc: "Once a game, you can reveal your role with (`w!reveal`) and your vote will count as double.",
+  	desc: "Once during the game you can reveal your role (`w!reveal`) which will make your vote count double during the rest of the game.",
     aura: "Good",
     team: "Village",
     abbr: [],
   },
   "Medium": {
-    desc: "During the night, you can talk anonymously with the dead players." +
-          " Once per game, you can revive a dead player (`w!revive [player]`).", // alias: w!rev
+    desc: "During the night you can talk anonymously with the dead." +
+          " Once during the game you can revive a dead player (`w!revive [player]`).", // alias: w!rev
     aura: "Unknown",
     team: "Village",
     abbr: ["med"],
     cat : "Strong Villager"
   },
   "Pacifist": {
-  	desc: "Once a game, you can reveal one player with (`w!reveal [player]`) and skip the voting session.",
+  	desc: "Once per game you can reveal the role of a player (`w!reveal [player]`) and prevent anybody from voting during that day.",
     aura: "Good",
     team: "Village",
     abbr: ["paci"],
@@ -196,8 +193,8 @@ let roles = {
     cat : "Regular Villager"
   },
   "Sheriff": {
-  	desc: "Every night, select a player to look at with (`w!lookout [player]`)." +
-    			" If that player is killed, you will get 2 suspects. One is the real killer of that player while the other is random.",
+  	desc: "At night you can select someone to watch (`w!watch [player]`)." +
+          " If that player dies during the night, you will uncover two possible suspects who might have killed that player.",
     aura: "Good",
     team: "Village",
     abbr: ["sher", "woody", "cowboy"], 
@@ -221,10 +218,8 @@ let roles = {
     cat : "Regular Villager"
   }, 
   "Witch": {
-  	desc: "You have 2 potions that you can use at night." +
-          " One is a protective potion that will only be consumed if the player was attacked by doing (`w!heal [player]`)." + // alias: w!protect
-    			" The other is a poison potion that can be used after the first night." +
-          " This potion can kill a player instantly by doing (`w!poison [player]`). You can use both potions once.",
+  	desc: "You have two potions: One will kill and the other will protect a player." +
+          " The protect potion is only consumed if the player was attacked. You cannot kill in the first night.",
     aura: "Unknown",
     team: "Village",
     abbr: [],
