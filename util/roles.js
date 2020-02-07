@@ -283,11 +283,14 @@ let roles = {
     cat : "Werewolf"
   }, 
   "Junior Werewolf": {
-    desc: "Because you are so cute, you can select another player to be killed when you are killed (`w!avenge [player]`).",
+    desc: "Because you are so cute, you can select another player to be killed when you are killed.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["jww", "jr", "jnr", "jrww", "jnrww","jw"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    day : "Select a player to kill when you die (`w!avenge [player]`).",
+    nite: "Vote to kill a player with the werewolves (`w!vote [player]`)." +
+          " Select a player to kill when you die (`w!avenge [player]`)."
   },
   "Kitten Wolf": {
     desc: "You are a werewolf with the ability to convert a villager into a werewolf (`w!scratch [player]`)." +
@@ -337,7 +340,9 @@ let roles = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww sham","sham","shaman"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    day : "Select a player to enchant (`w!enchant [player]`).",
+    nite: "Vote to kill a player with the werewolves (`w!vote [player]`)."
   },
   
   // Solo non-killing roles
