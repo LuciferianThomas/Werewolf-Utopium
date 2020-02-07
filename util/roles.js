@@ -117,7 +117,7 @@ let roles = {
     nite: "Select a player who cannot talk or vote during the day (`w!mute [player]`)."
   },
   "Gunner": {
-    desc: "You have two bullets which you can use to kill somebody (`w!shoot`)." +
+    desc: "You have two bullets which you can use to kill somebody." +
           " Only one bullet can be fired per day." +
           " The shots are very loud so that your role will be revealed after the first shot." +
           " You cannot shoot during the discussion phase on the first day.",
@@ -125,13 +125,14 @@ let roles = {
     team: "Village",
     abbr: ["gun"],
     cat : "Strong Villager",
-    day : "",
+    day : "Select a player to kill (`w!shoot [player]`) if you find them suspicious.\n" +
+          "**⚠️ Random shooting is a gamethrowing act, and can result in a ban!**",
     nite: "Nothing to do. Go back to sleep!"
   },
   "Jailer": {
     desc: "Select a target each day to put in jail during the next night." +
           " At night you can talk privately with your target." +
-          " Your target cannot act or be attacked, but if you find them suspicious, you can kill them (`w!execute`).",
+          " Your target cannot act or be attacked, but if you find them suspicious, you can kill them.",
     aura: "Unknown",
     team: "Village",
     abbr: ["jail"],
@@ -141,42 +142,55 @@ let roles = {
     nite: "Nothing to do. Go back to sleep!"
   },
   "Marksman": {
- 		desc: "At night you can mark a player as your target (`w!mark [player]`)." +
-          " After the next day, you can kill (`w!shoot`) or change your target." +
+ 		desc: "At night you can mark a player as your target." +
+          " After the next day, you can kill or change your target." +
           " If you try to kill a villager, your shot will backfire and kill you." +
           " You have two arrows.",
     aura: "Unknown",
     team: "Village",
     abbr: ["mm"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    day : "Kill your target (`w!shoot`) if you find them suspicious.\n" +
+          "**⚠️ If your target is a villager, your shot will backfire and kill you!**",
+    nite: "Mark a player as your target (`w!mark [player]`).\n" +
+          "After the next day, you can kill your target (`w!shoot`) if you find them suspicious.\n" +
+          "**⚠️ If your target is a villager, your shot will backfire and kill you!**"
   }, 
   "Mayor": {
-  	desc: "Once during the game you can reveal your role (`w!reveal`) which will make your vote count double during the rest of the game.",
+  	desc: "Once during the game you can reveal your role which will make your vote count double during the rest of the game.",
     aura: "Good",
     team: "Village",
     abbr: [],
+    day : "You can reveal your role (`w!reveal mayor`) to make your vote count double during the rest of the game.",
+    nite: "Nothing to do. Go back to sleep!"
   },
   "Medium": {
     desc: "During the night you can talk anonymously with the dead." +
-          " Once during the game you can revive a dead player (`w!revive [player]`).", // alias: w!rev
+          " Once during the game you can revive a dead player.",
     aura: "Unknown",
     team: "Village",
     abbr: ["med"],
-    cat : "Strong Villager"
+    cat : "Strong Villager",
+    nite: "You can talk anonymously with the dead." +
+          " Once during the game you can revive a dead player (`w!revive [player]`)."
   },
   "Pacifist": {
   	desc: "Once per game you can reveal the role of a player (`w!reveal [player]`) and prevent anybody from voting during that day.",
     aura: "Good",
     team: "Village",
     abbr: ["paci"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    day : "You can reveal the role of a player (`w!reveal [player]`) and prevent anybody from voting during that day.\n" +
+          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**",
+    nite: "Nothing to do. Go back to sleep!"
   },
   "President": {
   	desc: "Everyone knows who you are! If you die the village loses.",
     aura: "Good",
     team: "Village",
-    abbr: ["trump"],
-    oneOnly: true
+    abbr: ["trump", "donald trump"],
+    oneOnly: true,
+    nite: "Nothing to do. Go back to sleep!"
   },
   "Priest": {
     desc: "You can throw holy water on another player (`w!water [player]`)." +
@@ -184,7 +198,9 @@ let roles = {
     aura: "Good",
     team: "Village",
     abbr: ["pri"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    day : "Kill your target (`w!shoot`) if you find them suspicious.\n" +
+          "**⚠️ If your target is a villager, your shot will backfire and kill you!**",
   },
   "Red Lady": {
   	desc: "At night you can visit another player (`w!visit [player]`)." +

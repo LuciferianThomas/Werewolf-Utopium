@@ -62,7 +62,7 @@ module.exports = {
       targetPlayer.paciRevealed = true
       game.noVoting = true
     }
-    else if (gamePlayer.role == "Mayor") {
+    else if (gamePlayer.role == "Mayor" && args[0].toLowerCase() == "mayor") {
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer reveal yourself.")
     
@@ -82,7 +82,7 @@ module.exports = {
     
       gamePlayer.roleRevealed = "Mayor"
     }
-    else if (game.players.find(p => p.cards && p.cards.includes(gamePlayer.number))) {
+    else if (game.players.find(p => p.cards && p.cards.includes(gamePlayer.number)) && args[0].toLowerCase() == "card") {
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer reveal yourself.")
       
@@ -108,6 +108,7 @@ module.exports = {
       gamePlayer.roleRevealed = gamePlayer.role
       gamePlayer.ftCard = game.players.find(p => p.cards.includes(gamePlayer.number)).cards.indexOf(gamePlayer.number)+1
     }
+    else return await message.author.send("Missing arguments.")
       
     QuickGames[index] = game
     

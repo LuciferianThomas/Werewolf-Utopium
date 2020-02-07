@@ -10,8 +10,8 @@ const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
 
 module.exports = {
-  name: "givecards",
-  aliases: ["givecard", "cards", "card"],
+  name: "cards",
+  aliases: ["card"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -60,7 +60,7 @@ module.exports = {
           new Discord.RichEmbed()
             .setTitle("Card given!")
             .setThumbnail(fn.getEmoji(client, `Fortune Teller Card1`).url)
-            .setDescription(`You gave **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id)}** a card to reveal their roles at day.`)
+            .setDescription(`You gave **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id)}** a card to reveal their roles.`)
         )
         
         fn.getUser(client, targetPlayer.id).send(
@@ -68,8 +68,8 @@ module.exports = {
             .setTitle("Fortune Teller's Card")
             .setThumbnail(fn.getEmoji(client, `Fortune Teller Card1`).url)
             .setDescription(
-              "The Fortune Teller gave you a card to reveal your identity (`w!reveal`)." +
-              " You can use your card at any daytime."
+              "The Fortune Teller gave you a card to reveal your identity (`w!reveal card`)." +
+              " You can use your card at any time."
             )
         )
    
