@@ -725,8 +725,6 @@ module.exports = (client) => {
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
           }
           
-          
-          
           // SPIRIT SEER RESULTS
           let spzs = game.players.filter(p => p.alive && p.role == "Spirit Seer" && p.usedAbilityTonight)
           for (var spz of spzs) {
@@ -1024,7 +1022,7 @@ module.exports = (client) => {
             }
             break;
           case 1:
-            for (var player of game.players.filter(p => !p.left)) {
+            for (var player of game.players.filter(p => p.alive)) {
               fn.getUser(client, player.id).send(
                 new Discord.RichEmbed()
                   .setTitle(`Day ${Math.floor(game.currentPhase / 3) + 1} has started!`)
@@ -1034,7 +1032,7 @@ module.exports = (client) => {
             }
             break;
           case 2:
-            for (var player of game.players.filter(p => !p.left)) {
+            for (var player of game.players.filter(p => p.alive)) {
               fn.getUser(client, player.id).send(
                 new Discord.RichEmbed()
                   .setTitle(`Voting time has started!`)

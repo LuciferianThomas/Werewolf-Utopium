@@ -153,12 +153,12 @@ module.exports = async (client, game) => {
     )
   }
   
-  await fn.broadcastTo(
-    client, game.players.filter(p => !p.left),
-    new Discord.RichEmbed()
-      .setTitle("Night 1 has started.")
-      .setThumbnail(fn.getEmoji(client, "Night").url)
-  )
+  // await fn.broadcastTo(
+  //   client, game.players.filter(p => !p.left),
+  //   new Discord.RichEmbed()
+  //     .setTitle("Night 1 has started.")
+  //     .setThumbnail(fn.getEmoji(client, "Night").url)
+  // )
   
   if (game.roles.includes("President")) {
     let president = game.players.find(p => p.role == "President")
