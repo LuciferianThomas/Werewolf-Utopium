@@ -48,19 +48,16 @@ let roles = {
     cat : "Regular Villager"
   },
   "Cupid": {
-  	desc: "During the first night, select 2 players to be a couple with (`w!couple [player1] [player2]`). They will know each other's roles at the beginning of the next day." +
-    			" Your couple must survive until the end of the game and must be the last players alive in order to win as couple." +
-          " If one your couple dies, the other couple dies along and you become a regular villager.",
+  	desc: "During the first night you can select two players to be a love couple with (`w!couple [player1] [player2]`)." +
+    			" You win if the village wins or if the lovers are the last survivors.",
     aura: "Good",
     team: "Village",
     abbr: [],
     oneOnly: true
   },
   "Cursed": {
-    desc: "You are a regular villager until the werewolves kill you at which point, you become a werewolf." +
-          " <:Doctor:658633450353590295> Doctors, <:Bodyguard:659721472310509588> Bodyguards," +
-          " <:Beast_Hunter:660071569980260352> Beast Hunters and <:Jailer:658633215824756748> Jailer can protect him at night." +
-    			" You cannot be converted to an another team (e.g. sect).", 
+    desc: "You are a villager until the werewolves try to kill you, at which point you become a werewolf." +
+          " You cannot be converted into another team by sect leader etc.", 
     aura: "Good",
     team: "Village",
     abbr: ["lycan"]
@@ -154,8 +151,7 @@ let roles = {
     cat : "Regular Villager"
   },
   "President": {
-  	desc: "Your role is revealed to everyone. If you die the village loses." +
-          " You cannot be killed by werewolves unless there are 4 villagers or below.",
+  	desc: "Everyone knows who you are! If you die the village loses.",
     aura: "Good",
     team: "Village",
     abbr: ["trump"],
@@ -228,7 +224,7 @@ let roles = {
   
   // Werewolf roles
   "Werewolf": {
-    desc: "You are a regular werewolf with no special abilities. Do `w!vote [player]` to vote with your werewolf teammates.",
+    desc: "Choose one player to kill every night (`w!vote [player]`).",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww"],
@@ -242,33 +238,34 @@ let roles = {
     cat : "Werewolf"
   },
   "Guardian Wolf": {
-  	desc: "Once a game, you can protect anyone from being lynched by doing (`w!protect [player]`).",
+  	desc: "You are a werewolf who can once protect a player from being lynched by the village (`w!protect [player]`).",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["gww"],
+    abbr: ["gww","wwg","gw","wg"],
     cat : "Werewolf"
   }, 
   "Junior Werewolf": {
-    desc: "You can select a player to be avenged on when you die (`w!avenge [player]`).",
+    desc: "Because you are so cute, you can select another player to be killed when you are killed (`w!avenge [player]`).",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["jww", "jr", "jnr", "jrww", "jnrww"],
+    abbr: ["jww", "jr", "jnr", "jrww", "jnrww","jw"],
     cat : "Werewolf"
   },
   "Kitten Wolf": {
-    desc: "You can select can choose a player to convert a player to the Werewolves team (`w!scratch [player]`)." +
-          " If this player is part of the Village, they will be converted. If not, they will remain on their team." +
-          " Protector roles can negate this ability.",
+    desc: "You are a werewolf with the ability to convert a villager into a werewolf (`w!scratch [player]`)." +
+          " You can only do this once." +
+          " If your target is not a villager, you lose your ability!",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["kww"],
+    abbr: ["kww","wwk","wk","kw"],
     cat : "Werewolf"
   }, 
   "Nightmare Werewolf": {
-    desc: "Each day you can select a player to be numbed at night (`w!numb [player]`). That player cannot use their abilities that night.",
+    desc: "Twice during the game you can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`)." + 
+          " That player won't be able to use any abilities for one night.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["nww"],
+    abbr: ["nww","nw"],
     cat : "Werewolf"
   },
   "Sorcerer": {
@@ -282,8 +279,9 @@ let roles = {
     abbr: ["sorc"]
   },
   "Werewolf Berserk": {
-    desc: "Once per game you can announce a Werewolves 'frenzy' during the day." +
-          " If during the night of the frenzy their target is protected, all protectors of the victim will die, along with the victim.",
+    desc: "Once per game, you can active a werewolves \"frenzy\" during the day." +
+          " If during the night your selected victim is being protected, your victim and all protectors of your victim will die." +
+          " The frenzy will only be announced to the werewolves.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["wwb","bww","bers","berz"],
@@ -300,10 +298,9 @@ let roles = {
     cat : "Werewolf"
   },
   "Wolf Shaman": {
-    desc: "Each night, you can vote on a player to kill (`w!vote [player]`) and talk with the other werewolves." +
-          " During the day, you can put an enchantment on another player (`w!enchant [player]`)." +
-          " This will make that player appear as a Wolf Shaman to the <:Seer:658633721448235019> Seer," +
-          " Evil to the <:Aura_Seer:658632880490020874> Aura Seer and on the werewolves team for <:Detective:660070860832505863> Detective.",
+    desc: "During the day you can enchant another player." +
+          " For investigators, this player will appear to be a wolf shaman at the next night." +
+          " If you are the last werewolf, you cannot enchant anybody.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww sham","sham","shaman"],
@@ -410,30 +407,30 @@ let roles = {
     cat : "Random"
   },
   "Random Regular Villager": {
-    desc: "Any of:\nVillager, Aura Seer, Avenger, Beast Hunter, Bodyguard, Doctor, Flower Child," +
+    desc: "One of: Villager, Aura Seer, Avenger, Beast Hunter, Bodyguard, Doctor, Flower Child," +
           " Fortune Teller, Grumpy Grandma, Marksman, Pacifist, Priest, Red Lady," +
-          " Seer Apprentice, Sheriff, Spirit Seer, Tough Guy or Witch",
+          " Seer Apprentice, Sheriff, Spirit Seer, Tough Guy, Villager or Witch",
     abbr: ["rrv"],
     cat : "Random"
   },
   "Random Strong Villager": {
-    desc: "Any of:\nDetective, Gunner, Jailer, Medium or Seer",
+    desc: "One of: Detective, Gunner, Jailer, Medium or Seer",
     abbr: ["rsv"],
     cat : "Random"
   },
   "Random Werewolf": {
-    desc: "Any of:\nWerewolf, Alpha Werewolf, Guardian Wolf, Junior Werewolf," +
+    desc: "One of:\nWerewolf, Alpha Werewolf, Guardian Wolf, Junior Werewolf," +
           "Kitten Wolf, Nightmare Werewolf, Werewolf Berserk, Wolf Seer, Wolf Shaman",
     abbr: ["rw"],
     cat : "Random"
   },
   "Random Voting": {
-    desc: "Any of:\nFool or Headhunter",
+    desc: "One of: Fool or Headhunter",
     abbr: ["rv"],
     cat : "Random"
   },
   "Random Killer": {
-    desc: "Any of:\nArsonist, Bomber, Corruptor, Cannibal, Illusionist," +
+    desc: "One of: Arsonist, Bomber, Corruptor, Cannibal, Illusionist," +
           " Sect Leader, Serial Killer, Zombie",
     abbr: ["rk"],
     cat : "Random"
