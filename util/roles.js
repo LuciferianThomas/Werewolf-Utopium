@@ -11,7 +11,7 @@ let roles = {
     nite: "Nothing to do. Go back to sleep!"
   },
   "Aura Seer": {
-    desc: "Each night you can select a player to uncover their alignment: Good, Evil, or Unknown (`w!check [player]`)." +
+    desc: "Each night you can select a player to uncover their alignment: Good, Evil, or Unknown." +
           " Evil players belong to the werewolves and good players belong to the villagers team.\n" +
           "Unknown targets can be: Gunner, Jailer, Medium, Alpha werewolf, and all solo players.",
     aura: "Good",
@@ -21,7 +21,7 @@ let roles = {
     nite: "Select a player to uncover their alignment (`w!check [player]`)."
   }, 
   "Avenger": {
-    desc: "After the first night you can select a player to kill when you die (`w!avenge [player]`).",
+    desc: "After the first night you can select a player to kill when you die.",
     aura: "Good",
     team: "Village",
     abbr: ["hunter"],
@@ -31,7 +31,7 @@ let roles = {
     nite: "Select a player to kill when you die (`w!avenge [player]`)."
   }, 
   "Beast Hunter": {
-    desc: "At night you can place a trap on a person (`w!trap [player]`) which will become active the following night." +
+    desc: "At night you can place a trap on a person which will become active the following night." +
           " This player cannot be killed at night." +
           " If the player is attacked by werewolves, the weakest werewolf will die." +
           " Solo killers will not be killed by the trap, but will instead remove the trap after attacking." +
@@ -40,69 +40,81 @@ let roles = {
     team: "Village",
     abbr: ["bh"],
     cat : "Regular Villager",
-    nite: "Select a player to kill when you die (`w!avenge [player]`)."
+    nite: "Select a player to place your trap on (`w!trap [player]`). You can place the trap on yourself."
   },
   "Bodyguard": {
-    desc: "You can choose one player to protect every night (`w!protect [player]`)." +
+    desc: "You can choose one player to protect every night." +
           " That player cannot be killed that night and instead you will be attacked." +
           " Because you are strong you survive the first attack, but you will die on the second attack." +
           " Every night you automatically protect yourself.",
     aura: "Good",
     team: "Village",
     abbr: ["bg"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select a player to protect (`w!protect [player]`)."
   },
   "Cupid": {
-  	desc: "During the first night you can select two players to be a love couple with (`w!couple [player1] [player2]`)." +
+  	desc: "During the first night you can select two players to be a love couple." +
     			" You win if the village wins or if the lovers are the last survivors.",
     aura: "Good",
     team: "Village",
     abbr: [],
-    oneOnly: true
+    oneOnly: true,
+    nit1: "Select two players to be a love couple." +
+          " If you do not select two players, they will be randomly selected.",
+    nite: "Nothing to do. Go back to sleep!"
   },
   "Cursed": {
     desc: "You are a villager until the werewolves try to kill you, at which point you become a werewolf." +
           " You cannot be converted into another team by sect leader etc.", 
     aura: "Good",
     team: "Village",
-    abbr: ["lycan"]
+    abbr: ["lycan"],
+    nite: "Nothing to do. Go back to sleep!"
   },
   "Detective": {
-  	desc: "Each night you can select two players to uncover if they are in the same team (`w!detect [player1] [player2]`).",
+  	desc: "Each night you can select two players to uncover if they are in the same team.",
     aura: "Good",
     team: "Village",
     abbr: ["det","sherlock","holmes","sherlock holmes","conan"],
-    cat : "Strong Villager"
+    cat : "Strong Villager",
+    nite: "Select two players to uncover if they are in the same team (`w!detect [player1] [player2]`)."
   },
   "Doctor": {
-    desc: "Choose a player to protect every night (`w!heal [player]`)." + // alias: w!protect
+    desc: "Choose a player to protect every night." +
           " That player cannot be killed that night.",
     aura: "Good",
     team: "Village",
     abbr: ["doc", "medic"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Choose a player to protect (`w!heal [player]`)."
   },
   "Flower Child": {
  		desc: "You are a villager who can once protect a player from being lynched by the village.",
     aura: "Good", 
     team: "Village", 
  		abbr: ["fc", "flower"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    day : "You can once protect a player from being lynched by the village (`w!protect [player]`).",
+    nite: "Nothing to do. Go back to sleep!"
   }, 
   "Fortune Teller": {
-  	desc: "You have two cards which you can give to other players at night (`w!cards [player1] [player2: optional]`)." +
+  	desc: "You have two cards which you can give to other players at night." +
           " These players can use these cards to reveal their roles.",
     aura: "Unknown",
     team: "Village",
     abbr: ["ft"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select a player to give your card to (`w!card [player]`).\n" +
+          "You can give both cards to two players at once (`w!cards [player1] [player2]`)."
   }, 
   "Grumpy Grandma": {
-    desc: "After the first night you can select a player who cannot talk or vote during the day (`w!mute [player]`).",
+    desc: "After the first night you can select a player who cannot talk or vote during the day.",
     aura: "Good",
     team: "Village",
     abbr: ["granny","gg"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    nite: "Select a player who cannot talk or vote during the day (`w!mute [player]`)."
   },
   "Gunner": {
     desc: "You have two bullets which you can use to kill somebody (`w!shoot`)." +
@@ -112,17 +124,21 @@ let roles = {
     aura: "Unknown",
     team: "Village",
     abbr: ["gun"],
-    cat : "Strong Villager"
+    cat : "Strong Villager",
+    day : "",
+    nite: "Nothing to do. Go back to sleep!"
   },
   "Jailer": {
-    desc: "Select a target each day to put in jail during the next night (`w!jail [player]`)." +
+    desc: "Select a target each day to put in jail during the next night." +
           " At night you can talk privately with your target." +
           " Your target cannot act or be attacked, but if you find them suspicious, you can kill them (`w!execute`).",
     aura: "Unknown",
     team: "Village",
     abbr: ["jail"],
     cat : "Strong Villager",
-    oneOnly: true
+    oneOnly: true,
+    day : "Select a player to put in jail during the next night (`w!jail [player]`).",
+    nite: "Nothing to do. Go back to sleep!"
   },
   "Marksman": {
  		desc: "At night you can mark a player as your target (`w!mark [player]`)." +
