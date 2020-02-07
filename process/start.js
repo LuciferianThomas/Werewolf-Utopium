@@ -148,7 +148,7 @@ module.exports = async (client, game) => {
         .setTitle("Night 1 has started.")
         .setThumbnail(fn.getEmoji(client, "Night").url)
         .setDescription(
-          roles[thisPlayer.role].nit1 || "Nothing to do. Go back to sleep!"
+          roles[thisPlayer.role].nit1 || roles[thisPlayer.role].nite || "Nothing to do. Go back to sleep!"
         )
     )
   }

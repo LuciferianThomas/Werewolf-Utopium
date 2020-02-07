@@ -52,7 +52,7 @@ module.exports = {
                 : /^([aeiou])/i.test(targetPlayer.role)
                 ? "an"
                 : "a"
-            } ${gamePlayer.role}!\n` +
+            } ${targetPlayer.role}!\n` +
             "There will be no voting today!"
           )
       )

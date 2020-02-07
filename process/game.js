@@ -1007,7 +1007,14 @@ module.exports = (client) => {
         
         switch (game.currentPhase % 3) {
           case 0:
-            for (var player of game.players.filter(p => p.alive && (!p.jailed && game.players.find(p => p.role == "Jailer").alive))) {
+            for (var player of game.players.filter(
+              p =>
+                p.alive &&
+                p.role !== "Jailer" &&
+                (!p.jailed &&
+                  game.players.find(p => p.role == "Jailer") &&
+                  game.players.find(p => p.role == "Jailer").alive)
+            )) {
               fn.getUser(client, player.id).send(
                 new Discord.RichEmbed()
                   .setTitle(`Night ${Math.floor(game.currentPhase / 3) + 1} has started!`)

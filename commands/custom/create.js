@@ -115,7 +115,7 @@ module.exports = {
       gcInput = gcInput.first().content
       
       let usedGCs = games.get('quick').filter(x => x.mode == 'custom').map(x => x.gameID.toLowerCase())
-      console.log(usedGCs)
+      // console.log(usedGCs)
       
       if (parseInt(gcInput) != gcInput && gcInput.match(/^[a-z0-9\_]{3,10}$/i) && !usedGCs.includes(gcInput))
         currentGame.gameID = gcInput
