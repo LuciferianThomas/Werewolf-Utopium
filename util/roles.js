@@ -59,7 +59,7 @@ let roles = {
     team: "Village",
     abbr: [],
     oneOnly: true,
-    nit1: "Select two players to be a love couple." +
+    nit1: "Select two players to be a love couple (`w!lovers [player1] [player2]`)." +
           " If you do not select two players, they will be randomly selected."
   },
   "Cursed": {

@@ -742,6 +742,14 @@ module.exports = (client) => {
               `They cannot speak or vote today.`
             )
           }
+          
+          if (game.currentPhase == 1 && game.players.find(p => p.role == "Cupid")) {
+            let cupid = game.players.find(p => p.role == "Cupid")
+            for (var loverNumber of cupid.usedAbilityTonight) {
+              let lover = game.players[loverNumber-1]
+              if (!lover.alive) lover = game.players.filter()
+            }
+          }
 
           // CLEAR NIGHT SELECTIONS
           for (var x = 0; x < game.players.length; x++)
