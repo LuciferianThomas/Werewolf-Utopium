@@ -299,7 +299,7 @@ let roles = {
           " Select a player to kill when you die (`w!avenge [player]`)."
   },
   "Kitten Wolf": {
-    desc: "You are a werewolf with the ability to convert a villager into a werewolf (`w!scratch [player]`)." +
+    desc: "You are a werewolf with the ability to convert a villager into a werewolf." +
           " You can only do this once." +
           " If your target is not a villager, you lose your ability!",
     aura: "Evil",
@@ -311,12 +311,13 @@ let roles = {
           "**⚠️ If they are not a villager, you lose your ability!**"
   }, 
   "Nightmare Werewolf": {
-    desc: "Twice during the game you can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`)." + 
+    desc: "Twice during the game you can select a player during the day to \"fall asleep\" for one night ." + 
           " That player won't be able to use any abilities for one night.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["nww","nw"],
     cat : "Werewolf",
+    day : "You can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`).",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n"
   },
   "Sorcerer": {
