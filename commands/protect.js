@@ -24,41 +24,48 @@ module.exports = {
     
     if (gamePlayer.role !== "Doctor" && gamePlayer.role !== "Witch" && shared.commandName == "heal") 
       return await message.author.send("You do not have the abilities to heal a player.")
-    if (!["Doctor","Witch","Bodyguard","Tough Guy"].includes(gamePlayer.role))
-      return await message.author.send("You do not have the abilities to protect a player.")
-    if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer protect a player.")
-    if (gamePlayer.jailed)
-      return await message.author.send("You are currently jailed and cannot use your abilities.")
-    
-    if (gamePlayer.role == "Witch" && gamePlayer.elixirUsed)
-      return await message.author.send("You have already used your elixir!")
-    
-    if (game.currentPhase % 3 != 0)
-      return await message.author.send("You can only protect a player at night.")
-    
-    let target = parseInt(args[0])
-    if (isNaN(target) || target > game.players.length || target < 1)
-      return await message.author.send("Invalid target.")
-    
-    let targetPlayer = game.players[target-1]
-    if (!game.players[target-1].alive)
-      return await message.author.send("You cannot protect an dead player.")
-    if (target == gamePlayer.number)
-      return await message.author.send("You cannot protect yourself.")
     
     if (["Flower Child","Guardian Wolf"].includes(gamePlayer.role)) {
-      //gamePlayer
-    }
-    else {
-      if (gamePlayer.protected) {
-        let protectedPlayer = game.players[gamePlayer.protected-1]
+      if (!gamePlayer.alive)
+        return await message.author.send("You are dead. You can no longer protect a player.")
+      
+      if (game.currentPhase % 3 == 0)
+        return await message.author.send("You can only protect a player from lynching at day.")
+      
+      let target = parseInt(args[0])
+      if (isNaN(target) || target > game.players.length || target < 1)
+        return await message.author.send("Invalid target.")
 
-        protectedPlayer.protectors.splice(protectedPlayer.protectors.indexOf(gamePlayer.number), 1)
-      }
-    
-    targetPlayer.protectors.push(gamePlayer.number)
-    gamePlayer.protected = targetPlayer.number
+      let targetPlayer = game.players[target-1]
+      if (!game.players[target-1].alive)
+        return await message.author.send("You cannot protect an dead player.")
+      
+      targetPlayer.preventLynch = targetPlayer.number
+    }
+    else if (["Doctor","Witch","Bodyguard","Tough Guy"].includes(gamePlayer.role)) {
+      if (!gamePlayer.alive)
+        return await message.author.send("You are dead. You can no longer protect a player.")
+      
+      if (gamePlayer.jailed)
+        return await message.author.send("You are currently jailed and cannot use your abilities.")
+
+      if (gamePlayer.role == "Witch" && gamePlayer.elixirUsed)
+        return await message.author.send("You have already used your elixir!")
+
+      if (game.currentPhase % 3 != 0)
+        return await message.author.send("You can only protect a player at night.")
+
+      let target = parseInt(args[0])
+      if (isNaN(target) || target > game.players.length || target < 1)
+        return await message.author.send("Invalid target.")
+
+      let targetPlayer = game.players[target-1]
+      if (!game.players[target-1].alive)
+        return await message.author.send("You cannot protect an dead player.")
+      if (target == gamePlayer.number)
+        return await message.author.send("You cannot protect yourself.")
+      
+      gamePlayer.usedAbilityTonight = targetPlayer.number
     
       message.author.send(
         `${
@@ -72,6 +79,8 @@ module.exports = {
         }** to be protected.`
       )
     }
+    else 
+      return await message.author.send("You do not have the abilities to protect a player.")
     
     QuickGames[index] = game
     
