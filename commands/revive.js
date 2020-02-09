@@ -45,13 +45,7 @@ module.exports = {
     if (roles[targetPlayer.role].team !== "Village" && targetPlayer.role == "Headhunter")
       return await message.author.send("You can only revive villagers!")
     
-    // game.players[gamePlayer.number-1].revUsed = true
-    if (game.players.find(p => p.revive && p.revive.includes(gamePlayer.number))) {
-      let prevRev = game.players.find(p => p.revive && p.revive.includes(gamePlayer.number)).number - 1
-      game.players[prevRev].revive.splice(game.players[prevRev].revive.indexOf(gamePlayer.number),1)
-    }
-    if (!targetPlayer.revive) targetPlayer.revive = []
-    targetPlayer.revive.push(gamePlayer.number)
+    gamePlayer.usedAbilityTonight = targetPlayer.number
     
     message.author.send(
       `${fn.getEmoji(client, "Medium Revive")

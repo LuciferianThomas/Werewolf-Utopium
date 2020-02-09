@@ -115,25 +115,29 @@ module.exports = (client) => {
         )
 
         if (game.currentPhase % 3 == 1)  {
-          let revivedPlayers = game.players.filter(p => p.revive && p.revive.length)
-          for (var x = 0; x < revivedPlayers.length; x++){
+          // MEDIUM REVIVE
+          let mediums = game.players.filter(p => p.role && p.usedAbilityTonight)
+          for (var medium of mediums){
+            let revivedPlayer = game.players[medium.usedAbilityTonight-1]
             fn.broadcastTo(
-              client, game.players.filter(p => !p.left).map(p => p.id),
-              `<:Medium_Revive:660667751253278730> Medium has revived **${revivedPlayers[x].number} ${nicknames.get(revivedPlayers[x].id)}**.`
+              client, game.players.filter(p => !p.left),
+              `<:Medium_Revive:660667751253278730> Medium has revived **${revivedPlayer.number} ${nicknames.get(revivedPlayer.id)}**.`
             )
 
-            game.players[revivedPlayers[x].number-1].alive = true
-            for (var y of game.players[revivedPlayers[x].number-1].revive)
-              game.players[y-1].revUsed = true
-            game.players[revivedPlayers[x].number-1].revive = undefined
+            revivedPlayer.alive = true
+            medium.revUsed = true
+            revivedPlayer.revive = undefined
           }
           
           // RED LADY KILL
           let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight)
           for (var rl of rls) {
-            if (roles[game.players[rl.usedAbilityTonight-1].role].team !== "Village") {
+            let visitedPlayer = game.players[rl.usedAbilityTonight-1]
+            if (!visitedPlayer.alive) continue;
+            if (roles[visitedPlayer.role].team !== "Village") {
               rl.alive = false
               rl.roleRevealed = "Red Lady"
+              rl.visitedTonight = true
               game.lastDeath = game.currentPhase - 1
               
               fn.broadcastTo(
@@ -143,6 +147,7 @@ module.exports = (client) => {
               )
             }
           }
+          
           let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
           let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),
               wwRoles = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.role),
@@ -158,109 +163,110 @@ module.exports = (client) => {
             let attacked = sk.usedAbilityTonight,
                 attackedPlayer = game.players[attacked-1]
 
-            if (attackedPlayer.protectors.length) {
+            if (attackedPlayer.protectors.length || (attackedPlayer.role == "Red Lady" && attackedPlayer.visitedTonight)) {
               fn.getUser(client, sk.id).send(
                 `**${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** cannot be killed!`
               )
-              for (var x of attackedPlayer.protectors) {
-                let protector = game.players[x-1]
+              if (!(attackedPlayer.role == "Red Lady" && attackedPlayer.visitedTonight))
+                for (var x of attackedPlayer.protectors) {
+                  let protector = game.players[x-1]
 
-                if (protector.role == "Bodyguard") {
-                  protector.health -= 1
-                  if (protector.health) {
+                  if (protector.role == "Bodyguard") {
+                    protector.health -= 1
+                    if (protector.health) {
+                      fn.getUser(client, protector.id).send(
+                        new Discord.RichEmbed()
+                          .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                          .setDescription(
+                            "You fought off an attack last night and survived.\n" +
+                            "Next time you are attacked you will die."
+                          )
+                      )
+                    }
+                    else {
+                      game.lastDeath = game.currentPhase - 1
+                      protector.alive = false
+                      protector.killedBy = sk
+                      if (game.config.deathReveal) protector.roleRevealed = protector.role
+                      fn.broadcastTo(
+                        client, game.players.filter(p => !p.left),
+                        `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
+                          game.config.deathReveal
+                            ? ` ${fn.getEmoji(client, protector.role)}`
+                            : ""
+                        }**.`
+                      )
+
+                      game = fn.death(client, game, protector.number)
+                    }
+                  }
+                  else if (protector.role == "Tough Guy") {
+                    protector.health = 0
+
                     fn.getUser(client, protector.id).send(
                       new Discord.RichEmbed()
-                        .setTitle("<:Bodyguard_Protect:660497704526282786> Attacked!")
+                        .setAuthor(
+                          "Attacked!",
+                          fn.getEmoji(client, "Bodyguard Protect").url
+                        )
                         .setDescription(
-                          "You fought off an attack last night and survived.\n" +
-                          "Next time you are attacked you will die."
+                          `You protected **${attackedPlayer.number} ${
+                            nicknames.get(attackedPlayer.id)
+                          }** who was attacked by **${sk.number} ${
+                            nicknames.get(sk.id)
+                          } ${fn.getEmoji(client, sk.role)}**.\n` +
+                          "You have been wounded and will die at the end of the day."
+                        )
+                    )
+
+                    fn.getUser(client, sk.id).send(
+                      new Discord.RichEmbed()
+                        .setAuthor(
+                          "Attacked!",
+                          fn.getEmoji(client, "Bodyguard Protect").url
+                        )
+                        .setDescription(
+                          `You protected **${attackedPlayer.number} ${
+                            nicknames.get(attackedPlayer.id)
+                          }** who was attacked by **${sk.number} ${
+                            nicknames.get(sk.id)
+                          } ${fn.getEmoji(client, sk.role)}**.\n` +
+                          "You have been wounded and will die at the end of the day."
                         )
                     )
                   }
-                  else {
-                    game.lastDeath = game.currentPhase - 1
-                    protector.alive = false
-                    protector.killedBy = sk
-                    if (game.config.deathReveal) protector.roleRevealed = protector.role
-                    fn.broadcastTo(
-                      client, game.players.filter(p => !p.left),
-                      `The werewolves killed **${protector.number} ${fn.getUser(client, protector.id)}${
-                        game.config.deathReveal
-                          ? ` ${fn.getEmoji(client, protector.role)}`
-                          : ""
-                      }**.`
+                  else if (protector.role == "Doctor") {
+                    fn.getUser(client, protector.id).send(
+                      new Discord.RichEmbed()
+                        .setAuthor("Protection", fn.getEmoji("Doctor_Protection").url)
+                        .setDescription(
+                          `Your protection saved **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** last night!`
+                        )
                     )
-
-                    game = fn.death(client, game, protector.number)
                   }
-                }
-                else if (protector.role == "Tough Guy") {
-                  protector.health = 0
+                  else if (protector.role == "Witch") {
+                    protector.elixirUsed = true
 
-                  fn.getUser(client, protector.id).send(
-                    new Discord.RichEmbed()
-                      .setAuthor(
-                        "Attacked!",
-                        fn.getEmoji(client, "Bodyguard Protect").url
-                      )
-                      .setDescription(
-                        `You protected **${attackedPlayer.number} ${
-                          nicknames.get(attackedPlayer.id)
-                        }** who was attacked by **${sk.number} ${
-                          nicknames.get(sk.id)
-                        } ${fn.getEmoji(client, sk.role)}**.\n` +
-                        "You have been wounded and will die at the end of the day."
-                      )
-                  )
+                    fn.getUser(client, protector.id).send(
+                      new Discord.RichEmbed()
+                        .setAuthor("Elixir", fn.getEmoji("Witch Elixir").url)
+                        .setDescription("Last night your potion saved a life!")
+                    )
+                  }
+                  else if (protector.role == "Beast Hunter") {
+                    protector.trapStatus = -1
 
-                  fn.getUser(client, sk.id).send(
-                    new Discord.RichEmbed()
-                      .setAuthor(
-                        "Attacked!",
-                        fn.getEmoji(client, "Bodyguard Protect").url
-                      )
-                      .setDescription(
-                        `You protected **${attackedPlayer.number} ${
-                          nicknames.get(attackedPlayer.id)
-                        }** who was attacked by **${sk.number} ${
-                          nicknames.get(sk.id)
-                        } ${fn.getEmoji(client, sk.role)}**.\n` +
-                        "You have been wounded and will die at the end of the day."
-                      )
-                  )
-                }
-                else if (protector.role == "Doctor") {
-                  fn.getUser(client, protector.id).send(
-                    new Discord.RichEmbed()
-                      .setAuthor("Protection", fn.getEmoji("Doctor_Protection").url)
-                      .setDescription(
-                        `Your protection saved **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}** last night!`
-                      )
-                  )
-                }
-                else if (protector.role == "Witch") {
-                  protector.elixirUsed = true
-
-                  fn.getUser(client, protector.id).send(
-                    new Discord.RichEmbed()
-                      .setAuthor("Elixir", fn.getEmoji("Witch Elixir").url)
-                      .setDescription("Last night your potion saved a life!")
-                  )
-                }
-                else if (protector.role == "Beast Hunter") {
-                  protector.trapStatus = -1
-
-                  fn.getUser(client, protector.id).send(
-                    new Discord.RichEmbed()
-                      .setAuthor(
-                        "Trap Triggered!",
-                        fn.getEmoji(client, "Beast Hunter TrapInactive").url
-                      )
-                      .setDescription(
-                        "Your target was too string to be killed!"
-                      )
-                  )
-                }
+                    fn.getUser(client, protector.id).send(
+                      new Discord.RichEmbed()
+                        .setAuthor(
+                          "Trap Triggered!",
+                          fn.getEmoji(client, "Beast Hunter TrapInactive").url
+                        )
+                        .setDescription(
+                          "Your target was too string to be killed!"
+                        )
+                    )
+                  }
               }
             }
             else if (attackedPlayer.role == "Bodyguard") {
@@ -363,6 +369,7 @@ module.exports = (client) => {
               else {
                 game.lastDeath = game.currentPhase - 1
                 attackedPlayer.alive = false
+                attackedPlayer.killedBy = wolves.filter(p => !p.alive)[Math.floor(Math.random()*wolves.filter(p => !p.alive).length)]
                 if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left).map(p => p.id),

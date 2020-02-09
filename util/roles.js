@@ -329,14 +329,14 @@ let roles = {
     nite: "Select a player to uncover their role (`w!check [player]`)."
   },
   "Werewolf Berserk": {
-    desc: "Once per game, you can active a werewolves \"frenzy\" during the day (`w!frenzy`)." +
+    desc: "Once per game, you can active a werewolves \"frenzy\" during the day." +
           " If during the night your selected victim is being protected, your victim and all protectors of your victim will die." +
           " The frenzy will only be announced to the werewolves.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["wwb","bww","bers","berz"],
     cat : "Werewolf",
-    day : "You can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`).",
+    day : "Once per game, you can active a werewolves \"frenzy\" during the day (`w!frenzy`).",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
   },
   "Wolf Seer": {
@@ -345,7 +345,9 @@ let roles = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["wws", "wwz", "wwseer", "ww seer"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
+          "Select a player to uncover their role (`w!check [player]`)."
   },
   "Wolf Shaman": {
     desc: "During the day you can enchant another player (`w!enchant [player]`)." +
