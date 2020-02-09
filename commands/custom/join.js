@@ -12,12 +12,12 @@ const fn = require('/app/util/fn'),
 module.exports = {
   name: "join",
   run: async (client, message, args, shared) => {
-    if (players.get(`${message.author.id}.currentGame`)) 
-      return await message.author.send("You are already in a game!")
-    
     // if (!games.get("count")) games.set("count", 0)
     if (!games.get("quick")) games.set("quick", [])
     let Games = games.get("quick")
+    
+    if (Games.find(g => g.gameID == players.get(`${message.author.id}.currentGame`) && g.currentPhase < 999)) 
+      return await message.author.send("You are already in a game!")
     
     let activeGames = Games.filter(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "custom")
     if (!activeGames.length)

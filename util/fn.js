@@ -184,6 +184,34 @@ const addWin = (game, winners, team) => {
   }
 }
 
+const gameEmbed = (client, game) => {
+  return new Discord.RichEmbed()
+    .setTitle(game.mode == 'custom' ? `${game.name} [\`${game.gameID}\`]` : `Game #${game.gameID}`)
+    .addField(
+      `Players [${game.players.length}]`,
+      !game.players.length
+        ? "-"
+        : game.currentPhase == -1
+        ? game.players.map(p => nicknames.get(p.id)).join("\n")
+        : game.players.map(
+            p =>
+              `${
+                p.number
+              } ${nicknames.get(p.id)}${
+                p.alive ? "" : " <:Death:668750728650555402>"
+              } ${getEmoji(client, p.role)}${
+                p.couple
+                  ? ` ${getEmoji(client, "Cupid Lovers")}`
+                  : ""
+              }${
+                p.sect
+                  ? ` ${getEmoji(client, "Sect Member")}`
+                  : ""
+              }${p.left ? " *off*" : ""}`
+          ).join("\n")
+    )
+}
+
 const death = (client, game, number, suicide = false) => {
   let deadPlayer = game.players.find(p => p.number == number)
   

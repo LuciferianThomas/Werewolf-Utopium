@@ -35,18 +35,26 @@ module.exports = {
     ).catch(() => {})
     if (!reactions) return await message.channel.send(
       new Discord.RichEmbed()
+        .setColor("RED")
         .setTitle("Prompt cancelled.")
     )
     let removedGame = Games.splice(Games.indexOf(Games.find(g => g.gameID == game.gameID)), 1)
     
-    if (removedGame.phase < 999) fn.broadcastTo(
-      client, removedGame.players.filter(p => !p.left),
-      new Discord.RichEmbed()
-        .setColor("RED")
-        .setTitle("Game Terminated")
-        .setDescription(`This game has been terminated by staff. Please contact staff members for more information.`)
-    )
-    message.
+    if (removedGame.phase < 999) {
+      fn.broadcastTo(
+        client, removedGame.players.filter(p => !p.left),
+        new Discord.RichEmbed()
+          .setColor("RED")
+          .setTitle("Game Terminated")
+          .setDescription(`This game has been terminated by staff. Please contact staff members for more information.`)
+      )
+      
+      fn.broadcastTo(
+        client, removedGame.players.filter(p => !p.left),
+        fn.gameEmbed(client, removedGame)
+      )
+    }
+    await message.channel.send(`Successfully removed ${game.mode == 'custom' ? `${game.name} [\`${game.gameID}\`]` : `Game #${game.gameID}`}.`)
     games.set("quick", Games)
   }
 }

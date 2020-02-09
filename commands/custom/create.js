@@ -16,9 +16,6 @@ module.exports = {
     if (!client.guilds.get('522638136635817986').members.get(message.author.id).roles.find(r => r.name == 'ww cc'))
       return await message.author.send("You cannot create custom games!")
     
-    if (players.get(`${message.author.id}.currentGame`)) 
-      return await message.author.send("You are already in a game!")
-    
     if (players.get(`${message.author.id}.prompting`)) 
       return await message.author.send("You have an active prompt already!")
     
@@ -27,6 +24,9 @@ module.exports = {
     // if (!games.get("count")) games.set("count", 0)
     if (!games.get("quick")) games.set("quick", [])
     let Games = games.get("quick")
+    
+    if (Games.find(g => g.gameID == players.get(`${message.author.id}.currentGame`) && g.currentPhase < 999)) 
+      return await message.author.send("You are already in a game!")
     
     let currentGame = {
       mode: "custom",

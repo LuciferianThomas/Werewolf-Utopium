@@ -48,6 +48,15 @@ module.exports = (client, game) => {
         )
       }
     }
+    else if (game.currentPhase >= 999) {
+      if (!fn.getUser(client, game.players[pl].id) && moment(game.players[pl].lastAction).add(2, 'm') <= moment()) {
+        game.players[pl].left = true
+        players.set(`${game.players[pl].id}.currentGame`, 0)
+
+        if (fn.getUser(client, game.players[pl].id))
+          fn.getUser(client, game.players[pl].id).send(`You were removed from ${game.mode == 'custom' ? game.name : `Game #${game.gameID}`}.`)
+      }
+    }
     else {
       if (!game.players[pl].alive || game.players[pl].left) continue;
 

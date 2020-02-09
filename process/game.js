@@ -15,27 +15,18 @@ module.exports = (client) => {
 
     for (let i = 0; i < QuickGames.length; i++) {
       let game = QuickGames[i]
-
-      if (game.currentPhase < 999)
-        game = require('./inactivity')(client, game)
+      
+      game = require('./inactivity')(client, game)
 
       if (game.currentPhase === 999) {
         fn.broadcastTo(
           client, game.players.filter(p => !p.left),
-          new Discord.RichEmbed()
-            .setTitle(game.mode == 'custom' ? game.name : `Game #${game.gameID}`)
-            .addField(
-              `Players`, 
-              game.players.map(p => 
-                `${p.number} ${nicknames.get(p.id)}${p.alive ? "" : " <:Death:668750728650555402>"} ${
-                fn.getEmoji(client, p.role)}`
-              ).join('\n')
-            )
+          fn.gameEmbed(client, game)
         )
 
         game.currentPhase++
-        for (var j = 0; j < game.players.length; j++)
-          players.set(`${game.players[j].id}.currentGame`, 0)
+        // for (var j = 0; j < game.players.length; j++)
+        //   players.set(`${game.players[j].id}.currentGame`, 0)
       }
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
 

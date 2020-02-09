@@ -24,12 +24,12 @@ module.exports = {
   name: "quick",
   aliases: ["q"],
   run: async (client, message, args, shared) => {
-    if (players.get(`${message.author.id}.currentGame`)) 
-      return await message.author.send("You are already in a game!")
-    
     if (!games.get("count")) games.set("count", 0)
     if (!games.get("quick")) games.set("quick", [])
     let QuickGames = games.get("quick")
+    
+    if (QuickGames.find(g => g.gameID == players.get(`${message.author.id}.currentGame`) && g.currentPhase < 999)) 
+      return await message.author.send("You are already in a game!")
     
     let currentGame = QuickGames.find(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "quick")
     if (currentGame) {
