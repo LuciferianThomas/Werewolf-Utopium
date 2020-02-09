@@ -65,16 +65,23 @@ module.exports = {
       let targetPlayer = game.players[target-1]
 
       if (gamePlayer.role == "Aura Seer") {
-        message.author.send(
-          new Discord.RichEmbed()
-            .setAuthor(`Seeing Results`, fn.getEmoji(client, "Aura Seer").url)
-            .setThumbnail(fn.getEmoji(client, `${targetPlayer.enchanted && targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} Aura`).url)
-            .setDescription(
-              `**${target} ${nicknames.get(targetPlayer.id)}** has a${
-              (targetPlayer.enchanted && targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura) == "Good" ? "" : "n"
-              } ${targetPlayer.enchanted && targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} aura.`
-            )
-        )
+        let embed = new Discord.RichEmbed()
+          .setAuthor(`Seeing Results`, fn.getEmoji(client, "Aura Seer").url)
+          .setThumbnail(fn.getEmoji(client, `${targetPlayer.enchanted && targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} Aura`).url)
+          .setDescription(
+            `**${target} ${nicknames.get(targetPlayer.id)}** has a${
+            (targetPlayer.enchanted && targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura) == "Good" ? "" : "n"
+            } ${targetPlayer.enchanted && targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} aura.`
+          )
+        if (roles[targetPlayer.role].aura == "Unknown")
+          embed.setFooter(
+            `Unknown roles include ${
+              game.originalRoles.filter(
+                (r, i) => roles[r].aura == "Unknown" &&
+                          game.originalRoles.indexOf(r) === i
+              ).map(r => `${fn.getEmoji(client, r)} ${r}`).join(', ')}.${game.originalRoles.filter(r => r.includes("Random")).length ? `\n` }`
+          )
+        message.author.send(embed)
       }
       else {
         message.author.send(

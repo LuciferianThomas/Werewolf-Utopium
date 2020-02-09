@@ -772,9 +772,7 @@ module.exports = (client) => {
                 .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
                 .setDescription(
                   `You are in love with **${lovers[0].number} ${nicknames.get(lovers[0].id)} ${fn.getEmoji(client, lovers[1].role)}**.` + 
-                  ` You will die together! ${roles[lovers[0].role].team !== roles[lovers[1].role].team
-                     ? "You and the Cupid win if you are the last players alive apart from the Cupid."
-                     : "You also win with your team."}`
+                  "You have to stay alive with them until the end of the game. If your couple dies, you die along!"
                 )
             )
           }
