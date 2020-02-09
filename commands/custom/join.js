@@ -32,7 +32,9 @@ module.exports = {
         new Discord.RichEmbed({
           fields: activeGames.map(x => {
             return {
-              name: `**${x.name}**${
+              name: `${
+                !x.config.private ? "" : fn.getEmoji(client, "Private")
+              }**${x.name}**${
                 !x.config.private ? "" : ` [\`${x.gameID}\`]`
               }`,
               value: `${x.originalRoles.map(y => fn.getEmoji(client, y)).join("")}\n` +
