@@ -16,12 +16,17 @@ module.exports = {
     let QuickGames = games.get("quick"),
         game = QuickGames.find(g => g.gameID == args[0])
     
+    if (
+    
     message.author.send(
       new Discord.RichEmbed()
         .setTitle(game.mode == 'custom' ? game.name : `Game #${game.gameID}`)
+        .addField('Status')
         .addField(
           `Players [${game.players.length}]`,
-          game.currentPhase == -1
+          !game.players.length
+            ? "-"
+            : game.currentPhase == -1
             ? game.players.map(p => nicknames.get(p.id)).join("\n")
             : game.players.map(
                 p =>
@@ -54,8 +59,8 @@ module.exports = {
             //   if (a > b) return 1
             //   if (a < b) return -1
             // })
-            .map(r => `${fn.getEmoji(client, r)} ${r}`)
-            .join("\n")
+            .map(r => fn.getEmoji(client, r))
+            .join(" ")
         )
     )
   }
