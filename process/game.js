@@ -51,7 +51,13 @@ module.exports = (client) => {
               lynched = lynched[0]
               let lynchedPlayer = game.players[lynched-1]
               
-              if (!game.players.find(p => p.preventLynch == lynchedPlayer.number)) {
+              if (game.players.find(p => p.preventLynch == lynchedPlayer.number)) {
+                fn.broadcastTo(
+                  client, game.players.filter(p => !p.left), 
+                  `**${lynchedPlayer.number} ${nicknames.get(lynchedPlayer.id)}** cannot be lynched.`
+                )
+              }
+              else {
                 lynchedPlayer.alive = false
                 if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
 
@@ -97,7 +103,6 @@ module.exports = (client) => {
                   }
                 }
               }
-              else {}
             }
           } else
             fn.broadcastTo(
