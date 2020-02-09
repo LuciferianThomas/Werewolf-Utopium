@@ -31,7 +31,7 @@ module.exports = {
         .setTitle(game.mode == 'custom' ? `${game.name} [\`${game.gameID}\`]` : `Game #${game.gameID}`)
         .addField(
           'Status',
-          game.currentPhase == 999
+          game.currentPhase >= 999
             ? "Ended"
             : game.currentPhase == -1
             ? "Not started"
@@ -49,10 +49,7 @@ module.exports = {
                     p.number
                   } ${nicknames.get(p.id)}${
                     p.alive ? "" : " <:Death:668750728650555402>"
-                  }${
-                    p.id == message.author.id ||
-                    p.roleRevealed
-                      ? ` ${fn.getEmoji(client, p.role)}`
+                  } ${fn.getEmoji(client, p.role)}`
                       : ""
                   }${
                     p.couple
