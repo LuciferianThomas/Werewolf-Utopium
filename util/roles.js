@@ -263,25 +263,30 @@ let roles = {
   
   // Werewolf roles
   "Werewolf": {
-    desc: "Choose one player to kill every night (`w!vote [player]`).",
+    desc: "Choose one player to kill every night.",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["ww"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
   },
   "Alpha Werewolf": {
     desc: "You are a regular werewolf, except when your vote counts as double.",
     aura: "Unknown",
     team: "Werewolves",
     abbr: ["aww","alpha", "alpha ww"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
+          "You vote counts double."
   },
   "Guardian Wolf": {
   	desc: "You are a werewolf who can once protect a player from being lynched by the village (`w!protect [player]`).",
     aura: "Evil",
     team: "Werewolves",
     abbr: ["gww","wwg","gw","wg"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    day : "You can once protect a player from being lynched by the village (`w!protect [player]`).",
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
   }, 
   "Junior Werewolf": {
     desc: "Because you are so cute, you can select another player to be killed when you are killed.",
@@ -290,7 +295,7 @@ let roles = {
     abbr: ["jww", "jr", "jnr", "jrww", "jnrww","jw"],
     cat : "Werewolf",
     day : "Select a player to kill when you die (`w!avenge [player]`).",
-    nite: "Vote to kill a player with the werewolves (`w!vote [player]`)." +
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)." +
           " Select a player to kill when you die (`w!avenge [player]`)."
   },
   "Kitten Wolf": {
@@ -300,7 +305,10 @@ let roles = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["kww","wwk","wk","kw"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
+          "Once you can convert a villager into a werewolf (`w!scratch [player]`).\n" +
+          "**⚠️ If they are not a villager, you lose your ability!**"
   }, 
   "Nightmare Werewolf": {
     desc: "Twice during the game you can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`)." + 
@@ -308,7 +316,8 @@ let roles = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["nww","nw"],
-    cat : "Werewolf"
+    cat : "Werewolf",
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n"
   },
   "Sorcerer": {
     desc: "Each night you can select a player to uncover their role (`w!check [player]`)." +
