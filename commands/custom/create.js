@@ -223,7 +223,7 @@ module.exports = {
         timeSuccess = true
       }
       
-      // SETUP TIME
+      // SETUP REVEAL
       let revealSuccess = false
       while (!revealSuccess) {
         let revealPrompt = await message.author.send(
@@ -254,6 +254,38 @@ module.exports = {
         else currentGame.config.deathReveal = false
         revealSuccess = true
       }
+      
+      // SETUP REVEAL
+      let privateSuccess = false
+      while (!privateSuccess) {
+        let privatePrompt = await message.author.send(
+          new Discord.RichEmbed()
+            .setTitle("Custom Game Setup")
+            .setDescription(
+              `Private game?`
+            )
+        )
+        
+        await privatePrompt.react(fn.getEmoji(client, 'green tick'))
+        await privatePrompt.react(fn.getEmoji(client, 'red tick'))
+        let pReactions = await privatePrompt.awaitReactions(
+          (r, u) =>
+            (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
+              r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
+            u.id == message.author.id,
+          { time: 30*1000, max: 1, errors: ['time'] }
+        ).catch(() => {})
+        if (!pReactions)
+          return await message.author.send(
+            new Discord.RichEmbed()
+              .setColor("RED")
+              .setTitle("Prompt timed out.")
+          )
+        let pReaction = pReactions.first().emoji
+        if (pReaction.id == fn.getEmoji(client, "green_tick").id) currentGame.config.private = true
+        else currentGame.config.private = false
+        privateSuccess = true
+      }
     }
     
     await message.author.send(
@@ -267,7 +299,8 @@ module.exports = {
         .addField(
           'Configuration',
           `**Time:** Night ${currentGame.config.nightTime}s / Day ${currentGame.config.dayTime}s / Day ${currentGame.config.dayTime}s\n` +
-          `**Death Reveal:** ${currentGame.config.deathReveal}`
+          `**Death Reveal:** ${currentGame.config.deathReveal}\n` +
+          `**Private:** ${currentGame.config.private}`
         )
     )
     
