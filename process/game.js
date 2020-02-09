@@ -745,10 +745,38 @@ module.exports = (client) => {
           
           if (game.currentPhase == 1 && game.players.find(p => p.role == "Cupid")) {
             let cupid = game.players.find(p => p.role == "Cupid")
+            let lovers = []
             for (var loverNumber of cupid.usedAbilityTonight) {
               let lover = game.players[loverNumber-1]
-              if (!lover.alive) lover = game.players.filter()
+              if (!lover.alive) {
+                let possible = game.players.filter(p => p.alive && p.role != "Cupid")
+                lover = game.players[possible[Math.floor(Math.random()*possible.length)].number-1]
+              }
+              lover.couple = true
+              lovers.push(lover)
             }
+            fn.getUser(client, lovers[0].id).send(
+              new Discord.RichEmbed()
+                .setTitle("Love Was When")
+                .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
+                .setDescription(
+                  `You are in love with **${lovers[1].number} ${nicknames.get(lovers[1].id)} ${fn.getEmoji(client, lovers[1].role)}**.` + 
+                  ` You will die together! ${roles[lovers[0].role].team !== roles[lovers[1].role].team
+                     ? "You and the Cupid win if you are the last players alive apart from the Cupid."
+                     : "You also win with your team."}`
+                )
+            )
+            fn.getUser(client, lovers[1].id).send(
+              new Discord.RichEmbed()
+                .setTitle("Love Was When")
+                .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
+                .setDescription(
+                  `You are in love with **${lovers[0].number} ${nicknames.get(lovers[0].id)} ${fn.getEmoji(client, lovers[1].role)}**.` + 
+                  ` You will die together! ${roles[lovers[0].role].team !== roles[lovers[1].role].team
+                     ? "You and the Cupid win if you are the last players alive apart from the Cupid."
+                     : "You also win with your team."}`
+                )
+            )
           }
 
           // CLEAR NIGHT SELECTIONS
