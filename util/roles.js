@@ -318,14 +318,16 @@ let roles = {
     abbr: ["nww","nw"],
     cat : "Werewolf",
     day : "You can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`).",
-    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n"
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
   },
   "Sorcerer": {
     desc: "Each night you can select a player to uncover their role (`w!check [player]`)." +
           " You cannot vote or talk with the werewolves at night.",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["sorc"]
+    abbr: ["sorc"],
+    day : "You can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`).",
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
   },
   "Werewolf Berserk": {
     desc: "Once per game, you can active a werewolves \"frenzy\" during the day (`w!frenzy`)." +
