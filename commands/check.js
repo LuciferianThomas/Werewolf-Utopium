@@ -75,11 +75,31 @@ module.exports = {
           )
         if (roles[targetPlayer.role].aura == "Unknown")
           embed.setFooter(
-            `Unknown roles include ${
-              game.originalRoles.filter(
-                (r, i) => roles[r].aura == "Unknown" &&
-                          game.originalRoles.indexOf(r) === i
-              ).map(r => `${fn.getEmoji(client, r)} ${r}`).join(', ')}.${game.originalRoles.filter(r => r.includes("Random")).length ? `\n` }`
+            `Unknown roles include ${game.originalRoles
+              .filter(
+                (r, i) =>
+                  roles[r].aura == "Unknown" &&
+                  game.originalRoles.indexOf(r) === i
+              )
+              .map(r => `${fn.getEmoji(client, r)} ${r}`)
+              .join(", ")}.${
+              game.originalRoles.filter(r => r.includes("Random")).length
+                ? `\nPossible unknown roles from random roles include ${Object.values(
+                    roles
+                  )
+                    .filter(
+                      r =>
+                        r.aura == "Unknown" &&
+                        (game.originalRoles.find(r => r == "Random")
+                          ? true
+                          : game.originalRoles
+                              .filter(r1 => r1.includes("Random"))
+                              .includes(`Random ${r.cat}`))
+                    )
+                    .map(r => `${fn.getEmoji(client, r)} ${r}`)
+                    .join(", ")}`
+                : ""
+            }`
           )
         message.author.send(embed)
       }
