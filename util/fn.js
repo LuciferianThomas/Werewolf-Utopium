@@ -332,5 +332,6 @@ module.exports = {
   broadcastTo: broadcastTo,
   addXP: addXP,
   addWin: addWin,
-  death: death
+  death: death,
+  gameEmbed: gameEmbed
 }

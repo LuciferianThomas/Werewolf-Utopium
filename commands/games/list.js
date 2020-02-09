@@ -23,7 +23,7 @@ module.exports = {
           .setTitle("No results found.")
       )
     else for (var game of allGames.filter(g => args[0] ? g.mode == args[0].toLowerCase() : true)) {
-      if (i == 5) { i = 0; embeds.push(new Discord.RichEmbed()) }
+      if (i == 6) { i = 0; embeds.push(new Discord.RichEmbed()) }
       ++i
       embeds[embeds.length-1].addField(
         game.mode == 'custom' ? `${game.name} [\`${game.gameID}\`]` : `Game #${game.gameID}`,
@@ -45,18 +45,14 @@ module.exports = {
     }
     
     embeds.forEach((e, i) =>
-      e
-        .setTitle(
-          `List of ${
-            args[0]
-              ? args[0]
-                  .toLowerCase()
-                  .charAt(0)
-                  .toUpperCase() + args[0].toLowerCase().slice(1)
-              : "All"
-          } Games`
-        )
-        .setFooter(`Page ${i + 1}/${embeds.length}`)
+      e.setTitle(
+        `List of ${
+          args[0]
+            ? args[0].charAt(0).toUpperCase() + args[0].toLowerCase().slice(1)
+            : "All"
+        } Games`
+      )
+      .setFooter(`Page ${i + 1}/${embeds.length}`)
     )
     
     let m = await message.channel.send(embeds[0])
