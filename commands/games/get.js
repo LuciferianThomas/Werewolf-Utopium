@@ -10,16 +10,11 @@ const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
 
 module.exports = {
-  name: "game",
+  name: "get",
+  aliases: ["find"],
   run: async (client, message, args, shared) => {
-    let player = players.get(message.author.id)
-    if (!player.currentGame) 
-      return await message.author.send("**You are not currently in a game!**\nDo `w!quick` to join a Quick Game!")
-    
     let QuickGames = games.get("quick"),
-        game = QuickGames.find(g => g.gameID == player.currentGame),
-        index = QuickGames.indexOf(game),
-        gamePlayer = game.players.find(player => player.id == message.author.id)
+        game = QuickGames.find(g => g.gameID == args[0])
     
     message.author.send(
       new Discord.RichEmbed()
@@ -36,20 +31,15 @@ module.exports = {
                     p.alive ? "" : " <:Death:668750728650555402>"
                   }${
                     p.id == message.author.id ||
-                    p.roleRevealed ||
-                    (gamePlayer.couple && p.couple)
-                      ? ` ${fn.getEmoji(client, p.roleRevealed || p.role)}`
-                      : roles[gamePlayer.role].team == "Werewolves" &&
-                        roles[p.role].team == "Werewolves" &&
-                        gamePlayer.role !== "Sorcerer" && p.role !== "Sorcerer"
-                      ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
+                    p.roleRevealed
+                      ? ` ${fn.getEmoji(client, p.role)}`
                       : ""
                   }${
-                    gamePlayer.couple && p.couple
+                    p.couple
                       ? ` ${fn.getEmoji(client, "Cupid Lovers")}`
                       : ""
                   }${
-                    gamePlayer.sect && p.sect
+                    p.sect
                       ? ` ${fn.getEmoji(client, "Sect Member")}`
                       : ""
                   }${p.left ? " *off*" : ""}${
