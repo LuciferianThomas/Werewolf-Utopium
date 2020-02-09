@@ -21,7 +21,7 @@ module.exports = {
         )
     
     if (!game) return await message.channel.send(
-      new Discord.RichEmbed
+      new Discord.RichEmbed()
         .setColor("RED")
         .setTitle("No results found.")
     )
