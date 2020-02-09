@@ -14,14 +14,29 @@ module.exports = {
   aliases: ["find"],
   run: async (client, message, args, shared) => {
     let QuickGames = games.get("quick"),
-        game = QuickGames.find(g => g.gameID == args[0])
+        game = QuickGames.find(
+          g => g.mode == "custom"
+                 ? g.gameID.toLowerCase() == args[0].toLowerCase()
+                 : g.gameID == args[0]
+        )
     
-    if (
+    if (!game) return await message.channel.send(
+      new Discord.RichEmbed
+        .setColor("RED")
+        .setTitle("No results found.")
+    )
     
-    message.author.send(
+    message.channel.send(
       new Discord.RichEmbed()
-        .setTitle(game.mode == 'custom' ? game.name : `Game #${game.gameID}`)
-        .addField('Status')
+        .setTitle(game.mode == 'custom' ? `${game.name} [\`${game.gameID}\`]` : `Game #${game.gameID}`)
+        .addField(
+          'Status',
+          game.currentPhase == 999
+            ? "Ended"
+            : game.currentPhase == -1
+            ? "Not started"
+            : `${game.currentPhase % 3 == 0 ? "Night" : "Day"} ${Math.floor(game.currentPhase / 3) + 1}`
+       )
         .addField(
           `Players [${game.players.length}]`,
           !game.players.length
