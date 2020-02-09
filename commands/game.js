@@ -35,18 +35,14 @@ module.exports = {
                   } ${nicknames.get(p.id)}${
                     p.alive ? "" : " <:Death:668750728650555402>"
                   }${
-                    p.id == message.author.id ||
-                    p.roleRevealed ||
-                    (gamePlayer.couple && p.couple)
+                    p.id == message.author.id || p.roleRevealed
                       ? ` ${fn.getEmoji(client, p.roleRevealed || p.role)}`
                       : roles[gamePlayer.role].team == "Werewolves" &&
                         roles[p.role].team == "Werewolves" &&
                         gamePlayer.role !== "Sorcerer" && p.role !== "Sorcerer"
                       ? ` ${fn.getEmoji(client, "Fellow Werewolf")}`
-                      : ""
-                  }${
-                    gamePlayer.couple && p.couple
-                      ? ` ${fn.getEmoji(client, "Cupid Lovers")}`
+                      : gamePlayer.couple && p.couple
+                      ? ` ${fn.getEmoji(client, p.roleRevealed || p.role)} ${fn.getEmoji(client, "Cupid Lovers")}`
                       : ""
                   }${
                     gamePlayer.sect && p.sect
