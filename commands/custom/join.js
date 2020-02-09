@@ -19,7 +19,7 @@ module.exports = {
     if (!games.get("quick")) games.set("quick", [])
     let Games = games.get("quick")
     
-    let activeGames = Games.filter(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "custom" )
+    let activeGames = Games.filter(game => game.players.length <= 16 && game.currentPhase < 0 && game.mode == "custom")
     if (!activeGames.length)
       return await message.channel.send(
         new Discord.RichEmbed()

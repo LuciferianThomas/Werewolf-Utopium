@@ -49,9 +49,7 @@ module.exports = {
                     p.number
                   } ${nicknames.get(p.id)}${
                     p.alive ? "" : " <:Death:668750728650555402>"
-                  } ${fn.getEmoji(client, p.role)}`
-                      : ""
-                  }${
+                  } ${fn.getEmoji(client, p.role)}${
                     p.couple
                       ? ` ${fn.getEmoji(client, "Cupid Lovers")}`
                       : ""

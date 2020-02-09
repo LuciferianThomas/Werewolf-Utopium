@@ -23,7 +23,7 @@ module.exports = {
           .setTitle("No results found.")
       )
     else for (var game of allGames.filter(g => args[0] ? g.mode == args[0].toLowerCase() : true)) {
-      if (i == 25) { i = 0; embeds.push(new Discord.RichEmbed()) }
+      if (i == 5) { i = 0; embeds.push(new Discord.RichEmbed()) }
       ++i
       embeds[embeds.length-1].addField(
         game.mode == 'custom' ? `${game.name} [\`${game.gameID}\`]` : `Game #${game.gameID}`,
