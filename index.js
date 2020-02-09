@@ -167,10 +167,17 @@ client.on('message', async message => {
     return fn.broadcast(client, game, `**${nicknames.get(message.author.id)}**: ${content}`, [message.author.id])
   
   if (game.currentPhase >= 999)
-    return fn.broadcastTo(
-      client, game.players.filter(p => !p.left && p.id != message.author.id),
-      `**${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`
-    )
+    if (gamePlayer.alive)
+      return fn.broadcastTo(
+        client, game.players.filter(p => !p.left && p.id != message.author.id),
+        `**${gamePlayer.number} ${nicknames.get(message.author.id)}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}`
+      )
+    else {
+      return fn.broadcastTo(
+        client, game.players.filter(p => !p.left && p.id != message.author.id),
+        `_**${gamePlayer.number} ${nicknames.get(message.author.id)}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
+      )
+    }
   
   if (gamePlayer.mute) content = "..."
   
