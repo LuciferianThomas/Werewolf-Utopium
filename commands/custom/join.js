@@ -29,7 +29,18 @@ module.exports = {
     
     if (activeGames.length && !args.length)
       return await message.channel.send(
-        new Discord.RichEmbed({fields: activeGames.map(x => { return { name: `**${x.name}** [\`${x.gameID}\`]`, value: x.originalRoles.map(y => fn.getEmoji(client, y)).join('') } })})
+        new Discord.RichEmbed({
+          fields: activeGames.map(x => {
+            return {
+              name: `**${x.name}**${
+                !x.config.private ? "" : ` [\`${x.gameID}\`]`
+              }`,
+              value: `${x.originalRoles.map(y => fn.getEmoji(client, y)).join("")}\n` +
+                      `Night ${x.config.nightTime}s / Day ${x.config.dayTime}s / Voting ${x.config.votingTime}s\n` +
+                      `**Death Reveal:** ${currentGame.config.deathReveal}`
+            }
+          })
+        })
           .setColor("GOLD")
           .setTitle("Active Custom Games")
       )
