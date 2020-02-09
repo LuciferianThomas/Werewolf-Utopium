@@ -26,7 +26,7 @@ module.exports = {
         .setTitle("No results found.")
     )
     
-    let m = await message.channel.send("Are you sure to remove this game?" + game.currentPhase >= 0 && game.currentPhase < 999 ? "\nThis game is currently in progress!" : "")
+    let m = await message.channel.send("Are you sure to remove this game?" + (game.currentPhase >= 0 && game.currentPhase < 999 ? "\nThis game is currently in progress!" : ""))
     await m.react(fn.getEmoji(client, "green tick"))
     let reactions = await m.awaitReactions(
       (r, u) => r.emoji.id == client.emojis.find(e => e.name == "green_tick").id &&
