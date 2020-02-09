@@ -166,24 +166,30 @@ client.on('message', async message => {
   if (game.currentPhase == -1)
     return fn.broadcast(client, game, `**${nicknames.get(message.author.id)}**: ${content}`, [message.author.id])
   
+  if (game.currentPhase >= 999)
+    return fn.broadcastTo(
+      client, game.players.filter(p => !p.left && p.id != message.author.id),
+      `**${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`
+    )
+  
   if (gamePlayer.mute) content = "..."
   
   if (game.currentPhase % 3 != 0)
     if (gamePlayer.alive)
       return fn.broadcastTo(
-        client, game.players.filter(p => !p.left && p.id != message.author.id).map(p => p.id),
+        client, game.players.filter(p => !p.left && p.id != message.author.id),
         `**${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`
       )
     else {
       return fn.broadcastTo(
-        client, game.players.filter(p => !p.left && !p.alive && p.id != message.author.id).map(p => p.id),
+        client, game.players.filter(p => !p.left && !p.alive && p.id != message.author.id),
         `_**${gamePlayer.number} ${nicknames.get(message.author.id)}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
       )
     }
   if (game.currentPhase % 3 == 0) {
     if (!gamePlayer.alive) {
       return fn.broadcastTo(
-        client, game.players.filter(p => !p.left && (!p.alive || (p.alive && p.role == "Medium")) && p.id != message.author.id).map(p => p.id),
+        client, game.players.filter(p => !p.left && (!p.alive || (p.alive && p.role == "Medium")) && p.id != message.author.id),
         `_**${gamePlayer.number} ${nicknames.get(message.author.id)}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`
       )
     }
