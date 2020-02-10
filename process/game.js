@@ -765,6 +765,7 @@ module.exports = (client) => {
           for (var illu of illus) {
             let disguisedPlayer = game.players[illu.usedAbilityTonight]
             disguisedPlayer.disguised = true
+            game.lastDeath = game.currentPhase - 1
             illu.deluded.push(disguisedPlayer.number)
           }
 

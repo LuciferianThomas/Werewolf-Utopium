@@ -47,9 +47,7 @@ module.exports = {
         let protectedPlayer = game.players[gamePlayer.usedAbilityTonight-1]
         protectedPlayer.protectors.splice(protectedPlayer.protectors.indexOf(gamePlayer.number), 1)
       }
-      targetPlayer.protectors.push(gamePlayer.number)
-      gamePlayer.usedAbilityTonight = targetPlayer.number
-      
+            
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer protect a player.")
       
