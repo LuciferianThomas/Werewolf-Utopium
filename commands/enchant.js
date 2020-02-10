@@ -33,17 +33,14 @@ module.exports = {
     let target = parseInt(args[0])
     if (isNaN(target) || target > game.players.length || target < 1)
       return await message.author.send("Invalid target.")
-    if (!game.players[target-1].alive) 
+    
+    let targetPlayer = game.players[target-1]
+    if (!targetPlayer.alive) 
       return await message.author.send("You cannot target a dead player.")
     if (target == gamePlayer.number) 
       return await message.author.send("You cannot target yourself.")
 
-    if (game.players.find(p => p.enchanted && p.enchanted.includes(gamePlayer.number))) {
-      let prevRev = game.players.find(p => p.enchanted && p.enchanted.includes(gamePlayer.number)).number - 1
-      game.players[prevRev].enchanted.splice(game.players[prevRev].enchanted.indexOf(gamePlayer.number),1)
-    }
-    
-    game.players[target-1].enchanted.push(gamePlayer.number)
+    gamePlayer.enchant = targetPlayer.number
     
     message.author.send(`${fn.getEmoji(client, "Wolf Shaman Select")
                         } You selected **${target} ${nicknames.get(game.players[target-1].id)}** to be enchanted at night.`)
