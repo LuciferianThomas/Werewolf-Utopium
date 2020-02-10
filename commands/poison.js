@@ -56,6 +56,7 @@ module.exports = {
     if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role
     gamePlayer.poisonUsed = true
     game.lastDeath = game.currentPhase
+    gamePlayer.killedTonight = true
     
     game = fn.death(client, game, targetPlayer.number)
     
