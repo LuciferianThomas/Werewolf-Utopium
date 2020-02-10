@@ -34,12 +34,12 @@ module.exports = {
             return {
               name: `${
                 !x.config.private ? "" : fn.getEmoji(client, "Private")
-              }**${x.name}**${
-                !x.config.private ? "" : ` [\`${x.gameID}\`]`
+              } **${x.name}**${
+                x.config.private ? "" : ` [\`${x.gameID}\`]`
               }`,
               value: `${x.originalRoles.map(y => fn.getEmoji(client, y)).join("")}\n` +
                       `Night ${x.config.nightTime}s / Day ${x.config.dayTime}s / Voting ${x.config.votingTime}s\n` +
-                      `**Death Reveal:** ${currentGame.config.deathReveal}`
+                      `**Death Reveal:** ${x.config.deathReveal}`
             }
           })
         })

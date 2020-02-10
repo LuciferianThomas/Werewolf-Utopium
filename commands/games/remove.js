@@ -40,7 +40,7 @@ module.exports = {
     )
     let removedGame = Games.splice(Games.indexOf(Games.find(g => g.gameID == game.gameID)), 1)
     
-    if (removedGame.phase < 999) {
+    if (removedGame.currentPhase < 999) {
       fn.broadcastTo(
         client, removedGame.players.filter(p => !p.left),
         new Discord.RichEmbed()
