@@ -829,6 +829,22 @@ module.exports = (client) => {
           continue;
         }
 
+        if (alive.filter(p => p.role != "Zombie").length == 0) {
+          game.currentPhase = 999
+          fn.broadcastTo(
+            client, game.players.filter(p => !p.left),
+            new Discord.RichEmbed()
+              .setTitle("Game has ended.")
+              .setThumbnail(fn.getEmoji(client, "Zombie").url)
+              .setDescription(
+                `The zombies wins!`
+              )
+          )
+          fn.addXP(game.players.filter(p => p.role == "Zombie" && !p.suicide), 75)
+          fn.addWin(game, alive.filter(p => p.sect).map(p => p.number))
+          continue;
+        }
+
         if (aliveRoles.includes("Sect Leader") && alive.filter(p => !p.sect).length == 0) {
           game.currentPhase = 999
           fn.broadcastTo(

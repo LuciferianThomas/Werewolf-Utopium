@@ -10,8 +10,7 @@ const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
 
 module.exports = {
-  name: "delude",
-  aliases: ["illusion", "illu"],
+  name: "disguise",
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
     if (!player.currentGame) 
@@ -38,10 +37,8 @@ module.exports = {
     let targetPlayer = game.players[target-1]
     if (!targetPlayer.alive)
       return await message.author.send("You cannot avenge on a dead player.")
-    if (roles[gamePlayer.role].team == roles[targetPlayer.role].team == "Werewolves")
-      return await message.author.send("You cannot avenge on your fellow werewolves!")
     
-    gamePlayer.avenge = targetPlayer.number
+    gamePlayer.usedAbilityTonight = targetPlayer.number
     
     message.author.send(
       `${fn.getEmoji(client, "Illusionist Delude")
