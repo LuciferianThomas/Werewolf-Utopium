@@ -138,25 +138,22 @@ module.exports = (client) => {
           }
           
           // RED LADY KILL
-          let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight)
-          for (var rl of rls) {
-            let visitedPlayer = game.players[rl.usedAbilityTonight-1]
-            if (!visitedPlayer.alive) continue;
-            if (roles[visitedPlayer.role].team !== "Village") {
-              rl.alive = false
-              rl.roleRevealed = "Red Lady"
-              rl.visitedTonight = true
-              game.lastDeath = game.currentPhase - 1
-              
-              fn.broadcastTo(
-                client, game.players.filter(p => !p.left),
-                `<:Red_Lady_LoveLetter:674854554369785857> **${rl.number} ${nicknames.get(rl.id)} ${fn.getEmoji(client, "Red Lady")
-                }** visited an evil player and died!`
-              )
-            }
+          let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight),
+              killedRLs = rls.filter(rl => roles[game.players[rl.usedAbilityTonight-1].role].team !== "Village")
+          for (var killedRL of killedRL) {
+            killedRL.alive = false
+            killedRL.roleRevealed = "Red Lady"
+            killedRL.visitedTonight = true
+            game.lastDeath = game.currentPhase - 1
+
+            fn.broadcastTo(
+              client, game.players.filter(p => !p.left),
+              `<:Red_Lady_LoveLetter:674854554369785857> **${killedRL.number} ${nicknames.get(killedRL.id)} ${fn.getEmoji(client, "Red Lady")
+              }** visited an evil player and died!`
+            )
           }
           
-          let protectors = game.players.filter(p => p.alive && [""].includes(p.role))
+          let protectors = game.players.filter(p => p.alive && ["Bodyguard","Doctor","Witch",""].includes(p.role))
           
           let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
           let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),
@@ -616,22 +613,6 @@ module.exports = (client) => {
                       )
                   )
               )
-          
-              // RED LADY KILL
-              let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight)
-              for (var rl of rls) {
-                if (game.players[rl.usedAbilityTonight-1].killedBy) {
-                  rl.alive = false
-                  rl.roleRevealed = "Red Lady"
-                  game.lastDeath = game.currentPhase - 1
-
-                  fn.broadcastTo(
-                    client, game.players.filter(p => !p.left),
-                    `<:Red_Lady_LoveLetter:674854554369785857> **${rl.number} ${nicknames.get(rl.id)} ${fn.getEmoji(client, "Red Lady")
-                    }** visited an evil player and died!`
-                  )
-                }
-              }
               
               fn.broadcastTo(
                 client, game.players.filter(p => p.sect),
@@ -657,6 +638,21 @@ module.exports = (client) => {
               )
             }
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
+          }
+          
+          // RED LADY KILL
+          for (var rl of rls) {
+            if (game.players[rl.usedAbilityTonight-1].killedBy) {
+              rl.alive = false
+              rl.roleRevealed = "Red Lady"
+              game.lastDeath = game.currentPhase - 1
+
+              fn.broadcastTo(
+                client, game.players.filter(p => !p.left),
+                `<:Red_Lady_LoveLetter:674854554369785857> **${rl.number} ${nicknames.get(rl.id)} ${fn.getEmoji(client, "Red Lady")
+                }** visited an evil player and died!`
+              )
+            }
           }
           
           // SPIRIT SEER RESULTS
