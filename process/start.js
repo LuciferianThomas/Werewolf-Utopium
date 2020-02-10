@@ -48,6 +48,8 @@ module.exports = async (client, game) => {
         thisPlayer.cards = []; break;
       case "Sect Leader":
         thisPlayer.sect = true; break;
+      case "Illusionist":
+        thisPlayer.deluded = []; break;
     }
     
     await client.users.get(thisPlayer.id).send(
