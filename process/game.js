@@ -760,6 +760,8 @@ module.exports = (client) => {
                 )
             )
           }
+          
+          let illus = game.players.filter(p => )
 
           // CLEAR NIGHT SELECTIONS
           for (var x = 0; x < game.players.length; x++)
@@ -813,18 +815,21 @@ module.exports = (client) => {
         let alive = game.players.filter(p => p.alive),
             aliveRoles = alive.map(p => p.role)
 
-        if (alive.filter(p => p.role != "Zombie").length == 0) {
+        if (alive.filter(p => p.couple).length == 2 && alive.filter(p => !p.couple && p.role !== "Cupid").length == 0) {
+          let lovers = alive.filter(p => p.couple)
           game.currentPhase = 999
           fn.broadcastTo(
             client, game.players.filter(p => !p.left),
             new Discord.RichEmbed()
               .setTitle("Game has ended.")
-              .setThumbnail(fn.getEmoji(client, "Zombie").url)
+              .setThumbnail(fn.getEmoji(client, "Cupid").url)
               .setDescription(
-                `The zombies wins!`
+                `The Love Couple **${lovers[0].number} ${nicknames.get(lovers[0].id)} ${fn.getEmoji(client, lovers[0].role)
+                }** and **${lovers[1].number} ${nicknames.get(lovers[1].id)} ${fn.getEmoji(client, lovers[1].role)}** win!`
               )
           )
-          fn.addXP(game.players.filter(p => p.role == "Zombie" && !p.suicide), 75)
+          fn.addXP(game.players.filter(p => p.couple || (p.role == "Cupid" && !p.suicide)), 95)
+          fn.addXP(game.players.filter(p => !p.left), 15)
           fn.addWin(game, alive.filter(p => p.sect).map(p => p.number))
           continue;
         }
@@ -841,6 +846,7 @@ module.exports = (client) => {
               )
           )
           fn.addXP(game.players.filter(p => p.role == "Zombie" && !p.suicide), 75)
+          fn.addXP(game.players.filter(p => !p.left), 15)
           fn.addWin(game, alive.filter(p => p.sect).map(p => p.number))
           continue;
         }
