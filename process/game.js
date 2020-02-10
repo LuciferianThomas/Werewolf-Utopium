@@ -124,8 +124,8 @@ module.exports = (client) => {
 
         if (game.currentPhase % 3 == 1)  {
           // MEDIUM REVIVE
-          let mediums = game.players.filter(p => p.role && p.usedAbilityTonight)
-          for (var medium of mediums){
+          let mediums = game.players.filter(p => p.role == "Medium" && p.usedAbilityTonight)
+          for (var medium of mediums) {
             let revivedPlayer = game.players[medium.usedAbilityTonight-1]
             fn.broadcastTo(
               client, game.players.filter(p => !p.left),

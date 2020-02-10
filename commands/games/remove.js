@@ -53,7 +53,11 @@ module.exports = {
         client, removedGame.players.filter(p => !p.left),
         fn.gameEmbed(client, removedGame)
       )
+      
+      for (var removedPlayers of removedGame.players)
+        players.set(`${removedPlayers.id}.currentGame`, 0)
     }
+    
     await message.channel.send(`Successfully removed ${game.mode == 'custom' ? `${game.name} [\`${game.gameID}\`]` : `Game #${game.gameID}`}.`)
     games.set("quick", Games)
   }

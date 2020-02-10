@@ -150,6 +150,7 @@ client.on('message', async message => {
   
   let QG = games.get("quick")
   let game = QG.find(game => game.gameID == player.currentGame)
+  if (!game) return undefined;
   let gamePlayer = game.players.find(player => player.id == message.author.id)
   
   gamePlayer.lastAction = moment()
