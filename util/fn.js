@@ -218,11 +218,19 @@ const death = (client, game, number, suicide = false) => {
   if (!suicide) {
     if (game.currentPhase % 3 == 1) {
       // RED LADY VISITING ATTACKED PLAYER
-      let rls = game.players.filter(p => p.role == "Red Lady" && p.usedAbilityTonight == deadPlayer.number)
+      let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight == deadPlayer.number)
       for (var rl of rls) {
         rl.alive = false
         rl.roleRevealed = "Red Lady"
-        
+        rl.killedBy = game.players[rl.usedAbilityTonight-1]
+        game.lastDeath = game.currentPhase - 1
+        game = death(client, game, rl.number)
+
+        broadcastTo(
+          client, game.players.filter(p => !p.left),
+          `<:Red_Lady_LoveLetter:674854554369785857> **${rl.number} ${nicknames.get(rl.id)} ${getEmoji(client, "Red Lady")
+          }** visited an evil player and died!`
+        )
       }
     }
     
