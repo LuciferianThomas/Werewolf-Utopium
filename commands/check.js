@@ -74,33 +74,32 @@ module.exports = {
             } ${targetPlayer.enchanted && targetPlayer.enchanted.length ? "Evil" : roles[targetPlayer.role].aura} aura.`
           )
         if (roles[targetPlayer.role].aura == "Unknown")
-          embed.setFooter(
-            `Unknown roles include ${game.originalRoles
-              .filter(
-                (r, i) =>
-                  roles[r].aura == "Unknown" &&
-                  game.originalRoles.indexOf(r) === i
-              )
-              .map(r => `${fn.getEmoji(client, r)} ${r}`)
-              .join(", ")}.${
-              game.originalRoles.filter(r => r.includes("Random")).length
-                ? `\nPossible unknown roles from random roles include ${Object.values(
-                    roles
+          embed.description += `\n\nUnknown roles include ${game.originalRoles
+            .filter(
+              (r, i) =>
+                roles[r].aura == "Unknown" &&
+                game.originalRoles.indexOf(r) === i
+            )
+            .map(r => `${fn.getEmoji(client, r)} ${r}`)
+            .join(", ")}.${
+            game.originalRoles.filter(r => r.includes("Random")).length
+              ? `\nPossible unknown roles from random roles include ${Object.values(
+                  roles
+                )
+                  .filter(
+                    r =>
+                      r.aura == "Unknown" &&
+                      (game.originalRoles.find(r => r == "Random")
+                        ? true
+                        : game.originalRoles
+                            .filter(r1 => r1.includes("Random"))
+                            .includes(`Random ${r.cat}`))
                   )
-                    .filter(
-                      r =>
-                        r.aura == "Unknown" &&
-                        (game.originalRoles.find(r => r == "Random")
-                          ? true
-                          : game.originalRoles
-                              .filter(r1 => r1.includes("Random"))
-                              .includes(`Random ${r.cat}`))
-                    )
-                    .map(r => `${fn.getEmoji(client, r)} ${r}`)
-                    .join(", ")}`
-                : ""
-            }`
-          )
+                  .map(r => `${fn.getEmoji(client, r.name)} ${r.name}`)
+                  .join(", ")}`
+              : ""
+          }`
+          
         message.author.send(embed)
       }
       else {
