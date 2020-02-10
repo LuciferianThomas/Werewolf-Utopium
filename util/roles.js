@@ -11,7 +11,7 @@ let roles = {
     abbr: ["reg","vil","vill","forkman","forkmen"],
     cat : "Regular Villager",
     tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
-          tags.ROLE.WWO_ROLE & tags.ROLE.WWC_ROLE & tags.ROLE.AVAILABLE
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Aura Seer": {
     desc: "Each night you can select a player to uncover their alignment: Good, Evil, or Unknown." +
@@ -23,7 +23,7 @@ let roles = {
     cat : "Regular Villager",
     nite: "Select a player to uncover their alignment (`w!check [player]`).",
     tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
-          tags.ROLE.WWO_ROLE & tags.ROLE.WWC_ROLE & tags.ROLE.AVAILABLE
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   }, 
   "Avenger": {
     desc: "After the first night you can select a player to kill when you die.",
@@ -35,7 +35,7 @@ let roles = {
     nit1: "Nothing to do. Go back to sleep!",
     nite: "Select a player to kill when you die (`w!avenge [player]`).",
     tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
-          tags.ROLE.WWO_ROLE & tags.ROLE.WWC_ROLE & tags.ROLE.AVAILABLE
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   }, 
   "Beast Hunter": {
     desc: "At night you can place a trap on a person which will become active the following night." +
@@ -47,7 +47,9 @@ let roles = {
     team: "Village",
     abbr: ["bh"],
     cat : "Regular Villager",
-    nite: "Select a player to place your trap on (`w!trap [player]`). You can place the trap on yourself."
+    nite: "Select a player to place your trap on (`w!trap [player]`). You can place the trap on yourself.",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Bodyguard": {
     desc: "You can choose one player to protect every night." +
@@ -58,7 +60,9 @@ let roles = {
     team: "Village",
     abbr: ["bg"],
     cat : "Regular Villager",
-    nite: "Select a player to protect (`w!protect [player]`)."
+    nite: "Select a player to protect (`w!protect [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Cupid": {
   	desc: "During the first night you can select two players to be a love couple." +
@@ -68,14 +72,18 @@ let roles = {
     abbr: [],
     oneOnly: true,
     nit1: "Select two players to be a love couple (`w!lovers [player1] [player2]`)." +
-          " If you do not select two players, they will be randomly selected."
+          " If you do not select two players, they will be randomly selected.",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Cursed": {
     desc: "You are a villager until the werewolves try to kill you, at which point you become a werewolf." +
           " You cannot be converted into another team by sect leader etc.", 
     aura: "Good",
     team: "Village",
-    abbr: ["lycan"]
+    abbr: ["lycan"],
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Detective": {
   	desc: "Each night you can select two players to uncover if they are in the same team.",
@@ -83,7 +91,9 @@ let roles = {
     team: "Village",
     abbr: ["det","sherlock","holmes","sherlock holmes","conan"],
     cat : "Strong Villager",
-    nite: "Select two players to uncover if they are in the same team (`w!detect [player1] [player2]`)."
+    nite: "Select two players to uncover if they are in the same team (`w!detect [player1] [player2]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.STRONG_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Doctor": {
     desc: "Choose a player to protect every night." +
@@ -92,7 +102,9 @@ let roles = {
     team: "Village",
     abbr: ["doc", "medic"],
     cat : "Regular Villager",
-    nite: "Choose a player to protect (`w!heal [player]`)."
+    nite: "Choose a player to protect (`w!heal [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Flower Child": {
  		desc: "You are a villager who can once protect a player from being lynched by the village.",
@@ -100,7 +112,9 @@ let roles = {
     team: "Village", 
  		abbr: ["fc", "flower"],
     cat : "Regular Villager",
-    day : "You can once protect a player from being lynched by the village (`w!protect [player]`)."
+    day : "You can once protect a player from being lynched by the village (`w!protect [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
   "Fortune Teller": {
   	desc: "You have two cards which you can give to other players at night." +
@@ -110,7 +124,9 @@ let roles = {
     abbr: ["ft"],
     cat : "Regular Villager",
     nite: "Select a player to give your card to (`w!card [player]`).\n" +
-          "You can give both cards to two players at once (`w!cards [player1] [player2]`)."
+          "You can give both cards to two players at once (`w!cards [player1] [player2]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   }, 
   "Grumpy Grandma": {
     desc: "After the first night you can select a player who cannot talk or vote during the day.",
@@ -119,7 +135,9 @@ let roles = {
     abbr: ["granny","gg"],
     cat : "Regular Villager",
     nit1: "Nothing to do. Go back to sleep!",
-    nite: "Select a player who cannot talk or vote during the day (`w!mute [player]`)."
+    nite: "Select a player who cannot talk or vote during the day (`w!mute [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Gunner": {
     desc: "You have two bullets which you can use to kill somebody." +
@@ -131,7 +149,9 @@ let roles = {
     abbr: ["gun"],
     cat : "Strong Villager",
     day : "Select a player to kill (`w!shoot [player]`) if you find them suspicious.\n" +
-          "**⚠️ Random shooting is a gamethrowing act, and can result in a ban!**"
+          "**⚠️ Random shooting is a gamethrowing act, and can result in a ban!**",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.STRONG_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Jailer": {
     desc: "Select a target each day to put in jail during the next night." +
@@ -142,7 +162,9 @@ let roles = {
     abbr: ["jail"],
     cat : "Strong Villager",
     oneOnly: true,
-    day : "Select a player to put in jail during the next night (`w!jail [player]`)."
+    day : "Select a player to put in jail during the next night (`w!jail [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.STRONG_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Marksman": {
  		desc: "At night you can mark a player as your target." +
@@ -157,14 +179,18 @@ let roles = {
           "**⚠️ If your target is a villager, your shot will backfire and kill you!**",
     nite: "Mark a player as your target (`w!mark [player]`).\n" +
           "After the next day, you can kill your target (`w!shoot`) if you find them suspicious.\n" +
-          "**⚠️ If your target is a villager, your shot will backfire and kill you!**"
+          "**⚠️ If your target is a villager, your shot will backfire and kill you!**",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   }, 
   "Mayor": {
   	desc: "Once during the game you can reveal your role which will make your vote count double during the rest of the game.",
     aura: "Good",
     team: "Village",
     abbr: [],
-    day : "You can reveal your role (`w!reveal mayor`) to make your vote count double during the rest of the game."
+    day : "You can reveal your role (`w!reveal mayor`) to make your vote count double during the rest of the game.",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Medium": {
     desc: "During the night you can talk anonymously with the dead." +
@@ -174,7 +200,9 @@ let roles = {
     abbr: ["med"],
     cat : "Strong Villager",
     nite: "You can talk anonymously with the dead." +
-          " Once during the game you can revive a dead player (`w!revive [player]`)."
+          " Once during the game you can revive a dead player (`w!revive [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.STRONG_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Pacifist": {
   	desc: "Once per game you can reveal the role of a player (`w!reveal [player]`) and prevent anybody from voting during that day.",
@@ -183,14 +211,18 @@ let roles = {
     abbr: ["paci"],
     cat : "Regular Villager",
     day : "You can reveal the role of a player (`w!reveal [player]`) and prevent anybody from voting during that day.\n" +
-          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**"
+          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "President": {
   	desc: "Everyone knows who you are! If you die the village loses.",
     aura: "Good",
     team: "Village",
     abbr: ["trump", "donald trump"],
-    oneOnly: true
+    oneOnly: true,
+    tag : tags.ROLE.VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Priest": {
     desc: "You can throw holy water on another player." +
@@ -200,7 +232,9 @@ let roles = {
     abbr: ["pri"],
     cat : "Regular Villager",
     day : "You can throw holy water on another player (`w!water [player]`) if you find them suspicious.\n" +
-          "**⚠️ If your target is __not__ a werewolf, you die!**"
+          "**⚠️ If your target is __not__ a werewolf, you die!**",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Red Lady": {
   	desc: "At night you can visit another player." +
@@ -212,7 +246,9 @@ let roles = {
     cat : "Regular Villager",
     nite: "You can visit another player (`w!visit [player]`)." +
           " If you are attacked while visiting, you will not be killed.\n" +
-          "**⚠️ However, if you visit a player that is attacked or is evil, you will die!**"
+          "**⚠️ However, if you visit a player that is attacked or is evil, you will die!**",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Seer": {
     desc: "Every night, you can select a player to uncover their role.",
@@ -220,14 +256,18 @@ let roles = {
     team: "Village",
     abbr: [],
     cat : "Strong Villager",
-    nite: "Select a player to uncover their role (`w!check [player]`)."
+    nite: "Select a player to uncover their role (`w!check [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.STRONG_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Seer Apprentice": {
     desc: "You are a normal villager until the seer dies, at which point you become the new seer.",
     aura: "Good",
     team: "Village",
     abbr: ["sapp", "sa", "app", "seer app"],
-    cat : "Regular Villager"
+    cat : "Regular Villager",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Sheriff": {
   	desc: "At night you can select someone to watch." +
@@ -236,7 +276,9 @@ let roles = {
     team: "Village",
     abbr: ["sher", "woody", "cowboy"], 
     cat : "Regular Villager",
-    nite: "Select a player to watch (`w!watch [player]`)."
+    nite: "Select a player to watch (`w!watch [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
   "Spirit Seer": {
   	desc: "Each night you can select two players." +
