@@ -10,7 +10,7 @@ const fn = require('/app/util/fn'),
       roles = require("/app/util/roles")
 
 module.exports = {
-  name: "ignite",
+  name: "kill",
   run: async (client, message, args, shared) => {
     let player = player.get(message.author.id)
     if (!player.currentGame)
@@ -21,47 +21,40 @@ module.exports = {
       index = QuickGames.indexOf(game),
       gamePlayer = game.players.find(player => player.id == message.author.id)
 
-    if (gamePlayer.role != "Arsonist")
+    if (gamePlayer.role != "Illusionist")
       return await message.author.send("You do not have the abilities to ignite players.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer ignite players.")
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
-    if (typeof gamePlayer.usedAbilityTonight == 'array')
-      return await message.author.send("You already decided to douse players tonight!")
 
-    if (game.currentPhase % 3 != 0)
-      return await message.author.send("You can only ignite players during the night!")
+    if (game.currentPhase % 3 != 1)
+      return await message.author.send("You can only kill disguised players during the discussion phase!")
 
-    let doused = game.players.filter(
-      p => p.alive && p.doused.includes(gamePlayer.number)
+    let disguised = game.players.filter(
+      p => p.alive && gamePlayer.deluded.includes(p.number)
     )
 
-    if (!doused.length)
-      return await message.author.send("You haven't doused anyone or every doused player is dead! Do `w!douse [player1] [player2]` first!")
+    if (!disguised.length)
+      return await message.author.send("You haven't disguised anyone or every disguise player is dead! Do `w!douse [player1] [player2]` first!")
 
-    for (var i = 0; i < doused.length; i++) {
-      let dousedPlayer = game.players[doused[i].number - 1]
-
-      dousedPlayer.alive = false
-      if (game.config.deathReveal) dousedPlayer.roleRevealed = dousedPlayer.role
+    for (var target of disguised) {
+      target.alive = false
+      if (game.config.deathReveal) target.roleRevealed = target.role
 
       fn.broadcastTo(
         client,
         game.players.filter(p => !p.left),
-        `<:Arsonist_Ignite:664263079273431054> The Arsonist <:Arsonist:660365416480243752> has ignited **${
-          doused[i].number
-        } ${nicknames.get(dousedPlayer.id)}${
+        `<:Arsonist_Ignite:664263079273431054> The Illusionist <:Illusionist:660365802725441538> has killed **${target.number
+        } ${nicknames.get(target.id)}${
           game.config.deathReveal
-            ? ` ${fn.getEmoji(client, dousedPlayer.role)}`
+            ? ` ${fn.getEmoji(client, target.role)}`
             : ""
         }**.`
       )
 
-      game = fn.death(client, game, dousedPlayer.number)
+      game = fn.death(client, game, target.number)
     }
-    gamePlayer.killedTonight = true
-    gamePlayer.usedAbilityTonight = true
 
     QuickGames[index] = game
     games.set("quick", QuickGames)

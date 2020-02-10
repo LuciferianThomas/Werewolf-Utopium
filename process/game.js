@@ -761,7 +761,12 @@ module.exports = (client) => {
             )
           }
           
-          let illus = game.players.filter(p => )
+          let illus = game.players.filter(p => p.alive && p.usedAbilityTonight)
+          for (var illu of illus) {
+            let disguisedPlayer = game.players[illu.usedAbilityTonight]
+            disguisedPlayer.disguised = true
+            illu.deluded.push(disguisedPlayer.number)
+          }
 
           // CLEAR NIGHT SELECTIONS
           for (var x = 0; x < game.players.length; x++)
