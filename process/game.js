@@ -143,6 +143,7 @@ module.exports = (client) => {
           for (var killedRL of killedRL) {
             killedRL.alive = false
             killedRL.roleRevealed = "Red Lady"
+            killedRL.killedBy = game.players[killedRL.usedAbilityTonight-1]
             killedRL.visitedTonight = true
             game.lastDeath = game.currentPhase - 1
 
@@ -638,21 +639,6 @@ module.exports = (client) => {
               )
             }
             else fn.getUser(client, sl.id).send(`**${sectTarget.number} ${nicknames.get(sectTarget.id)}** cannot be sected!`)
-          }
-          
-          // RED LADY KILL
-          for (var rl of rls) {
-            if (game.players[rl.usedAbilityTonight-1].killedBy) {
-              rl.alive = false
-              rl.roleRevealed = "Red Lady"
-              game.lastDeath = game.currentPhase - 1
-
-              fn.broadcastTo(
-                client, game.players.filter(p => !p.left),
-                `<:Red_Lady_LoveLetter:674854554369785857> **${rl.number} ${nicknames.get(rl.id)} ${fn.getEmoji(client, "Red Lady")
-                }** visited an evil player and died!`
-              )
-            }
           }
           
           // SPIRIT SEER RESULTS
