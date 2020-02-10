@@ -74,7 +74,7 @@ let roles = {
     nit1: "Select two players to be a love couple (`w!lovers [player1] [player2]`)." +
           " If you do not select two players, they will be randomly selected.",
     tag : tags.ROLE.VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
-          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED & tags.ROLE.ONE_ONLY
   },
   "Cursed": {
     desc: "You are a villager until the werewolves try to kill you, at which point you become a werewolf." +
@@ -164,7 +164,7 @@ let roles = {
     oneOnly: true,
     day : "Select a player to put in jail during the next night (`w!jail [player]`).",
     tag : tags.ROLE.VILLAGER & tags.ROLE.STRONG_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
-          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE & tags.ROLE.ONE_ONLY
   },
   "Marksman": {
  		desc: "At night you can mark a player as your target." +
@@ -222,7 +222,7 @@ let roles = {
     abbr: ["trump", "donald trump"],
     oneOnly: true,
     tag : tags.ROLE.VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
-          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED & tags.ROLE.ONE_ONLY
   },
   "Priest": {
     desc: "You can throw holy water on another player." +
@@ -376,6 +376,15 @@ let roles = {
     tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
           tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   }, 
+  "Lone Wolf": {
+    desc: "You are a regular werewolf, except you only win if you are the last werewolf alive.",
+    aura: "Unknown",
+    team: "Solo",
+    abbr: ["lw"],
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).",
+    tag : tags.ROLE.SOLO_VOTING & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWC_ROLE & tags.ROLE.UNAVAILABLE
+  },
   "Nightmare Werewolf": {
     desc: "Twice during the game you can select a player during the day to \"fall asleep\" for one night ." + 
           " That player won't be able to use any abilities for one night.",
@@ -460,16 +469,16 @@ let roles = {
           tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Soul Collector": {
-    desc: "At night select up to three players." +
-          " If they die from villagers, werewolves or lynching, you collect their soul." +
+    desc: "At night select up to three players to collect their souls if they die from villagers, werewolves or lynching." +
           " Souls you obtained can't be reached until you die." +
           " Win by filling up all three boxes with souls.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["sc"],
+    oneOnly: true,
     // cat : "Voting",
     tag : /*tags.ROLE.SOLO_VOTING &*/ tags.ROLE.SEEN_AS_VILLAGER &
-          tags.ROLE.WWOWC_ROLE & tags.ROLE.UNAVAILABLE
+          tags.ROLE.WWOWC_ROLE & tags.ROLE.UNAVAILABLE & tags.ROLE.ONE_ONLY
   },
   
   // Solo killing roles
@@ -539,7 +548,7 @@ let roles = {
     cat : "Killer",
     oneOnly: true,
     tag : tags.ROLE.SOLO_KILLER &
-          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED & tags.ROLE.ONE_ONLY
 	},
   "Serial Killer": {
     desc: "Each night you can kill one player." +
