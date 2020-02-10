@@ -155,7 +155,7 @@ module.exports = (client) => {
             )
           }
           
-          let protectors = game.players.filter(p => p.alive && ["Bodyguard","Doctor","Witch",""].includes(p.role))
+          // let protectors = game.players.filter(p => p.alive && ["Bodyguard","Doctor","Witch","Tough Guy"].includes(p.role))
           
           let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
           let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),

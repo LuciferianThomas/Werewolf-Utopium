@@ -372,7 +372,8 @@ let roles = {
   },
   "Headhunter": {
     desc: "Your goal is to get your target lynched by the village." +
-          " If your target dies in a way other than being lynched, you become a regular villager.",
+          " You target must be lynched before you die in order to win." +
+          " If your target dies another way, you become a regular villager.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["hh"],
@@ -382,7 +383,7 @@ let roles = {
   // Solo killing roles
   
   "Arsonist": {
-  	desc: "Each night, you can douse 2 players with gasoline (`w!douse [player]`) or ignite doused players by doing (`w!ignite`)." + // alias: w!burn
+  	desc: "Each night, you can either select two players to douse with gasoline (`w!douse [player1] [player2]`)" + // alias: w!burn
           " You cannot be killed by the werewolves." + 
           " You win if you are the last player alive.", 
     aura: "Unknown", 
@@ -437,12 +438,14 @@ let roles = {
     oneOnly: true
 	},
   "Serial Killer": {
-    desc: "Each night, stab one player with (`w!stab [player]`)." +
-          " You cannot be killed by the werewolves. You win if you are the last player alive.", 
+    desc: "Each night you can kill one player." +
+          " You cannot be killed by the werewolves." +
+          " You win if you are the last player alive.", 
     aura: "Unknown",
     team: "Solo",
     abbr: ["sk"],
-    cat : "Killer"
+    cat : "Killer",
+    nite: "Select a player to stab (`w!stab [player]`)."
   },
   "Zombie": {
   	desc: "Each night, select a player to convert to a Zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
