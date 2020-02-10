@@ -216,12 +216,22 @@ const death = (client, game, number, suicide = false) => {
   let deadPlayer = game.players.find(p => p.number == number)
   
   if (!suicide) {
+    if (game.currentPhase % 3 == 1) {
+      // RED LADY VISITING ATTACKED PLAYER
+      let rls = game.players.filter(p => p.role == "Red Lady" && p.usedAbilityTonight == deadPlayer.number)
+      for (var rl of rls) {
+        rl.alive = false
+        rl.roleRevealed = "Red Lady"
+        
+      }
+    }
+    
     // AVENGING
     if (!deadPlayer.alive && ["Junior Werewolf","Avenger"].includes(deadPlayer.role)
         && !deadPlayer.avenged && !deadPlayer.suicide) {
       let avengingPlayer = deadPlayer
       let avengedPlayer = game.players[avengingPlayer.avenge-1]
-      if (avengedPlayer  && avengedPlayer.alive) {
+      if (avengedPlayer && avengedPlayer.alive) {
         avengedPlayer.alive = false
         if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
 

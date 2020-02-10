@@ -112,7 +112,7 @@ module.exports = (client) => {
         }
         else if (game.currentPhase % 3 == 2) game.noVoting = false
 
-        game.currentPhase += 1
+        game.currentPhase++
         game.nextPhase = moment().add(
           game.currentPhase % 3 == 0
             ? game.config.nightTime || 45
@@ -378,7 +378,7 @@ module.exports = (client) => {
               else {
                 game.lastDeath = game.currentPhase - 1
                 attackedPlayer.alive = false
-                attackedPlayer.killedBy = wolves.filter(p => !p.alive)[Math.floor(Math.random()*wolves.filter(p => !p.alive).length)]
+                attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
                 if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left).map(p => p.id),
@@ -397,7 +397,7 @@ module.exports = (client) => {
 
                 if (game.frenzy) {
                   protector.alive = false
-                  protector.killedBy = wolves.filter(p => !p.alive)[Math.floor(Math.random()*wolves.filter(p => !p.alive).length)]
+                  protector.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
                   if (game.config.deathReveal) protector.roleRevealed = protector.role
 
                   fn.broadcastTo(
@@ -431,7 +431,7 @@ module.exports = (client) => {
                   else {
                     game.lastDeath = game.currentPhase - 1
                     protector.alive = false
-                    protector.killedBy = wolves.filter(p => !p.alive)[Math.floor(Math.random()*wolves.filter(p => !p.alive).length)]
+                    protector.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
                     if (game.config.deathReveal) protector.roleRevealed = protector.role
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
@@ -532,7 +532,7 @@ module.exports = (client) => {
               else {
                 game.lastDeath = game.currentPhase - 1
                 attackedPlayer.alive = false
-                attackedPlayer.killedBy = wolves.filter(p => !p.alive)[Math.floor(Math.random()*wolves.filter(p => !p.alive).length)]
+                attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
                 if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
@@ -568,7 +568,7 @@ module.exports = (client) => {
             else {
               game.lastDeath = game.currentPhase - 1
               attackedPlayer.alive = false
-              attackedPlayer.killedBy = wolves.filter(p => !p.alive)[Math.floor(Math.random()*wolves.filter(p => !p.alive).length)]
+              attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
               if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
