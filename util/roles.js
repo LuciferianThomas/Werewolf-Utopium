@@ -1,15 +1,4 @@
-/** 
-  * ====================== ROLE TAGS ======================
-  * 0x0001 - REGULAR VILLAGER    0x0002 - STRONG VILLAGER
-  * 0x0004 - WEREWOLF            0x0008 - SOLO VOTING
-  * 0x0010 - SOLO KILLING        0x0020 - SEEN AS VILLAGER
-  * 0x0040 - SEEN AS WEREWOLF    0x0080 - 
-  * 0x0100 -                     0x0200 -
-  * 0x0400 -                     0x0800 - WWC ROLES
-  * 0x1000 - AVAILABLE           0x2000 - TO BE TESTED
-  * 0X4000 - UNAVAILABLE         0x8000 - WWOWC ROLES
-  * =======================================================
-  */
+let tags = require('./tags')
 
 let roles = {
   
@@ -21,7 +10,8 @@ let roles = {
     team: "Village",
     abbr: ["reg","vil","vill","forkman","forkmen"],
     cat : "Regular Villager",
-    tag : 0
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.WWC_ROLE & tags.ROLE.AVAILABLE
   },
   "Aura Seer": {
     desc: "Each night you can select a player to uncover their alignment: Good, Evil, or Unknown." +
@@ -31,7 +21,9 @@ let roles = {
     team: "Village",
     abbr: ["az","aura"],
     cat : "Regular Villager",
-    nite: "Select a player to uncover their alignment (`w!check [player]`)."
+    nite: "Select a player to uncover their alignment (`w!check [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.WWC_ROLE & tags.ROLE.AVAILABLE
   }, 
   "Avenger": {
     desc: "After the first night you can select a player to kill when you die.",
@@ -41,7 +33,9 @@ let roles = {
     cat : "Regular Villager",
     day : "Select a player to kill when you die (`w!avenge [player]`).",
     nit1: "Nothing to do. Go back to sleep!",
-    nite: "Select a player to kill when you die (`w!avenge [player]`)."
+    nite: "Select a player to kill when you die (`w!avenge [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.WWC_ROLE & tags.ROLE.AVAILABLE
   }, 
   "Beast Hunter": {
     desc: "At night you can place a trap on a person which will become active the following night." +
