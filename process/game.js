@@ -768,7 +768,6 @@ module.exports = (client) => {
               enchanted: game.players.find(p => p.role == "Wolf Shaman") ? [] : undefined,
               jailed: false,
               protectors: [],
-              protected: undefined,
               frenzy: undefined,
               killedBy: undefined,
             })

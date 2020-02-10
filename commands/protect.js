@@ -43,12 +43,12 @@ module.exports = {
       targetPlayer.preventLynch = targetPlayer.number
     }
     else if (["Doctor","Witch","Bodyguard","Tough Guy"].includes(gamePlayer.role)) {
-      if (gamePlayer.protected) {
-        let protectedPlayer = game.players[gamePlayer.protected-1]
+      if (gamePlayer.usedAbilityTonight) {
+        let protectedPlayer = game.players[gamePlayer.usedAbilityTonight-1]
         protectedPlayer.protectors.splice(protectedPlayer.protectors.indexOf(gamePlayer.number), 1)
       }
       targetPlayer.protectors.push(gamePlayer.number)
-      gamePlayer.protected = targetPlayer.number
+      gamePlayer.usedAbilityTonight = targetPlayer.number
       
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer protect a player.")
@@ -72,6 +72,7 @@ module.exports = {
       if (target == gamePlayer.number)
         return await message.author.send("You cannot protect yourself.")
       
+      targetPlayer.protectors.push(gamePlayer.number)
       gamePlayer.usedAbilityTonight = targetPlayer.number
     
       message.author.send(
