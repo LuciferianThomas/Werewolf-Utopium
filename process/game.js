@@ -138,7 +138,7 @@ module.exports = (client) => {
           }
           
           // RED LADY KILL
-          let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight && game.players[rl.usedAbilityTonight-1].alive),
+          let rls = game.players.filter(p => p.alive && p.role == "Red Lady" && p.usedAbilityTonight && game.players[p.usedAbilityTonight-1].alive),
               killedRLs = rls.filter(rl => roles[game.players[rl.usedAbilityTonight-1].role].team !== "Village")
           for (var rl of rls) rl.visitedTonight = true
           for (var killedRL of killedRLs) {
