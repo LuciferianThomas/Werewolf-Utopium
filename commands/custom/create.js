@@ -161,38 +161,6 @@ module.exports = {
       else if (!nameInput.match(/^[a-z0-9\s\-!\?@#\&\_]{3,30}$/i))
         await namePrompt.channel.send("Your game name must only include alphanumerical characters and underscores.")
     }
-      
-    // SETUP PRIVATE
-    let privateSuccess = false
-    while (!privateSuccess) {
-      let privatePrompt = await message.author.send(
-        new Discord.RichEmbed()
-          .setTitle("Custom Game Setup")
-          .setDescription(
-            `Private game?`
-          )
-      )
-
-      await privatePrompt.react(fn.getEmoji(client, 'green tick'))
-      await privatePrompt.react(fn.getEmoji(client, 'red tick'))
-      let pReactions = await privatePrompt.awaitReactions(
-        (r, u) =>
-          (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
-            r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
-          u.id == message.author.id,
-        { time: 30*1000, max: 1, errors: ['time'] }
-      ).catch(() => {})
-      if (!pReactions)
-        return await message.author.send(
-          new Discord.RichEmbed()
-            .setColor("RED")
-            .setTitle("Prompt timed out.")
-        )
-      let pReaction = pReactions.first().emoji
-      if (pReaction.id == fn.getEmoji(client, "green_tick").id) currentGame.config.private = true
-      else currentGame.config.private = false
-      privateSuccess = true
-    }
     
     let settingsPrompt = await message.author.send(
       new Discord.RichEmbed()
@@ -287,6 +255,38 @@ module.exports = {
         else currentGame.config.deathReveal = false
         revealSuccess = true
       }
+    }
+      
+    // SETUP PRIVATE
+    let privateSuccess = false
+    while (!privateSuccess) {
+      let privatePrompt = await message.author.send(
+        new Discord.RichEmbed()
+          .setTitle("Custom Game Setup")
+          .setDescription(
+            `Private game?`
+          )
+      )
+
+      await privatePrompt.react(fn.getEmoji(client, 'green tick'))
+      await privatePrompt.react(fn.getEmoji(client, 'red tick'))
+      let pReactions = await privatePrompt.awaitReactions(
+        (r, u) =>
+          (r.emoji.id == fn.getEmoji(client, "green_tick").id ||
+            r.emoji.id == fn.getEmoji(client, "red_tick").id) &&
+          u.id == message.author.id,
+        { time: 30*1000, max: 1, errors: ['time'] }
+      ).catch(() => {})
+      if (!pReactions)
+        return await message.author.send(
+          new Discord.RichEmbed()
+            .setColor("RED")
+            .setTitle("Prompt timed out.")
+        )
+      let pReaction = pReactions.first().emoji
+      if (pReaction.id == fn.getEmoji(client, "green_tick").id) currentGame.config.private = true
+      else currentGame.config.private = false
+      privateSuccess = true
     }
     
     await message.author.send(
