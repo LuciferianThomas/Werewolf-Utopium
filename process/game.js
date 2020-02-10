@@ -729,6 +729,7 @@ module.exports = (client) => {
           
           if (game.currentPhase == 1 && game.players.find(p => p.role == "Cupid")) {
             let cupid = game.players.find(p => p.role == "Cupid")
+            if (!cupid.usedAbilityTonight) cupid.usedAbilityTonight = []
             let lovers = []
             for (var loverNumber of cupid.usedAbilityTonight) {
               let lover = game.players[loverNumber-1]
@@ -739,6 +740,8 @@ module.exports = (client) => {
               lover.couple = true
               lovers.push(lover)
             }
+            if (!lovers[0]) lovers[0] = game.players.filter(p => p.alive && p.role !== "Cupid")[Math.floor(Math.random()*game.players.filter(p => p.alive && p.role !== "Cupid")).length]
+            if (!lovers[1]) lovers[1] = game.players.filter(p => p.alive && p.role !== "Cupid" && p.number !== lovers[0].number)[Math.floor(Math.random()*game.players.filter(p => p.alive && p.role !== "Cupid" && p.number !== lovers[0].number)).length]
             fn.getUser(client, lovers[0].id).send(
               new Discord.RichEmbed()
                 .setTitle("Love Was When")
