@@ -287,7 +287,9 @@ let roles = {
     team: "Village",
     abbr: ["ss", "sz", "spirit", "spz", "sps"],
     cat : "Regular Villager",
-    nite: "Select two players to see if either of them has killed tonight (`w!check [player1] [player2]`)."
+    nite: "Select two players to see if either of them has killed tonight (`w!check [player1] [player2]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
   "Tough Guy": {
   	desc: "You can choose one player to protect every night." +
@@ -297,7 +299,9 @@ let roles = {
     team: "Village",
     abbr: ["tg"],
     cat : "Regular Villager",
-    nite: "Select a player to protect (`w!protect [player]`)."
+    nite: "Select a player to protect (`w!protect [player]`).",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.STRONG_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
   "Witch": {
   	desc: "You have two potions: One will kill and the other will protect a player." +
@@ -308,7 +312,9 @@ let roles = {
     cat : "Regular Villager",
     nit1: "Select a player to heal with your protect potion (`w!heal [player]`).",
     nite: "Select a player to heal with your protect potion (`w!heal [player]`) or to kill with your poison potion (`w!poison [player]`).\n" +
-          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**"
+          "**⚠️ Random revealing is a gamethrowing act, and can result in a ban!**",
+    tag : tags.ROLE.VILLAGER & tags.ROLE.REGULAR_VILLAGER & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   
   // Werewolf roles
@@ -318,7 +324,9 @@ let roles = {
     team: "Werewolves",
     abbr: ["ww"],
     cat : "Werewolf",
-    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Alpha Werewolf": {
     desc: "You are a regular werewolf, except when your vote counts as double.",
@@ -327,7 +335,9 @@ let roles = {
     abbr: ["aww","alpha", "alpha ww"],
     cat : "Werewolf",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
-          "You vote counts double."
+          "You vote counts double.",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Guardian Wolf": {
   	desc: "You are a werewolf who can once protect a player from being lynched by the village (`w!protect [player]`).",
@@ -336,7 +346,9 @@ let roles = {
     abbr: ["gww","wwg","gw","wg"],
     cat : "Werewolf",
     day : "You can once protect a player from being lynched by the village (`w!protect [player]`).",
-    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
   "Junior Werewolf": {
     desc: "Because you are so cute, you can select another player to be killed when you are killed.",
@@ -346,7 +358,9 @@ let roles = {
     cat : "Werewolf",
     day : "Select a player to kill when you die (`w!avenge [player]`).",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)." +
-          " Select a player to kill when you die (`w!avenge [player]`)."
+          " Select a player to kill when you die (`w!avenge [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Kitten Wolf": {
     desc: "You are a werewolf with the ability to convert a villager into a werewolf." +
@@ -358,7 +372,9 @@ let roles = {
     cat : "Werewolf",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
           "Once you can convert a villager into a werewolf (`w!scratch [player]`).\n" +
-          "**⚠️ If they are not a villager, you lose your ability!**"
+          "**⚠️ If they are not a villager, you lose your ability!**",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   }, 
   "Nightmare Werewolf": {
     desc: "Twice during the game you can select a player during the day to \"fall asleep\" for one night ." + 
@@ -368,7 +384,9 @@ let roles = {
     abbr: ["nww","nw"],
     cat : "Werewolf",
     day : "You can select a player during the day to \"fall asleep\" for one night (`w!nightmare [player]`).",
-    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Sorcerer": {
     desc: "Each night you can select a player to uncover their role." +
@@ -376,7 +394,9 @@ let roles = {
     aura: "Evil",
     team: "Werewolves",
     abbr: ["sorc"],
-    nite: "Select a player to uncover their role (`w!check [player]`)."
+    nite: "Select a player to uncover their role (`w!check [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Werewolf Berserk": {
     desc: "Once per game, you can active a werewolves \"frenzy\" during the day." +
@@ -387,7 +407,9 @@ let roles = {
     abbr: ["wwb","bww","bers","berz"],
     cat : "Werewolf",
     day : "Once per game, you can active a werewolves \"frenzy\" during the day (`w!frenzy`).",
-    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`)."
+    nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Wolf Seer": {
     desc: "Each night you can select a player to uncover their role (`w!check [player]`)." +
@@ -397,7 +419,9 @@ let roles = {
     abbr: ["wws", "wwz", "wwseer", "ww seer"],
     cat : "Werewolf",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
-          "Select a player to uncover their role (`w!check [player]`)."
+          "Select a player to uncover their role (`w!check [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Wolf Shaman": {
     desc: "During the day you can enchant another player (`w!enchant [player]`)." +
@@ -408,7 +432,9 @@ let roles = {
     abbr: ["ww sham","sham","shaman"],
     cat : "Werewolf",
     day : "Select a player to enchant (`w!enchant [player]`).",
-    nite: "Vote to kill a player with the werewolves (`w!vote [player]`)."
+    nite: "Vote to kill a player with the werewolves (`w!vote [player]`).",
+    tag : tags.ROLE.WEREWOLF & tags.ROLE.SEEN_AS_WEREWOLF &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   
   // Solo non-killing roles
@@ -418,7 +444,9 @@ let roles = {
     aura: "Unknown",
     team: "Solo",
     abbr: ["tanner"],
-    cat : "Voting"
+    cat : "Voting",
+    tag : tags.ROLE.SOLO_VOTING & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Headhunter": {
     desc: "Your goal is to get your target lynched by the village." +
@@ -427,7 +455,21 @@ let roles = {
     aura: "Unknown",
     team: "Solo",
     abbr: ["hh"],
-    cat : "Voting"
+    cat : "Voting",
+    tag : tags.ROLE.SOLO_VOTING & tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
+  },
+  "Soul Collector": {
+    desc: "At night select up to three players." +
+          " If they die from villagers, werewolves or lynching, you collect their soul." +
+          " Souls you obtained can't be reached until you die." +
+          " Win by filling up all three boxes with souls.",
+    aura: "Unknown",
+    team: "Solo",
+    abbr: ["sc"],
+    // cat : "Voting",
+    tag : /*tags.ROLE.SOLO_VOTING &*/ tags.ROLE.SEEN_AS_VILLAGER &
+          tags.ROLE.WWOWC_ROLE & tags.ROLE.UNAVAILABLE
   },
   
   // Solo killing roles
@@ -439,7 +481,9 @@ let roles = {
     aura: "Unknown", 
     team: "Solo",
     abbr: ["ars", "arso", "arson", "pyro"],
-    cat : "Killer"
+    cat : "Killer",
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
   "Bomber": {
   	desc: "At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb [player]`)." +
@@ -448,7 +492,9 @@ let roles = {
  		aura: "Unknown",
     team: "Solo",
     abbr: ["bb", "bomb"],
-    cat : "Killer"
+    cat : "Killer",
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Corruptor": {
   	desc: "Every night, select a player 'glitch' by doing (`w!glitch [player]`)." +
@@ -457,7 +503,9 @@ let roles = {
     aura: "Unknown",
     team: "Solo",
     abbr: ["corr"],
-    cat : "Killer"
+    cat : "Killer",
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Cannibal": {
   	desc: "Every night, you can kill a player or save up your hunger to kill more the next night by doing (`w!eat [player]`)." +
@@ -465,7 +513,9 @@ let roles = {
     aura: "Unknown",
     team: "Solo",
     abbr: ["canni", "cani", "cb"],
-    cat : "Killer"
+    cat : "Killer",
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Illusionist": {
   	desc: "Every night, select a player to disguise." +
@@ -476,7 +526,9 @@ let roles = {
     aura: "Unknown", 
     team: "Solo", 
     abbr: ["illu", "illusion"],
-    cat : "Killer"
+    cat : "Killer",
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Sect Leader": {
   	desc: "Every night, select a player to convert into a Sect Member with (`w!sect [player]`). You can only convert villagers to the Sect Team." +
@@ -485,7 +537,9 @@ let roles = {
     team: "Sect",
     abbr: ["sl"],
     cat : "Killer",
-    oneOnly: true
+    oneOnly: true,
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
 	},
   "Serial Killer": {
     desc: "Each night you can kill one player." +
@@ -495,7 +549,9 @@ let roles = {
     team: "Solo",
     abbr: ["sk"],
     cat : "Killer",
-    nite: "Select a player to stab (`w!stab [player]`)."
+    nite: "Select a player to stab (`w!stab [player]`).",
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Zombie": {
   	desc: "Each night, select a player to convert to a Zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
@@ -503,7 +559,9 @@ let roles = {
     aura: "Unknown",
     team: "Zombies",
     abbr: ["zomb", "zom", "zb", "zombert", "walking dead"],
-    cat : "Killer"
+    cat : "Killer",
+    tag : tags.ROLE.SOLO_KILLER &
+          tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   
   // Random Roles
