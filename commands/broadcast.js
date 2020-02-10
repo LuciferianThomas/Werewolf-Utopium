@@ -33,7 +33,7 @@ module.exports = {
       client, game.players.filter(p => !p.left),
       new Discord.RichEmbed()
         .setColor("GOLD")
-        .setTitle("Broadcast")
+        .setTitle("📢 Broadcast")
         .setDescription(content)
     )
   }

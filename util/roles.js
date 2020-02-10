@@ -364,14 +364,14 @@ let roles = {
   // Solo non-killing roles
   
   "Fool": {
-    desc: "Your only goal is to get lynched by the village.",
+    desc: "Your goal is to get lynched by the village. You win if they lynch you.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["tanner"],
     cat : "Voting"
   },
   "Headhunter": {
-    desc: "Your only goal is to get your target lynched by the village." +
+    desc: "Your goal is to get your target lynched by the village." +
           " If your target dies in a way other than being lynched, you become a regular villager.",
     aura: "Unknown",
     team: "Solo",
