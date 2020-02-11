@@ -42,8 +42,10 @@ module.exports = {
     let targetPlayer = game.players[target-1]
     if (targetPlayer.alive)
       return await message.author.send("You cannot revive an alive player.")
-    if (roles[targetPlayer.role].team !== "Village" && targetPlayer.role == "Headhunter")
+    if (roles[targetPlayer.role].team !== "Village")
       return await message.author.send("You can only revive villagers!")
+    if (targetPlayer.boxed && game.players.find(p => p.role == "Soul Collector" && p.alive))
+      return await message.author.send("You cannot revive trapped souls!")
     
     gamePlayer.usedAbilityTonight = targetPlayer.number
     

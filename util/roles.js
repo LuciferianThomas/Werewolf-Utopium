@@ -469,7 +469,7 @@ let roles = {
           tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Soul Collector": {
-    desc: "At night select up to three players to collect their souls if they die from villagers, werewolves or lynching." +
+    desc: "At night select up to three players to collect their souls if they die from villagers or werewolves." +
           " Souls you obtained can't be reached until you die." +
           " Win by filling up all three boxes with souls.",
     aura: "Unknown",
@@ -477,6 +477,7 @@ let roles = {
     abbr: ["sc"],
     oneOnly: true,
     // cat : "Voting",
+    nite: "Select up to three players to collect their souls (`w!collect [player] ...`).",
     tag : /*tags.ROLE.SOLO_VOTING &*/ tags.ROLE.SEEN_AS_VILLAGER &
           tags.ROLE.WWOWC_ROLE & tags.ROLE.UNAVAILABLE & tags.ROLE.ONE_ONLY
   },
@@ -484,19 +485,20 @@ let roles = {
   // Solo killing roles
   
   "Arsonist": {
-  	desc: "Each night, you can either select two players to douse with gasoline (`w!douse [player1] [player2]`)" + // alias: w!burn
+  	desc: "Each night you can either select two players to douse with gasoline, or ignite all doused players which kills them." + // alias: w!burn
           " You cannot be killed by the werewolves." + 
           " You win if you are the last player alive.", 
     aura: "Unknown", 
     team: "Solo",
     abbr: ["ars", "arso", "arson", "pyro"],
     cat : "Killer",
+    nite: "Select two players to douse with gasoline (`w!douse [player1] [player2]`) or" +
+          " ignite all doused players.",
     tag : tags.ROLE.SOLO_KILLER &
           tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
   "Bomber": {
-  	desc: "At night, place a bomb on 3 players vertically, horizontally or diagonally (`w!placebomb [player]`)." +
-          " The following night, tbe bomb explodes, killing the selected players." +
+  	desc: "At night you can place a bomb which will explode during the following night." +
           " You cannot be killed by the werewolves. You win if you are the last player alive.",
  		aura: "Unknown",
     team: "Solo",
@@ -513,6 +515,8 @@ let roles = {
     team: "Solo",
     abbr: ["corr"],
     cat : "Killer",
+    nite: "Select two players to douse with gasoline (`w!douse [player1] [player2]`) or" +
+          " ignite all doused players.",
     tag : tags.ROLE.SOLO_KILLER &
           tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
@@ -540,8 +544,10 @@ let roles = {
           tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   },
   "Sect Leader": {
-  	desc: "Every night, select a player to convert into a Sect Member with (`w!sect [player]`). You can only convert villagers to the Sect Team." +
-    			" However, if you're killed, every Sect Member dies along. You win if everyone alive is converted into a Sect Member.", 
+  	desc: "Every night you can convert a player to join your sect." +
+          " Together you win if you are the last players alive." +
+          " All sect members will commit suicide if the sect leader dies." +
+    			" You cannot convert werewolves and solo killers.", 
     aura: "Unknown",
     team: "Sect",
     abbr: ["sl"],
