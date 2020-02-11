@@ -67,6 +67,7 @@ module.exports = {
         client, game.players.filter(p => !p.left).map(p => p.id), 
         `<:Gunner_Shoot:660666399332630549> Jailer executed his prisoner **${target} ${nicknames.get(targetPlayer.id)}${game.config.deathReveal ? ` ${fn.getEmoji(client, targetPlayer.role)}` : ""})**.`)
       gamePlayer.killedTonight = true
+      targetPlayer.killedBy = gamePlayer.number
     }
     
     if (game.config.deathReveal) targetPlayer.roleRevealed = targetPlayer.role

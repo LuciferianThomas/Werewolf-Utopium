@@ -70,6 +70,7 @@ module.exports = {
           nicknames.get(targetPlayer.id)
         }** and killed themselves. They are not a werewolf!`
       )
+      gamePlayer.killedBy = targetPlayer.number
       
       game = fn.death(client, game, gamePlayer.number)
     }

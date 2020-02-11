@@ -144,7 +144,7 @@ module.exports = (client) => {
           for (var killedRL of killedRLs) {
             killedRL.alive = false
             killedRL.roleRevealed = "Red Lady"
-            killedRL.killedBy = game.players[killedRL.usedAbilityTonight-1]
+            killedRL.killedBy = game.players[killedRL.usedAbilityTonight-1].number
             game.lastDeath = game.currentPhase - 1
             game = fn.death(client, game, killedRL.number)
 
@@ -196,7 +196,7 @@ module.exports = (client) => {
                   else {
                     game.lastDeath = game.currentPhase - 1
                     protector.alive = false
-                    protector.killedBy = sk
+                    protector.killedBy = sk.number
                     if (game.config.deathReveal) protector.roleRevealed = protector.role
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
@@ -294,7 +294,7 @@ module.exports = (client) => {
               else {
                 game.lastDeath = game.currentPhase - 1
                 attackedPlayer.alive = false
-                attackedPlayer.killedBy = sk
+                attackedPlayer.killedBy = sk.number
                 if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
@@ -327,7 +327,7 @@ module.exports = (client) => {
             else {
               game.lastDeath = game.currentPhase - 1
               attackedPlayer.alive = false
-              attackedPlayer.killedBy = sk
+              attackedPlayer.killedBy = sk.number
               if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
@@ -380,7 +380,7 @@ module.exports = (client) => {
               else {
                 game.lastDeath = game.currentPhase - 1
                 attackedPlayer.alive = false
-                attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
+                attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)].number
                 if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left).map(p => p.id),
@@ -399,7 +399,7 @@ module.exports = (client) => {
 
                 if (game.frenzy) {
                   protector.alive = false
-                  protector.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
+                  protector.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)].number
                   if (game.config.deathReveal) protector.roleRevealed = protector.role
 
                   fn.broadcastTo(
@@ -433,7 +433,7 @@ module.exports = (client) => {
                   else {
                     game.lastDeath = game.currentPhase - 1
                     protector.alive = false
-                    protector.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
+                    protector.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)].number
                     if (game.config.deathReveal) protector.roleRevealed = protector.role
                     fn.broadcastTo(
                       client, game.players.filter(p => !p.left),
@@ -534,7 +534,7 @@ module.exports = (client) => {
               else {
                 game.lastDeath = game.currentPhase - 1
                 attackedPlayer.alive = false
-                attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
+                attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)].number
                 if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left),
@@ -570,7 +570,7 @@ module.exports = (client) => {
             else {
               game.lastDeath = game.currentPhase - 1
               attackedPlayer.alive = false
-              attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)]
+              attackedPlayer.killedBy = wolves.filter(p => p.alive)[Math.floor(Math.random()*wolves.filter(p => p.alive).length)].number
               if (game.config.deathReveal) attackedPlayer.roleRevealed = attackedPlayer.role
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left).map(p => p.id),
@@ -677,18 +677,19 @@ module.exports = (client) => {
             if (!target.killedBy) continue;
             
             let one = Math.floor(Math.random()*2) == 1
-            let other = game.players.filter(p => p.alive && p.number !== target.killedBy.number && p.number !== sheriff.number)
+            let other = game.players.filter(p => p.alive && p.number !== target.killedBy && p.number !== sheriff.number)
             if (other.length) {
               let random = other[Math.floor(Math.random()*other.length)]
+			  let killedBy = game.players[target.killedBy-1]
 
               fn.getUser(client, sheriff.id).send(
                 new Discord.RichEmbed()
                   .setTitle("You guys were up for something...")
                   .setThumbnail(fn.getEmoji(client, "Sheriff Suspect").url)
                   .setDescription(
-                    one ? `**${target.killedBy.number} ${nicknames.get(target.killedBy.id)
+                    one ? `**${killedBy.number} ${nicknames.get(killedBy.id)
                     }** or **${random.number} ${nicknames.get(random.id)}** killed **${target.number} ${nicknames.get(target.id)}** last night.` 
-                    : `**${random.number} ${nicknames.get(random.id)}** or **${target.killedBy.number} ${nicknames.get(target.killedBy.id)
+                    : `**${random.number} ${nicknames.get(random.id)}** or **${killedBy.number} ${nicknames.get(killedBy.id)
                     }** killed **${target.number} ${nicknames.get(target.id)}** last night.` 
                   )
               )
@@ -699,7 +700,7 @@ module.exports = (client) => {
                   .setTitle("You were up for something...")
                   .setThumbnail(fn.getEmoji(client, "Sheriff Suspect").url)
                   .setDescription(
-                    `**${target.killedBy.number} ${nicknames.get(target.killedBy.id)
+                    `**${killedBy.number} ${nicknames.get(killedBy.id)
                     }** killed **${target.number} ${nicknames.get(target.id)}** last night.`
                   )
               )
