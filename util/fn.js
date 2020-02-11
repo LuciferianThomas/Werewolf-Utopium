@@ -335,7 +335,7 @@ const death = (client, game, number, suicide = false) => {
   }
   
   if (roles[deadPlayer.role].team == "Village" && !deadPlayer.sect &&
-      ["Village","Werewolves"].includes(roles[game.players[deadPlayer.killedBy-1].role].team) &&
+      (deadPlayer.killedBy == 17 || ["Village","Werewolves"].includes(roles[game.players[deadPlayer.killedBy-1].role].team)) &&
       game.players.find(p => p.role == "Soul Collector" && p.alive && p.box)) {
     broadcastTo(
       client, game.players.filter(p => !p.left),
