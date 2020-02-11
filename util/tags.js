@@ -16,5 +16,10 @@ module.exports = {
     TO_BE_TESTED: 0x2000,
     UNAVAILABLE: 0x4000,
     ONE_ONLY: 0x8000
+  },
+  PLAYER: {
+    DEVELOPER: 0x0001,
+    BETA_TESTER: 0x0002,
+    
   }
 }
