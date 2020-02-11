@@ -48,8 +48,8 @@ module.exports = {
     let targetPlayerA = game.players[targetA-1],
         targetPlayerB = game.players[targetB-1]
     
-    let roleA = roles[targetPlayerA.enchanted ? "Wolf Shaman" : targetPlayerA.role], 
-        roleB = roles[targetPlayerB.enchanted ? "Wolf Shaman" : targetPlayerB.role]
+    let roleA = roles[targetPlayerA.enchanted ? "Wolf Shaman" : targetPlayerA.disguised ? "Illusionist" : targetPlayerA.role], 
+        roleB = roles[targetPlayerB.enchanted ? "Wolf Shaman" : targetPlayerB.disguised ? "Illusionist" : targetPlayerB.role]
     
     message.author.send(
       new Discord.RichEmbed()

@@ -493,7 +493,7 @@ let roles = {
     abbr: ["ars", "arso", "arson", "pyro"],
     cat : "Killer",
     nite: "Select two players to douse with gasoline (`w!douse [player1] [player2]`) or" +
-          " ignite all doused players.",
+          " ignite all doused players (`w!ignite`).",
     tag : tags.ROLE.SOLO_KILLER &
           tags.ROLE.WWO_ROLE & tags.ROLE.TO_BE_TESTED
   }, 
@@ -510,32 +510,35 @@ let roles = {
   "Corruptor": {
   	desc: "Every night you can select one player to \"glitch\"." +
     			" That player won't be able to speak or vote the next day and will die at the end of the day." +
-  				" The role of that player won't be revealed when dying. The player cannot be revived by the medium. You win if you are the last player alive.",
+  				" The role of that player won't be revealed when dying. The player cannot be revived by the medium." +
+          " You cannot be killed by the werewolves." +
+          " You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["corr"],
     cat : "Killer",
-    nite: "Select two players to douse with gasoline (`w!douse [player1] [player2]`) or" +
-          " ignite all doused players.",
+    nite: "Select a player to \"glitch\" (`w!glitch [player1]`).",
     tag : tags.ROLE.SOLO_KILLER &
           tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Cannibal": {
-  	desc: "Every night, you can kill a player or save up your hunger to kill more the next night by doing (`w!eat [player]`)." +
-    			" You can only stack up to 5 kills. You cannot be killed by the werewolves. You win if you are the last player alive.",
+  	desc: "Each night you can either kill a player by eating him or save up your hunger to eat 5 players in one night." +
+          " You cannot be killed by the werewolves." +
+          " You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["canni", "cani", "cb"],
     cat : "Killer",
+    nite: "Select a player to \"eat\" (`w!eat [player1]`) or save up your hunger.",
     tag : tags.ROLE.SOLO_KILLER &
           tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Illusionist": {
-  	desc: "Every night, select a player to disguise." +
-    			" These players will appear to be the Illusionist to the <:Seer:658633721448235019> Seer," +
-          " a different team to the <:Detective:660070860832505863> Detective and unknown to the <:Aura_Seer:658632880490020874> Aura Seer." +
-          " During the day, you can choose to kill all disguised players." +
-          " You cannot be killed by the werewolves. You win if you are the last player alive.",
+  	desc: "Each night you can disguise a player." +
+          " This player will appear to be an illusionist to seer roles." +
+          " You can kill all disguised players during the discussion phase." +
+          " You cannot be killed by the werewolves." +
+          " You win if you are the last player alive.",
     aura: "Unknown", 
     team: "Solo", 
     abbr: ["illu", "illusion"],
@@ -569,8 +572,11 @@ let roles = {
           tags.ROLE.WWO_ROLE & tags.ROLE.AVAILABLE
   },
   "Zombie": {
-  	desc: "Each night, select a player to convert to a Zombie by (`w!zombify [player]`). Only players from the Village team can be converted." +
-    			" However, players take one day to convert before turning to a zombie. You win if all alive players are converted into Zombies.",
+  	desc: "Each night you can bite a player which will turn that player into a zombie at the end of the next night." +
+          " Bitten players will remain in their team for one day before converting." +
+          " All zombies can select different targets." +
+          " Only players from the village team or solo voting roles can be converted." +
+          " You win if all players have been converted.",
     aura: "Unknown",
     team: "Zombies",
     abbr: ["zomb", "zom", "zb", "zombert", "walking dead"],

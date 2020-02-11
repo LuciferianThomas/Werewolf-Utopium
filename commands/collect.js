@@ -30,6 +30,7 @@ module.exports = {
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only check on a player at night.")
     
+    gamePlayer.box = []
     if (game.players.filter(p => p.boxed).length + args.length > 3) 
       return await message.author.send("You can only select three players!")
     else {

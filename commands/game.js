@@ -48,6 +48,9 @@ module.exports = {
                     gamePlayer.sect && p.sect
                       ? ` ${fn.getEmoji(client, "Sect Member")}`
                       : ""
+                  }${
+                    p.boxed && game.players.find(pl => pl.role == "Soul Collector" && pl.alive)
+                      ? ` ${fn.getEmoji(client, "")}`
                   }${p.left ? " *off*" : ""}${
                     p.id == message.author.id ? "**" : ""
                   }`
