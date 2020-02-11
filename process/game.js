@@ -67,7 +67,7 @@ module.exports = (client) => {
                   `**${lynched} ${nicknames.get(lynchedPlayer.id)}${
                     game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`
                 )
-                lynchedPlayer.killedBy = -1
+                lynchedPlayer.killedBy = 
 
                 game = fn.death(client, game, lynchedPlayer.number)
 

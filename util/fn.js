@@ -213,7 +213,7 @@ const gameEmbed = (client, game) => {
               }${p.left ? " *off*" : ""}`
           ).join("\n")
     )
-    .addField("Roles", game.originalRoles.map(r => `${getEmoji(r)}`).join(' '))
+    .addField("Roles", game.originalRoles.map(r => `${getEmoji(client, r)}`).join(' '))
 }
 
 const death = (client, game, number, suicide = false) => {
