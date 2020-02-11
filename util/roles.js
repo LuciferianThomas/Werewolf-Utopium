@@ -508,9 +508,9 @@ let roles = {
           tags.ROLE.WWO_ROLE & tags.ROLE.UNAVAILABLE
   },
   "Corruptor": {
-  	desc: "Every night, select a player 'glitch' by doing (`w!glitch [player]`)." +
+  	desc: "Every night you can select one player to \"glitch\"." +
     			" That player won't be able to speak or vote the next day and will die at the end of the day." +
-  				" The role of the player won't be revealed. You cannot be killed by the werewolves. You win if you are the last player alive.",
+  				" The role of that player won't be revealed when dying. The player cannot be revived by the medium. You win if you are the last player alive.",
     aura: "Unknown",
     team: "Solo",
     abbr: ["corr"],
