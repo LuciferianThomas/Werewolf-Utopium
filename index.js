@@ -64,6 +64,20 @@ client.on('ready', async () => {
   require('/app/process/game.js')(client)
 })
 
+client.on('guildMemberAdd', async member => {
+  if (member.guild.id != "522638136635817986") return;
+  member.guild.channels.get("640530363587887104").send(
+    `${member}, welcome to **Werewolf Utopium**!`
+  )
+})
+
+client.on('guildMemberRemove', async member => {
+  if (member.guild.id != "522638136635817986") return;
+  member.guild.channels.get("640530363587887104").send(
+    `Hope to see you again in the near future, **${member.user.username}**!`
+  )
+})
+
 client.on('message', async message => {
   
   if (message.author.bot) return;
