@@ -25,6 +25,8 @@ module.exports = {
       return await message.channel.send(`<:red_tick:597374220267290624> Target not found.`)
     
     let player = players.get(target.id)
+    if (!player)
+      return await message.channel.send(`<:red_tick:597374220267290624> Target not found.`)
     
     let allGamesPlayed = fn.clone(player.wins)
     allGamesPlayed.push(...player.loses)
