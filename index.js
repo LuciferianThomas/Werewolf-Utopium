@@ -188,6 +188,7 @@ client.on('message', async message => {
         client, game.players.filter(p => !p.left && p.id != message.author.id),
         `**${gamePlayer.number} ${nicknames.get(message.author.id)}**: ${content}`
       )
+    else if (!gamePlayer.alive && gamePlayer.boxed && game.players.find(p => p.role == "Soul Collector" && p.alive)) return undefined
     else {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && !p.alive && p.id != message.author.id),
@@ -195,7 +196,8 @@ client.on('message', async message => {
       )
     }
   if (game.currentPhase % 3 == 0) {
-    if (!gamePlayer.alive) {
+    if (!gamePlayer.alive && gamePlayer.boxed && game.players.find(p => p.role == "Soul Collector" && p.alive)) return undefined
+    else if (!gamePlayer.alive) {
       return fn.broadcastTo(
         client, game.players.filter(p => !p.left && (!p.alive || (p.alive && p.role == "Medium")) && p.id != message.author.id),
         `_**${gamePlayer.number} ${nicknames.get(message.author.id)}**${gamePlayer.roleRevealed ? ` ${fn.getEmoji(client, gamePlayer.roleRevealed)}` : ""}: ${content}_`

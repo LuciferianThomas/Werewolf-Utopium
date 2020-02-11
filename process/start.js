@@ -50,6 +50,8 @@ module.exports = async (client, game) => {
         thisPlayer.sect = true; break;
       case "Illusionist":
         thisPlayer.deluded = []; break;
+      case "Soul Collector":
+        thisPlayer.box = []; break;
     }
     
     await client.users.get(thisPlayer.id).send(

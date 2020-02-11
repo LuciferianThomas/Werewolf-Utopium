@@ -50,8 +50,7 @@ module.exports = {
           continue;
         }
         
-        if (!gamePlayer.usedAbilityTonight) gamePlayer.usedAbilityTonight = []
-        gamePlayer.usedAbilityTonight.push(targetPlayer.number)
+        gamePlayer.box.push(targetPlayer.number)
       }
     }
     

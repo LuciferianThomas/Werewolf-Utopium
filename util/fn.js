@@ -222,7 +222,7 @@ const death = (client, game, number, suicide = false) => {
       for (var rl of rls) {
         rl.alive = false
         rl.roleRevealed = "Red Lady"
-        rl.killedBy = game.players[rl.usedAbilityTonight-1]
+        rl.killedBy = game.players[rl.usedAbilityTonight-1].number
         game.lastDeath = game.currentPhase - 1
         game = death(client, game, rl.number)
 
@@ -242,6 +242,7 @@ const death = (client, game, number, suicide = false) => {
       if (avengedPlayer && avengedPlayer.alive) {
         avengedPlayer.alive = false
         if (game.config.deathReveal) avengedPlayer.roleRevealed = avengedPlayer.role
+        avengedPlayer.killedBy = deadPlayer.number
 
         broadcastTo(
           client,
@@ -326,6 +327,21 @@ const death = (client, game, number, suicide = false) => {
         .setTitle("Master")
         .setThumbnail(getEmoji(client, "Seer").url)
         .setDescription("The Seer was killed. You are now a Seer!")
+    )
+  }
+  
+  if (roles[deadPlayer.role].team == "Village" && !deadPlayer.sect &&
+      ["Village","Werewolves"].includes(roles[game.players[deadPlayer.killedBy-1].role].team) &&
+      game.players.find(p => p.role == "Soul Collector" && p.alive && p.box)) {
+    broadcastTo(
+      client, game.players.filter(p => !p.left),
+      new Discord.RichEmbed()
+        .setTitle("Your soul is mine")
+        .setThumbnail(getEmoji(client, "Soul Collector"))
+        .setDescription(
+          `The Soul Collector took **${deadPlayer.number} ${nicknames.get(deadPlayer.id)}**'s soul!` +
+          " They cannot talk to the Medium or the dead, and cannot be revived until the Soul Collector is dead!"
+        )
     )
   }
 

@@ -48,6 +48,7 @@ module.exports = {
       return await message.author.send("You cannot poison the President!")
 
     targetPlayer.alive = false
+    targetPlayer.killedBy = gamePlayer.number
     
     fn.broadcastTo(
       client, game.players.filter(p => !p.left).map(p => p.id), 
