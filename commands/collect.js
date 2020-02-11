@@ -43,38 +43,20 @@ module.exports = {
 
         let targetPlayer = game.players[target-1]
         if (!targetPlayer.alive) {
-          message.author.send("You cannot give cards to an dead player.")
+          message.author.send("You cannot target an dead player.")
           continue;
         }
         if (target == gamePlayer.number) {
-          message.author.send("You cannot give cards to yourself.")
-          continue;
-        }
-        if (gamePlayer.cards.includes(targetPlayer.number)) {
-          message.author.send(`**${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** already has your card!`)
+          message.author.send("You cannot target yourself.")
           continue;
         }
         
-        gamePlayer.cards.push(targetPlayer.number)
-        message.author.send(
-          new Discord.RichEmbed()
-            .setTitle("Card given!")
-            .setThumbnail(fn.getEmoji(client, `Fortune Teller Card1`).url)
-            .setDescription(`You gave **${targetPlayer.number} ${fn.getUser(client, targetPlayer.id)}** a card to reveal their roles.`)
-        )
-        
-        fn.getUser(client, targetPlayer.id).send(
-          new Discord.RichEmbed()
-            .setTitle("Fortune Teller's Card")
-            .setThumbnail(fn.getEmoji(client, `Fortune Teller Card1`).url)
-            .setDescription(
-              "The Fortune Teller gave you a card to reveal your identity (`w!reveal card`)." +
-              " You can use your card at any time."
-            )
-        )
-   
+        if (!gamePlayer.usedAbilityTonight) gamePlayer.usedAbilityTonight = []
+        gamePlayer.usedAbilityTonight.push(targetPlayer.number)
       }
     }
+    
+    
     
     QuickGames[index] = game
 
