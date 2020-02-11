@@ -95,6 +95,8 @@ client.on('message', async message => {
         loses: [],
         suicides: 0
       }
+      
+      await message.channel.send("Please check your DMs!")
        
       let m = await message.author.send(
         new Discord.RichEmbed()
@@ -106,7 +108,7 @@ client.on('message', async message => {
       let input
       while (!input) {
         let response = await m.channel.awaitMessages(msg => msg.author.id == message.author.id, { max: 1, time: 60*1000, errors: ["time"] }).catch(() => {})
-        if (!m) return await m.channel.send("Question timed out.")
+        if (!response) return await m.channel.send("Question timed out.")
         response = response.first().content
         
         let usedNicknames = nicknames.all().map(x => x.data.toLowerCase())
