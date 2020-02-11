@@ -207,9 +207,13 @@ const gameEmbed = (client, game) => {
                 p.sect
                   ? ` ${getEmoji(client, "Sect Member")}`
                   : ""
+              }${
+                p.boxed && game.players.find(pl => pl.role == "Soul Collector" && pl.alive)
+                  ? ` ${getEmoji(client, "Soul")}` : ""
               }${p.left ? " *off*" : ""}`
           ).join("\n")
     )
+    .addField("Roles", game.originalRoles.map(r => `${getEmoji(r)}`).join(' '))
 }
 
 const death = (client, game, number, suicide = false) => {
@@ -337,7 +341,7 @@ const death = (client, game, number, suicide = false) => {
       client, game.players.filter(p => !p.left),
       new Discord.RichEmbed()
         .setTitle("Your soul is mine")
-        .setThumbnail(getEmoji(client, "Soul Collector"))
+        .setThumbnail(getEmoji(client, "Soul"))
         .setDescription(
           `The Soul Collector took **${deadPlayer.number} ${nicknames.get(deadPlayer.id)}**'s soul!` +
           " They cannot talk to the Medium or the dead, and cannot be revived until the Soul Collector is dead!"

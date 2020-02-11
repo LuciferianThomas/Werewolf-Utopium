@@ -50,7 +50,7 @@ module.exports = {
                       : ""
                   }${
                     p.boxed && game.players.find(pl => pl.role == "Soul Collector" && pl.alive)
-                      ? ` ${fn.getEmoji(client, "")}`
+                      ? ` ${fn.getEmoji(client, "Soul")}` : ""
                   }${p.left ? " *off*" : ""}${
                     p.id == message.author.id ? "**" : ""
                   }`
