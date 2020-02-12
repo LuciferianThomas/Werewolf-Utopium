@@ -5,19 +5,36 @@ const Discord = require('discord.js'),
 module.exports = {
   name: "beta",
   run: async (client, message, args, shared) => {
+    if (message.guild.id !== "522638136635817986") return
+    
     let input = moment(args.join(' ')).utcOffset(8)
     if (input == "Invalid date")
       return await message.channel.send("You inputted an invalid date. Please try again.")
     let time = input.format("HH:mm [HKT]"),
-        date = input.format("MMM D")
+        date = input.format("MMM D, YYYY (ddd)")
     
     let embed = new Discord.RichEmbed()
       .setColor(0xe4b400)
       .setTitle("βTesting Session")
-      .setDescription(`${message.author} will be hosting a βTesting Session at 21:00 HKT on Feb 12, 2020.`)
+      .setDescription(`${message.author} will be hosting a βTesting Session at [${time}](https://www.thetimezoneconverter.com/?t=${time}&tz=GMT%2B8&) on ${date}.`)
+      .setFooter("React to this message to show your availability.")
     
-    let m = await message.channel.send(
-      "Please confirm if this is correct."
-    )
+    let m = await message.channel.send("Please confirm if this is correct.", embed)
+    await m.react(fn.getEmoji(client, "green tick"))
+    let reactions = await m.awaitReactions(
+      (r, u) => r.emoji.id == client.emojis.find(e => e.name == "green_tick").id &&
+                u.id == message.author.id,
+      { max: 1, time: 10000, errors: ["time"] }
+    ).catch(() => {})
+    if (!reactions) return await m.edit(
+      new Discord.RichEmbed()
+        .setColor("RED")
+        .setTitle("Prompt cancelled.")
+    ).then(m => m.clearReactions().catch(() => {}))
+    
+    let βTester = fn.getRole(message.guild, "βTester")
+    await βTester.setMentionable(true, "βTest Announcement").catch(() => {})
+    message.guild.channels.get("676642370954985501").send(`${fn.getRole(message.guild, "βTester")}`,)
+    await βTester.setMentionable(false).catch(() => {})
   }
 }
