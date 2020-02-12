@@ -33,87 +33,92 @@ module.exports = (client) => {
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
 
       if (moment(game.nextPhase) <= moment()) try { 
-        if (game.currentPhase % 3 == 2 && !game.noVoting)  {
-          let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
-              lynchCount = []
-          for (var j = 0; j < lynchVotes.length; j++) {
-            if (!lynchCount[lynchVotes[j]]) lynchCount[lynchVotes[j]] = 0
-            lynchCount[lynchVotes[j]] += game.players.filter(player => player.alive)[j].role == "Mayor" ? 2 : 1
-          }
-          if (lynchCount.length) {
-            let max = lynchCount.reduce((m, n) => Math.max(m, n))
-            let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
-            if (lynched.length > 1 || lynchCount[lynched[0]] < Math.floor(game.players.filter(player => player.alive).length/2)) {
+        if (game.currentPhase % 3 == 2) {
+          if (!game.noVoting) {
+            let lynchVotes = game.players.filter(player => player.alive).map(player => player.vote),
+                lynchCount = []
+            for (var j = 0; j < lynchVotes.length; j++) {
+              if (!lynchCount[lynchVotes[j]]) lynchCount[lynchVotes[j]] = 0
+              lynchCount[lynchVotes[j]] += game.players.filter(player => player.alive)[j].role == "Mayor" ? 2 : 1
+            }
+            if (lynchCount.length) {
+              let max = lynchCount.reduce((m, n) => Math.max(m, n))
+              let lynched = [...lynchCount.keys()].filter(i => lynchCount[i] === max)
+              if (lynched.length > 1 || lynchCount[lynched[0]] < Math.floor(game.players.filter(player => player.alive).length/2)) {
+                fn.broadcastTo(
+                  client, game.players.filter(p => !p.left), 
+                  "The village cannot decide on who to lynch."
+                )
+              }
+              else {
+                lynched = lynched[0]
+                let lynchedPlayer = game.players[lynched-1]
+
+                if (game.players.find(p => p.preventLynch == lynchedPlayer.number)) {
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left), 
+                    `**${lynchedPlayer.number} ${nicknames.get(lynchedPlayer.id)}** cannot be lynched.`
+                  )
+                }
+                else {
+                  lynchedPlayer.alive = false
+                  if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
+
+                  game.lastDeath = game.currentPhase
+                  fn.broadcastTo(
+                    client, game.players.filter(p => !p.left), 
+                    `**${lynched} ${nicknames.get(lynchedPlayer.id)}${
+                      game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`
+                  )
+                  lynchedPlayer.killedBy = 17
+
+                  game = fn.death(client, game, lynchedPlayer.number)
+
+                  if (lynchedPlayer.role == "Fool") {
+                    game.currentPhase = 999
+                    fn.broadcastTo(
+                      client, game.players.filter(p => !p.left),
+                      new Discord.RichEmbed()
+                        .setTitle("Game has ended.")
+                        .setThumbnail(fn.getEmoji(client, "Fool").url)
+                        .setDescription(`Fool ${lynched} ${nicknames.get(lynchedPlayer.id)} wins!`)
+                    )
+                    fn.addXP(game.players.filter(p => p.number == lynched), 100)
+                    fn.addXP(game.players.filter(p => !p.left), 15)
+                    fn.addWin(game, [lynched], "Solo")
+                    continue;
+                  }
+                  if (lynchedPlayer.headhunter) {
+                    let headhunter = game.players[lynchedPlayer.headhunter-1]
+
+                    if (headhunter.alive) {
+                    game.currentPhase = 999
+                    fn.broadcastTo(
+                      client, game.players.filter(p => !p.left),
+                      new Discord.RichEmbed()
+                        .setTitle("Game has ended.")
+                        .setThumbnail(fn.getEmoji(client, "Headhunter").url)
+                        .setDescription(`Headhunter **${headhunter.number} ${nicknames.get(headhunter.id)}** wins!`)
+                    )
+                    fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
+                    fn.addXP(game.players.filter(p => !p.left), 15)
+                    fn.addWin(game, [headhunter.number], "Solo")
+                    continue;
+                    }
+                  }
+                }
+              }
+            } else
               fn.broadcastTo(
                 client, game.players.filter(p => !p.left), 
                 "The village cannot decide on who to lynch."
               )
-            }
-            else {
-              lynched = lynched[0]
-              let lynchedPlayer = game.players[lynched-1]
-              
-              if (game.players.find(p => p.preventLynch == lynchedPlayer.number)) {
-                fn.broadcastTo(
-                  client, game.players.filter(p => !p.left), 
-                  `**${lynchedPlayer.number} ${nicknames.get(lynchedPlayer.id)}** cannot be lynched.`
-                )
-              }
-              else {
-                lynchedPlayer.alive = false
-                if (game.config.deathReveal) lynchedPlayer.roleRevealed = lynchedPlayer.role
-
-                game.lastDeath = game.currentPhase
-                fn.broadcastTo(
-                  client, game.players.filter(p => !p.left), 
-                  `**${lynched} ${nicknames.get(lynchedPlayer.id)}${
-                    game.config.deathReveal ? ` ${fn.getEmoji(client, lynchedPlayer.role)}` : ""}** was lynched by the village.`
-                )
-                lynchedPlayer.killedBy = 17
-
-                game = fn.death(client, game, lynchedPlayer.number)
-
-                if (lynchedPlayer.role == "Fool") {
-                  game.currentPhase = 999
-                  fn.broadcastTo(
-                    client, game.players.filter(p => !p.left),
-                    new Discord.RichEmbed()
-                      .setTitle("Game has ended.")
-                      .setThumbnail(fn.getEmoji(client, "Fool").url)
-                      .setDescription(`Fool ${lynched} ${nicknames.get(lynchedPlayer.id)} wins!`)
-                  )
-                  fn.addXP(game.players.filter(p => p.number == lynched), 100)
-                  fn.addXP(game.players.filter(p => !p.left), 15)
-                  fn.addWin(game, [lynched], "Solo")
-                  continue;
-                }
-                if (lynchedPlayer.headhunter) {
-                  let headhunter = game.players[lynchedPlayer.headhunter-1]
-
-                  if (headhunter.alive) {
-                  game.currentPhase = 999
-                  fn.broadcastTo(
-                    client, game.players.filter(p => !p.left),
-                    new Discord.RichEmbed()
-                      .setTitle("Game has ended.")
-                      .setThumbnail(fn.getEmoji(client, "Headhunter").url)
-                      .setDescription(`Headhunter **${headhunter.number} ${nicknames.get(headhunter.id)}** wins!`)
-                  )
-                  fn.addXP(game.players.filter(p => p.number == headhunter.number), 100)
-                  fn.addXP(game.players.filter(p => !p.left), 15)
-                  fn.addWin(game, [headhunter.number], "Solo")
-                  continue;
-                  }
-                }
-              }
-            }
-          } else
-            fn.broadcastTo(
-              client, game.players.filter(p => !p.left), 
-              "The village cannot decide on who to lynch."
-            )
+          }
+          else game.noVoting = false
+        
+          for (var lynchProtector of game.players.filter(p => ["Flower Child","Guardian Wolf"].includes(p.role)))
+            lynchProtector.preventLynch = undefined
         }
-        else if (game.currentPhase % 3 == 2) game.noVoting = false
 
         game.currentPhase++
         game.nextPhase = moment().add(
@@ -158,7 +163,12 @@ module.exports = (client) => {
             )
           }
           
-          // let protectors = game.players.filter(p => p.alive && ["Bodyguard","Doctor","Witch","Tough Guy"].includes(p.role))
+          let protectors = game.players.filter(p => p.alive && ["Bodyguard","Doctor","Witch","Tough Guy","Beast Hunter","Jailer"].includes(p.role))
+          for (var protector of protectors) {
+            if (protector.role == "Beast Hunter" && protector.trap.status)
+              game.players[protector.trap.player-1].protectors.push(protector.number)
+            // else if (protector.role == "Jailer")
+          }
           
           let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
           let wwVotes = game.players.filter(player => player.alive && roles[player.role].team == "Werewolves").map(player => player.vote),
@@ -267,7 +277,7 @@ module.exports = (client) => {
                   )
                 }
                 else if (protector.role == "Beast Hunter") {
-                  protector.trapStatus = -1
+                  protector.trap.status = -1
 
                   fn.getUser(client, protector.id).send(
                     new Discord.RichEmbed()
@@ -357,10 +367,8 @@ module.exports = (client) => {
             let wwByStrength = game.players
               .filter(p => p.alive && roles[p.role].team == "Werewolves")
             wwByStrength.sort((a,b) => {
-              if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role))
-                return 1
-              if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role))
-                return -1
+              if (wwStrength.indexOf(a.role) > wwStrength.indexOf(b.role)) return 1
+              if (wwStrength.indexOf(a.role) < wwStrength.indexOf(b.role)) return -1
               return 0
             })
 
@@ -680,10 +688,10 @@ module.exports = (client) => {
             if (!target.killedBy) continue;
             
             let one = Math.floor(Math.random()*2) == 1
-            let other = game.players.filter(p => p.alive && p.number !== target.killedBy && p.number !== sheriff.number)
+            let killedBy = game.players[target.killedBy-1]
+            let other = game.players.filter(p => p.alive && p.number !== killedBy.number && p.number !== sheriff.number)
             if (other.length) {
               let random = other[Math.floor(Math.random()*other.length)]
-	      		  let killedBy = game.players[target.killedBy-1]
 
               fn.getUser(client, sheriff.id).send(
                 new Discord.RichEmbed()
