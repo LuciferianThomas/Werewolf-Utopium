@@ -25,8 +25,10 @@ module.exports = (client) => {
         )
 
         game.currentPhase++
-        // for (var j = 0; j < game.players.length; j++)
-        //   players.set(`${game.players[j].id}.currentGame`, 0)
+
+        client.guilds.get("522638136635817986").members
+          .filter(m => game.players.map(p => p.id).includes(m.id) && !m.roles.find(fn.getRole(m.guild, "Player")))
+          .forEach(m => m.addRole(fn.getRole(m.guild, "Player")).catch(()=>{}))
       }
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
 
