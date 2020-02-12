@@ -47,7 +47,8 @@ module.exports = {
     await m.edit(
       new Discord.RichEmbed()
         .setColor("GREEN")
-        .setTitle(`Announcement has been sent to ${βtest_announcements}.`)
+        .setTitle(`Announcement has been sent.`)
+        .setDescription(`Check ${βtest_announcements}!`)
     )
     await m.clearReactions().catch(() => {})
   }
