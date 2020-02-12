@@ -26,9 +26,9 @@ module.exports = (client) => {
 
         game.currentPhase++
 
-        client.guilds.get("522638136635817986").members
-          .filter(m => game.players.map(p => p.id).includes(m.id) && !m.roles.find(fn.getRole(m.guild, "Player")))
-          .forEach(m => m.addRole(fn.getRole(m.guild, "Player")).catch(()=>{}))
+        //client.guilds.get("522638136635817986").members
+        //  .filter(m => game.players.map(p => p.id).includes(m.id) && !m.roles.find(fn.getRole(m.guild, "Player")))
+        //  .forEach(m => m.addRole(fn.getRole(m.guild, "Player")).catch(()=>{}))
       }
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
 
@@ -683,7 +683,7 @@ module.exports = (client) => {
             let other = game.players.filter(p => p.alive && p.number !== target.killedBy && p.number !== sheriff.number)
             if (other.length) {
               let random = other[Math.floor(Math.random()*other.length)]
-			  let killedBy = game.players[target.killedBy-1]
+	      		  let killedBy = game.players[target.killedBy-1]
 
               fn.getUser(client, sheriff.id).send(
                 new Discord.RichEmbed()
@@ -768,9 +768,9 @@ module.exports = (client) => {
             )
           }
           
-          let illus = game.players.filter(p => p.alive && p.usedAbilityTonight)
+          let illus = game.players.filter(p => p.alive && p.role == "Illusionist" && p.usedAbilityTonight)
           for (var illu of illus) {
-            let disguisedPlayer = game.players[illu.usedAbilityTonight]
+            let disguisedPlayer = game.players[illu.usedAbilityTonight-1]
             disguisedPlayer.disguised = true
             game.lastDeath = game.currentPhase - 1
             illu.deluded.push(disguisedPlayer.number)
