@@ -1,13 +1,15 @@
 const Discord = require('discord.js'),
       moment = require('moment'),
-      fn = require('')
+      fn = require('/app/util/fn')
 
 module.exports = {
   name: "beta",
   run: async (client, message, args, shared) => {
-    let time = moment(args.join(' ')).utcOffset(8).format("YYYY/MM/DD HH:mm:ss")
-    if (time == "Invalid date")
+    let input = moment(args.join(' ')).utcOffset(8)
+    if (input == "Invalid date")
       return await message.channel.send("You inputted an invalid date. Please try again.")
+    let time = input.format("HH:mm [HKT]"),
+        date = input.format("MMM D")
     
     let embed = new Discord.RichEmbed()
       .setColor(0xe4b400)
