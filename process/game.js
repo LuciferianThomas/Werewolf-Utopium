@@ -791,7 +791,8 @@ module.exports = (client) => {
           // ARSONIST DOUSE
           let arsos = game.players.filter(p => p.alive && p.role == "Arsonist" && p.usedAbilityTonight)
           for (var arso of arsos) {
-            let dousedPlayers = arso.usedAbilityTonight.map(p => game.players[p-1])
+            let doused = arso.usedAbilityTonight.map(p => game.players[p-1])
+            arso.doused.push(doused.number)
           }
 
           // CLEAR NIGHT SELECTIONS

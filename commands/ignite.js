@@ -33,9 +33,7 @@ module.exports = {
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only ignite players during the night!")
 
-    let doused = game.players.filter(
-      p => p.alive && p.doused.includes(gamePlayer.number)
-    )
+    let doused = gamePlayer.doused.map(p => game.players[p-1] && p.alive)
 
     if (!doused.length)
       return await message.author.send("You haven't doused anyone or every doused player is dead! Do `w!douse [player1] [player2]` first!")
