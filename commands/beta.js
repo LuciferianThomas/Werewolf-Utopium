@@ -7,9 +7,10 @@ module.exports = {
   run: async (client, message, args, shared) => {
     if (message.guild.id !== "522638136635817986") return
     
-    let input = moment(args.join(' ')).utcOffset(8)
+    let input = moment(new Date(args.join(' '))).utcOffset(8)
     if (input == "Invalid date")
       return await message.channel.send("You inputted an invalid date. Please try again.")
+    
     let time = input.format("HH:mm"),
         date = input.format("MMM D, YYYY (ddd)")
     
