@@ -5,7 +5,8 @@ const Discord = require('discord.js'),
 module.exports = {
   name: "beta",
   run: async (client, message, args, shared) => {
-    if (message.guild.id !== "522638136635817986") return
+    if (message.guild.id !== "522638136635817986") return;
+    if (!message.member.roles.find(r => r.name == "βTester Helper")) return;
     
     let input = moment(new Date(args.join(' '))).utcOffset(8)
     if (input == "Invalid date")
@@ -36,8 +37,12 @@ module.exports = {
     let βTester = fn.getRole(message.guild, "βTester"),
         βtest_announcements = message.guild.channels.find(c => c.name == "βtest-announcements")
     await βTester.setMentionable(true, "βTest Announcement").catch(() => {})
-    βtest_announcements.send(`${βTester}`, embed)
+    let n = βtest_announcements.send(`${βTester}`, embed)
     await βTester.setMentionable(false).catch(() => {})
+    
+    await n.react(fn.getEmoji(client, "green tick"))
+    await n.react(fn.getEmoji(client, "gray tick"))
+    await n.react(fn.getEmoji(client, "red tick"))
     
     await m.edit(
       new Discord.RichEmbed()
