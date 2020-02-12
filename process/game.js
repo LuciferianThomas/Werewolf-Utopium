@@ -165,7 +165,9 @@ module.exports = (client) => {
           
           let protectors = game.players.filter(p => p.alive && ["Bodyguard","Doctor","Witch","Tough Guy","Beast Hunter","Jailer"].includes(p.role))
           for (var protector of protectors) {
-            if (protector.role == "Beast Hunter" && protector.trap.status)
+            if (["Bodyguard","Doctor","Witch","Tough Guy"].includes(protector.role))
+              game.players[protector.usedAbilityTonight-1].protectors.push(protector.number)
+            else if (protector.role == "Beast Hunter" && protector.trap.status)
               game.players[protector.trap.player-1].protectors.push(protector.number)
             else if (protector.role == "Jailer" && game.players.find(p => p.jailed && p.alive)) 
               game.players[game.players.find(p => p.jailed && p.alive).number-1].protectors.push(protector.number)
@@ -777,12 +779,19 @@ module.exports = (client) => {
             )
           }
           
+          // ILLUSIONIST DISGUISE
           let illus = game.players.filter(p => p.alive && p.role == "Illusionist" && p.usedAbilityTonight)
           for (var illu of illus) {
             let disguisedPlayer = game.players[illu.usedAbilityTonight-1]
             disguisedPlayer.disguised = true
             game.lastDeath = game.currentPhase - 1
             illu.deluded.push(disguisedPlayer.number)
+          }
+          
+          // ARSONIST DOUSE
+          let arsos = game.players.filter(p => p.alive && p.role == "Arsonist" && p.usedAbilityTonight)
+          for (var arso of arsos) {
+            let dousedPlayers = arso.usedAbilityTonight.map(p => game.players[p-1])
           }
 
           // CLEAR NIGHT SELECTIONS

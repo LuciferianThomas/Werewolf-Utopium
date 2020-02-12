@@ -28,12 +28,12 @@ module.exports = {
     if (gamePlayer.jailed)
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     
-    if (typeof gamePlayer.usedAbilityTonight == "array") {
-      let prevA = game.players[gamePlayer.dousedTonight[0]-1]
-      let prevB = game.players[gamePlayer.dousedTonight[1]-1]
-      prevA.doused.splice(prevA.doused.indexOf(gamePlayer.number), 1)
-      prevB.doused.splice(prevB.doused.indexOf(gamePlayer.number), 1)
-    }
+    // if (typeof gamePlayer.usedAbilityTonight == "array") {
+    //   let prevA = game.players[gamePlayer.dousedTonight[0]-1]
+    //   let prevB = game.players[gamePlayer.dousedTonight[1]-1]
+    //   prevA.doused.splice(prevA.doused.indexOf(gamePlayer.number), 1)
+    //   prevB.doused.splice(prevB.doused.indexOf(gamePlayer.number), 1)
+    // }
     
     if (game.currentPhase % 3 != 0)
       return await message.author.send("You can only douse players during the night!")
@@ -69,8 +69,8 @@ module.exports = {
       )
     )
 
-    targetPlayerA.doused.push(gamePlayer.number)
-    targetPlayerB.doused.push(gamePlayer.number)
+    // targetPlayerA.doused.push(gamePlayer.number)
+    // targetPlayerB.doused.push(gamePlayer.number)
     gamePlayer.usedAbilityTonight = [targetA, targetB]
     //gamePlayer.usedAbilityTonight = true
     
