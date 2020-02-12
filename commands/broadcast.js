@@ -12,7 +12,7 @@ const fn = require('/app/util/fn'),
 module.exports = {
   name: "broadcast",
   run: async (client, message, args, shared) => {
-    if (!["336389636878368770","658481926213992498","524188548815912999"].includes(message.author.id)) return;
+    if (!["336389636878368770","658481926213992498","524188548815912999","595132465933320193","230882864382607360"].includes(message.author.id)) return;
     
     let QuickGames = games.get("quick"),
         game = QuickGames.find(
