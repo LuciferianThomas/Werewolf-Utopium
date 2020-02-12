@@ -1,13 +1,7 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
-const db = require("quick.db"),
-      games = new db.table("Games"),
-      players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
-
-const { defaultPrefix, embedColor } = require('./config'),
-      roles = require('./roles')
+const { defaultPrefix, embedColor } = require('./config')
 
 let time = (date = moment()) => {
   return moment(date).utcOffset(8).format("YYYY/MM/DD HH:mm:ss")
