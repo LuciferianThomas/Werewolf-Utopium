@@ -41,12 +41,12 @@ module.exports = {
     if (target == gamePlayer.number)
       return await message.author.send("You cannot jail yourself.")
     
-    if (!gamePlayer.sect && targetPlayer.role == "President")
-      return await message.author.send("You cannot jail the President!")
+    // if (!gamePlayer.sect && targetPlayer.role == "President")
+    //   return await message.author.send("You cannot jail the President!")
     
     for (var i = 0; i < game.players.length; i++) game.players[i].jailed = false
     targetPlayer.jailed = true
-    targetPlayer.protectors.push(gamePlayer.number)
+    // targetPlayer.protectors.push(gamePlayer.number)
     message.author.send(
       `${fn.getEmoji(
         client, "Jailer Handcuffs"

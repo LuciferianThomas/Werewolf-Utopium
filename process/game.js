@@ -167,7 +167,8 @@ module.exports = (client) => {
           for (var protector of protectors) {
             if (protector.role == "Beast Hunter" && protector.trap.status)
               game.players[protector.trap.player-1].protectors.push(protector.number)
-            // else if (protector.role == "Jailer")
+            else if (protector.role == "Jailer" && game.players.find(p => p.jailed && p.alive)) 
+              game.players[game.players.find(p => p.jailed && p.alive).number-1].protectors.push(protector.number)
           }
           
           let sks = game.players.filter(p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight)
@@ -1027,8 +1028,9 @@ module.exports = (client) => {
             }
             break;
           case 2:
-            for (var player of game.players.filter(p => p.alive)) {
-              fn.getUser(client, player.id).send(
+            if (!game.noVoting)
+              fn.broadcastTo(
+                client, game.players.filter(p => p.alive),
                 new Discord.RichEmbed()
                   .setTitle(`Voting time has started!`)
                   .setThumbnail(fn.getEmoji(client, "Voting").url)
@@ -1037,7 +1039,16 @@ module.exports = (client) => {
                     } votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
                   )
               )
-            }
+            else
+              fn.broadcastTo(
+                client, game.players.filter(p => p.alive),
+                new Discord.RichEmbed()
+                  .setTitle("Peace For Today")
+                  .setThumbnail(fn.getEmoji(client, "Pacifist Reveal").url)
+                  .setDescription(
+                    `There is no voting today! ✌`
+                  )
+              )
             break;
         }
 
