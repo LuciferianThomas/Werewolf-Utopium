@@ -6,7 +6,7 @@ module.exports = {
   name: "beta",
   run: async (client, message, args, shared) => {
     if (message.guild.id !== "522638136635817986") return;
-    if (!message.member.roles.find(r => r.name == "βTester Helper")) return;
+    if (!message.member.roles.find(r => ["βTester Helper","Developer"].includes(r.name))) return;
     
     let input = moment(new Date(args.join(' '))).utcOffset(8)
     if (input == "Invalid date")
