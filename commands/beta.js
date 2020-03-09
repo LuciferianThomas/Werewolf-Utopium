@@ -1,6 +1,6 @@
 const Discord = require("discord.js"),
-  moment = require("moment"),
-  fn = require("/app/util/fn")
+      moment = require("moment"),
+      fn = require("/app/util/fn")
 
 module.exports = {
   name: "beta",
@@ -20,7 +20,7 @@ module.exports = {
       )
 
     let time = input.format("HH:mm"),
-      date = input.format("MMM D, YYYY (ddd)")
+        date = input.format("MMM D, YYYY (ddd)")
 
     let embed = new Discord.RichEmbed()
       .setColor(0xe4b400)
