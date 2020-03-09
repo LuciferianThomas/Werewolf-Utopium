@@ -5,7 +5,7 @@ const Discord = require("discord.js"),
 module.exports = {
   name: "now",
   run: async (client, message, args, shared) => {
-    let tzInput = args.join(' ')
+    let tzInput = args.join('')
     
     await message.channel.send(
       new Discord.RichEmbed()
