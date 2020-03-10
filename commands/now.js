@@ -7,7 +7,13 @@ module.exports = {
   run: async (client, message, args, shared) => {
     let tzInput = args.join('')
     
-    console.log(moment.tz)
+//     if (tzInput.length)
+//       tzInput = moment.tz(tzInput)
+    
+//     if (tzInput.startsWith("Moment Timezone has no data for"))
+//       tzInput = null
+//     else
+//       tz
     
     await message.channel.send(
       new Discord.RichEmbed()
