@@ -1,11 +1,13 @@
 const Discord = require("discord.js"),
-      moment = require("moment"),
+      moment = require("moment-timezone"),
       fn = require("/app/util/fn")
 
 module.exports = {
   name: "now",
   run: async (client, message, args, shared) => {
     let tzInput = args.join('')
+    
+    console.log(moment.tz)
     
     await message.channel.send(
       new Discord.RichEmbed()

@@ -8,6 +8,7 @@ dependencies:
   http: 0.0.0
   https: 1.0.0
   moment: 2.24.0
+  moment-timezone: 0.5.28
   node-fetch: 2.6.0
   path: 0.12.7
   quick.db: 7.0.0-b22
@@ -427,6 +428,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
+  /moment-timezone/0.5.28:
+    dependencies:
+      moment: 2.24.0
+    dev: false
+    resolution:
+      integrity: sha512-TDJkZvAyKIVWg5EtVqRzU97w0Rb0YVbfpqyjgu6GwXCAohVRqwZjf4fOzDE6p1Ch98Sro/8hQQi65WDXW5STPw==
   /moment/2.24.0:
     dev: false
     resolution:
@@ -691,6 +698,7 @@ specifiers:
   http: ^0.0.0
   https: ^1.0.0
   moment: ^2.24.0
+  moment-timezone: ^0.5.27
   node-fetch: ^2.6.0
   path: ^0.12.7
   quick.db: ^7.0.0-b22
