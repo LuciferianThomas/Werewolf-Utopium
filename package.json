@@ -8,6 +8,7 @@
     "discord.js": "^12.1.1",
     "fs": "^0.0.2",
     "http": "^0.0.0",
+    "quick.db": "^7.0.0-b22",
     "discord.js-commando": "^0.10.0",
     "path": "^0.12.7",
     "es6-shim": "^0.35.5",

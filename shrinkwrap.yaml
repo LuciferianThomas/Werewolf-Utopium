@@ -11,6 +11,7 @@ dependencies:
   moment-timezone: 0.5.28
   node-fetch: 2.6.0
   path: 0.12.7
+  quick.db: 7.0.0-b22
   striptags: 3.1.1
 packages:
   /@discordjs/collection/0.1.5:
@@ -359,6 +360,18 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
+  /lodash.get/4.4.2:
+    dev: false
+    resolution:
+      integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+  /lodash.set/4.3.2:
+    dev: false
+    resolution:
+      integrity: sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
+  /lodash.unset/4.5.2:
+    dev: false
+    resolution:
+      integrity: sha1-Nw0dPoW3Kn4bDN8tJyEhMG8j5O0=
   /lodash/4.17.15:
     dev: false
     resolution:
@@ -509,6 +522,15 @@ packages:
       node: '>=0.6'
     resolution:
       integrity: sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
+  /quick.db/7.0.0-b22:
+    dependencies:
+      better-sqlite3: 5.4.3
+      lodash.get: 4.4.2
+      lodash.set: 4.3.2
+      lodash.unset: 4.5.2
+    dev: false
+    resolution:
+      integrity: sha512-Qi3Mx2ho1M0rWzVwrjh5zqmlNVTLqO6WgaI1suZ4qOxhjD3CFcH2nvOnL7o3kan5C0taCrs9/n4EIvq6CgpCaQ==
   /range-parser/1.2.1:
     dev: false
     engines:
@@ -677,4 +699,5 @@ specifiers:
   moment-timezone: ^0.5.27
   node-fetch: ^2.6.0
   path: ^0.12.7
+  quick.db: ^7.0.0-b22
   striptags: ^3.1.1
