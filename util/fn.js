@@ -1,7 +1,13 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
+// const db = require("quick.db"),
+//       games = new db.table("Games"),
+//       players = new db.table("Players"),
+//       nicknames = new db.table("Nicknames")
+
 const { defaultPrefix, embedColor } = require('./config')
+      // roles = require('./roles')
 
 let time = (date = moment()) => {
   return moment(date).utcOffset(8).format("YYYY/MM/DD HH:mm:ss")
@@ -18,14 +24,14 @@ let ago = (date = moment()) => {
 let embed = (client, content) => {
   if (content instanceof Object) {
     let { title, description } = content
-    return new Discord.RichEmbed()
+    return new Discord.MessageEmbed()
       .setColor(embedColor)
       .setTitle(title)
       .setDescription(description)
       .setFooter(client.user.username, client.user.avatarURL)
       .setTimestamp()
   } else if (typeof content == "string") {
-    return new Discord.RichEmbed()
+    return new Discord.MessageEmbed()
       .setColor(embedColor)
       .setDescription(content)
       .setFooter(client.user.username, client.user.avatarURL)
@@ -37,7 +43,7 @@ let embed = (client, content) => {
 }
 
 let error = (client, message, error) => {
-  return new Discord.RichEmbed()
+  return new Discord.MessageEmbed()
     .setColor(embedColor)
     .setTitle(message)
     .setDescription(`${error}`)
@@ -49,7 +55,7 @@ let getUser = (client, data) => {
   if (data instanceof Discord.User) return data
   if (data instanceof Discord.GuildMember) return data.user
   if (data instanceof Discord.Message) return data.author
-  if (typeof data == "string") return client.users.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
+  if (typeof data == "string") return client.users.cache.find(user => user.id == data || user.tag.toLowerCase() == data.toLowerCase())
   // throw Error('Cannot find user.')
 }
 
@@ -57,21 +63,22 @@ let getMember = (guild, data) => {
   if (data instanceof Discord.User) return guild.members.get(data.id)
   if (data instanceof Discord.GuildMember) return data
   if (data instanceof Discord.Message) return data.member
-  if (typeof data == "string") return guild.members.find(member => member.user.id == data || member.user.tag.toLowerCase() == data.toLowerCase())
+  if (typeof data == "string") return guild.members.cache.find(member => member.user.id == data || member.user.tag.toLowerCase() == data.toLowerCase())
   // throw Error('Cannot find member.')
 }
 
 let getRole = (guild, data) => {
   if (data instanceof Discord.Role) return data
-  if (typeof data == "string") return guild.roles.find(role => role.name.toLowerCase() == data.toLowerCase() || role.id == data || role.name.toLowerCase().startsWith(data.toLowerCase()))
+  if (typeof data == "string") return guild.roles.cache.find(role => role.name.toLowerCase() == data.toLowerCase() || role.id == data || role.name.toLowerCase().startsWith(data.toLowerCase()))
   // throw Error('Cannot find role.')
 }
 
 let getEmoji = (client, name) => {
-  return client.emojis.find(emoji => emoji.name == name.replace(/ /g, "_"))
+  return client.emojis.cache.find(emoji => emoji.name.toLowerCase() == name.toLowerCase().replace(/ /g, "_"))
 }
 
 let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
+  if(embeds.length === 1) return
   if (addReactions) {
     await msg.react("⏪")
     await msg.react("◀")
@@ -79,10 +86,10 @@ let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
     await msg.react("⏩")
   }
   let reaction = await msg.awaitReactions((reaction, user) => user.id == author && ["◀","▶","⏪","⏩"].includes(reaction.emoji.name), {time: 30*1000, max:1, errors: ['time']}).catch(() => {})
-  if (!reaction) return msg.clearReactions().catch(() => {})
+  if (!reaction) return msg.reactions.removeAll().catch(() => {})
   reaction = reaction.first()
-  
-  if (msg.channel.type == 'dm' || !msg.member.hasPermissions("MANAGE_MESSAGES")) {
+  //console.log(msg.member.users.tag)
+  if (msg.channel.type == 'dm' || !msg.guild.me.hasPermission("MANAGE_MESSAGES")) {
     if (reaction.emoji.name == "◀") {
       let m = await msg.channel.send(embeds[Math.max(pageNow-1, 0)])
       msg.delete()
@@ -103,19 +110,19 @@ let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
   }
   else {
     if (reaction.emoji.name == "◀") {
-      await reaction.remove(author)
+      await reaction.users.remove(author)
       let m = await msg.edit(embeds[Math.max(pageNow-1, 0)])
       paginator(author, m, embeds, Math.max(pageNow-1, 0), false)
     } else if (reaction.emoji.name == "▶") {
-      await reaction.remove(author)
+      await reaction.users.remove(author)
       let m = await msg.edit(embeds[Math.min(pageNow+1, embeds.length-1)])
       paginator(author, m, embeds, Math.min(pageNow+1, embeds.length-1), false)
     } else if (reaction.emoji.name == "⏪") {
-      await reaction.remove(author)
+      await reaction.users.remove(author)
       let m = await msg.edit(embeds[0])
       paginator(author, m, embeds, 0, false)
     } else if (reaction.emoji.name == "⏩") {
-      await reaction.remove(author)
+      await reaction.users.remove(author)
       let m = await msg.edit(embeds[embeds.length-1])
       paginator(author, m, embeds, embeds.length-1, false)
     }
@@ -124,6 +131,10 @@ let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
 
 const deepClone = (object) => {
   return JSON.parse(JSON.stringify(object))
+}
+
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 module.exports = {
@@ -139,5 +150,6 @@ module.exports = {
   getRole: getRole,
   paginator: paginator,
   deepClone: deepClone,
-  clone: deepClone
+  clone: deepClone,
+  sleep: sleep
 }

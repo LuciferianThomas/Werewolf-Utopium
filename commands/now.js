@@ -16,7 +16,7 @@ module.exports = {
 //       tz
     
     await message.channel.send(
-      new Discord.RichEmbed()
+      new Discord.MessageEmbed()
         .setTitle(`Current Time`)
         .setDescription(
           `**Hong Kong Time**: ${moment().utcOffset(8).format("HH:mm [on] MMM D, YYYY (ddd)")}\n` +

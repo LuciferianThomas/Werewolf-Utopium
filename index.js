@@ -7,8 +7,8 @@ const Discord = require('discord.js'),
       fs = require("fs"),
       http = require('http'),
       moment = require('moment'),
-      fetch = require('node-fetch'),
-      db = require("quick.db")
+      fetch = require('node-fetch')
+      // db = require("quick.db")
 
 /* --- ALL PACKAGES --- */
 
@@ -50,14 +50,14 @@ client.on('ready', async () => {
 
 client.on('guildMemberAdd', async member => {
   if (member.guild.id != "522638136635817986") return;
-  member.guild.channels.get("640530363587887104").send(
+  member.guild.channels.cache.get("640530363587887104").send(
     `${member}, welcome to **Werewolf Utopium**!`
   )
 })
 
 client.on('guildMemberRemove', async member => {
   if (member.guild.id != "522638136635817986") return;
-  member.guild.channels.get("640530363587887104").send(
+  member.guild.channels.cache.get("640530363587887104").send(
     `Hope to see you again in the near future, **${member.user.username}**!`
   )
 })

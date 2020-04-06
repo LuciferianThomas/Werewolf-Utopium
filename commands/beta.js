@@ -7,7 +7,7 @@ module.exports = {
   run: async (client, message, args, shared) => {
     if (message.guild.id !== "522638136635817986") return
     if (
-      !message.member.roles.find(r =>
+      !message.member.roles.cache.find(r =>
         ["βTester Helper", "Developer"].includes(r.name)
       )
     )
@@ -22,7 +22,7 @@ module.exports = {
     let time = input.format("HH:mm"),
         date = input.format("MMM D, YYYY (ddd)")
 
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setColor(0xe4b400)
       .setTitle("βTesting Session")
       .setDescription(
@@ -46,9 +46,9 @@ module.exports = {
     if (!reactions)
       return await m
         .edit(
-          new Discord.RichEmbed().setColor("RED").setTitle("Prompt cancelled.")
+          new Discord.MessageEmbed().setColor("RED").setTitle("Prompt cancelled.")
         )
-        .then(m => m.clearReactions().catch(() => {}))
+        .then(m => m.reactions.removeAll().catch(() => {}))
 
     let βTester = fn.getRole(message.guild, "βTester"),
       βtest_announcements = message.guild.channels.find(
@@ -68,6 +68,6 @@ module.exports = {
         .setTitle(`Announcement has been sent.`)
         .setDescription(`Check ${βtest_announcements}!`)
     )
-    await m.clearReactions().catch(() => {})
+    await m.reactions.removeAll().catch(() => {})
   }
 }
