@@ -38,7 +38,7 @@ module.exports = {
     let reactions = await m
       .awaitReactions(
         (r, u) =>
-          r.emoji.id == client.emojis.find(e => e.name == "green_tick").id &&
+          r.emoji.id == client.emojis.cache.find(e => e.name == "green_tick").id &&
           u.id == message.author.id,
         { max: 1, time: 10000, errors: ["time"] }
       )
@@ -51,7 +51,7 @@ module.exports = {
         .then(m => m.reactions.removeAll().catch(() => {}))
 
     let βTester = fn.getRole(message.guild, "βTester"),
-      βtest_announcements = message.guild.channels.find(
+      βtest_announcements = message.guild.channels.cache.find(
         c => c.name == "βtest-announcements"
       )
     await βTester.setMentionable(true, "βTest Announcement").catch(() => {})
@@ -63,7 +63,7 @@ module.exports = {
     await n.react(fn.getEmoji(client, "red tick"))
 
     await m.edit(
-      new Discord.RichEmbed()
+      new Discord.MessageEmbed()
         .setColor("GREEN")
         .setTitle(`Announcement has been sent.`)
         .setDescription(`Check ${βtest_announcements}!`)
