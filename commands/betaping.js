@@ -15,6 +15,7 @@ module.exports = {
     if(!x) return await message.channel.send("Unable to find that announcement")
     let embed = new Discord.MessageEmbed().setTitle("βTesting Session Pings").setDescription("").setColor(0xE4B400)
     x.reactions.cache.forEach(r => {
+      r = r.fetch().then(y => console.log(y))
       console.log(r.users.cache.array())
       if(!r.me) return
       embed.description += `${r.emoji} - ${r.count - 1} ${(r.count - 1) === 1 ? "person" : "people"}\n`
@@ -43,7 +44,7 @@ module.exports = {
     let reaction = reactions.first().emoji
     let pings = ""
     x.reactions.cache.forEach(r => {
-        if(r.emoji === reaction) r.users.cache.forEach(u => pings += `<@${u.id}>`)
+      if(r.emoji === reaction) r.users.cache.forEach(u => pings += `<@${u.id}>`)
     })
     m.edit(new Discord.MessageEmbed().setTitle("βTesting Session Pings").setDescription(`Please confirm you would like to ping these people:\n\n${pings}`).setColor(0xE4B400))
     
