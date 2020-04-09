@@ -42,8 +42,10 @@ module.exports = {
     let reaction = reactions.first().emoji
     let pings = ""
     x.reactions.cache.forEach(r => {
-      let u = r.users.fetch()
-      if(r.emoji === reaction) r.users.cache.map(u => `<@${u.id}>`)
+      let u = r.users.fetch().then(u => {
+      console.log(u)
+      if(r.emoji === reaction) u.forEach(user => pings += `<@${user.id}>\n`)
+      })
     })
     m.edit(new Discord.MessageEmbed().setTitle("βTesting Session Pings").setDescription(`Please confirm you would like to ping these people:\n\n${pings}`).setColor(0xE4B400))
     
