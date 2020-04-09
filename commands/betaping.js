@@ -15,11 +15,11 @@ module.exports = {
     if(!x) return await message.channel.send("Unable to find that announcement")
     let embed = new Discord.MessageEmbed().setTitle("βTesting Session Pings").setDescription("").setColor(0xE4B400)
     x.reactions.cache.forEach(r => {
-      console.log(r.users.cache.map(u => `<@${u.id}>`))
+      console.log(r.users.cache.array())
       if(!r.me) return
-      embed.description += `${r.emoji} - ${r.count} people\n`
+      embed.description += `${r.emoji} - ${r.count - 1} ${(r.count - 1) === 1 ? "person" : "people"}\n`
     })
-    embed.description += `\n\nPlease select Green or Gray to ping those people, or Red to cancel`
+    embed.description += `\n\nPlease select ${fn.getEmoji(client, "green_tick")} or ${fn.getEmoji(client, "gray_tick")} to ping those people, or ${fn.getEmoji(client, "red_tick")} to cancel`
     let m = await message.channel.send(embed)
     await m.react(fn.getEmoji(client, "green_tick"))
     await m.react(fn.getEmoji(client, "gray_tick"))
@@ -43,7 +43,7 @@ module.exports = {
     let reaction = reactions.first().emoji
     let pings = ""
     x.reactions.cache.forEach(r => {
-        if(r.emoji === reaction) pings = r.users.cache.map(u => u.username)
+        if(r.emoji === reaction) r.users.cache.forEach(u => pings += `<@${u.id}>`)
     })
     m.edit(new Discord.MessageEmbed().setTitle("βTesting Session Pings").setDescription(`Please confirm you would like to ping these people:\n\n${pings}`).setColor(0xE4B400))
     
