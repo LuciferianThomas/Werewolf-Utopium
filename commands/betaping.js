@@ -32,18 +32,18 @@ module.exports = {
       u.id == message.author.id,
       { time: 30*1000, max: 1, errors: ['time'] }
     ).catch(() => {})
-    if (!reactions || reactions.first().emoji.id == fn.getEmoji(client, "red_tick").id)
-      m.reactions.removeAll().catch(() => {})
-      m.edit(
+    m.reactions.removeAll().catch(() => {})
+    if (!reactions || reactions.first().emoji.id == fn.getEmoji(client, "red_tick").id){
+      return m.edit(
         new Discord.MessageEmbed()
         .setColor("RED")
         .setTitle("Pinging canceled.")
       )
+    }
     let reaction = reactions.first().emoji
-    m.reactions.removeAll().catch(() => {})
     let pings = ""
     x.reactions.cache.forEach(r => {
-        if(r.emoji === reaction) pings = r.users.cache.map(u => `<@${u.id}>`)
+        if(r.emoji === reaction) pings = r.users.cache.map(u => u.username)
     })
     m.edit(new Discord.MessageEmbed().setTitle("βTesting Session Pings").setDescription(`Please confirm you would like to ping these people:\n\n${pings}`).setColor(0xE4B400))
     
