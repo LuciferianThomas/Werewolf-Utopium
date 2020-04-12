@@ -21,13 +21,16 @@ module.exports = {
     
     let green = await betamsg.reactions.cache.find(r => r.emoji.name == "green_tick").users.fetch()
     let gray = await betamsg.reactions.cache.find(r => r.emoji.name == "gray_tick").users.fetch()
-    let pingUsers = green.concat(gray).filter(u => u.id !== client.user.id).array()
+    let pingMembers = green.concat(gray).filter(u => u.id !== client.user.id).map(user => message.guild.members.cache.get(user.id))
+    let warnRole = fn.getRole(message.guild, "βTest Warn")
     
+    for (var member of pingMembers)
+      await member.roles.add(warnRole)
     
-    pingUsers.each(u => {
-      let m = message.guild.members.cache.get(u.id)
-      m.roles.add(fn.getRole(message.guild, "βTest Warn"))
-    })
+    await client.channels.cache.get("677414620436103169").send(`${warnRole}`, {allowedMentions: {roles: [warnRole.id]}})
+    
+    for (var member of pingMembers)
+      member.roles.remove(warnRole)
     
     // let reactions = betamsg.reactions.cache.filter(r => ["green_tick","gray_tick"].includes(r.emoji.name))
     // let users = reactions.map(r => r.users.fetch())
