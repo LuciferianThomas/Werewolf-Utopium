@@ -11,7 +11,7 @@ module.exports = {
         ["βTester Helper", "Developer"].includes(r.name)
       )
     )
-      return
+      return;
 
     let input = moment(new Date(args.join(" "))).utcOffset(8)
     if (input == "Invalid date")
