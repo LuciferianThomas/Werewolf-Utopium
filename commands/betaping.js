@@ -21,7 +21,8 @@ module.exports = {
     
     // console.log(betamsg.reactions.cache)
     let reactions = betamsg.reactions.cache.filter(r => r.me)
-    console.log(reactions.map(r => r.users.cache)[0].array())
+    console.log(reactions.first().users)
+    console.log(reactions.map(r => r.users.cache))
     // console.log(reactions.map(r => r.users.cache.map(u => u.id)).flat(Infinity).filter(u => u.id !== client.user.id))
     // let embed = new Discord.MessageEmbed()
     //   .setTitle("βTesting Session Pings")
