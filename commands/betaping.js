@@ -20,7 +20,14 @@ module.exports = {
     if (!betamsg) return await message.channel.send("Unable to find that announcement.")
     
     let green = await betamsg.reactions.cache.find(r => r.emoji.name == "green_tick").users.fetch()
-    console.log(green)
+    let gray = await betamsg.reactions.cache.find(r => r.emoji.name == "gray_tick").users.fetch()
+    let pingUsers = green.concat(gray).filter(u => u.id !== client.user.id).array()
+    
+    
+    pingUsers.each(u => {
+      let m = message.guild.members.cache.get(u.id)
+      m.roles.add(fn.getRole(message.guild, "βTest Warn"))
+    })
     
     // let reactions = betamsg.reactions.cache.filter(r => ["green_tick","gray_tick"].includes(r.emoji.name))
     // let users = reactions.map(r => r.users.fetch())
