@@ -8,6 +8,7 @@ const config = require('/app/util/config'),
 
 module.exports = {
   name: "betawarn",
+  aliases: ["betaping"],
   run: async (client, message, args, shared) => {
     if (message.guild.id !== "522638136635817986") return;
     if (!message.member.roles.cache.find(r =>
@@ -18,8 +19,10 @@ module.exports = {
     let betamsg = await client.guilds.cache.get("522638136635817986").channels.cache.get("676642370954985501").messages.fetch(args[0])
     if (!betamsg) return await message.channel.send("Unable to find that announcement.")
     
-    let reactions = betamsg.reactions.cache.filter(r => ["green_tick","gray_tick","red_tick"].includes(r.emoji.name))
-    console.log(reactions.map(r => r.users.cache.map(u => u.id)))
+    // console.log(betamsg.reactions.cache)
+    let reactions = betamsg.reactions.cache.filter(r => r.me)
+    console.log(reactions.map(r => r.users.cache)[0].array())
+    // console.log(reactions.map(r => r.users.cache.map(u => u.id)).flat(Infinity).filter(u => u.id !== client.user.id))
     // let embed = new Discord.MessageEmbed()
     //   .setTitle("βTesting Session Pings")
     //   .setDescription("")
