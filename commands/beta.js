@@ -54,9 +54,9 @@ module.exports = {
       βtest_announcements = message.guild.channels.cache.find(
         c => c.name == "βtest-announcements"
       )
-    // await βTester.setMentionable(true, "βTest Announcement").catch(() => {})
+    await βTester.setMentionable(true, "βTest Announcement").catch(() => {})
     let n = await βtest_announcements.send(`${βTester}`, {embed: embed, allowedMentions: {roles: [βTester.id]}})
-    // await βTester.setMentionable(false).catch(() => {})
+    await βTester.setMentionable(false).catch(() => {})
 
     await n.react(fn.getEmoji(client, "green tick"))
     await n.react(fn.getEmoji(client, "gray tick"))

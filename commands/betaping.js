@@ -19,15 +19,25 @@ module.exports = {
     let betamsg = await client.guilds.cache.get("522638136635817986").channels.cache.get("676642370954985501").messages.fetch(args[0])
     if (!betamsg) return await message.channel.send("Unable to find that announcement.")
     
+    let prompt = await message.channel.send("Please wait...")
+    
     let green = await betamsg.reactions.cache.find(r => r.emoji.name == "green_tick").users.fetch()
     let gray = await betamsg.reactions.cache.find(r => r.emoji.name == "gray_tick").users.fetch()
     let pingMembers = green.concat(gray).filter(u => u.id !== client.user.id).map(user => message.guild.members.cache.get(user.id))
     let warnRole = fn.getRole(message.guild, "βTest Warn")
     
+    await prompt.edit(
+      new Discord.MessageEmbed()
+        .setTitle("Comfirmation")
+        .setDescription(`The following members will be mentioned:\n${pingMembers.map()}`)
+    )
+    
     for (var member of pingMembers)
       await member.roles.add(warnRole)
     
-    await client.channels.cache.get("677414620436103169").send(`${warnRole}`, {allowedMentions: {roles: [warnRole.id]}})
+    await warnRole.setMentionable(true, "βTest Announcement").catch(() => {})
+    await client.channels.cache.get("676642370954985501").send(`${warnRole}`, {allowedMentions: {roles: [warnRole.id]}})
+    await warnRole.setMentionable(true, "βTest Announcement").catch(() => {})
     
     for (var member of pingMembers)
       member.roles.remove(warnRole)
