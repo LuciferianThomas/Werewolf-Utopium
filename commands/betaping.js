@@ -19,11 +19,13 @@ module.exports = {
     let betamsg = await client.guilds.cache.get("522638136635817986").channels.cache.get("676642370954985501").messages.fetch(args[0])
     if (!betamsg) return await message.channel.send("Unable to find that announcement.")
     
-    // console.log(await betamsg.reactions.cache.map(r => r.fetch()))
-    let reactions = betamsg.reactions.cache.array()
-    for ()
-    reactions = reactions.filter(r => r.me)
-    console.log(reactions.map(r => r.users.cache))
+    let green = await betamsg.reactions.cache.find(r => r.emoji.name == "green_tick").users.fetch()
+    console.log(green)
+    
+    // let reactions = betamsg.reactions.cache.filter(r => ["green_tick","gray_tick"].includes(r.emoji.name))
+    // let users = reactions.map(r => r.users.fetch())
+    // for (var user of users) await user
+    // console.log(users.map(u => u.map(u => u.id)).flat(Infinity))
     // console.log(reactions.map(r => r.users.cache.map(u => u.id)).flat(Infinity).filter(u => u.id !== client.user.id))
     // let embed = new Discord.MessageEmbed()
     //   .setTitle("βTesting Session Pings")
