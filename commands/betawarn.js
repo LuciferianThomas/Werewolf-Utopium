@@ -51,13 +51,32 @@ module.exports = {
       return await prompt
         .edit(new Discord.MessageEmbed().setColor("RED").setTitle("Prompt cancelled."))
         .then(m => m.reactions.removeAll().catch(() => {}))
+    prompt.reactions.removeAll()
     
+    await prompt.edit("Please wait... Giving the Warn role to the βTesters...")
     for (var member of pingMembers)
       await member.roles.add(warnRole)
     
+    let βtest_announcements = message.guild.channels.cache.find(
+      c => c.name == "βtest-announcements"
+    )
+    
     await warnRole.setMentionable(true, "βTest Announcement").catch(() => {})
-    await client.channels.cache.get("676642370954985501").send(`${warnRole}`, {allowedMentions: {roles: [warnRole.id]}})
+    await client.channels.cache
+      .get("676642370954985501")
+      .send(`${warnRole}`, {
+        embed: new Discord.MessageEmbed()
+                 .setColor(warnRole.color)
+                 .setTitle(`[βTest](${betamsg.url}) is starting right now.${args[1] ? ` The βTest game code is \`${args[1]}\`.` : ""}`),
+        allowedMentions: { roles: [warnRole.id] }
+      })
     await warnRole.setMentionable(true, "βTest Announcement").catch(() => {})
+    await prompt.edit(
+      new Discord.MessageEmbed()
+        .setColor("GREEN")
+        .setTitle(`Announcement has been sent.`)
+        .setDescription(`Check ${βtest_announcements}!`)
+    )
     
     for (var member of pingMembers)
       member.roles.remove(warnRole)

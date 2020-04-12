@@ -51,9 +51,9 @@ module.exports = {
         .then(m => m.reactions.removeAll().catch(() => {}))
 
     let βTester = fn.getRole(message.guild, "βTester"),
-      βtest_announcements = message.guild.channels.cache.find(
-        c => c.name == "βtest-announcements"
-      )
+        βtest_announcements = message.guild.channels.cache.find(
+          c => c.name == "βtest-announcements"
+        )
     await βTester.setMentionable(true, "βTest Announcement").catch(() => {})
     let n = await βtest_announcements.send(`${βTester}`, {embed: embed, allowedMentions: {roles: [βTester.id]}})
     await βTester.setMentionable(false).catch(() => {})
