@@ -19,7 +19,12 @@ module.exports = {
     let betamsg = await client.guilds.cache.get("522638136635817986").channels.cache.get("676642370954985501").messages.fetch(args[0])
     if (!betamsg) return await message.channel.send("Unable to find that announcement.")
     
-    let prompt = await message.channel.send("Please wait...")
+    let prompt = await prompt.edit(
+      new Discord.MessageEmbed()
+        .setColor("GOLD")
+        .setTitle(`Please wait...`)
+        .setDescription("Getting information...")
+    )
     
     let green = await betamsg.reactions.cache.find(r => r.emoji.name == "green_tick").users.fetch()
     let gray = await betamsg.reactions.cache.find(r => r.emoji.name == "gray_tick").users.fetch()
@@ -27,7 +32,12 @@ module.exports = {
     let warnRole = fn.getRole(message.guild, "βTest Warn")
     
     if (!pingMembers.length)
-      return await prompt.edit("There is no one to warn for this announcement!")
+      return await prompt.edit(
+        new Discord.MessageEmbed()
+          .setColor("RED")
+          .setTitle(`Prompt cancelled.`)
+          .setDescription(`There isn't anyone to ping for [this announcement message](${betamsg.id})!`)
+      )
     
     await prompt.edit(
       new Discord.MessageEmbed()
@@ -53,7 +63,12 @@ module.exports = {
         .then(m => m.reactions.removeAll().catch(() => {}))
     prompt.reactions.removeAll()
     
-    await prompt.edit("Please wait... Giving the Warn role to the βTesters...")
+    await prompt.edit(
+      new Discord.MessageEmbed()
+        .setColor("GOLD")
+        .setTitle(`Please wait...`)
+        .setDescription("Giving the Warn role to the βTesters...")
+    )
     for (var member of pingMembers)
       await member.roles.add(warnRole)
     

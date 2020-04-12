@@ -46,6 +46,7 @@ module.exports = {
     if (!reactions)
       return await m
         .edit(
+          "** **",
           new Discord.MessageEmbed().setColor("RED").setTitle("Prompt cancelled.")
         )
         .then(m => m.reactions.removeAll().catch(() => {}))
@@ -63,6 +64,7 @@ module.exports = {
     await n.react(fn.getEmoji(client, "red tick"))
 
     await m.edit(
+      "** **",
       new Discord.MessageEmbed()
         .setColor("GREEN")
         .setTitle(`Announcement has been sent.`)
