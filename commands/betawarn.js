@@ -26,11 +26,31 @@ module.exports = {
     let pingMembers = green.concat(gray).filter(u => u.id !== client.user.id).map(user => message.guild.members.cache.get(user.id))
     let warnRole = fn.getRole(message.guild, "βTest Warn")
     
+    if (!pingMembers.length)
+      return await prompt.edit("There is no one to warn for this announcement!")
+    
     await prompt.edit(
       new Discord.MessageEmbed()
         .setTitle("Comfirmation")
-        .setDescription(`The following members will be mentioned:\n${pingMembers.map()}`)
+        .setDescription(
+          `The following ${pingMembers.length} βTester${
+            pingMembers.length == 1 ? "" : "s"
+          } will be mentioned:\n${pingMembers.map(x => `${x}`).join(", ")}.`
+        )
     )
+    await prompt.react(fn.getEmoji(client, "green_tick"))
+    let pReactions = await prompt
+      .awaitReactions(
+        (r, u) =>
+          r.emoji.id == client.emojis.cache.find(e => e.name == "green_tick").id &&
+          u.id == message.author.id,
+        { max: 1, time: 10000, errors: ["time"] }
+      )
+      .catch(() => {})
+    if (!pReactions)
+      return await prompt
+        .edit(new Discord.MessageEmbed().setColor("RED").setTitle("Prompt cancelled."))
+        .then(m => m.reactions.removeAll().catch(() => {}))
     
     for (var member of pingMembers)
       await member.roles.add(warnRole)
