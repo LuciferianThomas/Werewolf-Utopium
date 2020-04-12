@@ -9,16 +9,18 @@ const config = require('/app/util/config'),
 module.exports = {
   name: "betaping",
   run: async (client, message, args, shared) => {
-    message.delete().catch(()=>{})
     if(!args[0]) return message.channel.send("Please specify an announcement message!")
     let x = await client.guilds.cache.get("522638136635817986").channels.cache.get("676642370954985501").messages.fetch(args[0])
-    if(!x) return await message.channel.send("Unable to find that announcement")
-    let embed = new Discord.MessageEmbed().setTitle("βTesting Session Pings").setDescription("").setColor(0xE4B400)
+    if (!x) return await message.channel.send("Unable to find that announcement.")
+    let embed = new Discord.MessageEmbed()
+      .setTitle("βTesting Session Pings")
+      .setDescription("")
+      .setColor(0xe4b400)
     x.reactions.cache.forEach(r => {
       if(!r.me) return
       embed.description += `${r.emoji} - ${r.count - 1} ${(r.count - 1) === 1 ? "person" : "people"}\n`
     })
-    embed.description += `\n\nPlease select ${fn.getEmoji(client, "green_tick")} or ${fn.getEmoji(client, "gray_tick")} to ping those people, or ${fn.getEmoji(client, "red_tick")} to cancel`
+    embed.description += `\n\nPlease confirm if these are the people who you want to `
     let m = await message.channel.send(embed)
     await m.react(fn.getEmoji(client, "green_tick"))
     await m.react(fn.getEmoji(client, "gray_tick"))
