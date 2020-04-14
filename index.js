@@ -72,7 +72,7 @@ client.on('message', async message => {
   
   let shared = {}
     
-  if (message.content.startsWith(prefix)) {
+  if (message.content.toLowerCase().startsWith(prefix)) {
     
     var args = message.content.trim().slice(prefix.length).split(/\s+/u)
     shared.prefix = prefix
