@@ -82,7 +82,8 @@ module.exports = {
       .send(`${warnRole}`, {
         embed: new Discord.MessageEmbed()
                  .setColor(warnRole.color)
-                 .setDescription(`[βTest](${betamsg.url}) is starting right now.${args[1] ? ` The βTest game code is \`${args[1]}\`.` : ""}`),
+                 .setTitle("βTesting Session")
+                 .setDescription(`A [βTesting Session](${betamsg.url}) is starting right now.${args[1] ? ` The βTest game code is \`${args[1]}\`.` : ""}`),
         allowedMentions: { roles: [warnRole.id] }
       })
     // await warnRole.setMentionable(false, "βTest Announcement").catch(() => {})
