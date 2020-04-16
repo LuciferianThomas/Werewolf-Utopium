@@ -46,21 +46,20 @@ client.login(token)
 
 client.once('ready', async () => {
   client.allinvites = await client.guilds.cache.get("522638136635817986").fetchInvites()
-  console.log(client.allinvites)
   console.log(`${fn.time()} | ${client.user.username} is up!`)
+})
+
+client.on('inviteCreate', async invite => {
+  client.allinvites = await client.guilds.cache.get("522638136635817986").fetchInvites()
+})
+client.on('inviteDelete', async invite => {
+  client.allinvites = await client.guilds.cache.get("522638136635817986").fetchInvites()
 })
 
 client.on('guildMemberAdd', async member => {
   if (member.guild.id != "522638136635817986") return;
   member.guild.channels.cache.get("640530363587887104").send(
     `${member}, welcome to **Werewolf Utopium**!`
-  )
-})
-
-client.on('guildMemberRemove', async member => {
-  if (member.guild.id != "522638136635817986") return;
-  member.guild.channels.cache.get("640530363587887104").send(
-    `Hope to see you again in the near future, **${member.user.username}**!`
   )
   member.guild.fetchInvites().then(guildInvites => {
     const oldinv = client.allinvites
@@ -70,6 +69,13 @@ client.on('guildMemberRemove', async member => {
     const logChannel = member.guild.channels.cache.get("677414620436103169")
     logChannel.send(`${member.user.tag} joined using invite code ${invite.code} from ${inviter.tag}. Invite was used ${invite.uses} times since its creation.`);
   });
+})
+
+client.on('guildMemberRemove', async member => {
+  if (member.guild.id != "522638136635817986") return;
+  member.guild.channels.cache.get("640530363587887104").send(
+    `Hope to see you again in the near future, **${member.user.username}**!`
+  )
 })
 
 client.on('message', async message => {
