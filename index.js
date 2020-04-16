@@ -44,7 +44,9 @@ const token = process.env.DISCORD_BOT_TOKEN
 
 client.login(token)
 
-client.on('ready', async () => {
+client.once('ready', async () => {
+  client.allinvites = await client.guilds.cache.get("522638136635817986").fetchInvites()
+  console.log(client.allinvites)
   console.log(`${fn.time()} | ${client.user.username} is up!`)
 })
 
@@ -60,6 +62,14 @@ client.on('guildMemberRemove', async member => {
   member.guild.channels.cache.get("640530363587887104").send(
     `Hope to see you again in the near future, **${member.user.username}**!`
   )
+  member.guild.fetchInvites().then(guildInvites => {
+    const oldinv = client.allinvites
+    client.allinvites = guildInvites
+    const invite = guildInvites.find(inv => inv.uses > oldinv.get(inv.code).uses)
+    const inviter = client.users.cache.get(invite.inviter.id)
+    const logChannel = member.guild.channels.cache.get("677414620436103169")
+    logChannel.send(`${member.user.tag} joined using invite code ${invite.code} from ${inviter.tag}. Invite was used ${invite.uses} times since its creation.`);
+  });
 })
 
 client.on('message', async message => {
@@ -92,3 +102,4 @@ client.on('message', async message => {
     message.delete().catch(error => {})
 	}
 })
+
