@@ -5,7 +5,7 @@
   "description": "Discord Bot Format by LuciferianThomas",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^12.1.1",
+    "discord.js": "^12.2.0",
     "fs": "^0.0.2",
     "http": "^0.0.0",
     "quick.db": "^7.1.1",
@@ -18,7 +18,8 @@
     "striptags": "^3.1.1",
     "https": "^1.0.0",
     "node-fetch": "^2.6.0",
-    "moment-timezone": "^0.5.27"
+    "moment-timezone": "^0.5.27",
+    "discord-giveaways": "^4.0.2"
   },
   "devDependencies": {},
   "scripts": {
