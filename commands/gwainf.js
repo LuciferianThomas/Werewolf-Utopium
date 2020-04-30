@@ -9,6 +9,9 @@ const gwainf = new db.table("gwainf")
 module.exports = {
   name: "gwainf",
   run: async (client, message, args, shared) => {
+    if (message.guild.id !== "522638136635817986" && !message.member.roles.cache.get("678427121701617676"))
+      return undefined;
+    
     if (!args.length) 
       return await message.channel.send(`${fn.getEmoji(client, "red tick")} Please mention the user you want to add an giveaway infraction.`)
 		let target = message.mentions.members.filter(member => member.user.id != client.user.id).first()
