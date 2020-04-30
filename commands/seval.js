@@ -3,6 +3,10 @@ const Discord = require("discord.js"),
       fn = require("/app/util/fn")
 
 
+const db = require("quick.db")
+
+const gwainf = new db.table("gwainf")
+
 module.exports = {
 	name: "seval",
 	usage: "seval <code>",
