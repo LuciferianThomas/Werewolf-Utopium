@@ -19,8 +19,6 @@ module.exports = {
     
     let msg = await client.channels.cache.get("704231388592996392").messages.fetch(args[1])
     if (!msg) return await message.channel.send(`${fn.getEmoji(client, "red tick")} Unknown message.`)
-    if (!(msg.author.id == "294882584201003009" && msg.content.includes("GIVEAWAY ENDED")))
-      return await message.channel.send(`${fn.getEmoji(client, "red tick")} This is not an ended giveaway!.`)
     
     let reason = args.slice(2).join(' ')
     if (!reason) return await message.channel.send(`${fn.getEmoji(client, "red tick")} Please give a reason why the user is given an infraction!`)
@@ -34,10 +32,32 @@ module.exports = {
       .setTitle("Giveaway Infraction")
       .setThumbnail(target.user.avatarURL())
       .setDescription(
-        `**User:** ${target.user} (${target.user.od})\n` +
+        `**User:** ${target.user} (${target.user.id})\n` +
         `**Infraction** #${gwainf.get(`${targetID}.inf`)}\n` +
         `**Reason:** ${reason}\n` +
         `[Jump to giveaway](${msg.url})`
       )
+    
+    await client.channels.cache.get("704644135558316032").send(embed)
+    await target.user
+      .send(
+        "**You have received a giveaway infraction.**\n" +
+          "3 strikes will result in a one-month giveaway ban.\n" +
+          "5 strikes will result in a two-month giveaway ban.\n" +
+          "7 strikes will result in a permanent giveaway ban.",
+        embed
+      )
+      .catch(async e => {
+        let m = await message.channel.send(
+          new Discord.MessageEmbed()
+            .setColor("RED")
+            .setTitle("Error")
+            .setDescription(`I cannot DM ${target.user}!`)
+        )
+        m.delete({timeout: 5000})
+      })
+    
+    let m = await message.channel.send(`${fn.getEmoji(client, "green tick")} Infraction recorded.`)
+    await m.delete({timeout: 5000})
   }
 }
