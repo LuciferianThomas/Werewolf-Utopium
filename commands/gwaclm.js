@@ -24,7 +24,7 @@ module.exports = {
     await client.channels.cache.get("704231388592996392").send(
       new Discord.MessageEmbed()
         .setColor(0x7289da)
-        .setDescription(`${fn.getEmoji(client, "green tick")} ${target.user} claimed their reward for [this giveaway](${msg.url}).`)
+        .setDescription(`${fn.getEmoji(client, "green tick")} ${target.user} claimed their reward for [this giveaway](${msg.url}) of **${msg.embeds[0].author.name}**.`)
     )
   }
 }
