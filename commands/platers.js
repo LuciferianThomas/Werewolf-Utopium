@@ -3,12 +3,12 @@ const Discord = require("discord.js"),
       fn = require("/app/util/fn")
 
 module.exports = {
-  name: "nitro",
+  name: "platers",
   run: async (client, message, args, shared) => {
     await message.channel.send(
       new Discord.MessageEmbed()
-        .setTitle(`Here's your Nitro:`)
-      .setImage("https://cdn.glitch.com/982524cd-c5d8-43be-9bdc-9decfa8ff79b%2Fnitro.png?v=1588300861771")
+        .setTitle(`Wth is a plater??`)
+      .setImage("https://cdn.glitch.com/523fbde2-d515-4952-9b60-3526c94a58e4%2F229d59eb-907e-4b49-a40c-653154db392a.image.png?v=1585504929370")
     )
   }
 }
