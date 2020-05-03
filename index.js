@@ -40,6 +40,37 @@ for (const file of commandFiles) {
 
 const token = process.env.DISCORD_BOT_TOKEN
 
+const { GiveawaysManager } = require("discord-giveaways");
+const manager = new GiveawaysManager(client, {
+  storage: "./giveaways.json",
+  updateCountdownEvery: 10000,
+  default: {
+    botsCanWin: false,
+    embedColor: "#708AD7",
+    reaction: "🎉"
+  },
+  messages: {
+    giveaway: "🎉🎉 **GIVEAWAY** 🎉🎉",
+    giveawayEnded: "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+    timeRemaining: "Time remaining: **{duration}**!",
+    inviteToParticipate: "React with 🎉 to enter!",
+    winMessage: "Congratulations, {winners}! You won **{prize}**!",
+    embedFooter: "Werewolf Utopium Giveaways",
+    noWinner: "Giveaway cancelled, no valid participations.",
+    hostedBy: "Hosted by: {user}",
+    winners: "winner(s)",
+    endedAt: "Ended at",
+    units: {
+      seconds: "seconds",
+      minutes: "minutes",
+      hours: "hours",
+      days: "days",
+      pluralS: false
+    }
+  }
+});
+client.giveawaysManager = manager;
+
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 client.login(token)

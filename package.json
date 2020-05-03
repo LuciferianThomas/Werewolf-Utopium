@@ -12,7 +12,7 @@
     "discord.js-commando": "^0.10.0",
     "path": "^0.12.7",
     "es6-shim": "^0.35.5",
-    "moment": "^2.24.0",
+    "moment": "^2.25.0",
     "express": "^4.17.1",
     "better-sqlite-pool": "^0.3.0",
     "striptags": "^3.1.1",
