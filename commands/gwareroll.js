@@ -7,6 +7,7 @@ module.exports = {
   name: "gwastart",
   aliases: ["giveaway"],
   run: async (client, message, args, shared) => {
+    if(!message.author.id == "439223656200273932") return
     let messageID = args[0];
     client.giveawaysManager.reroll(messageID).then(() => {
       message.channel.send("Success! Giveaway rerolled!");
