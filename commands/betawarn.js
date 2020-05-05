@@ -36,7 +36,7 @@ module.exports = {
         new Discord.MessageEmbed()
           .setColor("RED")
           .setTitle(`Prompt cancelled.`)
-          .setDescription(`There isn't anyone to ping for [this announcement message](${betamsg.id})!`)
+          .setDescription(`There isn't anyone to ping for [this announcement message](${betamsg.url})!`)
       )
     
     await prompt.edit(

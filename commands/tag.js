@@ -26,24 +26,36 @@ module.exports = {
     ) {
       tags.set(args[1], args.slice(2).join(" "))
       message.channel.send(`Tag \`${args[0]}\` created successfully`)
-    } else if(args[0]){
+    } else if (args[0]) {
       let tag = tags.get(args[0])
-      if(!tag) message.author.send(`Unable to find a tag called \`${args[0]}\``)
+      if (!tag)
+        message.author.send(`Unable to find a tag called \`${args[0]}\``)
       await message.channel.send(
-      new Discord.MessageEmbed()
-        .setColor(0x708ad7)
-        .setTitle(args[0])
-        .setDescription(`${tag}`)
-        .setFooter("Requested by "+message.author.tag)
-    )
+        new Discord.MessageEmbed()
+          .setColor(0x708ad7)
+          .setTitle(args[0])
+          .setDescription(`${tag}`)
+          .setFooter("Requested by " + message.author.tag)
+      )
     } else {
       let alltags = tags.all()
-      let embed = new Discord.MessageEmbed()
-        .setColor(0x708ad7)
-        .setTitle(args[0])
-        .setDescription(``)
-        .setFooter("Requested by "+message.author.tag)
-      alltags.forEach(tag => embed.description += `\`\``)
+      let embeds = [
+          new Discord.MessageEmbed()
+            .setDescription(``)
+        ],
+        i = 0
+      alltags.forEach(t => {
+        if(i > 5) embeds.push(new Discord.MessageEmbed()
+            .setDescription(``))
+        embeds[embeds.length - 1].description += `\`${t.id}\`:\n\`\`\`\n${t.data}\n\`\`\`\n\n`
+        i++
+      })
+      embeds.forEach((e, i) =>
+        e
+          .setTitle(`All tags in Werewolf Utopium`)
+          .setFooter(`Page ${i + 1}/${embeds.length}`)
+          .setColor(0x708ad7)
+      )
     }
   }
 }
