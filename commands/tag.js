@@ -47,7 +47,7 @@ module.exports = {
         if (i > 5) embeds.push(new Discord.MessageEmbed().setDescription(``))
         embeds[
           embeds.length - 1
-        ].description += `\`${t.ID}\`:\n\`\`\`\n${t.data}\n\`\`\`\n\n`
+        ].addField(t.ID, tags.get(t.ID))
         i++
       })
       embeds.forEach((e, i) =>
