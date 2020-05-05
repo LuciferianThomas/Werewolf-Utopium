@@ -28,7 +28,7 @@ module.exports = {
       if(!args[2]) return message.channel.send("Missing args")
       if(args[1] == "create") return message.channel.send("Your tag name cannot be `create` ")
       if (!args[1].match(/^[a-z0-9\-]{3,25}$/gi)) return await message.channel.send("Your tag name is invalid.")
-      tags.set(args[1], message.content.replace(/ +/g," ").slice(shared.commandName.length+args[0].length+args[1].length+4))
+      tags.set(args[1].toLowerCase(), message.content.replace(/ +/g," ").slice(shared.commandName.length+args[0].length+args[1].length+4))
       message.channel.send(`Tag \`${args[1]}\` created successfully`)
     } else if (args[0]) {
       let tag = tags.get(args[0])
