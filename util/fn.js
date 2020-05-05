@@ -77,6 +77,7 @@ let getEmoji = (client, name) => {
   return client.emojis.cache.find(emoji => emoji.name.toLowerCase() == name.toLowerCase().replace(/ /g, "_"))
 }
 
+
 let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
   if(embeds.length === 1) return
   if (addReactions) {

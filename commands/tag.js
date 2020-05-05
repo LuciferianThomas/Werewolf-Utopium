@@ -25,7 +25,7 @@ module.exports = {
         )
     ) {
       if(!args[2]) return message.channel.send("Missing args")
-      if(args[1] == "create") reth
+      if(args[1] == "create") return message.channel.send("Your tag name cannot be `create` ")
       tags.set(args[1], args.slice(2).join(" "))
       message.channel.send(`Tag \`${args[1]}\` created successfully`)
     } else if (args[0]) {
