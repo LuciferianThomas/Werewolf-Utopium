@@ -25,7 +25,7 @@ module.exports = {
         )
     ) {
       tags.set(args[1], args.slice(2).join(" "))
-      message.channel.send(`Tag \`${args[0]}\` created successfully`)
+      message.channel.send(`Tag \`${args[1]}\` created successfully`)
     } else if (args[0]) {
       let tag = tags.get(args[0])
       if (!tag)
@@ -56,6 +56,8 @@ module.exports = {
           .setFooter(`Page ${i + 1}/${embeds.length}`)
           .setColor(0x708ad7)
       )
+      let m = await message.channel.send(embeds[0])
+      fn.paginator(message.author.id, m, embeds, 0)
     }
   }
 }
