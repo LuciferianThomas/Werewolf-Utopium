@@ -24,6 +24,8 @@ module.exports = {
           ].includes(r.name)
         )
     ) {
+      if(!args[2]) return message.channel.send("Missing args")
+      if(args[1] == "create") reth
       tags.set(args[1], args.slice(2).join(" "))
       message.channel.send(`Tag \`${args[1]}\` created successfully`)
     } else if (args[0]) {
@@ -39,15 +41,13 @@ module.exports = {
       )
     } else {
       let alltags = tags.all()
-      let embeds = [
-          new Discord.MessageEmbed()
-            .setDescription(``)
-        ],
+      let embeds = [new Discord.MessageEmbed().setDescription(``)],
         i = 0
       alltags.forEach(t => {
-        if(i > 5) embeds.push(new Discord.MessageEmbed()
-            .setDescription(``))
-        embeds[embeds.length - 1].description += `\`${t.id}\`:\n\`\`\`\n${t.data}\n\`\`\`\n\n`
+        if (i > 5) embeds.push(new Discord.MessageEmbed().setDescription(``))
+        embeds[
+          embeds.length - 1
+        ].description += `\`${t.ID}\`:\n\`\`\`\n${t.data}\n\`\`\`\n\n`
         i++
       })
       embeds.forEach((e, i) =>
