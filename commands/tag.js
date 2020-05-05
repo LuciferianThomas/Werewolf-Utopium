@@ -6,6 +6,7 @@ const Discord = require("discord.js"),
 
 module.exports = {
   name: "tag",
+  aliases: ["tags"],
   run: async (client, message, args, shared) => {
     if (
       args[0] == "create" &&
