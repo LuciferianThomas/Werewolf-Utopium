@@ -19,7 +19,8 @@
     "https": "^1.0.0",
     "node-fetch": "^2.6.0",
     "moment-timezone": "^0.5.27",
-    "discord-giveaways": "^4.0.2"
+    "discord-giveaways": "^4.0.2",
+    "axios": "^0.19.2"
   },
   "devDependencies": {},
   "scripts": {

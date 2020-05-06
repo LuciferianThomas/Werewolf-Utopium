@@ -1,5 +1,6 @@
 const Discord = require("discord.js")
 const moment = require("moment")
+const axios = require("axios")
 
 const db = require("quick.db"),
       games = new db.table("Games"),
@@ -75,6 +76,15 @@ let getRole = (guild, data) => {
 
 let getEmoji = (client, name) => {
   return client.emojis.cache.find(emoji => emoji.name.toLowerCase() == name.toLowerCase().replace(/ /g, "_"))
+}
+
+let wunick = async (userid) => {
+  try {
+    const response = await axios.get('https://werewolf-utopium.tk/api/nickname/' + userid);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 
