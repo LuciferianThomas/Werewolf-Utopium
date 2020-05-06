@@ -1,9 +1,7 @@
 dependencies:
   axios: 0.19.2
   better-sqlite-pool: 0.3.0
-  discord-giveaways: 4.0.2
   discord.js: 12.2.0
-  discord.js-commando: 0.10.0
   es6-shim: 0.35.5
   express: 4.17.1
   fs: 0.0.2
@@ -169,12 +167,6 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
-  /common-tags/1.8.0:
-    dev: false
-    engines:
-      node: '>=4.0.0'
-    resolution:
-      integrity: sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
   /console-control-strings/1.1.0:
     dev: false
     resolution:
@@ -260,25 +252,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
-  /discord-giveaways/4.0.2:
-    dependencies:
-      merge-options: 2.0.0
-    dev: false
-    resolution:
-      integrity: sha512-P14otS454F6TrkgbpeuQBa8GGpfw3wDLorf8G5ZkE1Q1KBVWRKVfarlzcDMMXeyonBS88AtCs9x/NnY8/gq0QA==
-  /discord.js-commando/0.10.0:
-    dependencies:
-      common-tags: 1.8.0
-      escape-string-regexp: 1.0.5
-      require-all: 2.2.0
-    dev: false
-    engines:
-      node: '>=7.6.0'
-    peerDependencies:
-      discord.js: ^11.2.0
-      sqlite: ^2.0.0
-    resolution:
-      integrity: sha1-v6mL8zEIcDdvPHoNe3Nqaj5dCg8=
   /discord.js/12.2.0:
     dependencies:
       '@discordjs/collection': 0.1.5
@@ -325,12 +298,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
-  /escape-string-regexp/1.0.5:
-    dev: false
-    engines:
-      node: '>=0.8.0'
-    resolution:
-      integrity: sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
   /etag/1.8.1:
     dev: false
     engines:
@@ -543,12 +510,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=
-  /is-plain-obj/2.1.0:
-    dev: false
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
   /isarray/1.0.0:
     dev: false
     resolution:
@@ -567,14 +528,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
-  /merge-options/2.0.0:
-    dependencies:
-      is-plain-obj: 2.1.0
-    dev: false
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-S7xYIeWHl2ZUKF7SDeBhGg6rfv5bKxVBdk95s/I7wVF8d+hjLSztJ/B271cnUiF6CAFduEQ5Zn3HYwAjT16DlQ==
   /methods/1.1.2:
     dev: false
     engines:
@@ -870,10 +823,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
-  /require-all/2.2.0:
-    dev: false
-    resolution:
-      integrity: sha1-tEIMIzrAKC0P9Jsnf7iAqLXeCJQ=
   /safe-buffer/5.1.2:
     dev: false
     resolution:
@@ -1132,9 +1081,7 @@ shrinkwrapVersion: 3
 specifiers:
   axios: ^0.19.2
   better-sqlite-pool: ^0.3.0
-  discord-giveaways: ^4.0.2
   discord.js: ^12.2.0
-  discord.js-commando: ^0.10.0
   es6-shim: ^0.35.5
   express: ^4.17.1
   fs: ^0.0.2

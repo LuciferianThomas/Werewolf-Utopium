@@ -2,8 +2,8 @@ const Discord = require("discord.js")
 const moment = require("moment")
 const axios = require("axios")
 const wuapi = axios.create({
-  baseURL: 'werewolf-utopium.tk',
-  timeout: 5000,
+  baseURL: 'https://werewolf-utopium.tk/api',
+  timeout: 15000,
   headers: {'X-WU-API': process.env.API}
 });
 
@@ -83,9 +83,9 @@ let getEmoji = (client, name) => {
   return client.emojis.cache.find(emoji => emoji.name.toLowerCase() == name.toLowerCase().replace(/ /g, "_"))
 }
 
-let wunick = async (userid) => {
+let wuNick = (userid) => {
   try {
-    const response = await axios.get('https://werewolf-utopium.tk/api/nickname/' + userid);
+    const response = wuapi.get('/nickname/' + userid)
     return response;
   } catch (error) {
     console.error(error);
@@ -180,5 +180,6 @@ module.exports = {
   deepClone: deepClone,
   clone: deepClone,
   sleep: sleep,
-  broadcastTo: broadcastTo
+  broadcastTo: broadcastTo,
+  wuNick: wuNick
 }

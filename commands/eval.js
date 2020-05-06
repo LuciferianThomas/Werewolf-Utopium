@@ -110,7 +110,7 @@ module.exports = {
             "```"
         )
         .setFooter(
-          client.user.username + " Staff",
+          client.user.username,
           client.user.avatarURL({ format: "png", dynamic: true, size: 1024 })
         )
       message.channel.send(embed).catch(console.error)

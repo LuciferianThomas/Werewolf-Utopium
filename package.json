@@ -9,7 +9,6 @@
     "fs": "^0.0.2",
     "http": "^0.0.0",
     "quick.db": "^7.1.1",
-    "discord.js-commando": "^0.10.0",
     "path": "^0.12.7",
     "es6-shim": "^0.35.5",
     "moment": "^2.25.3",
@@ -19,7 +18,6 @@
     "https": "^1.0.0",
     "node-fetch": "^2.6.0",
     "moment-timezone": "^0.5.27",
-    "discord-giveaways": "^4.0.2",
     "axios": "^0.19.2"
   },
   "devDependencies": {},
