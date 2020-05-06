@@ -8,7 +8,7 @@ const Discord = require('discord.js'),
       http = require('http'),
       moment = require('moment'),
       fetch = require('node-fetch')
-      // db = require("quick.db")
+      db = require("quick.db")
 
 /* --- ALL PACKAGES --- */
 
