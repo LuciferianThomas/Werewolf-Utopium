@@ -1,6 +1,11 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 const axios = require("axios")
+const wuapi = axios.create({
+  baseURL: 'werewolf-utopium.tk',
+  timeout: 5000,
+  headers: {'X-WU-API': process.env.API}
+});
 
 const db = require("quick.db"),
       games = new db.table("Games"),
