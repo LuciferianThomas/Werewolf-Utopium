@@ -2,14 +2,14 @@ const Discord = require("discord.js"),
   moment = require("moment-timezone"),
   fn = require("/app/util/fn")
 
-const db = require("quick.db"),
-  tags = new db.table("tags")
+const db = require("quick.db")
+  // tags = new db.table("tags")
 
-const gwainf = new db.table("gwainf")
+// const gwainf = new db.table("gwainf")
 
 module.exports = {
-  name: "seval",
-  usage: "seval <code>",
+  name: "eval",
+  usage: "eval <code>",
   description: "Evaluate JavaScript code!",
   // category: "Bot Staff",
   // botStaffOnly: true,
