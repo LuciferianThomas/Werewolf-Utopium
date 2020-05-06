@@ -1,6 +1,7 @@
 const Discord = require("discord.js"),
       moment = require("moment"),
-      db = require("quick.db")
+      db = require("quick.db"),
+      fetch = require("node-fetch")
 
 const games = new db.table("Games"),
       players = new db.table("Players")
@@ -21,6 +22,8 @@ module.exports = {
         return await message.author.send("You are already in a game!")
       else prevGamePlayer.left = true
     }
+    
+    // fetch("https://")
     
     let gamePlayer = { id: message.author.id, nicknames: "" }
     
