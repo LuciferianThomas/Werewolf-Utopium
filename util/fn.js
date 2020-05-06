@@ -1,9 +1,9 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
-// const db = require("quick.db"),
-//       games = new db.table("Games"),
-//       players = new db.table("Players"),
+const db = require("quick.db"),
+      games = new db.table("Games"),
+      players = new db.table("Players")
 //       nicknames = new db.table("Nicknames")
 
 const { defaultPrefix, embedColor } = require('./config')
@@ -38,7 +38,7 @@ let embed = (client, content) => {
       .setTimestamp()
   } else {
     throw Error('Invalid content type.\nAccepts Object or String.')
-  }
+  
   return undefined
 }
 
@@ -142,15 +142,11 @@ const broadcastTo = (client, users, content) => {
   if (typeof users[0] !== "string") users = users.map(x => x.id)
   
   let game = games.get("quick").find(g => g.gameID == players.get(`${users[0]}.currentGame`))
-  // if (game.currentPhase % 3 !== 0) users.push(...game.spectators)
   
   for (var user of users) 
     getUser(client, user).send(
-      typeof content == "string" && content.match(new RegExp(`(?<!Night |Day )\\b${game.players.find(p => p.id == user).number}\\b`, "gi")) ?
-        `> ${content}` : content
+      content
     ).catch(() => {})
-  
-  // client.channels.get("677694502915276831").send()
 }
 
 module.exports = {
@@ -167,5 +163,6 @@ module.exports = {
   paginator: paginator,
   deepClone: deepClone,
   clone: deepClone,
-  sleep: sleep
+  sleep: sleep,
+  broadcastTo: broadcastTo,
 }
