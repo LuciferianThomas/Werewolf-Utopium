@@ -39,7 +39,7 @@ module.exports = {
       gamePlayer.vote = vote
       
       message.author.send(
-        `${fn.getEmoji(client, "Voting")} You voted to lynch **${vote} ${
+        `You voted to lynch **${vote} ${
           game.players[vote-1].nickname
         }.`
       )
@@ -47,7 +47,7 @@ module.exports = {
       if (!game.shade)
         fn.broadcastTo(
           client, game.players.filter(p => !p.left && p.number !== gamePlayer.number),
-          `${fn.getEmoji(client, "Voting")} **${gamePlayer.number} ${gamePlayer.nickname} voted to lynch **${vote} ${
+          `**${gamePlayer.number} ${gamePlayer.nickname} voted to lynch **${vote} ${
             game.players[vote-1].nickname
           }.`
         )
