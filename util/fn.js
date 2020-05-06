@@ -83,9 +83,9 @@ let getEmoji = (client, name) => {
   return client.emojis.cache.find(emoji => emoji.name.toLowerCase() == name.toLowerCase().replace(/ /g, "_"))
 }
 
-let wuNick = (userid) => {
+let wuNick = async (userid) => {
   try {
-    const response = wuapi.get('/nickname/' + userid)
+    const response = await wuapi.get('/nickname/' + userid)
     return response;
   } catch (error) {
     console.error(error);
