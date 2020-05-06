@@ -40,36 +40,36 @@ for (const file of commandFiles) {
 
 const token = process.env.DISCORD_BOT_TOKEN
 
-const { GiveawaysManager } = require("discord-giveaways");
-const manager = new GiveawaysManager(client, {
-  storage: "./giveaways.json",
-  updateCountdownEvery: 10000,
-  default: {
-    botsCanWin: false,
-    embedColor: "#708AD7",
-    reaction: "🎉"
-  },
-  messages: {
-    giveaway: "🎉🎉 **GIVEAWAY** 🎉🎉",
-    giveawayEnded: "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
-    timeRemaining: "Time remaining: **{duration}**!",
-    inviteToParticipate: "React with 🎉 to enter!",
-    winMessage: "Congratulations, {winners}! You won **{prize}**!",
-    embedFooter: "Werewolf Utopium Giveaways",
-    noWinner: "Giveaway cancelled, no valid participations.",
-    hostedBy: "Hosted by: {user}",
-    winners: "winner(s)",
-    endedAt: "Ended at",
-    units: {
-      seconds: "seconds",
-      minutes: "minutes",
-      hours: "hours",
-      days: "days",
-      pluralS: false
-    }
-  }
-});
-client.giveawaysManager = manager;
+// const { GiveawaysManager } = require("discord-giveaways");
+// const manager = new GiveawaysManager(client, {
+//   storage: "./giveaways.json",
+//   updateCountdownEvery: 10000,
+//   default: {
+//     botsCanWin: false,
+//     embedColor: "#708AD7",
+//     reaction: "🎉"
+//   },
+//   messages: {
+//     giveaway: "🎉🎉 **GIVEAWAY** 🎉🎉",
+//     giveawayEnded: "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+//     timeRemaining: "Time remaining: **{duration}**!",
+//     inviteToParticipate: "React with 🎉 to enter!",
+//     winMessage: "Congratulations, {winners}! You won **{prize}**!",
+//     embedFooter: "Werewolf Utopium Giveaways",
+//     noWinner: "Giveaway cancelled, no valid participations.",
+//     hostedBy: "Hosted by: {user}",
+//     winners: "winner(s)",
+//     endedAt: "Ended at",
+//     units: {
+//       seconds: "seconds",
+//       minutes: "minutes",
+//       hours: "hours",
+//       days: "days",
+//       pluralS: false
+//     }
+//   }
+// });
+// client.giveawaysManager = manager;
 
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
@@ -77,21 +77,22 @@ client.login(token)
 
 client.once('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
+  client.user.setPresence({ activity: { name: 'LuciferianThomas code' , type: "WATCHING"}, status: 'dnd' })
 })
 
-client.on('guildMemberAdd', async member => {
-  if (member.guild.id != "522638136635817986") return;
-  member.guild.channels.cache.get("640530363587887104").send(
-    `${member}, welcome to **Werewolf Utopium**!`
-  )
-})
+// client.on('guildMemberAdd', async member => {
+//   if (member.guild.id != "522638136635817986") return;
+//   member.guild.channels.cache.get("640530363587887104").send(
+//     `${member}, welcome to **Werewolf Utopium**!`
+//   )
+// })
 
-client.on('guildMemberRemove', async member => {
-  if (member.guild.id != "522638136635817986") return;
-  member.guild.channels.cache.get("640530363587887104").send(
-    `Hope to see you again in the near future, **${member.user.username}**!`
-  )
-})
+// client.on('guildMemberRemove', async member => {
+//   if (member.guild.id != "522638136635817986") return;
+//   member.guild.channels.cache.get("640530363587887104").send(
+//     `Hope to see you again in the near future, **${member.user.username}**!`
+//   )
+// })
 
 client.on('message', async message => {
   
@@ -99,7 +100,7 @@ client.on('message', async message => {
   
   const msg = message.content.trim().toLowerCase()
   
-  const prefix = "w!"
+  const prefix = "s!"
   
   let shared = {}
     
