@@ -23,7 +23,7 @@ module.exports = {
       else prevGamePlayer.left = true
     }
     
-    // fetch("https://")
+    
     
     let gamePlayer = { id: message.author.id, nicknames: "" }
     
