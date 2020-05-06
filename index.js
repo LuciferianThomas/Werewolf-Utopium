@@ -121,7 +121,7 @@ client.on('message', async message => {
 			console.log(error)
 		}
     
-    message.delete({timeout: 5000}).catch(error => {})
+    message.delete().catch(error => {})
 	}
 })
 
