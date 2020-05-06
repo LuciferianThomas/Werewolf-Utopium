@@ -19,7 +19,6 @@ const client = new Discord.Client(),
       fn = require('/app/util/fn')
 
 const app = express()
-app.use(express.static('public'));
 
 app.get("/", function(request, response) {
   response.redirect("https://werewolf-utopium.tk/")

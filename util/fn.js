@@ -94,6 +94,17 @@ let wuNick = async (userid) => {
   }
 }
 
+let wuPlayer = async (userid) => {
+  try {
+    const response = await wuapi.get('/player/' + userid)
+    console.log(response)
+    return response.data.player
+  } catch (error) {
+    return false
+    console.error(error);
+  }
+}
+
 
 let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
   if(embeds.length === 1) return
@@ -183,5 +194,6 @@ module.exports = {
   clone: deepClone,
   sleep: sleep,
   broadcastTo: broadcastTo,
-  wuNick: wuNick
+  wuNick: wuNick,
+  wuPlayer: wuPlayer
 }
