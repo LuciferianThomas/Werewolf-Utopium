@@ -22,6 +22,8 @@ module.exports = {
       else prevGamePlayer.left = true
     }
     
+    let gamePlayer = { id: message.author.id, nicknames: "" }
+    
     let currentGame = Games.find(game => game.players.length <= 16 && game.currentPhase < -0.5 && game.mode == "quick")
     if (currentGame) {
       Games[Games.indexOf(currentGame)].players.push({ id: message.author.id, lastAction: moment() })
@@ -33,19 +35,11 @@ module.exports = {
       currentGame = {
         mode: "classic",
         gameID: count,
-        nextPhase: null,
         currentPhase: -1,
         players: [{
           id: message.author.id,
-          lastAction: moment()
-        }],
-        logs: "",
-        logMsgs: [],
-        spectators: [],
-        config: {
-          deathReveal: true,
-          talismans: true
-        }
+          nickname: ""
+        }]
       }
       Games.push(currentGame)
     }
@@ -69,7 +63,7 @@ module.exports = {
       client, currentGame.players.filter(p => p.id !== message.author.id),
       new Discord.MessageEmbed()
         .setAuthor(`${player.nickname} joined the game.`, message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))         
-        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => nicknames.get(player.id)).join("\n"))
+        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => player.nuckname).join("\n"))
     )
     
     fn.addLog(currentGame, `${nicknames.get(message.author.id)} joined the game.`)

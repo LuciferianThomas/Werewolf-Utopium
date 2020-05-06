@@ -1,9 +1,9 @@
 const Discord = require("discord.js")
 const moment = require("moment")
 
-// const db = require("quick.db"),
-//       games = new db.table("Games"),
-//       players = new db.table("Players"),
+const db = require("quick.db"),
+      games = new db.table("Games"),
+      players = new db.table("Players")
 //       nicknames = new db.table("Nicknames")
 
 const { defaultPrefix, embedColor } = require('./config')
@@ -145,10 +145,7 @@ const broadcastTo = (client, users, content) => {
   // if (game.currentPhase % 3 !== 0) users.push(...game.spectators)
   
   for (var user of users) 
-    getUser(client, user).send(
-      typeof content == "string" && content.match(new RegExp(`(?<!Night |Day )\\b${game.players.find(p => p.id == user).number}\\b`, "gi")) ?
-        `> ${content}` : content
-    ).catch(() => {})
+    getUser(client, user).send(content).catch(() => {})
   
   // client.channels.get("677694502915276831").send()
 }
@@ -167,5 +164,6 @@ module.exports = {
   paginator: paginator,
   deepClone: deepClone,
   clone: deepClone,
-  sleep: sleep
+  sleep: sleep,
+  broadcastTo: broadcastTo
 }
