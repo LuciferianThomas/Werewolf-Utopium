@@ -22,14 +22,17 @@ const app = express()
 app.use(express.static('public'));
 
 app.get("/", function(request, response) {
-  response.redirect()
+  response.redirect("https://werewolf-utopium.tk/")
+});
+app.get("/ping", function(request, response) {
+  response.sendStatus(200)
 });
 
 const listener = app.listen(process.env.PORT, function() {
-  setInterval(() => {
-    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`)
-  }, 225000)
-});
+  // console.log(
+  //   "werewolf-utopium.tk is online, using port " + listener.address().port
+  // )
+})
 
 client.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))

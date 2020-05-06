@@ -4,7 +4,7 @@ const axios = require("axios")
 const wuapi = axios.create({
   baseURL: 'https://werewolf-utopium.tk/api',
   timeout: 15000,
-  headers: {'X-WU-API': process.env.API}
+  headers: {wuapi: process.env.API}
 });
 
 const db = require("quick.db"),
