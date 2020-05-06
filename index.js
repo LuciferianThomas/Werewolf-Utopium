@@ -49,7 +49,7 @@ client.login(token)
 
 client.once('ready', async () => {
   console.log(`${fn.time()} | ${client.user.username} is up!`)
-  client.user.setPresence({ activity: { name: 'LuciferianThomas code' , type: "WATCHING"}, status: 'dnd' })
+  client.user.setPresence({ activity: { name: 'Spyfall (Coming Soon!)' , type: "PLAYING"}, status: 'dnd' })
 })
 
 // client.on('guildMemberAdd', async member => {
