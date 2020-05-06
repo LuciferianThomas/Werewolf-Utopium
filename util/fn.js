@@ -86,8 +86,10 @@ let getEmoji = (client, name) => {
 let wuNick = async (userid) => {
   try {
     const response = await wuapi.get('/nickname/' + userid)
-    return response;
+    console.log(response)
+    return response.data.nickname
   } catch (error) {
+    return false
     console.error(error);
   }
 }
