@@ -7,12 +7,12 @@ const games = new db.table("Games"),
 
 const fn = require('/app/util/fn')
 module.exports = {
-  name: "quick",
-  aliases: ["q"],
+  name: "classic",
+  aliases: ["cl"],
   run: async (client, message, args, shared) => {
     if (!games.get("count")) games.set("count", 0)
-    if (!games.get("quick")) games.set("quick", [])
-    let Games = games.get("quick")
+    if (!games.get("classic")) games.set("classic", [])
+    let Games = games.get("classic")
     
     if (Games.find(g => g.gameID == players.get(`${message.author.id}.currentGame`))) {
       let prevGame = Games.find(g => g.gameID == players.get(`${message.author.id}.currentGame`)),
@@ -24,9 +24,9 @@ module.exports = {
     
     let gamePlayer = { id: message.author.id, nicknames: "" }
     
-    let currentGame = Games.find(game => game.players.length <= 16 && game.currentPhase < -0.5 && game.mode == "quick")
+    let currentGame = Games.find(game => game.players.length <= 16 && game.currentPhase < -0.5 && game.mode == "classic")
     if (currentGame) {
-      Games[Games.indexOf(currentGame)].players.push({ id: message.author.id, lastAction: moment() })
+      Games[Games.indexOf(currentGame)].players.push(gamePlayer)
       currentGame = Games.find(game => game.gameID == currentGame.gameID)
     } else {
       let count = games.add("count", 1)
@@ -36,10 +36,7 @@ module.exports = {
         mode: "classic",
         gameID: count,
         currentPhase: -1,
-        players: [{
-          id: message.author.id,
-          nickname: ""
-        }]
+        players: [gamePlayer]
       }
       Games.push(currentGame)
     }
@@ -56,18 +53,18 @@ module.exports = {
     
     let m2 = message.author.send(
       new Discord.MessageEmbed().setTitle("Welcome to the game! Here are some useful commands to get started:")
-      .setDescription(`\`w!start\` - Vote to start the game (4 people required)\n\`w!game\` - See the player list and the list of roles in the game\n\`w!leave\` - Leave the game. **Warning: Doing this after the game starts is considered suiciding**`)
+      // .setDescription(`\`w!start\` - Vote to start the game (4 people required)\n\`w!game\` - See the player list and the list of roles in the game\n\`w!leave\` - Leave the game. **Warning: Doing this after the game starts is considered suiciding**`)
     )
     
     fn.broadcastTo(
       client, currentGame.players.filter(p => p.id !== message.author.id),
       new Discord.MessageEmbed()
-        .setAuthor(`${player.nickname} joined the game.`, message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))         
-        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => player.nuckname).join("\n"))
+        .setAuthor(`${gamePlayer.nickname} joined the game.`, message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))         
+        .addField(`Current Players [${currentGame.players.length}]`, currentGame.players.map(player => player.nickname).join("\n"))
     )
     
-    fn.addLog(currentGame, `${nicknames.get(message.author.id)} joined the game.`)
-    games.set("quick", Games)
+    // fn.addLog(currentGame, `${nicknames.get(message.author.id)} joined the game.`)
+    games.set("classic", Games)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)
       
     if (currentGame.players.length == 16) require('/app/process/start')(client, currentGame)
