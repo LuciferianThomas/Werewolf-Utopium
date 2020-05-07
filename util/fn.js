@@ -195,5 +195,6 @@ module.exports = {
   sleep: sleep,
   broadcastTo: broadcastTo,
   wuNick: wuNick,
-  wuPlayer: wuPlayer
+  wuPlayer: wuPlayer,
+  wuapi: wuapi
 }
