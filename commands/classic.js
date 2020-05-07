@@ -23,7 +23,6 @@ module.exports = {
       else prevGamePlayer.left = true
     }
     
-    
     let nick = await fn.wuNick(message.author.id)
     let gamePlayer = { id: message.author.id, nickname: nick }
     
