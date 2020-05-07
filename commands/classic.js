@@ -24,8 +24,8 @@ module.exports = {
     }
     
     
-    
-    let gamePlayer = { id: message.author.id, nicknames: "" }
+    let nick = await fn.wuNick(message.author.id)
+    let gamePlayer = { id: message.author.id, nickname: nick }
     
     let currentGame = Games.find(game => game.players.length <= 16 && game.currentPhase < -0.5 && game.mode == "classic")
     if (currentGame) {

@@ -53,7 +53,7 @@ module.exports = {
               .addField(`Expression`, "```js\n" + args.join(" ") + "```")
               .addField(`Result`, "```js\n" + out + "```")
               .setFooter(
-                client.user.username + " Staff",
+                client.user.username,
                 client.user.avatarURL({
                   format: "png",
                   dynamic: true,
@@ -84,7 +84,7 @@ module.exports = {
                 "```js\nOutput too long. Check console log.```"
               )
               .setFooter(
-                client.user.username + " Staff",
+                client.user.username,
                 client.user.avatarURL({
                   format: "png",
                   dynamic: true,
