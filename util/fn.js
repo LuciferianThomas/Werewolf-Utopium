@@ -105,6 +105,17 @@ let wuPlayer = async (userid) => {
   }
 }
 
+let wuAddcoins = async (userid, amount) => {
+  try {
+    const response = await wuapi.post('/addcoins/' + userid, `amount=${amount}`)
+    console.log(response)
+    return response.data.player
+  } catch (error) {
+    return false
+    console.error(error);
+  }
+}
+
 
 let paginator = async (author, msg, embeds, pageNow, addReactions = true) => {
   if(embeds.length === 1) return
