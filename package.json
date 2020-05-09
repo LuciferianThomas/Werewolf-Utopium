@@ -2,7 +2,7 @@
   "name": "spyfall-utopium",
   "version": "1.0.0",
   "homepage": "https://spyfall.werewolf-utopium.tk",
-  "description": "Discord Bot Format by LuciferianThomas",
+  "description": "Spyfall - A minigame of Werewolf Utopium",
   "main": "index.js",
   "dependencies": {
     "discord.js": "^12.2.0",
