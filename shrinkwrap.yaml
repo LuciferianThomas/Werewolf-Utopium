@@ -9,6 +9,7 @@ dependencies:
   https: 1.0.0
   moment: 2.25.3
   moment-timezone: 0.5.28
+  node-cmd: 3.0.0
   node-fetch: 2.6.0
   path: 0.12.7
   quick.db: 7.1.1
@@ -641,6 +642,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-FeLpTS0F39U7hHZU1srAK4Vx+5AHNVOTP+hxBNQknR/54laTHSFIJkDWDqiquY1LeLUgTfPN7sLPhMubx0PLAg==
+  /node-cmd/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-OP/3CkqqT2WdID61eGJzcBjiT28=
   /node-fetch/2.6.0:
     dev: false
     engines:
@@ -1089,6 +1094,7 @@ specifiers:
   https: ^1.0.0
   moment: ^2.25.3
   moment-timezone: ^0.5.27
+  node-cmd: ^3.0.0
   node-fetch: ^2.6.0
   path: ^0.12.7
   quick.db: ^7.1.1

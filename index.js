@@ -28,6 +28,9 @@ app.get("/", function(request, response) {
 app.get("/ping", function(request, response) {
   response.sendStatus(200)
 });
+app.get("/restart", function(req, res) {
+  res.status(200).send(`Restart for ${client.user.username} initiated`)
+})
 
 const listener = app.listen(process.env.PORT, function() {
   // console.log(

@@ -109,7 +109,7 @@ let wuAddcoins = async (userid, amount) => {
   try {
     const response = await wuapi.post('/addcoins/' + userid, `amount=${amount}`)
     console.log(response)
-    return response.data.player
+    return response.data
   } catch (error) {
     return false
     console.error(error);
@@ -207,5 +207,6 @@ module.exports = {
   broadcastTo: broadcastTo,
   wuNick: wuNick,
   wuPlayer: wuPlayer,
-  wuapi: wuapi
+  wuapi: wuapi,
+  wuAddcoins: wuAddcoins
 }

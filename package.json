@@ -18,7 +18,8 @@
     "https": "^1.0.0",
     "node-fetch": "^2.6.0",
     "moment-timezone": "^0.5.27",
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "node-cmd": "^3.0.0"
   },
   "devDependencies": {},
   "scripts": {
