@@ -8,7 +8,9 @@ const Discord = require('discord.js'),
       http = require('http'),
       moment = require('moment'),
       fetch = require('node-fetch'),
-      db = require("quick.db")
+      db = require("quick.db"),
+      temp = new db.table("temp"),
+      games = new db.table("Games")
 
 /* --- ALL PACKAGES --- */
 
@@ -48,6 +50,34 @@ const token = process.env.DISCORD_BOT_TOKEN
 client.login(token)
 
 client.once('ready', async () => {
+  //alert players in game if w!restart or auto-restart was used
+  let gamealert = temp.get("gamealert")
+  if (gamealert) {
+    let Games = games.get("quick")
+    let activeGames = Games.filter(game => game.currentPhase < 999)
+    if (!activeGames.length) return
+    activeGames.forEach(game => {
+      // console.log(game.players)
+      if (!game.players.length) return;
+      game.players.forEach(p =>
+        client.users.cache
+          .get(p.id)
+          .send(
+            "The bot has finished rebooting. Enjoy your game!"
+          )
+      )
+      // fn.addLog(game, "Restart complete")
+      // fn.addLog(game, "-divider-")
+    })
+    temp.delete("gamealert")
+  }
+  //respond to w!restart command
+  let rebootchan = temp.get("rebootchan")
+  if(rebootchan){
+    temp.delete("rebootchan")
+    client.channels.cache.get(rebootchan).send("Bot has successfully been restarted!").catch(() => temp.delete("rebootchan"))
+  }
+  
   console.log(`${fn.time()} | ${client.user.username} is up!`)
   client.user.setPresence({ activity: { name: 'Spyfall (Coming Soon!)' , type: "PLAYING"}, status: 'dnd' })
 })
