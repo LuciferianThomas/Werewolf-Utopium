@@ -10,7 +10,8 @@ const Discord = require('discord.js'),
       fetch = require('node-fetch'),
       db = require("quick.db"),
       temp = new db.table("temp"),
-      games = new db.table("Games")
+      games = new db.table("Games"),
+      cmd = require("node-cmd")
 
 /* --- ALL PACKAGES --- */
 
@@ -29,7 +30,8 @@ app.get("/ping", function(request, response) {
   response.sendStatus(200)
 });
 app.get("/restart", function(req, res) {
-  res.status(200).send(`Restart for ${client.user.username} initiated`)
+  res.status(200).send(`Restart initiated`)
+  cmd.run("refresh")
 })
 
 const listener = app.listen(process.env.PORT, function() {
