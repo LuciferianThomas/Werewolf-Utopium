@@ -7,8 +7,8 @@ dependencies:
   fs: 0.0.2
   http: 0.0.0
   https: 1.0.0
-  moment: 2.25.3
-  moment-timezone: 0.5.28
+  moment: 2.26.0
+  moment-timezone: 0.5.31
   node-cmd: 3.0.0
   node-fetch: 2.6.0
   path: 0.12.7
@@ -604,20 +604,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
-  /moment-timezone/0.5.28:
+  /moment-timezone/0.5.31:
     dependencies:
-      moment: 2.24.0
+      moment: 2.26.0
     dev: false
     resolution:
-      integrity: sha512-TDJkZvAyKIVWg5EtVqRzU97w0Rb0YVbfpqyjgu6GwXCAohVRqwZjf4fOzDE6p1Ch98Sro/8hQQi65WDXW5STPw==
-  /moment/2.24.0:
+      integrity: sha512-+GgHNg8xRhMXfEbv81iDtrVeTcWt0kWmTEY1XQK14dICTXnWJnT0dxdlPspwqF3keKMVPXwayEsk1DI0AA/jdA==
+  /moment/2.26.0:
     dev: false
     resolution:
-      integrity: sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
-  /moment/2.25.3:
-    dev: false
-    resolution:
-      integrity: sha512-PuYv0PHxZvzc15Sp8ybUCoQ+xpyPWvjOuK72a5ovzp2LI32rJXOiIfyoFoYvG3s6EwwrdkMyWuRiEHSZRLJNdg==
+      integrity: sha512-oIixUO+OamkUkwjhAVE18rAMfRJNsNe/Stid/gwHSOfHrOtw9EhAY2AHvdKZ/k/MggcYELFCJz/Sn2pL8b8JMw==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -1092,8 +1088,8 @@ specifiers:
   fs: ^0.0.2
   http: ^0.0.0
   https: ^1.0.0
-  moment: ^2.25.3
-  moment-timezone: ^0.5.27
+  moment: ^2.26.0
+  moment-timezone: ^0.5.31
   node-cmd: ^3.0.0
   node-fetch: ^2.6.0
   path: ^0.12.7
