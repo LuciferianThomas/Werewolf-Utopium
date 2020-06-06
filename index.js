@@ -121,7 +121,7 @@ client.on('message', async message => {
 
 client.on('message', async message => {
   if (message.channel.id !== "718418283312840814" && message.author.id !== "718413626079445082") return;
-  let veri = message.content, [ _, code, check ] = veri.match(/(\d{6})\-(\d|A)/), checksum = 0
+  let veri = message.content, [ x, code, check ] = veri.match(/(\d{6})\-(\d|A)/), checksum = 0
   for (var i = 0; i < code.length; i++) checksum += parseInt(code[i])
   if (check == "A") check = 10
   else check = parseInt(check)
