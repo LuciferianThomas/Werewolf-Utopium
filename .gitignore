@@ -3,3 +3,4 @@ shrinkwrap.yaml
 logs/
 *.log
 node_modules/
+.env
