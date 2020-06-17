@@ -1,0 +1,76 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <title>WWOU - Home</title>
+    <%- include("partials/header", {title: "All Logs - Werewolf Utopium", desc: "List of all the logs for the Werewolf Utopium staff to access", path: path }) %>
+    <script>
+    function nouser(){$('#nouser').modal('show')};
+    </script>
+    <style>
+      @media only screen and (min-width: 577px) {
+        imglogo {
+          float: right;
+        }
+        txtlogo {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <% if(player){ %>
+  <body>
+  <% } else { %>
+  <body onload="nouser()">
+  <% } %>
+    <%- include("partials/navbar", {"user": user}) %>
+    
+    <div class="container padtop">
+      <% files.forEach(f => { %>
+        <a href="/log/<%- f.replace(/(.log)/g, "") %>"><%- f %></a><br>
+      <% }) %>
+    </div>
+    
+    
+    <% if(user) { %>
+    <div
+      class="modal fade"
+      id="nouser"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="nousertitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="nousertitle">User not found</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Dismiss"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Hey there <%- user.username %>! We were unable to find you in
+            our player database.
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              onclick="location.href='/invite';"
+            >
+              Join our server
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <%- include("partials/footer") %>
+  </body>
+</html>

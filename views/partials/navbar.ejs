@@ -1,0 +1,122 @@
+<script>function addbot(){$('#addbot').modal('show')};</script>
+<script>function getLog(){
+    let id = prompt("What log ID would you open?", "");
+    if (id != null) window.location.href = "/log/" + id;
+    }</script>
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+  <a class="navbar-brand" href="/">Werewolf Utopium</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/roles">Roles</a>
+      </li>
+<!--       <li class="nav-item">
+        <a class="nav-link" href="#" onClick="addbot()">Add the bot</a>
+      </li> -->
+      <% if(!user || user.inserver ){ %>
+      <li class="nav-item">
+        <a class="nav-link" href="/invite">Join Server</a>
+      </li>
+      <% } %>
+      <li class="nav-item">
+        <a class="nav-link" href="https://status.werewolf-utopium.tk">Status</a>
+      </li>
+      <% if(user){ %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="logmenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Staff</a>
+        <div class="dropdown-menu" aria-labelledby="logmenu">
+          <a class="nav-link" onClick="getLog()" href="#">Get Log</a>
+          <a href="/logs" class="nav-link">View all logs</a>
+        </div>
+      </li>
+      <% } %>
+      <% if(user && ["336389636878368770","658481926213992498","439223656200273932","529121242716831748"].includes(user.id)){ %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="devmenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Developers</a>
+        <div class="dropdown-menu" aria-labelledby="devmenu">
+          <a href="https://glitch.com/edit/#!/werewolf-utopium" class="nav-link">Open Editor</a>
+          <a href="https://glitch.com/edit/#!/werewolf-utopium-staff" class="nav-link">Open Editor - Staff Module</a>
+          <a href="https://glitch.com/edit/#!/spyfall-utopium" class="nav-link">Open Editor - Spyfall</a>
+          <a href="/json.sqlite" class="nav-link">Download DB</a>
+          <a href="/restart" class="nav-link">Restart Server</a>
+        </div>
+      </li>
+      <% } %>
+      
+    </ul>
+    <div class="navbar-nav justify-content-between" style="margin-right: 20px;">
+<!--       <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="darkSwitch" />
+        <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+      </div> -->
+      <% if(user){ %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="usermenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="https://cdn.discordapp.com/avatars/<%- user.id %>/<%- user.avatar %>.png" class="roundimg" style="max-height:1.5em"> 
+        <%- user.nickname || user.username %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="usermenu">
+          <a class="dropdown-item" href="/profile/<%- user.id %>">View Profile</a>
+          <% if(user && ["336389636878368770","658481926213992498","439223656200273932","529121242716831748"].includes(user.id)){ %>
+          <a class="dropdown-item" href="/info">Log raw user data</a>
+          <% } %>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </li>
+      <% } else { %>
+      <a class="nav-item nav-link" href="/login?return='<%- encodeURI(path) %>'">Login</a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+<div
+     class="modal fade"
+     id="addbot"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="addbottitle"
+     aria-hidden="true"
+     >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addbottitle">Unavaliable</h5>
+        <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Dismiss"
+                >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Sorry! The bot is currently unavailable to add into any servers right now. You can come play with us by clicking <a href="/invite">here</a>!
+      </div>
+      <div class="modal-footer">
+        <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                >
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

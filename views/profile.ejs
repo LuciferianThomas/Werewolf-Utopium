@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+   <title>WWOU - Profile for <%- player.nickname %></title>
+    <%- include("partials/header", {title: player.nickname + "'s Profile on Werewolf Utopium", desc: null, path: path }) %>
+  </head>
+  <body>
+    <%- include("partials/navbar", {"user": user}) %>
+<!--     <div class="loading container" id="loader" style="display:block;visibility:visible;">
+      <div class="row logo vertcenter animated pulse slow infinite">
+        <div class="col">
+          <img
+               class="roundimg right"
+               src="https://cdn.discordapp.com/avatars/657960787993690122/f245efe58e1f4f75caab0b84e2a990b4.png"
+               />
+        </div>
+        <h1 class="col-7 opensans animated fadeIn slow" style="font-weight:900;">
+          Werewolf Utopium
+        </h1>
+      </div>
+      <p class="opensans center">
+        Loading... please wait...
+      </p>
+    </div> -->
+    <div class="center container profileblock" style="margin-top:30px;">
+     <div class="row logo vertcenter">
+        <div class="col">
+          <img
+               class="roundimg right"
+               src="<%- player.avatar %>"
+               />
+        </div>
+        <h1 class="col-7 opensans" style="font-weight:900; text-align:left;">
+          <%- player.nickname %>
+        </h1>
+    </div>
+      <p>
+        Coins: <%- player.coins %>
+      </p>
+      <p>
+        Roses: <%- player.roses %>
+      </p>
+      <p>
+        XP: <%- player.xp %>
+      </p>
+      <hr>
+      <h3>
+        Statistics:
+      </h3>
+      <p>
+          Games played: <%- allGamesPlayed.length + player.suicides %><br>
+          Wins: <%- player.wins.length %> (<%- Math.floor(player.wins.length/(allGamesPlayed.length + player.suicides)*10000)/100 %>%)<br>
+          Defeats: <%- player.loses.length %> (<%- Math.floor(player.loses.length/(allGamesPlayed.length + player.suicides)*10000)/100 %>%)<br>
+          Suicides: <%- player.suicides %> (<%- Math.floor(player.suicides/(allGamesPlayed.length + player.suicides)*10000)/100 %>%)<br>
+
+      </p>
+      
+      </div>
+    </div>
+    <%- include("partials/footer") %>
+  </body>
+</html>
