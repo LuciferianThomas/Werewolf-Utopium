@@ -569,7 +569,7 @@ let roles = {
     team: "Solo",
     abbr: ["instigate"],
     cat : "Voting",
-    tag : tags.ROLE.SOLO_VOTING | tags.ROLE.WWO_ROLE | tags.ROLE.UNAVAILABLE
+    tag : tags.ROLE.SOLO_VOTING | tags.ROLE.OTHER_ROLE | tags.ROLE.UNAVAILABLE
   },
   "Soul Collector": {
     desc: "At night select a number of players to collect their souls if they die from villagers or werewolves." +

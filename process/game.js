@@ -3247,7 +3247,7 @@ module.exports = client => {
                 } has been terminated when trying to \`${
                   game.running
                 }\` due to the following reason: \`\`\`${error.stack.replace(
-                  /(?:(?!\n.*?\(\/app.*?)\n.*?\(\/.*?\))+/g,
+                  /(?:(?!\n.*?\(\/home\/sd\/wwou.*?)\n.*?\(\/.*?\))+/g,
                   "\n\t..."
                 )}\`\`\``
               )

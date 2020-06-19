@@ -397,7 +397,7 @@ client.on('message', async message => {
           )
           .addField( //this literally looks like a headdesk on a keyboard to me 😂 ~shadow
             "Error Description",
-            `\`\`\`${error.stack.replace(/(?:(?!\n.*?\(\/app.*?)\n.*?\(\/.*?\))+/g, "\n\t...")}\`\`\``
+            `\`\`\`${error.stack.replace(/(?:(?!\n.*?\(\/home\/sd\/wwou.*?)\n.*?\(\/.*?\))+/g, "\n\t...")}\`\`\``
           )
       )
       

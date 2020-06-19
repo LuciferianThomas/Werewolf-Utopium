@@ -47,6 +47,8 @@ module.exports = {
           return await message.author.send("You cannot vote a sorcerer.")
         if (!game.players[vote-1].alive) 
           return await message.author.send("You cannot vote a dead player.")
+        if (vote == gamePlayer.number) 
+        return await message.author.send("You cannot vote yourself.")
         gamePlayer.vote = vote
         
         fn.broadcastTo(
