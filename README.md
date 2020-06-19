@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 # Werewolf Utopium
 
 ## Developers
@@ -12,4 +9,3 @@
 
 ## Retired
 [3061LRTAGSPKJMORMRT](https://glitch.com/@3061LRTAGSPKJMORMRT) (Ashish#0380)  
->>>>>>> ff08bc850b019a1273cdb1244c550700d6766451
