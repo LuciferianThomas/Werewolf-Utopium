@@ -1,0 +1,34 @@
+body{
+  background: #000000
+}
+pre {
+  white-space: pre-wrap;
+  color: white;
+  font-size: 15px;
+/*   padding: 1em; */
+}
+.error{
+  background-color: #FF0000;
+  color: #FFFFFF;
+}
+.phase{
+  color: #1dabff;
+}
+.action{
+  color: #00FF00;
+}
+.warn{
+  color: #FFD700;
+}
+.join{
+  color: #43B581;
+}
+.leave{
+  color: #F04947;
+}
+.spectate{
+  color: #43B581;
+}
+.result{
+  color: #FDDD88;
+}

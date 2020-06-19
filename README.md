@@ -1,2 +1,15 @@
-# Werewolf-Utopium
-Werewolf Utopium - a Werewolf Online simulation bot on Discord!
+<<<<<<< HEAD
+
+=======
+# Werewolf Utopium
+
+## Developers
+[LuciferianThomas](https://glitch.com/@LuciferianThomas) (LuciferianThomas#0666)   
+[thewilloftheshadow](https://glitch.com/@thewilloftheshadow) (TheShadow#8124) ([ShadowDevelopment](https://github.com/thewilloftheshadow))
+
+## Helpers
+[SomethingMysterious](https://glitch.com/@SomethingMysterious) (SomethingMysterious#3933)
+
+## Retired
+[3061LRTAGSPKJMORMRT](https://glitch.com/@3061LRTAGSPKJMORMRT) (Ashish#0380)  
+>>>>>>> ff08bc850b019a1273cdb1244c550700d6766451

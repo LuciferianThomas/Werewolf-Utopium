@@ -1,0 +1,113 @@
+border-radius: 10  border-radius: 106.rolesdiv {
+  padding-top: 100px;
+  background-color: white;
+  color: black;
+}
+.fredoka {
+  font-family: "Fredoka One";
+}
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+.padtop {
+  padding-top: 50px;
+}
+.bold{
+  font-weight: 900;
+}
+.semibold{
+  font-weight: 600;
+}
+.center {
+  text-align: center;
+}
+figure {
+  position: relative;
+  padding-right: 15px;
+  padding-left: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 200px;
+  height: 175px;
+}
+.gridblock {
+  display: inline-block;
+}
+#title {
+  padding-bottom: 20px;
+}
+.roundimg {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.right{
+  float: right;
+}
+.vertcenter{
+  vertical-align: middle;
+}
+.logo{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.logo h1{
+  line-height: 128px;
+}
+.roleitem{
+  color: #000000;
+}
+.roleitem:hover {
+  color: #999999;
+  /*   text-decoration: underline; */
+  cursor: pointer;
+}
+.rolefilter{
+  border-radius: 10px;
+  border: 1px solid #999999;
+}
+.rolesdiv{
+  padding-top:20px;
+}
+.hidden{
+  display: none;
+}
+.shown{
+  display: block;
+}
+.profileblock{
+  border-radius: 10px;
+  border: 1px solid #999999;
+}
+.loading{
+  animation-iteration-count: infinite;
+  z-index: 1050;
+  padding-top: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+[data-theme="dark"] {
+  background-color: #111 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .bg-light {
+  background-color: #333 !important;
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: #000 !important;
+}
+
+[data-theme="dark"] .bg-black {
+  background-color: #eee !important;
+}
+
+.addccordion .dcard-header:after {
+  font-family: 'FontAwesome';  
+  content: "\f068";
+  float: right; 
+}
+.addccordion .dcard-header.collapsed:after {
+  /* symbol for "collapsed" panels */
+  content: "\f067"; 
+} 
