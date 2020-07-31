@@ -1,0 +1,1507 @@
+{
+  "704680466837667951": {
+    "u": 0,
+    "t": 1588079315624,
+    "m": "__***`Werewolf Voting Hands`***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704680466518900806/vote_werewolves_selected3x.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704680466703187988/vote_werewolves3x.png"
+      }
+    ]
+  },
+  "704680556662751232": {
+    "u": 0,
+    "t": 1588079337040,
+    "m": "__***`Random Wolf`***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704680556507693086/icon_random_werewolf_filled.png"
+      }
+    ]
+  },
+  "704680660492877955": {
+    "u": 0,
+    "t": 1588079361795,
+    "m": "__***```Solo Killers```***__"
+  },
+  "704681264665329674": {
+    "u": 0,
+    "t": 1588079505841,
+    "m": "__***Arsonist***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704681264485236806/icon_arsonist_filled.png"
+      }
+    ]
+  },
+  "704681345292697711": {
+    "u": 0,
+    "t": 1588079525064,
+    "m": "*Arsonist douse*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704681345095434350/arsonist_douse.png"
+      }
+    ]
+  },
+  "704681407360008286": {
+    "u": 0,
+    "t": 1588079539862,
+    "m": "*Arsonist doused*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704681407292768346/arsonist_doused.png"
+      }
+    ]
+  },
+  "704681487890645073": {
+    "u": 0,
+    "t": 1588079559062,
+    "m": "*Arsonist ignite*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704681487814885396/1588071013022.png"
+      }
+    ]
+  },
+  "704681679561818183": {
+    "u": 0,
+    "t": 1588079604760,
+    "m": "__***Bandit***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704681679805218826/icon_bandit_filled-1-1.png"
+      }
+    ]
+  },
+  "704681778111315988": {
+    "u": 0,
+    "t": 1588079628256,
+    "m": "*Bandit select Accomplice*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704681777855332382/bandit_select_accomplice-1.png"
+      }
+    ]
+  },
+  "704681902073708654": {
+    "u": 0,
+    "t": 1588079657811,
+    "m": "*Bandit select Kill*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704681901922844761/bandit_select_kill-1.png"
+      }
+    ]
+  },
+  "704682071053959198": {
+    "u": 0,
+    "t": 1588079698099,
+    "m": "___Accomplice___",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704682070907289720/icon_accomplice_filled-1-1.png"
+      }
+    ]
+  },
+  "704682234615038052": {
+    "u": 0,
+    "t": 1588079737095,
+    "m": "*Accomplice select Kill*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704682234367705186/accomplice_select_kill-1.png"
+      }
+    ]
+  },
+  "704682535925317642": {
+    "u": 0,
+    "t": 1588079808933,
+    "m": "__***Bomber***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704682535669596180/icon_bomber_filled.png"
+      }
+    ]
+  },
+  "704682623892455564": {
+    "u": 0,
+    "t": 1588079829906,
+    "m": "*Bomber Bomb build*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704682623485739018/bomber_bomb_build.png"
+      }
+    ]
+  },
+  "704682999903551548": {
+    "u": 0,
+    "t": 1588079919554,
+    "m": "__***Cannibal***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704682999526195220/icon_cannibal_filled-1.png"
+      }
+    ]
+  },
+  "704683156162478110": {
+    "u": 0,
+    "t": 1588079956809,
+    "m": "*Cannibal eat*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704683155784990720/cannibal_eat.png"
+      }
+    ]
+  },
+  "704683340166463639": {
+    "u": 0,
+    "t": 1588080000679,
+    "m": "__***Corruptor***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704683339830788126/icon_corruptor_filled-1.png"
+      }
+    ]
+  },
+  "704683414694920223": {
+    "u": 0,
+    "t": 1588080018448,
+    "m": "*Corruptor Glitched*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704683414728605733/corruptor_glitch_filled.png"
+      }
+    ]
+  },
+  "704683600708239361": {
+    "u": 0,
+    "t": 1588080062797,
+    "m": "__***Illusionist***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704683600653582386/icon_illusionist_filled-1.png"
+      }
+    ]
+  },
+  "704683676839182406": {
+    "u": 0,
+    "t": 1588080080948,
+    "m": "*Illusionist Delude*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704683676675473478/illusionist_delude_sticker.png"
+      }
+    ]
+  },
+  "704683944997683310": {
+    "u": 0,
+    "t": 1588080144882,
+    "m": "*Illusionist Kill*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704683944821391470/illusionist_kill_sticker.png"
+      }
+    ]
+  },
+  "704684514512994345": {
+    "u": 0,
+    "t": 1588080280665,
+    "m": "__***Sect Leader***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704684514714058792/icon_sect_leader_filled.png"
+      }
+    ]
+  },
+  "704684774530351188": {
+    "u": 0,
+    "t": 1588080342658,
+    "m": "*Sect Member Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704684774727614505/icon_sect_member_filled.png"
+      }
+    ]
+  },
+  "704684879073378334": {
+    "u": 0,
+    "t": 1588080367583,
+    "m": "__***Serial Killer***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704684878880309338/icon_serial_killer_filled.png"
+      }
+    ]
+  },
+  "704684972551700580": {
+    "u": 0,
+    "t": 1588080389870,
+    "m": "*Serial Killer Kill Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704684972233195632/serial_killer_knife.png"
+      }
+    ]
+  },
+  "704685133411647548": {
+    "u": 0,
+    "t": 1588080428222,
+    "m": "__***Zombie***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704685132920913921/icon_zombie_filled.png"
+      }
+    ]
+  },
+  "704685194384244846": {
+    "u": 0,
+    "t": 1588080442759,
+    "m": "*Zombie bitten*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704685193906225152/zombie_bitten.png"
+      }
+    ]
+  },
+  "704685315788374148": {
+    "u": 0,
+    "t": 1588080471704,
+    "m": "__***`Zombie Voting Hands`***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704685315327000656/vote_zombie_selected.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704685315633315920/vote_zombie.png"
+      }
+    ]
+  },
+  "704685505685749810": {
+    "u": 0,
+    "t": 1588080516979,
+    "m": "__***```Random Solo Killer```***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704685505408794774/random-killer.png"
+      }
+    ]
+  },
+  "704685704751480863": {
+    "u": 0,
+    "t": 1588080564440,
+    "m": "__***```Random Role```***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704685704931967026/icon_random_all_filled.png"
+      }
+    ]
+  },
+  "704687007485394947": {
+    "u": 0,
+    "t": 1588080875036,
+    "m": "__***```Gold```***__"
+  },
+  "704687138104410213": {
+    "u": 0,
+    "t": 1588080906178,
+    "m": "__***5 Gold***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704687135898468502/silver_coin3x-1.png"
+      }
+    ]
+  },
+  "704687318610477058": {
+    "u": 0,
+    "t": 1588080949214,
+    "m": "__***100 Gold***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704687317994176542/100Gold.png"
+      }
+    ]
+  },
+  "704687406862827550": {
+    "u": 0,
+    "t": 1588080970255,
+    "m": "__***300 Gold***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704687406657568808/JPEG_20191003_140536.jpg"
+      }
+    ]
+  },
+  "704687721624371201": {
+    "u": 0,
+    "t": 1588081045300,
+    "m": "__***600 Gold***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704687721712582836/JPEG_20191003_140555.jpg"
+      }
+    ]
+  },
+  "704687840516374629": {
+    "u": 0,
+    "t": 1588081073646,
+    "m": "__***3500 Gold***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704687840352796682/JPEG_20191003_140648.jpg"
+      }
+    ]
+  },
+  "704687927459971113": {
+    "u": 0,
+    "t": 1588081094375,
+    "m": "__***6000 Gold***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704687927245930536/6000Gold.png"
+      }
+    ]
+  },
+  "704688151796384026": {
+    "u": 0,
+    "t": 1588081147861,
+    "m": "__***250000 Gold***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704688151985389568/JPEG_20191003_140741.jpg"
+      }
+    ]
+  },
+  "704688287872450620": {
+    "u": 0,
+    "t": 1588081180304,
+    "m": "__***```Roses```***__"
+  },
+  "704688366649737218": {
+    "u": 0,
+    "t": 1588081199086,
+    "m": "__***Single Rose***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704688366515388436/assets_images_rose-1.png"
+      }
+    ]
+  },
+  "704688475806367744": {
+    "u": 0,
+    "t": 1588081225111,
+    "m": "__***Rose Bouquet***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704688475596914698/rose_large_sticker_server3x-2.png"
+      }
+    ]
+  },
+  "704688911187705866": {
+    "u": 0,
+    "t": 1588081328914,
+    "m": "__***```Day Time```***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704688910655291463/day_time.png"
+      }
+    ]
+  },
+  "704689132382978078": {
+    "u": 0,
+    "t": 1588081381651,
+    "m": "__***```Night Time```***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704689131476746280/night_time.png"
+      }
+    ]
+  },
+  "704690917298143293": {
+    "u": 0,
+    "t": 1588081807208,
+    "m": "__***```Gems```***__"
+  },
+  "704690990409318412": {
+    "u": 0,
+    "t": 1588081824639,
+    "m": "__***400 Gems***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704690990606450778/assets_images_gem_pile_1.png"
+      }
+    ]
+  },
+  "704691144495202384": {
+    "u": 0,
+    "t": 1588081861376,
+    "m": "__***820 Gems***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704691144281554994/assets_images_gem_pile_2.png"
+      }
+    ]
+  },
+  "704691267287777300": {
+    "u": 0,
+    "t": 1588081890652,
+    "m": "__***1700 Gems***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704691267140845708/assets_images_gem_pile_3.png"
+      }
+    ]
+  },
+  "704691362330574908": {
+    "u": 0,
+    "t": 1588081913312,
+    "m": "__***3600 Gems***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704691362192162976/assets_images_gem_pile_4.png"
+      }
+    ]
+  },
+  "704691455817547846": {
+    "u": 0,
+    "t": 1588081935601,
+    "m": "__***7300 Gems***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704691455628673115/assets_images_gem_pile_5.png"
+      }
+    ]
+  },
+  "704691565305790534": {
+    "u": 0,
+    "t": 1588081961705,
+    "m": "__***15000 Gems***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704691565016252456/assets_images_gem_pile_6.png"
+      }
+    ]
+  },
+  "704668012166512661": {
+    "u": 0,
+    "t": 1588076346199,
+    "m": "*Red Lady Visit Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704668012313182248/20190822_104018.png"
+      }
+    ]
+  },
+  "704668094857216008": {
+    "u": 0,
+    "t": 1588076365914,
+    "m": "__***Santa Claus***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704668094789976104/Santa.png"
+      }
+    ]
+  },
+  "704668248066752562": {
+    "u": 0,
+    "t": 1588076402442,
+    "m": "*Santa Claus Gift*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704668247764500490/santa_gift.png"
+      }
+    ]
+  },
+  "704668356929650788": {
+    "u": 0,
+    "t": 1588076428397,
+    "m": "*Santa Claus Ho Ho Ho*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704668356774723674/santa_hohoho-1-1.png"
+      }
+    ]
+  },
+  "704668442183204915": {
+    "u": 0,
+    "t": 1588076448723,
+    "m": "__***Sheriff***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704668442107838554/icon_sheriff_filled-1.png"
+      }
+    ]
+  },
+  "704668500899397712": {
+    "u": 0,
+    "t": 1588076462722,
+    "m": "*Sheriff Oversee*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704668500593213440/sheriff_oversee.png"
+      }
+    ]
+  },
+  "704669661853253632": {
+    "u": 0,
+    "t": 1588076739515,
+    "m": "__***Villager***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704669661681156137/icon_villager_filled-1.png"
+      }
+    ]
+  },
+  "704669727762677823": {
+    "u": 0,
+    "t": 1588076755229,
+    "m": "__***Gunner***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704669727599099944/icon_gunner_filled.png"
+      }
+    ]
+  },
+  "704669783324360704": {
+    "u": 0,
+    "t": 1588076768476,
+    "m": "*Gunner Bullet*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704669783060250624/gunner_voting_shoot.png"
+      }
+    ]
+  },
+  "704669843214827521": {
+    "u": 0,
+    "t": 1588076782755,
+    "m": "__***Jailer***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704669843152175224/icon_jailer_filled.png"
+      }
+    ]
+  },
+  "704669901176176660": {
+    "u": 0,
+    "t": 1588076796574,
+    "m": "*Jailer Handcuffs*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704669901020856421/jailer_handcuffs_sticker3x.png"
+      }
+    ]
+  },
+  "704669946852147281": {
+    "u": 0,
+    "t": 1588076807464,
+    "m": "*Jail Bars*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704669946772193380/assets_images_jailer_bars.png"
+      }
+    ]
+  },
+  "704670026682204160": {
+    "u": 0,
+    "t": 1588076826497,
+    "m": "__***Marksman***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670026493460570/icon_marksman_filled.png"
+      }
+    ]
+  },
+  "704670090079109131": {
+    "u": 0,
+    "t": 1588076841612,
+    "m": "*Marksman Target Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670090263527504/marksman_mark3x.png"
+      }
+    ]
+  },
+  "704670137751437322": {
+    "u": 0,
+    "t": 1588076852978,
+    "m": "*Marksman shoot*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670137529270282/marksman_shoot3x.png"
+      }
+    ]
+  },
+  "704670203983822889": {
+    "u": 0,
+    "t": 1588076868769,
+    "m": "__***Medium***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670203828764762/icon_medium_filled.png"
+      }
+    ]
+  },
+  "704670288864084028": {
+    "u": 0,
+    "t": 1588076889006,
+    "m": "*Medium Revive*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670288679272538/medium_heart_sticker3x.png"
+      }
+    ]
+  },
+  "704670480954687548": {
+    "u": 0,
+    "t": 1588076934804,
+    "m": "__***`Random Regular Villager`***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670480786784346/icon_random_villager_normal_filled.png"
+      }
+    ]
+  },
+  "704670590510039132": {
+    "u": 0,
+    "t": 1588076960924,
+    "m": "__***`Strong Random Villager`***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670590593663046/icon_random_villager_strong_filled.png"
+      }
+    ]
+  },
+  "704670970581090364": {
+    "u": 0,
+    "t": 1588077051540,
+    "m": "__***```Villager Voting Signs```***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670968668356693/vote_day_voter_skin_13x.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670968932728923/vote_day_voter_skin_23x-1.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670969158959155/vote_day_voter_skin_33x.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670969490571304/vote_day_voter_skin_43x.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670969943293973/vote_day_voter_skin_53x.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704670970350403664/vote_day_voter_skin_63x.png"
+      }
+    ]
+  },
+  "704671133819207690": {
+    "u": 0,
+    "t": 1588077090459,
+    "m": "__***```Villager Voting Hands```***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704671133118496878/vote_day_selected3x.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704671133634396200/vote_day3x.png"
+      }
+    ]
+  },
+  "704671793188962374": {
+    "u": 0,
+    "t": 1588077247665,
+    "m": "__***```Solo Voting Roles```***__"
+  },
+  "704671917700939856": {
+    "u": 0,
+    "t": 1588077277351,
+    "m": "__***Headhunter***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704671917558464563/icon_headhunter_filled.png"
+      }
+    ]
+  },
+  "704671971828564068": {
+    "u": 0,
+    "t": 1588077290256,
+    "m": "*Headhunter Target*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704671971690020974/headhunter_target.png"
+      }
+    ]
+  },
+  "704672040627470356": {
+    "u": 0,
+    "t": 1588077306659,
+    "m": "__***Fool***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704672040397045850/icon_fool_filled-1.png"
+      }
+    ]
+  },
+  "704672282248740874": {
+    "u": 0,
+    "t": 1588077364266,
+    "m": "__***`Random Voting Role`***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704672282093551726/icon_random_voting_filled.png"
+      }
+    ]
+  },
+  "704672617390407750": {
+    "u": 0,
+    "t": 1588077444170,
+    "m": "__***```Werewolves```***__"
+  },
+  "704672797305208903": {
+    "u": 0,
+    "t": 1588077487065,
+    "m": "__***Alpha Werewolf***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704672797141631016/icon_alpha_werewolf_filled.png"
+      }
+    ]
+  },
+  "704672895800180987": {
+    "u": 0,
+    "t": 1588077510548,
+    "m": "__***Werewolf Berserk***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704672895632277619/icon_werewolf_beserk_filled.png"
+      }
+    ]
+  },
+  "704672974275346463": {
+    "u": 0,
+    "t": 1588077529258,
+    "m": "*Werewolf Berserk Frenzy*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704672974279671858/werewolf_berserk_frenzy3x.png"
+      }
+    ]
+  },
+  "704673144148852776": {
+    "u": 0,
+    "t": 1588077569759,
+    "m": "__***Guardian Werewolf***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704673143997988972/icon_guardian_wolf_filled-1.png"
+      }
+    ]
+  },
+  "704673212977381387": {
+    "u": 0,
+    "t": 1588077586169,
+    "m": "*Guardian Werewolf Save Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704673212562145301/1576598210453.png"
+      }
+    ]
+  },
+  "704673302169518151": {
+    "u": 0,
+    "t": 1588077607434,
+    "m": "__***Junior Werewolf***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704673301955346442/icon_junior_werewolf_filled-1.png"
+      }
+    ]
+  },
+  "704673390933311628": {
+    "u": 0,
+    "t": 1588077628597,
+    "m": "*Junior Werewolf Avenge Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704673390530789486/junior_werewolf_selection_marker3x-1.png"
+      }
+    ]
+  },
+  "704673496898207845": {
+    "u": 0,
+    "t": 1588077653861,
+    "m": "__***Kitten Werewolf***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704673496688754759/icon_kitten_wolf_filled.png"
+      }
+    ]
+  },
+  "704673830961938632": {
+    "u": 0,
+    "t": 1588077733508,
+    "m": "*Kitten Werewolf Convert Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704673830794428486/kitten_wolf_convert_sticker.png"
+      }
+    ]
+  },
+  "704673966131773521": {
+    "u": 0,
+    "t": 1588077765735,
+    "m": "__***Nightmare Werewolf***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704673965930577940/icon_nightmare_werewolf_filled.png"
+      }
+    ]
+  },
+  "704674091717623898": {
+    "u": 0,
+    "t": 1588077795677,
+    "m": "*Nightmare Werewolf Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704674091361107998/nightmare_werewolf_ghost_dark_filled.png"
+      }
+    ]
+  },
+  "704674197896560691": {
+    "u": 0,
+    "t": 1588077820992,
+    "m": "*Nightmare Werewolf Selected*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704674197762211940/nightmare_werewolf_ghost.png"
+      }
+    ]
+  },
+  "704674313592242228": {
+    "u": 0,
+    "t": 1588077848576,
+    "m": "*Nightmare Werewolf Nightmare*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704674313563013170/nightmare_werewolf_ghosts.png"
+      }
+    ]
+  },
+  "704674504143536229": {
+    "u": 0,
+    "t": 1588077894007,
+    "m": "__***Werewolf Paci***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704674503686488098/icon_wolf_pacifist_filled-1-1.png"
+      }
+    ]
+  },
+  "704674616836227072": {
+    "u": 0,
+    "t": 1588077920875,
+    "m": "__***Regular Werewolf***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704674616701878272/icon_werewolf_filled-2.png"
+      }
+    ]
+  },
+  "704674859510267915": {
+    "u": 0,
+    "t": 1588077978733,
+    "m": "__***Wolf Seer***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704674859505942568/icon_wolf_seer_filled.png"
+      }
+    ]
+  },
+  "704674918922715266": {
+    "u": 0,
+    "t": 1588077992898,
+    "m": "*Wolf Seer Resign*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704674918775783474/1588071278205.png"
+      }
+    ]
+  },
+  "704675153530847313": {
+    "u": 0,
+    "t": 1588078048833,
+    "m": "__***Shadow Wolf***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704675153195565076/icon_shadow_wolf_filled-1-1.png"
+      }
+    ]
+  },
+  "704675244039864380": {
+    "u": 0,
+    "t": 1588078070412,
+    "m": "*Shadow Wolf Selected*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704675243683479612/shadow_wolf_selected-1.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704675243893194862/shadow_wolf_selected-2.png"
+      }
+    ]
+  },
+  "704675352404033596": {
+    "u": 0,
+    "t": 1588078096248,
+    "m": "*Shadow Wolf Double Voting*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704675352231936000/shadow_wolf_double_voting-1.png"
+      }
+    ]
+  },
+  "704680017107484702": {
+    "u": 0,
+    "t": 1588079208400,
+    "m": "__***Wolf Shaman***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704680016650305566/icon_wolf_shaman_filled.png"
+      }
+    ]
+  },
+  "704680086347055114": {
+    "u": 0,
+    "t": 1588079224908,
+    "m": "*Wolf Shaman Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704680086217031751/wolf_shaman_enchantement_marker3x.png"
+      }
+    ]
+  },
+  "704680253204726025": {
+    "u": 0,
+    "t": 1588079264690,
+    "m": "__***Sorcerer***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704680253003661312/icon_sorcerer_filled.png"
+      }
+    ]
+  },
+  "704647260293824543": {
+    "u": 0,
+    "t": 1588071398567,
+    "m": "__***Aura Seer***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704647260067070032/icon_aura_seer_filled.png"
+      }
+    ]
+  },
+  "704649495664656405": {
+    "u": 0,
+    "t": 1588071931521,
+    "m": "*Aura Seer Result Good*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704649495094362172/aura_seer_result_good.png"
+      }
+    ]
+  },
+  "704649780709687376": {
+    "u": 0,
+    "t": 1588071999481,
+    "m": "*Aura Seer Result Unknown*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704649780520812596/1588071869913.png"
+      }
+    ]
+  },
+  "704649871608512522": {
+    "u": 0,
+    "t": 1588072021153,
+    "m": "*Aura Seer Result Evil*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704649871277424670/aura_seer_result_evil.png"
+      }
+    ]
+  },
+  "704651623053393941": {
+    "u": 0,
+    "t": 1588072438730,
+    "m": "__***Seer***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704651622625837187/IMG_20200428_131004.png"
+      }
+    ]
+  },
+  "704652702172446821": {
+    "u": 0,
+    "t": 1588072696012,
+    "m": "__***Seer Apprentice***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704652701946085477/Seer_Apprentice_1.png"
+      }
+    ]
+  },
+  "704652896666517524": {
+    "u": 0,
+    "t": 1588072742383,
+    "m": "__***Spirit Seer***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704652896494419990/icon_spirit_seer_filled.png"
+      }
+    ]
+  },
+  "704653000479866922": {
+    "u": 0,
+    "t": 1588072767134,
+    "m": "*Spirit Seer Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704653000546713602/spirit_seer_select_target.png"
+      }
+    ]
+  },
+  "704653304499798046": {
+    "u": 0,
+    "t": 1588072839618,
+    "m": "*Spirit Seer Result didn't kill*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704653304256397376/spirit_seer_not_killed.png"
+      }
+    ]
+  },
+  "704653390172389377": {
+    "u": 0,
+    "t": 1588072860044,
+    "m": "*Spirit Seer Result did kill*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704653390097154058/spirit_seer_killed.png"
+      }
+    ]
+  },
+  "704653809523228724": {
+    "u": 0,
+    "t": 1588072960025,
+    "m": "__***Beast Hunter***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704653809594400789/icon_beast_hunter_filled.png"
+      }
+    ]
+  },
+  "704654109730537513": {
+    "u": 0,
+    "t": 1588073031600,
+    "m": "*Beast Hunter Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654109487268000/beast_hunter_select.png"
+      }
+    ]
+  },
+  "704654249711108096": {
+    "u": 0,
+    "t": 1588073064974,
+    "m": "*Beast Hunter Trap Construction*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654249547530270/beast_hunter_trap_construction3x.png"
+      }
+    ]
+  },
+  "704654322285281290": {
+    "u": 0,
+    "t": 1588073082277,
+    "m": "*Beast Hunter Trap Set*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654321991811072/beast_hunter_trap_active.png"
+      }
+    ]
+  },
+  "704654443622301777": {
+    "u": 0,
+    "t": 1588073111206,
+    "m": "__***Bodyguard***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654443185963058/icon_bodyguard_filled.png"
+      }
+    ]
+  },
+  "704654489042419724": {
+    "u": 0,
+    "t": 1588073122035,
+    "m": "*Bodyguard Shield*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654489302335508/bodyguard_voting_protect.png"
+      }
+    ]
+  },
+  "704654746446856193": {
+    "u": 0,
+    "t": 1588073183405,
+    "m": "__***Doctor***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654746295992420/icon_doctor_filled-1.png"
+      }
+    ]
+  },
+  "704654824943124560": {
+    "u": 0,
+    "t": 1588073202120,
+    "m": "*Doctor Protect*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654824540733480/doctor_voting_protect.png"
+      }
+    ]
+  },
+  "704654939141439561": {
+    "u": 0,
+    "t": 1588073229347,
+    "m": "__***Forger***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704654939200290866/icon_forger_filled-1-1.png"
+      }
+    ]
+  },
+  "704655096432033852": {
+    "u": 0,
+    "t": 1588073266848,
+    "m": "*Forger forge Shield*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704655095379394560/forger_forge_shield-1.png"
+      }
+    ]
+  },
+  "704655218234753034": {
+    "u": 0,
+    "t": 1588073295888,
+    "m": "*Forger given Shield*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704655218037489674/forger_given_shield-1.png"
+      }
+    ]
+  },
+  "704655321473482792": {
+    "u": 0,
+    "t": 1588073320502,
+    "m": "*Forger forge Sword*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704655321276219402/forger_forge_sword-1.png"
+      }
+    ]
+  },
+  "704655513048186881": {
+    "u": 0,
+    "t": 1588073366177,
+    "m": "*Forger given Sword*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704655513027346512/forger_given_sword-1.png"
+      }
+    ]
+  },
+  "704655596313640961": {
+    "u": 0,
+    "t": 1588073386029,
+    "m": "__***Tough Guy***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704655596343001123/icon_tough_guy_filled.png"
+      }
+    ]
+  },
+  "704664604491382835": {
+    "u": 0,
+    "t": 1588075533746,
+    "m": "__***Witch***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704664604537782354/icon_witch_filled-1.png"
+      }
+    ]
+  },
+  "704664693448638535": {
+    "u": 0,
+    "t": 1588075554955,
+    "m": "*Witch Poison*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704664693255700570/witch_poison_sticker3x.png"
+      }
+    ]
+  },
+  "704664756950401064": {
+    "u": 0,
+    "t": 1588075570095,
+    "m": "*Witch Healing Potion*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704664756560330834/witch_elixir_sticker3x.png"
+      }
+    ]
+  },
+  "704664824310923295": {
+    "u": 0,
+    "t": 1588075586155,
+    "m": "__***Avenger***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704664824549736488/icon_avenger_filled.png"
+      }
+    ]
+  },
+  "704664890165690388": {
+    "u": 0,
+    "t": 1588075601856,
+    "m": "*Avenger Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704664889892929601/avenger_selection_marker.png"
+      }
+    ]
+  },
+  "704665022814486633": {
+    "u": 0,
+    "t": 1588075633482,
+    "m": "__***Cupid***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665022877401238/icon_cupid_filled.png"
+      }
+    ]
+  },
+  "704665093010620496": {
+    "u": 0,
+    "t": 1588075650218,
+    "m": "*Cupid Lovers Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665092695916624/cupid_select_lovers_sticker.png"
+      }
+    ]
+  },
+  "704665220332650576": {
+    "u": 0,
+    "t": 1588075680574,
+    "m": "__***Cursed***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665219854762105/icon_cursed_human_filled-2.png"
+      }
+    ]
+  },
+  "704665345163788298": {
+    "u": 0,
+    "t": 1588075710336,
+    "m": "__***Detective***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665344597557348/icon_detective_filled.png"
+      }
+    ]
+  },
+  "704665398095642696": {
+    "u": 0,
+    "t": 1588075722956,
+    "m": "*Detective Result Equal*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665398263545869/detective_result_equal.png"
+      }
+    ]
+  },
+  "704665453695467570": {
+    "u": 0,
+    "t": 1588075736212,
+    "m": "*Detective Result not Equal*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665453460717629/detective_result_not_equal.png"
+      }
+    ]
+  },
+  "704665537770422302": {
+    "u": 0,
+    "t": 1588075756257,
+    "m": "__***Flowerchild***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665537560445008/flower_child.png"
+      }
+    ]
+  },
+  "704665605042733149": {
+    "u": 0,
+    "t": 1588075772296,
+    "m": "*Flowerchild Save Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665605042864238/path4431.png"
+      }
+    ]
+  },
+  "704665677759512688": {
+    "u": 0,
+    "t": 1588075789633,
+    "m": "__***Fortune Teller***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665677570768916/ft2_2.png"
+      }
+    ]
+  },
+  "704665781635514398": {
+    "u": 0,
+    "t": 1588075814399,
+    "m": "*Fortune Teller Cards*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665780893253692/1577109321315.png"
+      },
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665781475999754/1577109425984.png"
+      }
+    ]
+  },
+  "704665994647568405": {
+    "u": 0,
+    "t": 1588075865185,
+    "m": "__***Grumpy Grandma***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704665994756358144/icon_grumpy_grandma_filled.png"
+      }
+    ]
+  },
+  "704667154271699015": {
+    "u": 0,
+    "t": 1588076141661,
+    "m": "__***Loudmouth***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667153919377436/icon_loudmouth_filled-1-1.png"
+      }
+    ]
+  },
+  "704667242176053338": {
+    "u": 0,
+    "t": 1588076162619,
+    "m": "*Loudmouth Select*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667241903554666/loudmouth_select_sticker-1.png"
+      }
+    ]
+  },
+  "704667336770191380": {
+    "u": 0,
+    "t": 1588076185172,
+    "m": "*Loudmouth Revealed*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667336568733766/loudmouth_revealed-1.png"
+      }
+    ]
+  },
+  "704667425492172885": {
+    "u": 0,
+    "t": 1588076206325,
+    "m": "__***Mayor***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667425530052638/icon_mayor_filled.png"
+      }
+    ]
+  },
+  "704667478143270993": {
+    "u": 0,
+    "t": 1588076218878,
+    "m": "*Mayor Reveal*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667478193733672/mayor_reveal3x.png"
+      }
+    ]
+  },
+  "704667548376891483": {
+    "u": 0,
+    "t": 1588076235623,
+    "m": "__***Pacifist***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667548075032617/icon_pacifist_filled.png"
+      }
+    ]
+  },
+  "704667597668483112": {
+    "u": 0,
+    "t": 1588076247375,
+    "m": "__***President***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667597626409040/icon_president_filled.png"
+      }
+    ]
+  },
+  "704667673581060180": {
+    "u": 0,
+    "t": 1588076265474,
+    "m": "__***Priest***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667673681854514/icon_priest_filled.png"
+      }
+    ]
+  },
+  "704667722147168308": {
+    "u": 0,
+    "t": 1588076277053,
+    "m": "*Priest Holy Water*",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667722084122750/priest_holy_water.png"
+      }
+    ]
+  },
+  "704667958848520222": {
+    "u": 0,
+    "t": 1588076333487,
+    "m": "__***Red Lady***__",
+    "a": [
+      {
+        "url": "https://cdn.discordapp.com/attachments/581504153453592577/704667958693199982/icon_red_lady_filled.png"
+      }
+    ]
+  },
+  "704646931611385917": {
+    "u": 0,
+    "t": 1588071320203,
+    "m": "__***```Villagers```***__"
+  }
+}

@@ -1,0 +1,214 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <title>WWOU - Roles</title>
+    <%- include("partials/header", {title: "Werewolf Utopium's Roles", desc: "The list of all the roles contained in Werewolf Utopium, as well as roles that are currently being developed.", path: path }) %>
+    <script>
+      let activeFilter = "allroles"
+      function collapseload(){
+        $('#rolefilter').collapse()
+      }
+      function showrole(role){$(`#${role}`).modal("show")};
+      function filter(type) {
+        let tc = ['allroles', ...Object.keys(<%- JSON.stringify(tags.ROLE) %>).map(x => `${x.toLowerCase().replace(/_/g,"")}roles`)]
+        for (item of tc)
+        tc.forEach(item => {
+          $(`.${item}`).hide(1000)
+        })
+        $(`.${type}`).show(1000)
+        activeFilter = type
+      }
+      function showfilter(){$('filtermodal').modal("show")}
+      function iconOnly() {
+        if ($(`.allroles`).css("display") == "inline-block") {
+          $(`.allroles`).css("display", "block")
+          $(`.rolenametext`).show(1000)
+          filter(activeFilter)
+        }
+        else {
+          $(`.allroles`).css("display", "inline-block")
+          $(`.rolenametext`).hide(1000)
+          filter(activeFilter)
+        }
+      }
+    </script>
+  </head>
+  <body onload="collapseload()">
+    <div id="content">
+    <%- include("partials/navbar", {"user": user}) %>
+    <!-- <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#rolefilter">Filter roles</button> -->
+    <div class="rolesdiv container">
+      <h1 class="center bold" id="title">
+        List of Werewolf Utopium roles
+      </h1>
+      <div class="row">
+        <div id="rolefilter" class="col-md-3 accordion">
+          <div class="card border-bottom">
+          <div class="bold card-header" id="headingOne">
+            <button class="btn btn-link bold" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Filter By:
+            </button>
+          </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#rolefilter">
+              <div class="card-body">
+          <p class="roleitem bold" onclick="iconOnly()">
+            Display Icons Only
+          </p>
+          <hr>
+          <p class="roleitem bold" onclick="filter('allroles')">
+            All Roles
+          </p>
+          <hr>
+          <% for (aura of ['Good', 'Unknown', 'Evil']) { %>
+          <p class="roleitem bold" onclick="filter('<%- aura.toLowerCase() %>aura')">
+            <%- aura %> Aura
+          </p>
+          <% } %>
+          <hr>
+          <% for (tag of Object.keys(tags.ROLE)) { %>
+          <%   if (tag.startsWith("SEEN_AS")) continue; %>
+          <p class="roleitem bold" onclick="filter('<%- tag.toLowerCase().replace(/_/g,"") %>roles')">
+            <%- (tag.replace(/_/g, " ").toUpperCase()[0] + tag.replace(/_/g, " ").toLowerCase().slice(1)).split(' ').map(x => x[0].toUpperCase() + x.slice(1)).join(' ').replace(/(WWOWC|WWC|WWO)/gi, (char) => char.toUpperCase()) %>
+          </p>
+          <% } %>
+        </div>
+            </div>
+          </div>
+        </div>
+        <div class="roles col-md-9">
+          <% for (role in roles) { %>
+          <p
+             href="#" class="allroles <%- roles[role].tags.join('roles_').replace(/ /g,"").replace(/_/g," ").toLowerCase() %>roles <%- roles[role].aura ? `${roles[role].aura.toLowerCase()}aura` : "" %> roleitem bold"
+             id="p<%- roles[role].cleanname %>"
+             onclick="showrole('<%- roles[role].cleanname %>')")
+             style="font-size:1.5em"
+             >
+            <span style="padding-right:0.5em;"><img
+                 src="<%- roles[role].emoji %>"
+                 style="max-height: 1.75em;
+                        max-width: 1.75em;
+                        padding: calc(1.75em * (1 - <%- roles[role].height %> / <%- roles[role].width %>) / 2) 
+                                 calc(1.75em * (1 - <%- roles[role].width %> / <%- roles[role].height %>) / 2) 
+                                 calc(1.75em * (1 - <%- roles[role].height %> / <%- roles[role].width %>) / 2) 
+                                 calc(1.75em * (1 - <%- roles[role].width %> / <%- roles[role].height %>) / 2)"
+                 ></span><span class='rolenametext'><%- roles[role].name %></span></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <% for (role in roles) { %>
+    <div
+         class="modal fade"
+         id="<%- roles[role].cleanname %>"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="<%- roles[role].cleanname %>title"
+         aria-hidden="true"
+         >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title bold" id="<%- roles[role].cleanname %>title">
+              <img src="<%- roles[role].emoji %>" width="50"> <%- roles[role].name %>
+            </h5>
+            <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Dismiss"
+                    >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><%- roles[role].desc %></p>
+            <p>
+              <% if (roles[role].team) { %><span class="semibold">Team:</span> <%- roles[role].team %><br /><% } %>
+              <% if (roles[role].aura) { %><span class="semibold">Aura:</span> <%- roles[role].aura %><% } %>
+            </p>
+            <p>
+              <span class="semibold">Role Tags:</span><br />
+              <%- roles[role].tags ? roles[role].tags.join(', ').split(' ').map(x => x[0].toUpperCase() + x.slice(1)).join(' ').replace(/(WWOWC|WWC|WWO)/gi, (char) => char.toUpperCase()) : "None" %>
+            </p>
+            <% if (roles[role].cmds.length) { %>
+            <p>
+              <span class="semibold">Action Commands:</span><br />
+              w!<%- roles[role].name == "Mayor" ? "reveal mayor" : roles[role].cmds.join(", w!") %>
+            </p>
+            <% } %>
+            <p>
+              <% role %>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                    >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <div
+         class="modal fade"
+         id="filtermodal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="filtertitle"
+         aria-hidden="true"
+         >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title bold" id="filtertitle">
+              Filter Role List
+            </h5>
+            <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="roleitem bold" onclick="filter('allroles')">
+              All Roles
+            </p>
+            <hr>
+            <% for (aura of ['Good', 'Unknown', 'Evil']) { %>
+            <p class="roleitem bold" onclick="filter('<%- tag.toLowerCase() %>aura')">
+              <%- aura %> Aura
+            </p>
+            <% } %>
+            <hr>
+            <% for (tag of Object.keys(tags.ROLE)) { %>
+            <p class="roleitem bold" onclick="filter('<%- tag.toLowerCase().replace(/_/g,"") %>roles')">
+              <%- (tag.replace(/_/g, " ").toUpperCase()[0] + tag.replace(/_/g, " ").toLowerCase().slice(1)).split(' ').map(x => x[0].toUpperCase() + x.slice(1)).join(' ').replace(/(WWOWC|WWC|WWO)/gi, (char) => char.toUpperCase()) %>
+            </p>
+            <% } %>
+          </div>
+          <div class="modal-footer">
+            <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                    >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <%- include("partials/footer") %>
+  </body>
+</html>

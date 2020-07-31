@@ -1,0 +1,25 @@
+<!DOCTYPE html> 
+<html
+  <head>
+    <title>Werewolf Utopium DM Logs</title>
+    <link rel="stylesheet" href="../log.css">
+<script>
+  var ws = new WebSocket('wss://werewolf-utopium.tk/wsserver');
+  // event emmited when connected
+  ws.onopen = function () {
+    console.log('websocket is connected ...')
+    // sending a send event to websocket server
+    ws.send('connected')
+  }
+  // event emmited when receiving message 
+  ws.onmessage = function (ev) {
+    console.log(ev);
+  }
+</script>
+  </head>
+  <body>
+    <pre class="msgs">
+      
+    </pre>
+  </body>
+</html>
