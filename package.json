@@ -1,0 +1,40 @@
+{
+  "name": "lt-discord-bot-format",
+  "version": "1.0.0",
+  "homepage": "-",
+  "description": "Discord Bot Format by LuciferianThomas",
+  "main": "index.js",
+  "dependencies": {
+    "better-sqlite-pool": "^0.3.0",
+    "canvas": "^2.6.1",
+    "cron": "^1.8.2",
+    "discord.js": "^12.2.0",
+    "discord.js-commando": "^0.10.0",
+    "dotenv": "^8.2.0",
+    "es6-shim": "^0.35.5",
+    "express": "^4.17.1",
+    "fs": "^0.0.2",
+    "handybag": "latest",
+    "http": "^0.0.0",
+    "https": "^1.0.0",
+    "moment": "^2.26.0",
+    "moment-timezone": "^0.5.31",
+    "node-cmd": "^3.0.0",
+    "node-fetch": "^2.6.0",
+    "path": "^0.12.7",
+    "quick.db": "^7.1.1",
+    "striptags": "^3.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node yeet.js"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "keywords": [
+    "unity"
+  ],
+  "author": "LuciferianThomas",
+  "license": "MIT"
+}
