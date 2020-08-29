@@ -11,6 +11,7 @@ const fn = require('/home/utopium/wwou/util/fn.js'),
 
 module.exports = {
   name: "frenzy",
+  aliases: ["berserk", "crazy"],
   gameroles: ["Werewolf Berserk"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
