@@ -11,7 +11,7 @@ const fn = require('/home/utopium/wwou/util/fn.js'),
 
 module.exports = {
   name: "inherit",
-  aliases: ["copy"],
+  aliases: ["copy", "mimic"],
   gameroles: ["Doppelganger"],
   run: async (client, message, args, shared) => {
     let player = players.get(message.author.id)
