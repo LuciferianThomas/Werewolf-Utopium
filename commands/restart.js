@@ -36,7 +36,8 @@ module.exports = {
       })
       temp.set("gamealert", true)
     }
-    if(message.channel.type !== 'dm') temp.set("rebootchan", message.channel.id)
+    temp.set("rebootchan", `${message.channel.type == "dm" ? message.author.id : message.channel.id}`)
+    temp.set("rebootchantype", `${message.channel.type}`)
     fn.addLog("MAIN", `Bot restart in progress, initated by ${message.author.tag}.`)
     await message.channel.send("Rebooting bot, please wait...")
     await fn.sleep(5000)

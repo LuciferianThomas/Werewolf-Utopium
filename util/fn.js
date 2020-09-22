@@ -672,7 +672,8 @@ const death = (client, game, killed, suicide = false) => {
     alive.filter(p => !p.couple && p.role !== "Cupid").length == 0
   ) {
     let lovers = alive.filter(p => p.couple)
-    let cupid = game.players.filter(p => p.role == "Cupid" && !p.suicide)
+    let cupidfil = game.players.filter(p => p.role == "Cupid" && !p.suicide)
+    let cupid = cupidfil[0]
     game.currentPhase = 999
     broadcastTo(
       client,
@@ -888,7 +889,7 @@ const death = (client, game, killed, suicide = false) => {
   if (
     game.players.filter(
       p => p.alive && !(roles[p.role].tag & tags.ROLE.SEEN_AS_VILLAGER)
-    ).length == 0
+    ).length == 0 && game.currentPhase != 999
   ) {
     game.currentPhase = 999
     broadcastTo(

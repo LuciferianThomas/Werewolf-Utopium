@@ -58,8 +58,8 @@ module.exports = {
         new Discord.MessageEmbed()
           .setColor("GREEN")
           .setTitle(`${fn.getEmoji(client, 'green_tick')} Evaluation Success!`)
-          .addField(`Expression`, '```js\n'+args.join(" ")+'```')
-          .addField(`Result`, '```js\n'+out+'```')
+          .addField(`Expression`, `\`\`\`js\n${args.join(" ")}\`\`\``)
+          .addField(`Result`, `\`\`\`js\n${out}\`\`\``)
           .setFooter(client.user.username, client.user.avatarURL({ format: 'png', dynamic: true, size: 1024 }))
       ).catch(console.error)
       else if (out.length <= 2000-8 && (modifier == "-t" || (modifier == "-e" && out.length > 1024-8))) message.channel.send('```js\n'+out+'```')
@@ -76,26 +76,23 @@ module.exports = {
         ).catch(console.error)
       }
 		} catch (e) {
-      // console.log(e.stack)
+      let emsg = `\`\`\`js\n${e.stack.replace(
+        /(?:(?!\n.*?\(\/home\/utopium\/wwou.*?)\n.*?\(\/.*?\))+/g,
+        "\n\t...")}\`\`\``
       var embed = new Discord.MessageEmbed()
         .setColor("RED")
         .setTitle(`${fn.getEmoji(client, "red_tick")} Evaluation Failed!`)
         .addField(`Expression`, "```js\n" + args.join(" ") + "```")
         .addField(
           `Error Message`,
-          "```js\n" +
-            e.stack.replace(
-              /(?:(?!\n.*?\(\/app.*?)\n.*?\(\/.*?\))+/g,
-              "\n\t..."
-            ) +
-            "```"
-          
+          `${emsg.length > 1024 ? "See below" : e}`
         )
         .setFooter(
           client.user.username,
           client.user.avatarURL({ format: "png", dynamic: true, size: 1024 })
         )
       message.channel.send(embed).catch(console.error)
+      if(emsg.length > 1024) message.channel.send(emsg)
 		}
     
 	}

@@ -78,7 +78,7 @@ let roles = {
     nit1: "Select two players to be a love couple (`w!lovers [player1] [player2]`)." +
           " If you do not select two players, they will be randomly selected.",
     tag : tags.ROLE.VILLAGER | tags.ROLE.SEEN_AS_VILLAGER |
-          tags.ROLE.WWO_ROLE | tags.ROLE.UNAVAILABLE | tags.ROLE.ONE_ONLY
+          tags.ROLE.WWO_ROLE | tags.ROLE.TO_BE_TESTED | tags.ROLE.ONE_ONLY
   },
   "Cursed": {
     desc: "You are a villager until the werewolves try to kill you, at which point you become a werewolf." +
@@ -428,7 +428,7 @@ let roles = {
           " If your target is not a villager, you lose your ability!",
     aura: "Evil",
     team: "Werewolves",
-    abbr: ["kww","wwk","wk","kw"],
+    abbr: ["kww","wwk","wk","kw", "kitten werewolf"],
     cat : "Werewolf",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
           "Once you can convert a villager into a werewolf (`w!scratch [player]`).\n" +
@@ -572,7 +572,7 @@ let roles = {
     nite: "Choose two players to instigate hate between for the next day. (`w!instigate [player1] [player2]`)",
     day: "Try to get the two players you chose to be voting each other",
     tag : tags.ROLE.SOLO_VOTING | tags.ROLE.SEEN_AS_VILLAGER |
-          tags.ROLE.OTHER_ROLE | tags.ROLE.TO_BE_TESTED | tags.ROLE.ONE_ONLY,
+          tags.ROLE.OTHER_ROLE | tags.ROLE.TO_BE_TESTED,
     wrt : "544360819790577676"
   },
   "Soul Collector": {

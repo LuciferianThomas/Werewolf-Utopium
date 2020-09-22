@@ -4,7 +4,7 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+      nicknames = require("/home/utopium/global/db.js").nicknames
 
 const fn = require('/home/utopium/wwou/util/fn.js'),
       roles = require("/home/utopium/wwou/util/roles.js"),
@@ -75,8 +75,8 @@ module.exports = {
             `You can now create custom games with ${fn.getEmoji(client, role.name)} ${role.name}.\n` +
             `You now have ${player[currency]} ${fn.getEmoji(client, currency.substring(0, 4))}.`
           )
-          .setThumbnail(fn.getEmoji(client, role.name).url).catch(()=>{})
-      )
+          .setThumbnail(fn.getEmoji(client, role.name).url)
+      ).catch(()=>{})
     }
     else if (args.length && args[0].toLowerCase() == "gamecode") {
       if (player.roses < 50) return await message.channel.send(

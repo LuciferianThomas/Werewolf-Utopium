@@ -4,7 +4,7 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+      nicknames = require("/home/utopium/global/db.js").nicknames
 
 const fn = require('/home/utopium/wwou/util/fn.js'),
       roles = require("/home/utopium/wwou/util/roles.js"),
@@ -33,6 +33,7 @@ module.exports = {
       return await message.channel.send(new Discord.MessageEmbed().setDescription(`${fn.getEmoji(client, "red_tick")} You already have a private channel!`))
     if (item.name === "Custom Maker" && am > 1)
       am = 1
+    if (item.name === "Clue") am = 1
     
     let role = null
     if(item.name === "Talisman"){
@@ -135,7 +136,7 @@ module.exports = {
     if (reaction.id == fn.getEmoji(client, "red_tick").id) return await m.edit(new Discord.MessageEmbed().setDescription("Purchase cancelled."))
     
     
-    if(!["talisman", "private channel"].includes(item.itemid)) players.add(message.author.id+".inventory."+item.itemid, am)
+    if(!["clue", "talisman", "private channel"].includes(item.itemid)) players.add(message.author.id+".inventory."+item.itemid, am)
     
     if (item.itemid == "custom maker")
       players.set(
@@ -143,6 +144,9 @@ module.exports = {
         ["Villager","Gunner","Doctor","Bodyguard","Seer","Jailer","Priest","Aura Seer","Medium",
          "Werewolf","Alpha Werewolf","Wolf Seer","Wolf Shaman","Fool","Headhunter","Serial Killer"]
       )
+
+    if(item.itemid === "clue")
+      message.author.send(fn.event())
     
     if(item.itemid === "talisman") players.add(message.author.id+".inventory."+item.itemid+"."+role.name, am)
     

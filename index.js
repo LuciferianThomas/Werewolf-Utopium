@@ -30,7 +30,7 @@ const client = new Discord.Client(),
       config = require('/home/utopium/wwou/util/config.js'),
       fn = require('/home/utopium/wwou/util/fn.js')
 
-client.on("debug", x => console.log(x))
+client.on("debug", x => console.log("Debug - "+x))
 
 client.commands = new Discord.Collection()
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
@@ -57,6 +57,7 @@ client.once('ready', async () => {
   fn.addLog(`MAIN`, `Werewolf Utopium bot is now ready.`)
   
   client.user.setPresence({ activity: { name: 'Werewolf Online' , type: "PLAYING"}, status: 'online' })
+  //client.user.setPresence({activity: { name: 'new roles being coded!', type: 'STREAMING', url: "https://www.twitch.tv/theshadowdev"}})
 
   require('/home/utopium/wwou/process/game.js')(client)
   
@@ -84,8 +85,14 @@ client.once('ready', async () => {
   //respond to w!restart command
   let rebootchan = temp.get("rebootchan")
   if(rebootchan){
+    let rct = temp.get("rebootchantype")
     temp.delete("rebootchan")
-    client.channels.cache.get(rebootchan).send("Bot has successfully been restarted!").catch(() => temp.delete("rebootchan"))
+    temp.delete("rebootchantype")
+    let sendto = null
+    if(rct == "dm") sendto = client.users.cache.get(rebootchan)
+    if(rct == "text") sendto = client.channels.cache.get(rebootchan)
+    if(sendto) sendto.send("Bot has successfully been restarted!")
+    console.log(rebootchan, rct, `${sendto ? sendto.id : "no sendto"}`)
   }
   
   //Setup auto-restart job
@@ -117,7 +124,7 @@ client.once('ready', async () => {
   })
   
   //start auto-restart job
-  autoRestart.start();
+  //autoRestart.start();
   
   //Check if there are logs that need to be written
   setInterval(() => {
@@ -242,9 +249,9 @@ client.once('ready', async () => {
         `> ${Object.values(roles).filter(r => r.tag & tags.ROLE.AVAILABLE).length} Available\n` +
         `> ${Object.values(roles).filter(r => r.tag & tags.ROLE.TO_BE_TESTED).length} To Be Tested\n` +
         `> ${Object.values(roles).filter(r => r.tag & tags.ROLE.UNAVAILABLE).length} Unavailable\n` +
-        `**Member Count**: ${prog.guild.members.cache.size}\n` +
-        `> ${prog.guild.members.cache.filter(m => !m.user.bot).size} Humans (${prog.guild.members.cache.filter(m => !m.user.bot && m.user.presence.status !== "offline").size} Online)\n` +
-        `> ${prog.guild.members.cache.filter(m => m.user.bot).size} Bots\n` +
+        `**Member Count**: ${(await prog.guild.members.fetch()).size}\n` +
+        `> ${(await prog.guild.members.fetch()).filter(m => !m.user.bot).size} Humans (${prog.guild.members.cache.filter(m => !m.user.bot && m.user.presence.status !== "offline").size} Online)\n` +
+        `> ${(await prog.guild.members.fetch()).filter(m => m.user.bot).size} Bots\n` +
         `\n\n[Jump to Top](https://discordapp.com/channels/522638136635817986/640533861154947082/680260825952288782)`
       )
       //.addField
@@ -394,7 +401,10 @@ client.on('message', async message => {
       if (players.get(`${message.author.id}.prompting`))
         players.delete(`${message.author.id}.prompting`)
 		} catch (error) {
-                        console.error(error)
+      console.error(error)
+      let emsg = `\`\`\`js\n${error.stack.replace(
+        /(?:(?!\n.*?\(\/home\/utopium\/wwou.*?)\n.*?\(\/.*?\))+/g,
+        "\n\t...")}\`\`\``
 			await client.channels.cache.get("664285087839420416").send(
         new Discord.MessageEmbed()
           .setDescription(
@@ -402,12 +412,12 @@ client.on('message', async message => {
               message.content.replace(/(`)/g, "\$1")
             }\``
           )
-          .addField( //this literally looks like a headdesk on a keyboard to me 😂 ~shadow
+          .addField( 
             "Error Description",
-            `\`\`\`${error.stack.replace(/(?:(?!\n.*?\(\/home\/utopium\/wwou.*?)\n.*?\(\/.*?\))+/g, "\n\t...")}\`\`\``
+            `${emsg.length > 1024 ? "See below" : e}`
           )
       )
-      
+      if(emsg.length > 1024) client.channels.cache.get("664285087839420416").send(emsg)
       await message.channel.send(`${fn.getEmoji(client, "red_tick")} An error occurred when trying to execute this command. Please contact staff members.`)
 		}
     
@@ -707,16 +717,16 @@ client.on('message', async message => {
   )
 })
 
-client.on('message', async message => {
-  if (message.channel.id !== "718418283312840814" && message.author.id !== "718413626079445082") return;
-  let veri = message.content, [ _, code, check ] = veri.match(/(\d{6})\-(\d|A)/), checksum = 0
-  for (var i = 0; i < code.length; i++) checksum += parseInt(code[i])
-  if (check == "A") check = 10
-  else check = parseInt(check)
-  if (10-(checksum%11)!=check) return;
-  // console.log("Received ping from Status bot")
-  message.react("👍")
-})
+//client.on('message', async message => {
+//  if (message.channel.id !== "718418283312840814" && message.author.id !== "718413626079445082") return;
+// let veri = message.content, [ _, code, check ] = veri.match(/(\d{6})\-(\d|A)/), checksum = 0
+//  for (var i = 0; i < code.length; i++) checksum += parseInt(code[i])
+//  if (check == "A") check = 10
+//  else check = parseInt(check)
+//  if (10-(checksum%11)!=check) return;
+//  // console.log("Received ping from Status bot")
+//  message.react("👍")
+//})
 
 // SpyFall interaction
 // client.on('message', async message => {

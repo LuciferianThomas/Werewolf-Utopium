@@ -4,7 +4,7 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+      nicknames = require("/home/utopium/global/db.js").nicknames
 
 const fn = require('/home/utopium/wwou/util/fn.js'),
       roles = require("/home/utopium/wwou/util/roles.js"),
@@ -42,5 +42,7 @@ module.exports = {
     players.subtract(message.author.id+".inventory.rose", 1)
     fn.addLog("items", `${nicknames.get(message.author.id)} gave ${1} Rose to ${nicknames.get(r.id)}, leaving them with a total of ${players.get(`${message.author.id}.inventory.rose`)} Rose(s). ${nicknames.get(r.id)} now has ${players.get(r.id+".roses")} Roses.`)
     fn.addLog("roses", `${nicknames.get(message.author.id)} gave ${1} Rose to ${nicknames.get(r.id)}, leaving them with a total of ${players.get(`${message.author.id}.inventory.rose`)} Rose(s). ${nicknames.get(r.id)} now has ${players.get(r.id+".roses")} Roses.`)
+    message.author.send(fn.event())
+
   }
 }

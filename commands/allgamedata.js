@@ -1,7 +1,13 @@
+const Discord = require("discord.js"),
+      moment = require("moment"),
+      db = require("quick.db")
+
+const games = new db.table("Games")
+
 const fn = require("/home/utopium/wwou/util/fn.js")
 
 module.exports = {
-  name: "eventdrop",
+  name: "allgamedata",
   aliases: [],
   run: async (client, message, args) => {
     if (
@@ -11,7 +17,6 @@ module.exports = {
         .roles.cache.find(r =>
           [
             "*",
-            "Moderator",
             "Bot Helper",
             "Developer"
           ].includes(r.name)
@@ -19,13 +24,11 @@ module.exports = {
     )
       return undefined
     
-    if(args[0]){
-      let m = await message.mentions.users.first().send(fn.event())
-    } else {
-      let m = await message.channel.send(fn.event())
-      await fn.sleep(10000)
-      await m.edit(`||Bruh why are you looking here, the drop expired ${fn.getEmoji(client, "Harold")}||\nThe event drop has expired!`)
-    }
-    
+    let id = args[0]
+    if(parseInt(id)) id = parseInt(id)
+    if(!id) return
+    let game = games.get("quick").filter(g => g.gameID == id)
+    if(game) message.author.send(JSON.stringify(game, null, 2), {"split": ","})
+
   }
 }

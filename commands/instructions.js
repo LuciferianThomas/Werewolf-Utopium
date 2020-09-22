@@ -2,13 +2,8 @@ const Discord = require("discord.js"),
       moment = require("moment"),
       db = require("quick.db")
 
-const games = new db.table("Games"),
-      players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+const games = new db.table("Games")
 
-const fn = require('/home/utopium/wwou/util/fn.js'),
-      roles = require("/home/utopium/wwou/util/roles.js"),
-      logs = new db.table("Logs")
 
 module.exports = {
   name: "instructions",
@@ -25,6 +20,7 @@ module.exports = {
         game = QuickGames.find(
           g => g.gameID == args[0]
         );
+        if(!game) return message.react("681383350715547679")
     game.instructions = args.slice(1).join(" ")
     let index = QuickGames.indexOf(game);
     QuickGames[index] = game;

@@ -55,7 +55,7 @@ module.exports = client => {
         //     )
         //   }
         // }
-        // for (var i = 0; i < game.players.length / 4; i++) fn.broadcastTo(client, game.players.filter(p => !p.left), fn.event())
+        for (var i = 0; i < game.players.length / 4; i++) fn.broadcastTo(client, game.players.filter(p => !p.left), fn.event())
       }
       if (game.currentPhase == -1 || game.currentPhase >= 999) continue;
 
@@ -82,6 +82,50 @@ module.exports = client => {
                 if (!game.players[j].alive) continue;
                 fn.addLog(game, `${j+1} ${nicknames.get(game.players[j].id)} had ${lynchCount[j+1] || 0} votes.`)
               }
+              // INSTIGATOR WIN CONDITIONS
+              game.running = "test for instigator win conditions"
+              let insts = game.players.filter(p => p.alive && p.role == "Instigator")
+              let winningInsts = []
+              for (var inst of insts) if (inst && inst.instigate) {
+                let instPlayers = game.players.filter(p => p.alive && inst.instigate.includes(p.number))
+                if (instPlayers[0].vote == inst.instigate[1] && instPlayers[1].vote == inst.instigate[0]) {
+                  winningInsts.push(inst)
+                }
+              }
+              if (winningInsts.length) {
+                game.running = "instigators win"
+                game.currentPhase = 999
+
+                fn.broadcastTo(
+                  client,
+                  game.players.filter(p => !p.left),
+                  new Discord.MessageEmbed()
+                    .setTitle("Game has ended.")
+                    .setThumbnail(fn.getEmoji(client, "Instigator").url)
+                    .setDescription(
+                      `Instigator${winningInsts.length > 1 ? "s" : ""} **${winningInsts.map(inst => `${
+                        inst.number
+                      } ${nicknames.get(inst.id)}`).join(', ')}** win${winningInsts.length == 1 ? "s" : ""}!`, true
+                    )
+                )
+
+                fn.addLog("-divider2-")
+                fn.addLog(
+                  game,
+                  `[RESULT] Instigator${winningInsts.length > 1 ? "s" : ""} ${winningInsts.map(inst => `${
+                    inst.number
+                  } ${nicknames.get(inst.id)}`).join(', ')} wins!`
+                )
+                game.running = "add instigators win and xp"
+                fn.addXP(game, 
+                  winningInsts,
+                  100
+                )
+                fn.addXP(game, game.players.filter(p => !p.left), 15)
+                fn.addWin(game, winningInsts.map(inst => inst.number), "Solo")
+                continue
+              }
+
               if (lynchCount.length) {
                 let max = lynchCount.reduce((m, n) => Math.max(m, n))
                 let lynched = [...lynchCount.keys()].filter(
@@ -287,45 +331,6 @@ module.exports = client => {
                       }
                     }
 
-                    // INSTIGATOR WIN CONDITIONS
-                    game.running = "test for instigator win conditions"
-                    let inst = game.players.find(p => p.alive && p.role == "Instigator")
-                    if (inst && inst.instigate) {
-                      let instPlayers = game.players.filter(p => p.alive && inst.instigate.includes(p.number))
-                      if (instPlayers[0].vote == inst.instigate[1] && instPlayers[1].vote == inst.instigate[0]) {
-                        game.currentPhase = 999
-                        fn.broadcastTo(
-                          client,
-                          game.players.filter(p => !p.left),
-                          new Discord.MessageEmbed()
-                            .setTitle("Game has ended.")
-                            .setThumbnail(fn.getEmoji(client, "Instigator").url)
-                            .setDescription(
-                              `Instigator **${
-                                inst.number
-                              } ${nicknames.get(inst.id)}** wins by instigating ${
-                                instPlayers.map(x => `**${x.number} ${nicknames.get(x.id)}**`
-                              )}!`, true
-                            )
-                        )
-                        fn.addLog(
-                          game,
-                          `Instigator ${
-                            inst.number
-                          } ${nicknames.get(inst.id)} wins!`
-                        )
-                        game.running = "add instigator win and xp"
-                        fn.addXP(game, 
-                          game.players.filter(
-                            p => p.number == inst.number
-                          ),
-                          100
-                        )
-                        fn.addXP(game, game.players.filter(p => !p.left), 15)
-                        fn.addWin(game, [inst.number], "Solo")
-                        continue
-                      }
-                    }
                   }
                 }
               } else {
@@ -375,6 +380,99 @@ module.exports = client => {
                   rdmPl.number} ${nicknames.get(rdmPl.id)} when they die.`
                 )
               }
+            }
+            console.log(`Cupid phase: ${game.currentPhase}`)
+            // CUPID LOVER
+            game.running = "assign lovers for cupid"
+            if (
+              game.currentPhase == 0 &&
+              game.players.find(p => p.role == "Cupid")
+            ) {
+              let cupid = game.players.find(p => p.role == "Cupid")
+              if (!cupid.usedAbilityTonight) cupid.usedAbilityTonight = []
+              let lovers = []
+              for (var loverNumber of cupid.usedAbilityTonight) {
+                let lover = game.players[loverNumber - 1]
+                if (!lover.alive) {
+                  let possible = game.players.filter(
+                    p => p.alive && p.role != "Cupid"
+                  )
+                  lover =
+                    game.players[
+                      possible[Math.floor(Math.random() * possible.length)]
+                        .number - 1
+                    ]
+                }
+                lover.couple = true
+                lovers.push(lover)
+              }
+              if (!lovers[0])
+                lovers[0] = game.players.filter(
+                  p => p.alive && p.role !== "Cupid"
+                )[
+                  Math.floor(
+                    Math.random() *
+                      game.players.filter(p => p.alive && p.role !== "Cupid")
+                        .length
+                  )
+                ]
+              if (!lovers[1])
+                lovers[1] = game.players.filter(
+                  p =>
+                    p.alive &&
+                    p.role !== "Cupid" &&
+                    p.number !== lovers[0].number
+                )[
+                  Math.floor(
+                    Math.random() *
+                      game.players.filter(
+                        p =>
+                          p.alive &&
+                          p.role !== "Cupid" &&
+                          p.number !== lovers[0].number
+                      ).length
+                  )
+                ]
+              fn.getUser(client, cupid.id).send(
+                new Discord.MessageEmbed()
+                  .setTitle("Love is in the air...")
+                  .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
+                  .setDescription(
+                    `${cupid.usedAbilityTonight.length == 2 ? `You have now made ` : ``}**${lovers[1].number} ${nicknames.get(
+                      lovers[1].id
+                    )}** and **${lovers[2].number} ${nicknames.get(
+                      lovers[2].id
+                    )}** ${cupid.usedAbilityTonight.length == 2 ? `fall in love.` : `have fallen in love.`}.` +
+                      `You will win if you are the last players alive with these two lovers.`
+                  )
+              )
+              fn.getUser(client, lovers[0].id).send(
+                new Discord.MessageEmbed()
+                  .setTitle("Love Was When")
+                  .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
+                  .setDescription(
+                    `You are in love with **${lovers[1].number} ${nicknames.get(
+                      lovers[1].id
+                    )} ${fn.getEmoji(client, lovers[1].role)}**.` +
+                      ` You will die together! ${
+                        roles[lovers[0].role].team !==
+                        roles[lovers[1].role].team
+                          ? "You and the Cupid win if you are the last players alive apart from the Cupid."
+                          : "You also win with your team."
+                      }`
+                  )
+              )
+              fn.getUser(client, lovers[1].id).send(
+                new Discord.MessageEmbed()
+                  .setTitle("Love Was When")
+                  .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
+                  .setDescription(
+                    `You are in love with **${lovers[0].number} ${nicknames.get(
+                      lovers[0].id
+                    )} ${fn.getEmoji(client, lovers[0].role)}**.` +
+                    `You have to stay alive with them until the end of the game. If ${nicknames.get(lovers[0].id)} dies, you die along with them!`
+                  )
+              )
             }
             
             // MEDIUM REVIVE
@@ -1629,7 +1727,7 @@ module.exports = client => {
                     client,
                     game.players.filter(
                       p =>
-                        !p.left && roles[p.role].tag & tags.ROLE.SEEN_AS_WEREWOLF
+                        !p.left && roles[p.role].tag && tags.ROLE.SEEN_AS_WEREWOLF
                     ),
                     `Kitten Wolf converted **${
                       rl.number
@@ -1639,7 +1737,7 @@ module.exports = client => {
                   )
                   rl.role = "Werewolf"
                   fn.getUser(client, rl.id).send(
-                    `You were scratched by the kitten wolf. You are now a werewolf!` +
+                    `You were scratched by the kitten wolf. You are now a werewolf! ` +
                       `Check out who your teammates are in \`w!game\`.`
                   )
                       
@@ -1664,7 +1762,7 @@ module.exports = client => {
                   client,
                   game.players.filter(
                     p =>
-                      !p.left && roles[p.role].tag & tags.ROLE.SEEN_AS_WEREWOLF
+                      !p.left && roles[p.role].tag && tags.ROLE.SEEN_AS_WEREWOLF
                   ),
                   `Kitten Wolf tried to convert **${
                     attackedPlayer.number
@@ -2077,86 +2175,7 @@ module.exports = client => {
               )
             }
 
-            // CUPID LOVER
-            game.running = "assign lovers for cupid"
-            if (
-              game.currentPhase == 1 &&
-              game.players.find(p => p.role == "Cupid")
-            ) {
-              let cupid = game.players.find(p => p.role == "Cupid")
-              if (!cupid.usedAbilityTonight) cupid.usedAbilityTonight = []
-              let lovers = []
-              for (var loverNumber of cupid.usedAbilityTonight) {
-                let lover = game.players[loverNumber - 1]
-                if (!lover.alive) {
-                  let possible = game.players.filter(
-                    p => p.alive && p.role != "Cupid"
-                  )
-                  lover =
-                    game.players[
-                      possible[Math.floor(Math.random() * possible.length)]
-                        .number - 1
-                    ]
-                }
-                lover.couple = true
-                lovers.push(lover)
-              }
-              if (!lovers[0])
-                lovers[0] = game.players.filter(
-                  p => p.alive && p.role !== "Cupid"
-                )[
-                  Math.floor(
-                    Math.random() *
-                      game.players.filter(p => p.alive && p.role !== "Cupid")
-                        .length
-                  )
-                ]
-              if (!lovers[1])
-                lovers[1] = game.players.filter(
-                  p =>
-                    p.alive &&
-                    p.role !== "Cupid" &&
-                    p.number !== lovers[0].number
-                )[
-                  Math.floor(
-                    Math.random() *
-                      game.players.filter(
-                        p =>
-                          p.alive &&
-                          p.role !== "Cupid" &&
-                          p.number !== lovers[0].number
-                      ).length
-                  )
-                ]
-              fn.getUser(client, lovers[0].id).send(
-                new Discord.MessageEmbed()
-                  .setTitle("Love Was When")
-                  .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
-                  .setDescription(
-                    `You are in love with **${lovers[1].number} ${nicknames.get(
-                      lovers[1].id
-                    )} ${fn.getEmoji(client, lovers[1].role)}**.` +
-                      ` You will die together! ${
-                        roles[lovers[0].role].team !==
-                        roles[lovers[1].role].team
-                          ? "You and the Cupid win if you are the last players alive apart from the Cupid."
-                          : "You also win with your team."
-                      }`
-                  )
-              )
-              fn.getUser(client, lovers[1].id).send(
-                new Discord.MessageEmbed()
-                  .setTitle("Love Was When")
-                  .setThumbnail(fn.getEmoji(client, "Cupid Lovers").url)
-                  .setDescription(
-                    `You are in love with **${lovers[0].number} ${nicknames.get(
-                      lovers[0].id
-                    )} ${fn.getEmoji(client, lovers[0].role)}**.` +
-                    `You have to stay alive with them until the end of the game. If ${nicknames.get(lovers[0].id)} dies, you die along with them!`
-                  )
-              )
-            }
-
+            
             // ILLUSIONIST DISGUISE
             game.running = "disguise by illu"
             let illus = game.players.filter(
@@ -2999,7 +3018,7 @@ module.exports = client => {
                     .setDescription(
                       `${Math.floor(
                         game.players.filter(player => player.alive).length / 2
-                      )} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.`
+                      )} votes are required to lynch a player.\nType \`w!vote [number]\` to vote against a player.\nType \`w!votes\` to see the current votes.`
                     )
                 )
               else
@@ -3113,7 +3132,7 @@ module.exports = client => {
               nmtarget.nightmared = true
               fn.getUser(client, nmtarget.id).send(
                 new Discord.MessageEmbed()
-                  .setThumbnail(fn.getEmoji(client, "Nightmare_Ghosts"))
+                  .setThumbnail(fn.getEmoji(client, "Nightmare_Ghosts").url)
                   .setTitle("Nightmared!")
                   .setDescription(
                     "You have been nightmared and cannot use your abilities tonight!\nGo to sleep!"
@@ -3125,7 +3144,7 @@ module.exports = client => {
                   p => roles[p.role].tag & tags.ROLE.SEEN_AS_WEREWOLF && !p.left
                 ),
                 new Discord.MessageEmbed()
-                  .setThumbnail(fn.getEmoji(client, "Nightmare"))
+                  .setThumbnail(fn.getEmoji(client, "Nightmare").url)
                   .setTitle("Nightmared!")
                   .setDescription(
                     `**${nmtarget.number} ${nicknames.get(

@@ -4,7 +4,7 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+      nicknames = require("/home/utopium/global/db.js").nicknames
 
 const fn = require('/home/utopium/wwou/util/fn.js'),
       roles = require("/home/utopium/wwou/util/roles.js")
@@ -62,7 +62,7 @@ module.exports = {
         targetPlayerA.id
       )} (${targetPlayerA.role}) and ${targetPlayerB.number} ${nicknames.get(
         targetPlayerB.id
-      )} ${targetPlayerB.role}.`
+      )} (${targetPlayerB.role}).`
     )
     gamePlayer.instigate = [targetPlayerA.number, targetPlayerB.number]
     // QuickGames[index] = game

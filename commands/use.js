@@ -5,7 +5,7 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+      nicknames = require("/home/utopium/global/db.js").nicknames
 
 const fn = require('/home/utopium/wwou/util/fn.js'),
       roles = require("/home/utopium/wwou/util/roles.js"),
@@ -26,9 +26,9 @@ module.exports = {
       let am = parseInt(args[args.length - 1], 10)
       if (!Number.isNaN(am)) args.pop()
       else am = 1
-      input = args.join(" ")
+      input = args.join(" ").toLowerCase()
     } else {
-      input = args[0]
+      input = args[0].toLowerCase()
     }
     let item = shop[input]
     if(input === "bouquet") item = shop["rose bouquet"]

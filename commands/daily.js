@@ -5,7 +5,7 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+      nicknames = require("/home/utopium/global/db.js").nicknames
 
 const fn = require('/home/utopium/wwou/util/fn.js'),
       roles = require("/home/utopium/wwou/util/roles.js"),
@@ -125,9 +125,27 @@ module.exports = {
       if (((player.inventory || {})["streak preserver"] || 0) >= Math.ceil((moment().diff(moment(player.lastDaily || 0), 'hours') - 48)/24)) {
         consumedSPs = Math.ceil((moment().diff(moment(player.lastDaily || 0), 'hours') - 48)/24)
         player.inventory["streak preserver"] -= consumedSPs
+        players.set(`${message.author.id}.inventory.streak preserver`, player.inventory["streak preserver"])
       }
       else player.streak = 0
     }
+
+    // let spcheck = await message.channel.send(
+    //   `Would you like to use ${consumedSPs} Streak Presrvers to save your streak of ${player.streak}?`
+    // )
+    // spcheck.react(fn.getEmoji(client, "green tick"))
+    // spcheck.react(fn.getEmoji(client, "red tick"))
+
+    // let reactions = await spcheck.awaitReactions(
+    //   (r, u) =>
+    //     (r.emoji.id == fn.getEmoji(client, "green tick").id || r.emoji.id == fn.getEmoji(client, "red tick").id) &&
+    //     u.id == message.author.id,
+    //   { max: 1, time: 10000, errors: ["time"] }
+    // )
+    // if (!reactions)
+    //   return await spcheck.edit("** **", new Discord.MessageEmbed().setColor("RED").setTitle(`Prompt ${reactions ? "canceled" : "timed out"}.`))
+    //     .then(m => m.reactions.removeAll().catch(() => {}))
+    // spcheck.reactions.removeAll()
 
     if(player.streak > 100) player.streak = 100
       
@@ -196,10 +214,10 @@ module.exports = {
     }
     
     if (consumedSPs) embed.description += `\n\n${consumedSPs} Streak Preservers are consumed to save your streak!`
+    if (player.streak == 100) embed.description +=`\n\nYou have reached the maximum 100-day streak!`
     
     players.set(`${message.author.id}.lastDaily`, moment())
     players.set(`${message.author.id}.streak`, player.streak)
-    players.set(`${message.author.id}.inventory`, player.inventory)
     
     message.channel.send(embed)
   }

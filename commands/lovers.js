@@ -4,7 +4,7 @@ const Discord = require("discord.js"),
 
 const games = new db.table("Games"),
       players = new db.table("Players"),
-      nicknames = new db.table("Nicknames")
+      nicknames = require("/home/utopium/global/db.js").nicknames
 
 const fn = require('/home/utopium/wwou/util/fn.js'),
       roles = require("/home/utopium/wwou/util/roles.js")
@@ -29,8 +29,8 @@ module.exports = {
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")
     
-    if (game.currentPhase % 3 != 0)
-      return await message.author.send("You can only make players fall in love during the night!")
+    if (game.currentPhase !== 0)
+      return await message.author.send("You can only make players fall in love during the first night!")
     
     let targetA = parseInt(args[0]),
         targetB = parseInt(args[1])
@@ -64,5 +64,6 @@ module.exports = {
     QuickGames[index] = game
     
     games.set("quick", QuickGames)
+    console.log(gamePlayer)
   }
 }
