@@ -1,0 +1,6 @@
+--2020-10-11 18:54:53--  https://media.discordapp.net/attachments/650908127343935488/764616562308939846/Writers_and_Utopium.png?width=251
+Resolving media.discordapp.net (media.discordapp.net)... 162.159.128.232, 162.159.129.232, 162.159.134.232, ...
+Connecting to media.discordapp.net (media.discordapp.net)|162.159.128.232|:443... connected.
+HTTP request sent, awaiting response... 400 Bad Request
+2020-10-11 18:54:54 ERROR 400: Bad Request.
+

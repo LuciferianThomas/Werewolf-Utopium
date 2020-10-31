@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <title>WWOU - Loading...</title>
+    <%- include("partials/header", {title: null, desc: null}) %>
+    <script>
+    function loader(){
+      document.querySelector("#content").style.visibility = "hidden"; 
+      document.querySelector("#loader").style.visibility = "visible"; 
+      document.querySelector("#loader").style.display = "block"; 
+    }
+    document.onreadystatechange = function() { 
+      if (document.readyState !== "complete") { 
+        document.querySelector("#content").style.visibility = "hidden"; 
+        document.querySelector("#loader").style.visibility = "visible"; 
+      } else { 
+        document.querySelector("#loader").style.display = "none"; 
+        document.querySelector("#content").style.visibility = "visible"; 
+      } 
+    }; 
+    </script>
+    
+  </head>
+  <body>
+    <div class="loading container" id="loader" style="display:block;visibility:visible;">
+      <div class="row logo vertcenter animated pulse slow infinite">
+        <div class="col">
+          <img
+               class="roundimg right"
+               src="https://cdn.discordapp.com/avatars/657960787993690122/f245efe58e1f4f75caab0b84e2a990b4.png"
+               />
+        </div>
+        <h1 class="col-7 opensans animated fadeIn slow" style="font-weight:900;">
+          Werewolf Utopium
+        </h1>
+      </div>
+      <p class="opensans center">
+        Loading... please wait...
+      </p>
+    </div>
+    <%- include("partials/footer") %>
+  </body>
+</html>
