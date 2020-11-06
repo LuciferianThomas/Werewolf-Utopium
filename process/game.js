@@ -1754,6 +1754,7 @@ module.exports = client => {
                   convertRLs(rl)
                 }
               }
+              let doprotect = true
               if (
                 roles[attackedPlayer.role].team !== "Village" ||
                 attackedPlayer.headhunter || attackedPlayer.sect || attackedPlayer.role === "Amulet of Protection Holder"
@@ -1776,8 +1777,9 @@ module.exports = client => {
                     attackedPlayer.number
                   } ${nicknames.get(attackedPlayer.id)} (${attackedPlayer.role}).`
                 )
+                doprotect = false
               }
-              else if (attackedPlayer.protectors.length) {
+              else if (attackedPlayer.protectors.length && doprotect) {
                 fn.broadcastTo(
                   client, game.players.filter(p => !p.left && (roles[p.role].tag & tags.ROLE.SEEN_AS_WEREWOLF)),
                   `Kitten Wolf tried to convert **${attackedPlayer.number} ${nicknames.get(attackedPlayer.id)}**!` +
@@ -3055,7 +3057,7 @@ module.exports = client => {
                     .setThumbnail(fn.getEmoji(client, "Night").url)
                     .setDescription(
                       (roles[player.role].nite ||
-                        (player.abil1 + (player.abil2 || 0) == 0))
+                        (player.abil1 + (player.abil2 || 0) != 0))
                         ? roles[player.role].nite
                         : "Nothing to do. Go back to sleep!"
                     )

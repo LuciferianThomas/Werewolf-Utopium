@@ -40,6 +40,8 @@ module.exports = {
         return await message.author.send("That player has already been revealed!")
       if (game.currentPhase >= 999)
         return await message.author.send("The game is over! You can no longer use your actions.")
+      if(targetPlayer.id == message.author.id)
+        return await message.author.send("You cannot choose to reveal yourself!")
       
       await message.author.send(
         `${fn.getEmoji(client, "Voting")} You selected **${
@@ -77,9 +79,11 @@ module.exports = {
         return await message.author.send("You cannot reveal a dead player's role!")
       if(gamePlayer.role == "Wolf Pacifist" && (targetPlayer.role.toLowerCase().includes("wolf") || targetPlayer.role == "Sorcerer"))
         return await message.author.send("You cannot reveal your own team!")
+      if(targetPlayer.id == message.author.id)
+        return await message.author.send("You cannot reveal yourself!")
       
-    //  if (targetPlayer.paciReveal)
-    //    return await message.author.send("This player is already revealed by another Pacifist!")
+      if (targetPlayer.paciReveal)
+        return await message.author.send("This player is already revealed by another Pacifist!")
       
       fn.broadcastTo(
         client, game.players.filter(p => !p.left),

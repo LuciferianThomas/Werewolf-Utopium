@@ -45,9 +45,9 @@ module.exports = {
         isNaN(targetB) || targetB > game.players.length || targetB < 1)
       return await message.author.send("Invalid target.")
     if (!game.players[targetA-1].alive || !game.players[targetB-1].alive)
-      return await message.author.send("You cannot detect on a dead player.")
+      return await message.author.send("You cannot instigate hate with a dead player.")
     if (targetA == gamePlayer.number || targetB == gamePlayer.number)
-      return await message.author.send("You cannot detect on yourself.")
+      return await message.author.send("You cannot instigate hate yourself.")
     if (targetA == targetB)
       return await message.author.send("You need to select **__two different targets__** for our ability to work!")
     
@@ -65,7 +65,6 @@ module.exports = {
       )} (${targetPlayerB.role}).`
     )
     gamePlayer.instigate = [targetPlayerA.number, targetPlayerB.number]
-    // QuickGames[index] = game
 
     games.set("quick", QuickGames)
   }

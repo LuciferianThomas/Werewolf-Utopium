@@ -1,16 +1,16 @@
 module.exports = {
-  "clue": {
-    price: 100,
-    name: "Clue",
-    description: "Hmmmm I wonder what this is...",
-    itemid: "clue",
-    unavailable: false,
-    emoji: "Random",
-    currency: "coins",
-    plural: "s",
-    aliases: [],
-    hidden: false
-  },
+  // "clue": {
+  //   price: 100,
+  //   name: "Clue",
+  //   description: "Hmmmm I wonder what this is...",
+  //   itemid: "clue",
+  //   unavailable: false,
+  //   emoji: "Random",
+  //   currency: "coins",
+  //   plural: "s",
+  //   aliases: [],
+  //   hidden: false
+  // },
   "lootbox": {
     price: 10,
     name: "Lootbox",

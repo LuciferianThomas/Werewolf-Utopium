@@ -27,9 +27,17 @@ module.exports = {
     let embed = new Discord.MessageEmbed()
         .setTitle(`${role.name}`)
         .setThumbnail(fn.getEmoji(client, role.name).url)
-        .setDescription(`${role.desc}${role.aura ? `\n\nAura: ${role.aura}` : ""}${role.team ? `\nTeam: ${role.team}` : ""}\n${role.ideaBy ? `\nIdea By: ${role.ideaBy}` : ""}${role.graphicsBy ? `\nGraphics By: ${graphicsBy}` : ""}`);
+        .setDescription(`${role.desc}${role.aura ? `\n\nAura: ${role.aura}` : ""}${role.team ? `\nTeam: ${role.team}` : ""}`);
     if (rolecmds.length)
       embed.addField("Action Commands", `${rolecmds.map(c => `\`w!${c}\``).join(', ')}`)
+    if(role.ideaBy){
+      let user = await client.users.fetch(role.ideaBy)
+      embed.description += `\n${role.ideaBy ? `\nIdea By: ${user.tag}` : ""}`
+    }
+    if(role.graphicsBy){
+      let user = await client.users.fetch(role.graphicsBy)
+      embed.description += `${role.ideaBy ? `\nGraphics By: ${user.tag}` : ""}`
+    }
     
     await message.channel.send(embed)
   }
