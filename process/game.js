@@ -559,6 +559,9 @@ module.exports = client => {
             let sks = game.players.filter(
               p => p.alive && p.role == "Serial Killer" && p.usedAbilityTonight
             )
+            let dazzs = game.players.filter(
+              p => p.alive && p.role == "Dazzler" && typeof p.usedAbilityTonight == "array"
+            )
             let wwVotes = game.players
                 .filter(
                   player =>
@@ -1281,7 +1284,7 @@ module.exports = client => {
 
                           fn.addLog(
                             game,
-                            `Bodyguard ${protector.number} ${nicknames.get(protector.id)} was stabbed to death when saving ${
+                            `Bodyguard ${protector.number} ${nicknames.get(protector.id)} was eaten when saving ${
                             attackedPlayer.number} ${nicknames.get(attackedPlayer.id)} from Cannibal ${
                             canni.number} ${nicknames.get(canni.id)}'s attack.`
                           )
@@ -1363,6 +1366,309 @@ module.exports = client => {
             fn.death(client, game, canniKilled)
             
             // BANDIT KILL
+
+
+            // DAZZLER KILL
+            game.running = "kill for dazzler"
+            let dazzlerKilled = []
+            for (var dazz of dazzs) {
+              let attacked = dazz.usedAbilityTonight,
+                  attackedPlayers = game.players.filter(p => attacked.find(x => x == p.number))
+
+              for (var attackedPlayer of attackedPlayers) {
+                if (
+                  attackedPlayer.protectors.length ||
+                  (attackedPlayer.role == "Red Lady" &&
+                    attackedPlayer.visitedTonight)
+                ) {
+                  fn.getUser(client, dazz.id).send(
+                    `**${attackedPlayer.number} ${nicknames.get(
+                      attackedPlayer.id
+                    )}** cannot be killed!`
+                  )
+                  
+                  if (
+                    attackedPlayer.role == "Red Lady" &&
+                    attackedPlayer.visitedTonight
+                  ) {
+                    fn.addLog(
+                      game,
+                      `Dazzler ${dazz.number} ${nicknames.get(dazz.id)} couldn't kill Red Lady ${
+                      attackedPlayer.number} ${nicknames.get(attackedPlayer.id)} as they weren't home.`
+                    )
+                    continue;
+                  }
+  
+                  for (var x of attackedPlayer.protectors) {
+                    game.running = "protect from dazzler attack"
+  
+                    let protector = game.players[x - 1]
+  
+                    if (protector.role == "Jailer") {}
+                    else if (protector.role == "Doctor") {
+                      game.running = "protect from dazz attack for doc"
+                      fn.getUser(client, protector.id).send(
+                        new Discord.MessageEmbed()
+                          .setAuthor(
+                            "Protection",
+                            fn.getEmoji("Doctor_Protection").url
+                          )
+                          .setDescription(
+                            `Your protection saved **${
+                              attackedPlayer.number
+                            } ${nicknames.get(attackedPlayer.id)}** last night!`
+                          )
+                      )
+                      fn.addLog(
+                        game,
+                        `Doctor ${protector.number} ${nicknames.get(protector.id)} saved ${
+                        attackedPlayer.number} ${nicknames.get(attackedPlayer.id)} from Dazzler ${
+                        dazz.number} ${nicknames.get(dazz.id)}'s attack.`
+                      )
+                    }
+                    else if (protector.role == "Beast Hunter") {
+                      game.running = "protect from dazz attack for bh"
+  
+                      fn.getUser(client, protector.id).send(
+                        new Discord.MessageEmbed()
+                          .setAuthor(
+                            "Trap Triggered!",
+                            fn.getEmoji(client, "Beast Hunter TrapInactive").url
+                          )
+                          .setDescription(
+                            "Your target was too string to be killed!"
+                          )
+                      )
+                      fn.addLog(
+                        game,
+                        `Beast Hunter ${protector.number} ${nicknames.get(protector.id)}'s trap saved ${
+                        attackedPlayer.number} ${nicknames.get(attackedPlayer.id)} from Dazzler ${
+                        dazz.number} ${nicknames.get(dazz.id)}'s attack.`
+                      )
+                        
+                      delete protector.trap
+                      delete protector.trapAct
+                    }
+                    else if (protector.role == "Witch") {
+                      game.running = "protect from dazz attack for witch"
+                      protector.abil1 = 0
+  
+                      fn.getUser(client, protector.id).send(
+                        new Discord.MessageEmbed()
+                          .setAuthor("Elixir", fn.getEmoji("Witch Elixir").url)
+                          .setDescription("Last night your potion saved a life!")
+                      )
+                      
+                      fn.addLog(
+                        game,
+                        `Witch ${protector.number} ${nicknames.get(protector.id)} saved ${
+                        attackedPlayer.number} ${nicknames.get(attackedPlayer.id)} from Dazzler ${
+                        dazz.number} ${nicknames.get(dazz.id)}'s attack with their elixir potion.`
+                      )
+                    }
+                    // FORGER'S SHIELD
+                    else if (protector.role == "Bodyguard") {
+                      game.running = "protect from dazz attack for bg"
+                      protector.health -= 1
+                      if (protector.health) {
+                        fn.getUser(client, protector.id).send(
+                          new Discord.MessageEmbed()
+                            .setTitle(
+                              `fn.getEmoji(client, "Bodyguard_Protect") Attacked!`
+                            )
+                            .setDescription(
+                              "You fought off an attack last night and survived.\n" +
+                                "Next time you are attacked you will die."
+                            )
+                        )
+                        
+                        fn.addLog(
+                          game,
+                          `Bodyguard ${protector.number} ${nicknames.get(
+                            protector.id
+                          )} fought off from Dazzler ${
+                            dazz.number
+                          } ${nicknames.get(dazz.id)}'s attack on ${
+                            attackedPlayer.number
+                          } ${nicknames.get(attackedPlayer.id)}.`
+                        )
+                      } else {
+                        game.running = "kill bg protector - attacker dazz"
+                        game.lastDeath = game.currentPhase
+                        protector.alive = false
+                        protector.killedBy = dazz.number
+                        if (game.config.deathReveal)
+                          protector.roleRevealed = protector.role
+                        fn.broadcastTo(
+                          client,
+                          game.players.filter(p => !p.left),
+                          `The dazzler killed **${
+                            protector.number
+                          } ${nicknames.get(protector.id)}${
+                            game.config.deathReveal
+                              ? ` ${fn.getEmoji(client, protector.role)}`
+                              : ""
+                          }**.`
+                        )
+                        
+                        fn.addLog(
+                          game,
+                          `Bodyguard ${protector.number} ${nicknames.get(protector.id)} was killed when saving ${
+                          attackedPlayer.number} ${nicknames.get(attackedPlayer.id)} from Dazzler ${
+                          dazz.number} ${nicknames.get(dazz.id)}'s attack.`
+                        )
+                        
+                        dazzlerKilled.push(protector.number)
+  
+                        // game = fn.death(client, game, protector.number)
+                      }
+                    }
+                    else if (protector.role == "Tough Guy") {
+                      game.running = "protect from dazz attack for tg"
+                      protector.health = 0
+  
+                      fn.getUser(client, protector.id).send(
+                        new Discord.MessageEmbed()
+                          .setAuthor(
+                            "Attacked!",
+                            fn.getEmoji(client, "Bodyguard Protect").url
+                          )
+                          .setDescription(
+                            `You protected **${
+                              attackedPlayer.number
+                            } ${nicknames.get(
+                              attackedPlayer.id
+                            )}** who was attacked by **${
+                              dazz.number
+                            } ${nicknames.get(dazz.id)} ${fn.getEmoji(
+                              client,
+                              dazz.role
+                            )}**.\n` +
+                              "You have been wounded and will die at the end of the day."
+                          )
+                      )
+                        
+                      fn.addLog(
+                        game,
+                        `Tough Guy ${protector.number} ${nicknames.get(protector.id)} was wounded when saving ${
+                        attackedPlayer.number} ${nicknames.get(attackedPlayer.id)} from Dazzler ${
+                        sk.number} ${nicknames.get(sk.id)}'s attack.`
+                      )
+                    }
+                  }
+                }
+                else if (attackedPlayer.role == "Bodyguard") {
+                  game.running = "bg self-prot from dazz attack"
+                  attackedPlayer.health -= 1
+                  if (attackedPlayer.health) {
+                    fn.getUser(client, attackedPlayer.id).send(
+                      new Discord.MessageEmbed()
+                        .setTitle(
+                          fn.getEmoji(client, "Bodyguard_Protect") + " Attacked!"
+                        )
+                        .setDescription(
+                          "You fought off an attack last night and survived.\n" +
+                            "Next time you are attacked you will die."
+                        )
+                    )
+                        
+                    fn.addLog(
+                      game,
+                      `Bodyguard ${protector.number} ${nicknames.get(protector.id)} fought off an attack from Dazzler ${
+                      dazz.number} ${nicknames.get(dazz.id)}'s attack.`
+                    )
+                  } else {
+                    game.running = "kill bg self-prot - attacker dazz"
+                    game.lastDeath = game.currentPhase
+                    attackedPlayer.alive = false
+                    attackedPlayer.killedBy = dazz.number
+                    if (game.config.deathReveal)
+                      attackedPlayer.roleRevealed = attackedPlayer.role
+                    fn.broadcastTo(
+                      client,
+                      game.players.filter(p => !p.left),
+                      `The dazzler killed **${
+                        attackedPlayer.number
+                      } ${nicknames.get(attackedPlayer.id)}${
+                        game.config.deathReveal
+                          ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
+                          : ""
+                      }**.`
+                    )
+                        
+                    fn.addLog(
+                      game,
+                      `Bodyguard ${attackedPlayer.number} ${nicknames.get(
+                        attackedPlayer.id
+                      )} was killed by Dazzler ${
+                        dazz.number
+                      } ${nicknames.get(dazz.id)}.`
+                    )
+                    dazzlerKilled.push(attackedPlayer.number)
+                    // game = fn.death(client, game, attackedPlayer.number)
+                  }
+                }
+                else if (attackedPlayer.role == "Tough Guy") {
+                  game.running = "tg self-prot from dazz attack"
+                  attackedPlayer.health = 0
+  
+                  fn.getUser(client, attackedPlayer.id).send(
+                    new Discord.MessageEmbed()
+                      .setAuthor(
+                        "Attacked!",
+                        fn.getEmoji(client, "Bodyguard Protect").url
+                      )
+                      .setDescription(
+                        `You were attacked by **${dazz.number} ${nicknames.get(
+                          dazz.id
+                        )} ${fn.getEmoji(client, dazz.role)}**.\n` +
+                          "You have been wounded and will die at the end of the day."
+                      )
+                  )
+                        
+                  fn.addLog(
+                    game,
+                    `Tough Guy ${attackedPlayer.number} ${nicknames.get(
+                      attackedPlayer.id
+                    )} was wounded when fighting off an attack from Dazzler ${
+                      dazz.number
+                    } ${nicknames.get(dazz.id)}'s attack.`
+                  )
+                }
+                else {
+                  game.running = "kill dazz-attacked player"
+                  game.lastDeath = game.currentPhase
+                  attackedPlayer.alive = false
+                  attackedPlayer.killedBy = dazz.number
+                  if (game.config.deathReveal)
+                    attackedPlayer.roleRevealed = attackedPlayer.role
+                  fn.broadcastTo(
+                    client,
+                    game.players.filter(p => !p.left).map(p => p.id),
+                    `The dazzler killed **${
+                      attackedPlayer.number
+                    } ${nicknames.get(attackedPlayer.id)}${
+                      game.config.deathReveal
+                        ? ` ${fn.getEmoji(client, attackedPlayer.role)}`
+                        : ""
+                    }**.`
+                  )
+                        
+                  fn.addLog(
+                    game,
+                    `${attackedPlayer.number} ${nicknames.get(
+                      attackedPlayer.id
+                    )} was killed by Dazzler ${
+                      dazz.number
+                    } ${nicknames.get(dazz.id)}.`
+                  )
+                  
+                  dazzlerKilled.push(attackedPlayer.number)
+                  // game = fn.death(client, game, attackedPlayer.number)
+                }
+              }
+            }
+            game = fn.death(client, game, dazzlerKilled)
 
             // SERIAL KILLER KILL
             game.running = "kill for serial killer"
@@ -3161,7 +3467,51 @@ module.exports = client => {
                   nmww.id
                 )} gave ${nmtarget.number} ${nicknames.get(
                   nmtarget.id
-                )} (${nmtarget.role}) a nightmare and they cannot use their abilities.`
+                )} (${nmtarget.role}) a nightmare.`
+              )
+            }
+            
+            game.running = "give dazzling effects"
+            let dazzs = game.players.filter(
+              p => p.role == "Dazzler" && p.alive && p.dztarget
+            )
+            for (var dazz of dazzs) {
+              let dztarget = game.players[dazz.dztarget - 1]
+              if (!dztarget.alive) continue
+              dztarget.dazzled = true
+              if (roles[dztarget.role].tag & tags.ROLE.INVESTIGATOR) dazz.gaze = dztarget.role
+              fn.getUser(client, dztarget.id).send(
+                new Discord.MessageEmbed()
+                  .setThumbnail(fn.getEmoji(client, "Dazzler_Dazzle").url)
+                  .setTitle("Dazzled!")
+                  .setDescription(
+                    "You have been dazzled and cannot use your abilities!\nGo to sleep!"
+                  )
+              )
+
+              fn.getUser(client, dazz.id).send(
+                new Discord.MessageEmbed()
+                  .setThumbnail(fn.getEmoji(client, "Dazzler_Dazzle").url)
+                  .setTitle("Dazzled")
+                  .setDescription(
+                    `You have dazzled **${dztarget.number} ${nicknames.get(dztarget.id)}**.${
+                      roles[dztarget.role].tag & tags.ROLE.INVESTIGATOR
+                        ? ` You can check as a${
+                            ["A","E","I","O","U"].incluies(dztarget.role[0]) ? "n" : ""} ${
+                            fn.getEmoji(client, dztarget.role)
+                          } ${dztarget.role} tonight!`
+                        : ""
+                    }`
+                  )
+              )
+              
+              fn.addLog(
+                game,
+                `Dazzler ${dazz.number} ${nicknames.get(
+                  dazz.id
+                )} dazzled ${dztarget.number} ${nicknames.get(
+                  dztarget.id
+                )} (${dztarget.role}).`
               )
             }
 

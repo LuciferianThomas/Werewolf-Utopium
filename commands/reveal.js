@@ -22,6 +22,9 @@ module.exports = {
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
+    
+    if (gamePlayer.dazzled)
+      return await message.author.send("You are dazzled and cannot use your abilities!")
     if (gamePlayer.role == "Loudmouth" && args.length) {
       if (!gamePlayer.alive)
         return await message.author.send("You are dead. You can no longer reveal a player's role!")

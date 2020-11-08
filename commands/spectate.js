@@ -13,6 +13,7 @@ module.exports = {
   name: "spectate",
   aliases: [],
   run: async (client, message, args, shared) => {
+    return message.channel.send("Sorry! Spectating isn't finished being coded into the bot yet! Feel free to pester Shadow to finish it after his Writers Utopia roles")
     if (
       !client.guilds.cache
       .get("522638136635817986")
@@ -38,7 +39,7 @@ module.exports = {
       else prevGamePlayer.left = true
     }
     
-    let activeGames = Games.filter(game => game.currentPhase < 999 && game.players.length)
+    let activeGames = Games.filter(game => game.currentPhase < 999)
     if (!activeGames.length)
       return await message.channel.send(
         new Discord.MessageEmbed()

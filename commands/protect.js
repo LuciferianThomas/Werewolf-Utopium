@@ -57,6 +57,9 @@ module.exports = {
           "The game is over! You can no longer use your actions."
         )
 
+      if (gamePlayer.dazzled)
+        return await message.author.send("You are dazzled and cannot use your abilities!")
+
       if (!gamePlayer.abil1)
         return await message.author.send("You have already used your ability.")
 
@@ -94,22 +97,16 @@ module.exports = {
       ["Doctor", "Witch", "Bodyguard", "Tough Guy"].includes(gamePlayer.role)
     ) {
       if (game.currentPhase % 3 != 0)
-        return await message.author.send(
-          "You can only protect a player at night."
-        )
+        return await message.author.send("You can only protect a player at night.")
       if (!gamePlayer.alive)
-        return await message.author.send(
-          "You are dead. You can no longer protect a player."
-        )
+        return await message.author.send("You are dead. You can no longer protect a player.")
 
       if (gamePlayer.jailed)
-        return await message.author.send(
-          "You are currently jailed and cannot use your abilities."
-        )
+        return await message.author.send("You are currently jailed and cannot use your abilities.")
       if (gamePlayer.nightmared)
-        return await message.author.send(
-          "You are having a nightmare and cannot use your abilities!"
-        )
+        return await message.author.send("You are having a nightmare and cannot use your abilities!")
+      if (gamePlayer.dazzled)
+        return await message.author.send("You are dazzled and cannot use your abilities!")
       if (game.currentPhase >= 999)
         return await message.author.send(
           "The game is over! You can no longer use your actions."

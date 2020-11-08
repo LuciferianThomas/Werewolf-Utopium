@@ -21,7 +21,7 @@ module.exports = {
         game = QuickGames.find(g => g.gameID == player.currentGame),
         index = QuickGames.indexOf(game),
         gamePlayer = game.players.find(player => player.id == message.author.id)
-    if (gamePlayer.role !== "Sheriff")
+    if (gamePlayer.role !== "Sheriff" && gamePlayer.gaze !== "Sheriff")
       return await message.author.send("You do not have the abilities to watch a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer watch a player.")
@@ -32,6 +32,8 @@ module.exports = {
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     if (gamePlayer.nightmared)
       return await message.author.send("You are having a nightmare and cannot use your abilities!")
+    if (gamePlayer.dazzled)
+      return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")
     

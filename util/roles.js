@@ -29,7 +29,8 @@ let roles = {
       tags.ROLE.REGULAR_VILLAGER |
       tags.ROLE.SEEN_AS_VILLAGER |
       tags.ROLE.WWO_ROLE |
-      tags.ROLE.AVAILABLE,
+      tags.ROLE.AVAILABLE |
+      tags.ROLE.INVESTIGATOR,
   },
   Avenger: {
     desc: "After the first night you can select a player to kill when you die.",
@@ -136,7 +137,8 @@ let roles = {
       tags.ROLE.STRONG_VILLAGER |
       tags.ROLE.SEEN_AS_VILLAGER |
       tags.ROLE.WWO_ROLE |
-      tags.ROLE.AVAILABLE,
+      tags.ROLE.AVAILABLE |
+      tags.ROLE.INVESTIGATOR,
   },
   Doctor: {
     desc:
@@ -437,7 +439,8 @@ let roles = {
       tags.ROLE.STRONG_VILLAGER |
       tags.ROLE.SEEN_AS_VILLAGER |
       tags.ROLE.WWO_ROLE |
-      tags.ROLE.AVAILABLE,
+      tags.ROLE.AVAILABLE |
+      tags.ROLE.INVESTIGATOR,
   },
   "Seer Apprentice": {
     desc:
@@ -469,7 +472,8 @@ let roles = {
       tags.ROLE.REGULAR_VILLAGER |
       tags.ROLE.SEEN_AS_VILLAGER |
       tags.ROLE.WWO_ROLE |
-      tags.ROLE.AVAILABLE,
+      tags.ROLE.AVAILABLE |
+      tags.ROLE.INVESTIGATOR,
   },
   "Spirit Seer": {
     desc:
@@ -487,7 +491,8 @@ let roles = {
       tags.ROLE.REGULAR_VILLAGER |
       tags.ROLE.SEEN_AS_VILLAGER |
       tags.ROLE.WWO_ROLE |
-      tags.ROLE.AVAILABLE,
+      tags.ROLE.AVAILABLE |
+      tags.ROLE.INVESTIGATOR,
   },
   "Tough Guy": {
     desc:
@@ -704,7 +709,8 @@ let roles = {
       tags.ROLE.WEREWOLF |
       tags.ROLE.SEEN_AS_VILLAGER |
       tags.ROLE.WWO_ROLE |
-      tags.ROLE.AVAILABLE,
+      tags.ROLE.AVAILABLE |
+      tags.ROLE.INVESTIGATOR,
   },
   "Werewolf Berserk": {
     desc:
@@ -761,7 +767,8 @@ let roles = {
       tags.ROLE.WEREWOLF |
       tags.ROLE.SEEN_AS_WEREWOLF |
       tags.ROLE.WWO_ROLE |
-      tags.ROLE.AVAILABLE,
+      tags.ROLE.AVAILABLE |
+      tags.ROLE.INVESTIGATOR,
   },
   "Wolf Shaman": {
     desc:

@@ -35,7 +35,9 @@ module.exports = {
     if (game.currentPhase % 3 !== 0)
       return await message.author.send("You can only convert a player to a Werewolf during the night!")
     if (gamePlayer.jailed)
-      return await message.author.send("You cannot convert other players into Werewolves while in jail!")
+      return await message.author.send("You cannot use your abilities while in jail!")
+    if (gamePlayer.dazzled)
+      return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")
 

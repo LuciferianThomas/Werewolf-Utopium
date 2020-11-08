@@ -32,9 +32,11 @@ module.exports = {
     if (game.currentPhase % 3 !== 0)
       return await message.author.send("You can only sect a player during the night!")
     if (gamePlayer.jailed)
-      return await message.author.send("You cannot sect other players while in jail!")
+      return await message.author.send("You cannot use your abilities while in jail!")
     if (gamePlayer.nightmared)
       return await message.author.send("You are having a nightmare and cannot use your abilities!")
+    if (gamePlayer.dazzled)
+      return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")
 

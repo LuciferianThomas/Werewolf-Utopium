@@ -62,7 +62,7 @@ module.exports = {
               ).join("\n")
         )
     
-    if (game.spectators.length) embed.addField(`Spectators [${game.spectators.length}]`, game.spectators.map(id => nicknames.get(id)).join("\n"))
+        if (game.spectators.length) embed.addField(`Spectators [${game.spectators.length}]`, game.spectators.map(id => nicknames.get(id)).join("\n"))
         embed.addField(
           `Roles`,
           game.originalRoles

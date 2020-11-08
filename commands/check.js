@@ -25,7 +25,8 @@ module.exports = {
       game = QuickGames.find(g => g.gameID == player.currentGame),
       index = QuickGames.indexOf(game),
       gamePlayer = game.players.find(player => player.id == message.author.id)
-    if (!["Seer", "Aura Seer", "Spirit Seer", "Sorcerer", "Wolf Seer"].includes(gamePlayer.role))
+    if (!["Seer", "Aura Seer", "Spirit Seer", "Sorcerer", "Wolf Seer"].includes(gamePlayer.role) &&
+        !["Seer", "Aura Seer", "Spirit Seer", "Sorcerer", "Wolf Seer"].includes(gamePlayer.gaze))
       return await message.author.send("You do not have the abilities to check on a player.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer check on a player.")
@@ -36,6 +37,8 @@ module.exports = {
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     if (gamePlayer.nightmared)
       return await message.author.send("You are having a nightmare and cannot use your abilities!")
+    if (gamePlayer.dazzled)
+      return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")
 
@@ -49,7 +52,7 @@ module.exports = {
         "You cannot check on a player if you are the last werewolf."
       )
 
-    if (gamePlayer.role == "Spirit Seer") {
+    if (gamePlayer.role == "Spirit Seer" || gamePlayer.gaze == "Spirit Seer") {
       let targetA = parseInt(args[0]), 
           targetB = parseInt(args[1])
       if (
@@ -97,7 +100,7 @@ module.exports = {
 
       let targetPlayer = game.players[target - 1]
 
-      if (gamePlayer.role == "Aura Seer") {
+      if (gamePlayer.role == "Aura Seer" || gamePlayer.gaze == "Aura Seer") {
         let aura = game.players.find(pl => pl.enchant == targetPlayer.number)
                 ? "Evil"
                 : targetPlayer.disguised

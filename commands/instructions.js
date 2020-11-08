@@ -25,6 +25,6 @@ module.exports = {
     let index = QuickGames.indexOf(game);
     QuickGames[index] = game;
     games.set("quick", QuickGames);
-    message.react("✅")
+    message.react(fn.getEmoji(client, "green tick"))
   }
 }

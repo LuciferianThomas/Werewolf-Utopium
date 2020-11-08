@@ -28,6 +28,10 @@ module.exports = {
       return await message.author.send("You can only enchant a player at day!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")
+
+    
+    if (gamePlayer.dazzled)
+      return await message.author.send("You are dazzled and cannot use your abilities!")
     
     if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length == 1)
       return await message.author.send("You cannot enchant a player when you are the last werewolf!")
