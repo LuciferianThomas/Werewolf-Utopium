@@ -32,7 +32,7 @@ module.exports = {
       return await message.author.send("You are currently jailed and you cannot use your abilities!")
     if (gamePlayer.nightmared)
       return await message.author.send("You are having a nightmare and cannot use your abilities!")
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")

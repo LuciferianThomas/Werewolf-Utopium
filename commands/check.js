@@ -37,7 +37,7 @@ module.exports = {
       return await message.author.send("You are currently jailed and cannot use your abilities.")
     if (gamePlayer.nightmared)
       return await message.author.send("You are having a nightmare and cannot use your abilities!")
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")
@@ -99,6 +99,9 @@ module.exports = {
         return await message.author.send("You cannot check on yourself.")
 
       let targetPlayer = game.players[target - 1]
+
+      if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role == "Wolf Seer")
+        return await message.author.send("Why would you want to check your fellow wolfs? " + fn.getEmoji(client, "Harold"))
 
       if (gamePlayer.role == "Aura Seer" || gamePlayer.gaze == "Aura Seer") {
         let aura = game.players.find(pl => pl.enchant == targetPlayer.number)

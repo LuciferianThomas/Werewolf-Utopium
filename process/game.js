@@ -3478,7 +3478,7 @@ module.exports = client => {
             for (var dazz of dazzs) {
               let dztarget = game.players[dazz.dztarget - 1]
               if (!dztarget.alive) continue
-              dztarget.dazzled = true
+              dztarget.dazzled = game.currentPhase - 1
               if (roles[dztarget.role].tag & tags.ROLE.INVESTIGATOR) dazz.gaze = dztarget.role
               fn.getUser(client, dztarget.id).send(
                 new Discord.MessageEmbed()

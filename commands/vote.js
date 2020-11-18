@@ -41,7 +41,7 @@ module.exports = {
         let vote = parseInt(args[0])
         if (isNaN(vote) || vote > game.players.length || vote < 1)
           return await message.author.send("Invalid vote.")
-        if (roles[game.players[vote-1].role].team == "Werewolf") 
+        if (roles[game.players[vote-1].role].team == "Werewolves") 
           return await message.author.send("You cannot vote a fellow werewolf.")
         if (game.players[vote-1].role == "Sorcerer") 
           return await message.author.send("You cannot vote a sorcerer.")

@@ -30,7 +30,7 @@ module.exports = {
       return await message.author.send("The game is over! You can no longer use your actions.")
 
     
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
     
     if (game.players.filter(p => p.alive && roles[p.role].team == "Werewolves").length == 1)

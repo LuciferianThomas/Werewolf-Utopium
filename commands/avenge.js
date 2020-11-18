@@ -30,7 +30,7 @@ module.exports = {
       return await message.author.send("You are currently jailed and you cannot use your abilities!")
     if (gamePlayer.nightmared)
       return await message.author.send("You are having a nightmare and cannot use your abilities!")
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase == 0 && gamePlayer.role == "Avenger")
       return await message.author.send("You cannot select a player to be avenged right now!")

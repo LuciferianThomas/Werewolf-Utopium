@@ -35,7 +35,7 @@ module.exports = {
       return await message.author.send("The game is over! You can no longer use your actions.")
     
     if (game.currentPhase % 3 == 0)
-      return await message.author.send("You can only select a player to be nightmared during the day!")
+      return await message.author.send("You can only dazzle a player during the day!")
     if (gamePlayer.lastKill != game.currentPhase - 1 && gamePlayer.lastKill != game.currentPhase - 2)
       return await message.author.send("You can only dazzle on the day after you killed!")
     
@@ -52,13 +52,13 @@ module.exports = {
     gamePlayer.dztarget = targetPlayer.number
     
     message.author.send(
-      `<:Nightmare:660735617428226050> You have selected **${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** to have a nightmare on the next night!`
+      `${fn.getEmoji(client, "Dazzler_Dazzle")} You have selected **${targetPlayer.number} ${nicknames.get(targetPlayer.id)}** to be dazzled!`
     )
     fn.addLog(
       game,
       `[ACTION] ${gamePlayer.role} ${gamePlayer.number} ${nicknames.get(
         gamePlayer.id
-      )} selected  (${targetPlayer.role})${targetPlayer.number} ${nicknames.get(targetPlayer.id)} (${targetPlayer.role}) to have a nightmare on the next night.`
+      )} selected  (${targetPlayer.role})${targetPlayer.number} ${nicknames.get(targetPlayer.id)} (${targetPlayer.role}) to be dazzled on the next night.`
     )
     
     gamePlayer.abil1 -= 1

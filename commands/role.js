@@ -30,13 +30,13 @@ module.exports = {
         .setDescription(`${role.desc}${role.aura ? `\n\nAura: ${role.aura}` : ""}${role.team ? `\nTeam: ${role.team}` : ""}`);
     if (rolecmds.length)
       embed.addField("Action Commands", `${rolecmds.map(c => `\`w!${c}\``).join(', ')}`)
-    if(role.ideaBy){
-      let user = await client.users.fetch(role.ideaBy)
-      embed.description += `\n${role.ideaBy ? `\nIdea By: ${user.tag}` : ""}`
+    if(role.wrt){
+      let user = await client.users.fetch(role.wrt)
+      embed.description += `\n${role.wrt ? `\nIdea By: ${user.tag}` : ""}`
     }
-    if(role.graphicsBy){
-      let user = await client.users.fetch(role.graphicsBy)
-      embed.description += `${role.ideaBy ? `\nGraphics By: ${user.tag}` : ""}`
+    if(role.grph){
+      let user = await client.users.fetch(role.grph)
+      embed.description += `${role.grph ? `\nGraphics By: ${user.tag}` : ""}`
     }
     
     await message.channel.send(embed)

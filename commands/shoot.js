@@ -27,7 +27,7 @@ module.exports = {
       return await message.author.send("You do not have the abilities to shoot a player.")
     if (gamePlayer.role !== "Jailer" && shared.commandName == "execute")
       return await message.author.send("Only the Jailer can execute their prisoners!")
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
       
     if (!gamePlayer.alive)

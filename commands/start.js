@@ -21,7 +21,7 @@ module.exports = {
     if (game.currentPhase !== -1)
       return await message.author.send("Your game has started!")
     if (game.players.length < 4) 
-      return await message.author.send("**There are insufficient players to start a game!**\nInvite your friends to join the game!")
+      return await message.author.send("**There are insufficient players to start a game!**\nInvite your friends to join the game! You need a minimium of 4 players, but 6 or more is recommended")
     
     if (!QuickGames[QuickGames.indexOf(game)].startVotes) QuickGames[QuickGames.indexOf(game)].startVotes = []
     let votes = QuickGames[QuickGames.indexOf(game)].startVotes

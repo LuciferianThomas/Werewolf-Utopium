@@ -23,7 +23,7 @@ module.exports = {
         gamePlayer = game.players.find(player => player.id == message.author.id)
     
     
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
     if (gamePlayer.role == "Loudmouth" && args.length) {
       if (!gamePlayer.alive)

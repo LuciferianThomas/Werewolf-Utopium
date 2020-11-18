@@ -29,7 +29,7 @@ module.exports = {
       return await message.author.send("You are dead. You can no longer activate frenzy.")
     if (!gamePlayer.abil1)
       return await message.author.send("You have activated frenzy already.")
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
     if (game.currentPhase >= 999)
       return await message.author.send("The game is over! You can no longer use your actions.")

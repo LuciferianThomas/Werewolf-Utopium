@@ -75,7 +75,7 @@ module.exports = async (client, game) => { try {
       case "Tough Guy":
         thisPlayer.health = 1; break;
       case "Medium": case "Jailer": case "Priest": case "Flower Child": 
-      case "Werewolf Berserk": case "Kitten Wolf": case "Guardian Wolf":
+      case "Werewolf Berserk": case "Kitten Wolf": case "Demon Wolf": case "Guardian Wolf":
       case "Pacifist": case "Wolf Pacifist": case "Shadow Wolf": case "Cannibal":
         thisPlayer.abil1 = 1; break;
       case "Gunner": case "Marksman":

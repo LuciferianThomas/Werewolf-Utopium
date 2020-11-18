@@ -30,7 +30,7 @@ module.exports = {
     if (game.currentPhase % 3 == 0)
       return await message.author.send("You cannot throw holy water at night.")
     
-    if (gamePlayer.dazzled)
+    if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")
     if (!gamePlayer.abil1)
       return await message.author.send("You have used your holy water.")
