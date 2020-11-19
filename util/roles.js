@@ -410,7 +410,7 @@ let roles = {
           tags.ROLE.WWO_ROLE | tags.ROLE.AVAILABLE
   },
   "Demon Wolf": {
-      desc: "You are a regular werewolf, except your vote counts as double.",
+      desc: "Once per game, choose a wolf to upgrade to the next strongest wolf.",
       aura: "Evil",
       team: "Werewolves",
       abbr: ["dww", "demon", "demonww"],
