@@ -272,7 +272,7 @@ let roles = {
     nite: "You can select a player to extract essence from (`w!extract [player]`) and brew a potion with it." +
           " You can also use the potions you have brewed (`w!potion [player]`).",
     tag : tags.ROLE.SOLO_KILLER |
-          tags.ROLE.OTHER_ROLE | tags.ROLE.UNAVAILABLE,
+          tags.ROLE.OTHER_ROLE | tags.ROLE.UNAVAILABLE | tags.WU_ROLE,
     wrt : "356282138737377280"
   },
   "President": {
@@ -405,10 +405,23 @@ let roles = {
     abbr: ["aww","alpha", "alpha ww"],
     cat : "Werewolf",
     nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
-          "You vote counts double.",
+          "Your vote counts double.",
     tag : tags.ROLE.WEREWOLF | tags.ROLE.SEEN_AS_WEREWOLF |
           tags.ROLE.WWO_ROLE | tags.ROLE.AVAILABLE
   },
+  "Demon Wolf": {
+      desc: "You are a regular werewolf, except your vote counts as double.",
+      aura: "Evil",
+      team: "Werewolves",
+      abbr: ["dww", "demon", "demonww"],
+      cat : "Werewolf",
+      attr: { abil1: 1 },
+      nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
+            "If you haven't already, you can upgrade a wolf to the next strongest role (`w!upgrade [player]`).",
+      tag : tags.ROLE.WEREWOLF | tags.ROLE.SEEN_AS_WEREWOLF |
+            tags.ROLE.WU_ROLE | tags.ROLE.TO_BE_TESTED,
+      wrt: "598296973342146576"
+},
   "Guardian Wolf": {
     desc: "You are a werewolf who can once protect a player from being lynched by the village.",
     aura: "Evil",
@@ -500,6 +513,20 @@ let roles = {
     tag : tags.ROLE.WEREWOLF | tags.ROLE.SEEN_AS_VILLAGER |
           tags.ROLE.WWO_ROLE | tags.ROLE.AVAILABLE
   },
+  "Totem Wolf": {
+      desc: "You can place one totem a night on any player, up to 2 nights. A totem will reflect a killing skill back to its user.",
+      aura: "Evil",
+      team: "Werewolves",
+      abbr: ["tww", "totem", "totemww"],
+      cat : "Werewolf",
+      attr: { abil1: 1 },
+      nite: "Chat and vote with the werewolves on who to kill tonight (`w!vote [player]`).\n" +
+            "If you haven't placed two totems already, you can place a totem on a player (`w!upgrade [player]`).",
+      tag : tags.ROLE.WEREWOLF | tags.ROLE.SEEN_AS_WEREWOLF |
+            tags.ROLE.WU_ROLE | tags.ROLE.UNAVAILABLE,
+      wrt: "182177490893012992"
+      
+},
   "Werewolf Berserk": {
     desc: "Once per game, you can active a werewolves \"frenzy\" during the day." +
           " If during the night your selected victim is being protected, your victim and all protectors of your victim will die." +
@@ -586,7 +613,7 @@ let roles = {
     nite: "Choose two players to instigate hate between for the next day. (`w!instigate [player1] [player2]`)",
     day: "Try to get the two players you chose to be voting each other",
     tag : tags.ROLE.SOLO_VOTING | tags.ROLE.SEEN_AS_VILLAGER |
-          tags.ROLE.OTHER_ROLE | tags.ROLE.TO_BE_TESTED,
+          tags.ROLE.OTHER_ROLE | tags.ROLE.TO_BE_TESTED | tags.WU_ROLE,
     wrt : "544360819790577676"
   },
   "Soul Collector": {
@@ -693,7 +720,9 @@ let roles = {
     cat : "Killer",
     nite: "Select a player to \"dazzle\" (`w!dazzle [player1]`).",
     tag : tags.ROLE.SOLO_KILLER |
-          tags.ROLE.OTHER_ROLE | tags.ROLE.TO_BE_TESTED
+          tags.ROLE.OTHER_ROLE | tags.ROLE.TO_BE_TESTED | tags.WU_ROLE,
+    wrt: "600206664527773708",
+    grph: "699677225523478541"
   },
   "Illusionist": {
     desc: "Each night you can disguise a player." +

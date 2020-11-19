@@ -26,9 +26,9 @@ module.exports = {
     let target = parseInt(args[0])
     
     if (gamePlayer.role !== "Demon Wolf")
-      return await message.author.send("You do not have the abilities to nightmare a player.")
+      return await message.author.send("You do not have the abilities to upgrade a player.")
     if (!gamePlayer.alive)
-      return await message.author.send("You are dead. You can no longer nightmare a player.")
+      return await message.author.send("You are dead. You can no longer upgrade a player.")
     if (!gamePlayer.abil1)
       return await message.author.send("You have already upgraded a werewolf.")
     if (gamePlayer.dazzled == game.currentPhase)

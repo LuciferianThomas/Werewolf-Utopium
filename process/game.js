@@ -591,6 +591,7 @@ module.exports = client => {
               "Wolf Shaman",
               "Wolf Pacifist",
               "Shadow Wolf",
+              "Demon Wolf",
               "Guardian Wolf",
               "Werewolf Berserk",
               "Alpha Werewolf",
