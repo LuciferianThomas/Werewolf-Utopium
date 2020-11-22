@@ -12,7 +12,7 @@ const fn = require('/home/utopium/wwou/util/fn.js'),
 module.exports = {
   name: "give",
   run: async (client, message, args, shared) => {
-    return await message.channel.send("Giving coins is disabled right now :(")
+    //return await message.channel.send("Giving coins is disabled right now :(")
     let thisPlayer = players.get(message.author.id)
     let targetPlayer
     if (!args[0])
@@ -52,7 +52,7 @@ module.exports = {
       new Discord.MessageEmbed()
       .setTitle(`Coins for you!`)
       .setDescription(
-        `Successfully transferred ${input} ${fn.getEmoji(client, "Coin")} to ${nicknames.get(targetPlayer.id)}!\n` +
+        `Successfully transferred ${input} ${fn.getEmoji(client, "Coin")} from your balance to ${nicknames.get(targetPlayer.id)}!\n` +
         `You now have ${players.get(`${message.author.id}.coins`)} ${fn.getEmoji(client, "Coin")}.\n` +
         `${nicknames.get(targetPlayer.id)} now has ${players.get(`${targetPlayer.id}.coins`)} ${fn.getEmoji(client, "Coin")}.`
       )
