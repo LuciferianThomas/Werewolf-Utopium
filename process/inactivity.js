@@ -24,6 +24,19 @@ module.exports = (client, game) => {
         let leftPlayer = game.players[pl].id
         game.players.splice(pl--, 1)
 
+        if (game.currentPhase == -1 && game.mode == "custom" && game.createdBy == leftPlayer) {
+          fn.broadcastTo(
+            client, game.players,
+            `You have been removed from ${game.name} [\`${game.gameID}\`] as the game creator left.`, true
+          )
+          game.players.forEach(p => players.set(`${p.id}.currentGame`, 0))
+          game.spectators.forEach(p => players.set(`${p}.currentGame`, 0))
+          fn.addLog(game, `All players and spectators were removed from ${game.name} [${game.gameID}] as the game creator left.`)
+          let QuickGames = games.get("quick")
+          QuickGames.splice(QuickGames.indexOf(QuickGames.find(g => g.gameID == game.gameID)), 1)
+          games.set("quick", QuickGames)
+        }
+
         if (game.players.length)
           fn.broadcastTo(
             client, game.players.filter(p => !p.left),
@@ -39,19 +52,6 @@ module.exports = (client, game) => {
                   .join("\n")
               ), true
           )
-    
-        if (game.currentPhase == -1 && game.mode == "custom" && game.createdBy == leftPlayer) {
-          fn.broadcastTo(
-            client, game.players,
-            `You have been removed from ${game.name} [\`${game.gameID}\`] as the game creator left.`, true
-          )
-          game.players.forEach(p => players.set(`${p.id}.currentGame`, 0))
-          game.spectators.forEach(p => players.set(`${p}.currentGame`, 0))
-          fn.addLog(game, `All players and spectators were removed from ${game.name} [${game.gameID}] as the game creator left.`)
-          let QuickGames = games.get("quick")
-          QuickGames.splice(QuickGames.indexOf(QuickGames.find(g => g.gameID == game.gameID)), 1)
-          games.set("quick", QuickGames)
-        }
       } else if (moment(game.players[pl].lastAction).add(2.5, 'm') <= moment() && !game.players[pl].prompted) {
         game.players[pl].prompted = true
         fn.getUser(client, game.players[pl].id).send(
@@ -75,6 +75,7 @@ module.exports = (client, game) => {
         }
       }
     }
+    
     else {
       if (!game.players[pl].alive || game.players[pl].left) continue;
 

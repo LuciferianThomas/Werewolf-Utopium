@@ -54,7 +54,8 @@ client.once('ready', async () => {
   client.allinvites = await client.guilds.cache.get("522638136635817986").fetchInvites()
   fn.addLog(`MAIN`, `Werewolf Utopium bot is now ready.`)
   
-  client.user.setPresence({ activity: { name: 'Werewolf Online' , type: "PLAYING"}, status: 'online' })
+  //client.user.setPresence({ activity: { name: 'Werewolf Online' , type: "PLAYING"}, status: 'online' })
+  client.user.setPresence({ activity: { name: 'Werewolf Online' , type: "COMPETING"}, status: 'online' })
   //client.user.setPresence({activity: { name: 'new roles being coded!', type: 'STREAMING', url: "https://www.twitch.tv/theshadowdev"}})
 
   require('/home/utopium/wwou/process/game.js')(client)
@@ -90,7 +91,7 @@ client.once('ready', async () => {
     if(rct == "dm") sendto = client.users.cache.get(rebootchan)
     if(rct == "text") sendto = client.channels.cache.get(rebootchan)
     if(sendto) sendto.send("Bot has successfully been restarted!")
-    console.log(rebootchan, rct, `${sendto ? sendto.id : "no sendto"}`)
+    //console.log(rebootchan, rct, `${sendto ? sendto.id : "no sendto"}`)
   }
   
   //Setup auto-restart job

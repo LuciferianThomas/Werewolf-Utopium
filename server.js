@@ -7,39 +7,6 @@ const session = require("express-session")
 const passport = require("passport")
 const probe = require("probe-image-size")
 const cmd = require("node-cmd")
-const expressWs = require('express-ws')(app);
-
-
-const statusMonitor = require("express-status-monitor")({
-  title: "Werewolf Utopium Status",
-  path: "/status",
-  spans: [
-    {
-      interval: 1, // Every second
-      retention: 60 // Keep 60 datapoints in memory
-    },
-    {
-      interval: 5, // Every 5 seconds
-      retention: 60
-    },
-    {
-      interval: 15, // Every 15 seconds
-      retention: 60
-    }
-  ],
-  chartVisibility: {
-    cpu: true,
-    mem: true,
-    load: false,
-    responseTime: false,
-    rps: false,
-    statusCodes: true
-  } /* ,
-healthChecks: [{
-  protocol: 'https',
-  host: 'staff.werewolf-utopium.tk',
-}] */
-})
 
 app.use(
   require("express-session")({
@@ -196,16 +163,6 @@ module.exports = client => {
         )
           req.user.inserver = true
       }
-    })
-
-    app.ws("/wsserver", (ws, req) => {
-      ws.on('message', function (message) {
-        console.log(`New message: ${message}`)
-      })
-    })
-    
-    app.get("/ws", (req, res) => {
-      res.render(__dirname + "/views/ws.ejs")
     })
     
     

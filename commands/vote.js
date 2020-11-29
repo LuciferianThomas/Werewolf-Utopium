@@ -28,7 +28,7 @@ module.exports = {
     
     if (game.currentPhase % 3 == 0) {
       if (roles[gamePlayer.role].team == "Werewolves" && (gamePlayer.role !== "Sorcerer" || 
-          (gamePlayer.role == "Wolf Seer" && (!game.players.filter(player => player.alive && roles[player.role].team == "Werewolf").length || gamePlayer.resigned)))) {
+          (gamePlayer.role == "Wolf Seer" && (game.players.filter(player => player.alive && roles[player.role].team == "Werewolf").length == 1 || gamePlayer.resigned)))) {
         if (!args[0]) return await message.author.send("Please select a player, or choose `cancel` to remove your vote!")
         if (args[0].toLowerCase() == "cancel") {
           gamePlayer.vote = null
