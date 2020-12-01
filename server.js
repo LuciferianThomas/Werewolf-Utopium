@@ -299,7 +299,7 @@ module.exports = client => {
 
     app.get("/logs", checkAuth, viewLogs, async (req, res) => {
       
-      let pass = { user: null, player: null, path: req.path }
+      let pass = { user: null, player: null, path: req.path, dev: false }
       if (req.user) {
         req.user.nickname = nicknames.get(req.user.id) || null
         pass.user = req.user
@@ -326,6 +326,41 @@ module.exports = client => {
       // console.log(fulllog)
       let logs = fulllog.split("\n")
       res.render(__dirname + "/views/log.ejs", {
+        logs: logs,
+        id: req.params.id
+      })
+    })
+
+    app.get("/devlogs", checkAuth, viewLogs, async (req, res) => {
+      
+      let pass = { user: null, player: null, path: req.path, dev: false }
+      if (req.user) {
+        req.user.nickname = nicknames.get(req.user.id) || null
+        pass.user = req.user
+        pass.nickname = nicknames.get(req.user.id) || null
+        pass.player = players.get(req.user.id)
+      }
+      let files = fs.readdirSync("/home/utopium/.pm2/logs")
+      files = files.filter(
+        f => f.toLowerCase().endsWith(".log")
+      )
+      pass.files = files
+      pass.dev = true
+      res.render(__dirname + "/views/logs.ejs", pass)
+    })
+    
+    app.get("/devlog/:id", checkAuth, viewLogs, async (req, res) => {
+      let files = fs.readdirSync("/home/utopium/.pm2/logs")
+      let file = files.find(
+        f => f.toLowerCase() == `${req.params.id.toLowerCase()}.log`
+      )
+      if (!file) return res.status(404).send("No devlogs with that ID were found.")
+      if (file != `${req.params.id}.log`)
+        res.redirect(`/devlog/${file.substring(0, file.length - 4)}`)
+      let fulllog = fs.readFileSync(`/home/utopium/.pm2/logs/${file}`, "utf8")
+      // console.log(fulllog)
+      let logs = fulllog.split("\n")
+      res.render(__dirname + "/views/devlog.ejs", {
         logs: logs,
         id: req.params.id
       })

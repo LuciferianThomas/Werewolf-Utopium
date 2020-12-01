@@ -3,6 +3,10 @@
     let id = prompt("What log ID would you open?", "");
     if (id != null) window.location.href = "/log/" + id;
     }</script>
+<script>function getDevLog(){
+    let id = prompt("What devlog ID would you open?", "");
+    if (id != null) window.location.href = "/devlog/" + id;
+    }</script>
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
   <a class="navbar-brand" href="/">Werewolf Utopium</a>
   <button
@@ -45,6 +49,8 @@
         <div class="dropdown-menu" aria-labelledby="logmenu">
           <a class="nav-link" onClick="getLog()" href="#">Get Log</a>
           <a href="/logs" class="nav-link">View all logs</a>
+          <a class="nav-link" onClick="getDevLog()" href="#">Get Devlog</a>
+          <a href="/devlogs" class="nav-link">View all devlogs</a>
         </div>
       </li>
       <% } %>
