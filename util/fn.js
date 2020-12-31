@@ -561,6 +561,7 @@ const death = (client, game, killed, suicide = false) => {
       game,
       `[RESULT] The game ended in a tie. No one won!`
     )
+    return;
       }
 
   game.running = "test for kill president win conditions"
@@ -719,7 +720,7 @@ const death = (client, game, killed, suicide = false) => {
       }
 
   game.running = "test for zombie win conditions"
-  if (alive.filter(p => p.role == "Zombie").length == alive.length) {
+  if (alive.filter(p => p.role == "Zombie").length == alive.length && game.roles.includes("Zombie")) {
     game.currentPhase = 999
     broadcastTo(
       client,

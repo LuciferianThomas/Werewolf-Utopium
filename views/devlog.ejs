@@ -1,0 +1,14 @@
+<!DOCTYPE html> 
+<html
+  <head>
+    <title>Log: <%- id -%></title>
+    <link rel="stylesheet" href="../log.css">
+  </head>
+  <body>
+    <pre>
+      <%_ logs.forEach(line => { -%>
+<span><%- line -%></span>
+      <%_ }) -%>
+    </pre>
+  </body>
+</html>

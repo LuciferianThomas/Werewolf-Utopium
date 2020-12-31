@@ -101,7 +101,7 @@ module.exports = {
       let targetPlayer = game.players[target - 1]
 
       if (roles[gamePlayer.role].team == "Werewolves" && gamePlayer.role == "Wolf Seer")
-        return await message.author.send("Why would you want to check your fellow wolfs? " + fn.getEmoji(client, "Harold"))
+        return await message.author.send(`Why would you want to check your fellow wolfs? ${fn.getEmoji(client, "Harold")}`)
 
       if (gamePlayer.role == "Aura Seer" || gamePlayer.gaze == "Aura Seer") {
         let aura = game.players.find(pl => pl.enchant == targetPlayer.number)

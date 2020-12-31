@@ -43,7 +43,7 @@ module.exports = client => {
           )
       
         // if (game.mode == "quick") for (var player of game.players.map(x => x.id)) {
-        //   // if (!players.get(`${player}.wins`).find(g =>)) return;
+        //   // if (!players.get(`${player}.wins`).find(g => {})) return;
         //   let rdm = Math.floor(Math.random()*25)
         //   if (rdm == 0) {
         //     players.add(`${player}.inventory.lootbox`, 1)
@@ -206,7 +206,7 @@ module.exports = client => {
                     fn.addLog(
                       game,
                       `Handsome Prince ${lynchedPlayer.number} ${nicknames.get(lynchedPlayer.id)
-                      } revealed themselves as the village tried to lynch him.`
+                      } revealed themselves as the village tried to lynch them.`
                     )
                   } else {
                     game.running = "kill lynched player"
@@ -658,8 +658,23 @@ module.exports = client => {
                     attackedPlayer.id
                   )}${attackedPlayer.role == "Red Lady" ? " who was not home." : ""}.`
                 )
-              }
-              else if (attackedPlayer.protectors.length) {
+              } else if (attackedPlayer.totem){
+                game.running = "totem save player from ww kill"
+                fn.broadcastTo(
+                  client,
+                  wolves,
+                  `**${attackedPlayer.number} ${nicknames.get(
+                    attackedPlayer.id
+                  )}** cannot be killed!`
+                )
+
+                fn.addLog(
+                  game,
+                  `The Werewolves couldn't kill ${attackedPlayer.role} ${attackedPlayer.number} ${nicknames.get(
+                    attackedPlayer.id
+                  )} because a Totem protected that player.`
+                )
+              } else if (attackedPlayer.protectors.length) {
                 if (game.frenzy) {
                   game.running = "kill attacked player for frenzy"
                   game.lastDeath = game.currentPhase
@@ -3469,6 +3484,42 @@ module.exports = client => {
                 )} gave ${nmtarget.number} ${nicknames.get(
                   nmtarget.id
                 )} (${nmtarget.role}) a nightmare.`
+              )
+            }
+
+            game.running = "place totems"
+            let twolfs = game.players.filter(
+              p => p.role == "Totem Wolf" && p.alive && p.toPlace
+            )
+            for (var wolf of twolfs) {
+              let toPlace = game.players[wolf.toPlace - 1]
+              if (!toPlace.alive) continue
+              toPlace.totem = true
+              fn.getUser(client, toPlace.id).send(
+                new Discord.MessageEmbed()
+                  .setThumbnail(fn.getEmoji(client, "Totem_Wolf_Totem").url)
+                  .setTitle("A new totem!")
+                  .setDescription(
+                    `You have been given a totem by the ${fn.getEmoji(client, "Totem_Wolf")} Totem Wolf!\nThis totem will reflect any killing ability used on you back to the killer! This totem does not go away until it is used up or you die by other means`
+                  )
+              )
+
+              fn.getUser(client, wolf.id).send(
+                new Discord.MessageEmbed()
+                  .setThumbnail(fn.getEmoji(client, "Totem_Wolf_Totem").url)
+                  .setTitle("Totem Placed!")
+                  .setDescription(
+                    `You have placed a totem on **${toPlace.number} ${nicknames.get(toPlace.id)}**.`
+                  )
+              )
+              
+              fn.addLog(
+                game,
+                `Totem Wolf ${wolf.number} ${nicknames.get(
+                  wolf.id
+                )} placed a totem on ${toPlace.number} ${nicknames.get(
+                  toPlace.id
+                )} (${toPlace.role}).`
               )
             }
             

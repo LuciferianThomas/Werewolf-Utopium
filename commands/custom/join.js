@@ -93,7 +93,7 @@ module.exports = {
     )
     let alt = false
     if (client.guilds.cache.get("522638136635817986").members.cache.get(message.author.id).roles.cache.find(r => r.name == "Verified Alts")) alt = true
-    fn.addLog(currentGame, `${nicknames.get(message.author.id)} joined the game.${alt ? " (Verified Alt)" : ""}`)
+    fn.addLog(currentGame, `${nicknames.get(message.author.id)} (${message.author.id}) joined the game.${alt ? " (Verified Alt)" : ""}`)
     
     if (message.guild) message.channel.send(`**${nicknames.get(message.author.id)}** has now joined **Custom Game ${currentGame.name} ${currentGame.config.private ? "" : `[\`${currentGame.gameID}\`]`}**.`)
     

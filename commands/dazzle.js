@@ -58,7 +58,7 @@ module.exports = {
       game,
       `[ACTION] ${gamePlayer.role} ${gamePlayer.number} ${nicknames.get(
         gamePlayer.id
-      )} selected  (${targetPlayer.role})${targetPlayer.number} ${nicknames.get(targetPlayer.id)} (${targetPlayer.role}) to be dazzled on the next night.`
+      )} selected ${targetPlayer.number} ${nicknames.get(targetPlayer.id)} (${targetPlayer.role}) to be dazzled on the next night.`
     )
     
     gamePlayer.abil1 -= 1

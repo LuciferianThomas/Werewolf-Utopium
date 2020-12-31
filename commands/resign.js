@@ -23,10 +23,10 @@ module.exports = {
         gamePlayer = game.players.find(player => player.id == message.author.id)
         
     if (gamePlayer.role !== "Wolf Seer")
-      return await message.author.send("You do not have the abilities to nightmare a player.")
+      return await message.author.send("You do not have the abilities to resign.")
     if (!gamePlayer.alive)
       return await message.author.send("You are dead. You can no longer resign.")
-    if (!gamePlayer.resigned)
+    if (gamePlayer.resigned)
       return await message.author.send("You have resigned already.")
     if (gamePlayer.dazzled == game.currentPhase)
       return await message.author.send("You are dazzled and cannot use your abilities!")

@@ -7,39 +7,6 @@ const session = require("express-session")
 const passport = require("passport")
 const probe = require("probe-image-size")
 const cmd = require("node-cmd")
-const expressWs = require('express-ws')(app);
-
-
-const statusMonitor = require("express-status-monitor")({
-  title: "Werewolf Utopium Status",
-  path: "/status",
-  spans: [
-    {
-      interval: 1, // Every second
-      retention: 60 // Keep 60 datapoints in memory
-    },
-    {
-      interval: 5, // Every 5 seconds
-      retention: 60
-    },
-    {
-      interval: 15, // Every 15 seconds
-      retention: 60
-    }
-  ],
-  chartVisibility: {
-    cpu: true,
-    mem: true,
-    load: false,
-    responseTime: false,
-    rps: false,
-    statusCodes: true
-  } /* ,
-healthChecks: [{
-  protocol: 'https',
-  host: 'staff.werewolf-utopium.tk',
-}] */
-})
 
 app.use(
   require("express-session")({
@@ -197,16 +164,6 @@ module.exports = client => {
           req.user.inserver = true
       }
     })
-
-    app.ws("/wsserver", (ws, req) => {
-      ws.on('message', function (message) {
-        console.log(`New message: ${message}`)
-      })
-    })
-    
-    app.get("/ws", (req, res) => {
-      res.render(__dirname + "/views/ws.ejs")
-    })
     
     
     app.get("/", (req, res) => {
@@ -342,7 +299,7 @@ module.exports = client => {
 
     app.get("/logs", checkAuth, viewLogs, async (req, res) => {
       
-      let pass = { user: null, player: null, path: req.path }
+      let pass = { user: null, player: null, path: req.path, dev: false }
       if (req.user) {
         req.user.nickname = nicknames.get(req.user.id) || null
         pass.user = req.user
@@ -369,6 +326,41 @@ module.exports = client => {
       // console.log(fulllog)
       let logs = fulllog.split("\n")
       res.render(__dirname + "/views/log.ejs", {
+        logs: logs,
+        id: req.params.id
+      })
+    })
+
+    app.get("/devlogs", checkAuth, viewLogs, async (req, res) => {
+      
+      let pass = { user: null, player: null, path: req.path, dev: false }
+      if (req.user) {
+        req.user.nickname = nicknames.get(req.user.id) || null
+        pass.user = req.user
+        pass.nickname = nicknames.get(req.user.id) || null
+        pass.player = players.get(req.user.id)
+      }
+      let files = fs.readdirSync("/home/utopium/.pm2/logs")
+      files = files.filter(
+        f => f.toLowerCase().endsWith(".log")
+      )
+      pass.files = files
+      pass.dev = true
+      res.render(__dirname + "/views/logs.ejs", pass)
+    })
+    
+    app.get("/devlog/:id", checkAuth, viewLogs, async (req, res) => {
+      let files = fs.readdirSync("/home/utopium/.pm2/logs")
+      let file = files.find(
+        f => f.toLowerCase() == `${req.params.id.toLowerCase()}.log`
+      )
+      if (!file) return res.status(404).send("No devlogs with that ID were found.")
+      if (file != `${req.params.id}.log`)
+        res.redirect(`/devlog/${file.substring(0, file.length - 4)}`)
+      let fulllog = fs.readFileSync(`/home/utopium/.pm2/logs/${file}`, "utf8")
+      // console.log(fulllog)
+      let logs = fulllog.split("\n")
+      res.render(__dirname + "/views/devlog.ejs", {
         logs: logs,
         id: req.params.id
       })

@@ -109,10 +109,10 @@ module.exports = {
           gamePlayer.id
         )} decided to kill ${targetA} ${
           nicknames.get(targetPlayerA.id)
-        } (${targetPlayerA.role}) ${
+        } (${targetPlayerA.role})${
           !targetB ? ""
-            : ` and ${targetB} ${nicknames.get(targetPlayerB.id)} (${targetPlayerB.role})`
-        } tonight.`
+            : ` and ${targetB} ${nicknames.get(targetPlayerB.id)} (${targetPlayerB.role}) `
+        }tonight.`
       )
     }
 

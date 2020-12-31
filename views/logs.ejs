@@ -2,7 +2,11 @@
 <html>
   <head>
     <title>WWOU - Home</title>
-    <%- include("partials/header", {title: "All Logs - Werewolf Utopium", desc: "List of all the logs for the Werewolf Utopium staff to access", path: path }) %>
+    <% if(dev) { %>
+      <%- include("partials/header", {title: "All Dev Logs - Werewolf Utopium", desc: "List of all the devlogs for the Werewolf Utopium developers to access", path: path }) %>
+    <% } else { %>
+      <%- include("partials/header", {title: "All Logs - Werewolf Utopium", desc: "List of all the logs for the Werewolf Utopium staff to access", path: path }) %>
+    <% } %>
     <script>
     function nouser(){$('#nouser').modal('show')};
     </script>
@@ -26,7 +30,11 @@
     
     <div class="container padtop">
       <% files.forEach(f => { %>
-        <a href="/log/<%- f.replace(/(.log)/g, "") %>"><%- f %></a>, 
+        <% if(dev) { %>
+        <a href="/devlog/<%- f.replace(/(.log)/g, "") %>"><%- f %></a>,  
+        <% } else { %>
+        <a href="/log/<%- f.replace(/(.log)/g, "") %>"><%- f %></a>,  
+        <% } %>
       <% }) %>
     </div>
     
