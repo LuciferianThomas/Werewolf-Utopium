@@ -1,8 +1,8 @@
 const Discord = require('discord.js'),
       db = require('quick.db')
 
-const config = require('/app/util/config'),
-      fn = require('/app/util/fn')
+const config = require('/home/sd/utopium/spyfall/util/config'),
+      fn = require('/home/sd/utopium/spyfall/util/fn')
 
 module.exports = {
   name: "ping",

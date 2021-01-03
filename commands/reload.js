@@ -3,8 +3,8 @@ const Discord = require('discord.js'),
       db = require("quick.db"),
       fs = require("fs")
 
-const config = require('/app/util/config'),
-      fn = require('/app/util/fn')
+const config = require('/home/sd/utopium/spyfall/util/config'),
+      fn = require('/home/sd/utopium/spyfall/util/fn')
 
 module.exports = {
 	name: "reload",
@@ -50,16 +50,16 @@ module.exports = {
       if (!commandfile) return message.author.send("Unable to find that command.");
       client.commands.delete(command);
 
-      delete require.cache[require.resolve(`/app/commands/${commandfile.name}.js`)]
+      delete require.cache[require.resolve(`/home/sd/utopium/spyfall/commands/${commandfile.name}.js`)]
 
-      // if(command === "shop") delete require.cache[require.resolve(`/app/util/shop.js`)]
-      // if(command === "roles") delete require.cache[require.resolve(`/app/util/roles.js`)]
+      // if(command === "shop") delete require.cache[require.resolve(`/home/sd/utopium/spyfall/util/shop.js`)]
+      // if(command === "roles") delete require.cache[require.resolve(`/home/sd/utopium/spyfall/util/roles.js`)]
       // if (["coins","custom","games","items","logs","roses","talisman","use"].includes(command)) {
-      //   let filesInFolder = fs.readdirSync(`/app/commands/${command}`).filter(file => file.endsWith('.js'))
-      //   filesInFolder.forEach(file => delete require.cache[require.resolve(`/app/commands/${command}/${file}`)])
+      //   let filesInFolder = fs.readdirSync(`/home/sd/utopium/spyfall/commands/${command}`).filter(file => file.endsWith('.js'))
+      //   filesInFolder.forEach(file => delete require.cache[require.resolve(`/home/sd/utopium/spyfall/commands/${command}/${file}`)])
       // }
 
-      let props = require(`/app/commands/${commandfile.name}`);
+      let props = require(`/home/sd/utopium/spyfall/commands/${commandfile.name}`);
       // console.log(`Reload: Command "${command}" loaded`);
       client.commands.set(props.name, props);    
 

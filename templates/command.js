@@ -1,13 +1,13 @@
 /**
- *  This is a sample for command modules in /app/commands/*.js
+ *  This is a sample for command modules in /home/sd/utopium/spyfall/commands/*.js
 **/
 
 const Discord = require('discord.js'),
       db = require('quick.db'),
       moment = require('moment')
 
-const config = require('/app/util/config'),
-      fn = require('/app/util/fn')
+const config = require('/home/sd/utopium/spyfall/util/config'),
+      fn = require('/home/sd/utopium/spyfall/util/fn')
 
 const userData = new db.table("USERDATA"),
       guildData = new db.table("GUILDDATA"),

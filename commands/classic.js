@@ -6,7 +6,7 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
-const fn = require('/app/util/fn')
+const fn = require('/home/sd/utopium/spyfall/util/fn')
 module.exports = {
   name: "classic",
   aliases: ["cl"],
@@ -69,6 +69,6 @@ module.exports = {
     games.set("classic", Games)
     players.set(`${message.author.id}.currentGame`, currentGame.gameID)
       
-    if (currentGame.players.length == 16) require('/app/process/start')(client, currentGame)
+    if (currentGame.players.length == 16) require('/home/sd/utopium/spyfall/process/start')(client, currentGame)
   }
 }

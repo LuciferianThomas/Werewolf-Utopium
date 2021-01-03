@@ -1,6 +1,7 @@
   /* --- ALL PACKAGES --- */
 
 require('es6-shim')
+require("dotenv").config()
 
 const Discord = require('discord.js'),
       express = require('express'),
@@ -18,8 +19,8 @@ const Discord = require('discord.js'),
 /* --- ALL GLOBAL CONSTANTS & FUNCTIONS --- */
 
 const client = new Discord.Client(),
-      config = require('/app/util/config'),
-      fn = require('/app/util/fn')
+      config = require('/home/sd/utopium/spyfall/util/config'),
+      fn = require('/home/sd/utopium/spyfall/util/fn')
 
 const app = express()
 

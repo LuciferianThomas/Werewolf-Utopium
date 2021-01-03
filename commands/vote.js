@@ -5,7 +5,7 @@ const Discord = require("discord.js"),
 const games = new db.table("Games"),
       players = new db.table("Players")
 
-const fn = require('/app/util/fn')
+const fn = require('/home/sd/utopium/spyfall/util/fn')
 
 module.exports = {
   name: "vote",

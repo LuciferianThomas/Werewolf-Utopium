@@ -1,7 +1,7 @@
 const db = require("quick.db"),
       cmd = require("node-cmd"),
       temp = new db.table("temp"),
-      fn = require('/app/util/fn'),
+      fn = require('/home/sd/utopium/spyfall/util/fn'),
       games = new db.table("Games")
 
 module.exports = {

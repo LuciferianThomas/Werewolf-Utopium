@@ -1,6 +1,6 @@
 const Discord = require("discord.js"),
   moment = require("moment-timezone"),
-  fn = require("/app/util/fn")
+  fn = require("/home/sd/utopium/spyfall/util/fn")
 
 const db = require("quick.db")
   // tags = new db.table("tags")
@@ -104,7 +104,7 @@ module.exports = {
           `Error Message`,
           "```js\n" +
             e.stack.replace(
-              /(?:(?!\n.*?\(\/app.*?)\n.*?\(\/.*?\))+/g,
+              /(?:(?!\n.*?\(\/home\/sd\/utopium\/spyfall.*?)\n.*?\(\/.*?\))+/g,
               "\n\t..."
             ) +
             "```"
