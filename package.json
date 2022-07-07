@@ -18,7 +18,7 @@
     "express-session": "^1.17.1",
     "handybag": "latest",
     "html": "^1.0.0",
-    "moment": "^2.28.0",
+    "moment": "^2.29.4",
     "node-cmd": "^3.0.0",
     "node-fetch": "^2.6.1",
     "os": "^0.1.1",
